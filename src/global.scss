@@ -1,0 +1,117 @@
+@import './components/backToTop/backToTop.scss';
+@import './components/card/card.scss';
+@import './components/cardOffer/cardOffer.scss';
+@import './components/carousel/carousel.scss';
+@import './components/footer/footer.scss';
+//@import './components/infos/infos.scss'; menção honrosa
+@import './components/inputs/inputs.scss';
+@import './components/header/components/menuDep/menu.scss';
+
+@import './pages/aboutPage/about.scss';
+@import './pages/brandsPage/brands.scss';
+@import './pages/cartPage/cart.scss';
+@import './pages/categoryPage/category.scss';
+@import './pages/homePage/Home.scss';
+@import './pages/loginPage/login.scss';
+@import './pages/productFilterPage/productFilter.scss';
+@import './pages/productPage/product.scss';
+
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+@mixin lightMode {
+    background-color: $color-bgLight;
+    color: $color-fontLight;
+}
+
+@mixin darkMode {
+    background-color: $color-bgDark;
+    color: $color-fontDark;
+}
+
+:root {
+    font-family: $font-web;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    color-scheme: light dark;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 50px;
+    background-color: $color-secundaryDark;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: $color-secundaryLight;
+    border: 1px solid $color-secundaryDark;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    font-size: 62.5%;
+
+    body {
+        width: 100%;
+        min-width: 320px;
+        min-height: 100vh;
+        font-size: 1.6rem;
+        background-color: $color-bgLight;
+        color: $color-fontLight;
+
+        &::-webkit-scrollbar {
+            width: 0.7em;
+            background:$color-secundaryLight;
+        }
+
+        input {
+            outline: none;
+            border: none;
+        }
+
+        a {
+            color: $color-fontLight;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+        @include lightMode; 
+    }
+
+    body.dark {
+        @include darkMode;
+    }
+}

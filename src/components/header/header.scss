@@ -1,0 +1,125 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+header { 
+    width: 90%;
+    height: 4em;
+    background-color: $color-secundaryLight;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 1em;
+    box-shadow: 4px 2px 20px 3px $color-shadow;
+    border-radius: 0 0 35px 35px;
+    justify-content: space-between;
+    background-color: $color-secundaryLight;
+    font-size: 2.0rem;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+
+    &.shrink {
+        animation: sizeHeader .3s linear forwards;
+    }
+
+
+
+    .navegation {
+        display: flex;
+        flex-direction: row;
+
+        li {
+            padding: 0 0.8em;
+
+            a {
+                color: $color-fontDark;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    transform: scaleX(0);
+                    height: 2px;
+                    bottom: -5px;
+                    left: 0;
+                    background-color: $color-fontDark;
+                    transform-origin: bottom right;
+                    transition: transform 0.25s ease-out;
+                }
+                    
+                &:hover::after {
+                    transform: scaleX(1);
+                    transform-origin: bottom left;
+                }
+            }
+        }
+    }
+
+    .inputSearch {
+        width: 50%;
+        position: relative;
+
+        #inputSearch {
+            width: 100%;
+            height: 2em;
+            border-radius: 20px;
+            background-color: $color-bgLight;
+            color: $color-fontLight;
+            text-indent: 20px;
+            font-size: 2.0rem;
+        }
+
+        .searchIcon {
+            position: absolute;
+            right: 2%;
+            top: 10%;
+            height: 28px;
+            width: 28px;
+        }
+    }
+
+    .menuDesktop {
+        display: flex;
+        align-items: center;
+
+        .favoriteIcon,
+        .userIcon,
+        .cartIcon {
+            color: $color-fontDark;
+            margin: 20px;
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    .menuMobile {
+        display: none;
+    }
+}
+
+@keyframes sizeHeader {
+    to {
+        height: 3em;
+    }
+}

@@ -1,0 +1,102 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.bgScreen { 
+    width: 100vw;
+    height: 100vh;
+    // background-color: $color-bgDark;
+    // color: $color-fontDark;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .notFound {
+        display: flex;
+        align-items: center;
+        filter: drop-shadow(2px 2px 4px $color-card);
+
+        h1 {
+            font-size: 12.8rem;
+
+            span {
+                color: $color-primaryLight;
+            }
+        }
+
+        .iconError {
+            width: 106px;
+            height: 116px;
+            color: $color-primaryDark;
+        }
+    }
+
+    .desc {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+            font-family: $font-title;
+            font-size: 3.2rem;
+        }
+        p {
+            font-family: $font-items;
+            font-size: 2rem;
+        }
+    }
+
+    .btnHome {
+        font-family: $font-title;
+        padding: 1em 5em;
+        margin: 30px 0;
+        font-size: 2rem;
+        border-radius: 15px;
+        border: none;
+        box-shadow: 2px 2px 10px #2d3a3aee;
+        cursor: pointer;
+        background-color: $color-secundaryDark;
+        color: $color-fontDark;
+        font-weight: 700;
+
+        &:hover {
+            filter: brightness(.9);
+        }
+    }
+}
+
+.light {
+    .notFound {
+        filter: drop-shadow(2px 2px 4px $color-shadow);
+
+        .iconError {
+            color: $color-primaryLight;
+        }
+    }
+
+    .btnHome {
+        font-family: $font-title;
+        background-color: $color-secundaryLight;
+        color: $color-fontDark;
+        box-shadow: 4px 4px 10px $color-shadow;
+    }
+}

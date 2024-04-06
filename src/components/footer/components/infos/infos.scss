@@ -1,0 +1,62 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.infosContent {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background-color: $color-primaryLight;
+    color: $color-fontLight;
+    border-radius: 50px;
+    padding: 10px 15px;
+    width: 55%;
+    box-shadow: 2px 2px 4px $color-shadow;
+
+    position: absolute;
+    top: -15%;
+    left: 10%;
+
+    .containerService,
+    .containerPhone,
+    .containerMail {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .containerIcon {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: $color-terciaryLight;
+            box-shadow: 2px 2px 4px $color-shadow;
+
+            .icon {
+                position: absolute;
+                width: 36px;
+                height: 36px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}

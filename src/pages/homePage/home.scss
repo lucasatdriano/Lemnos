@@ -1,0 +1,145 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+body {
+    .mainDep {
+        width: 90%;
+        margin: 13em auto 0;
+
+        .containerDeps {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto;
+            grid-template-rows: auto auto; 
+            gap: 20px;
+            margin-top: 10px;
+        
+            .gridItem {
+                background-color: $color-card;
+                padding: 10px;
+                border-radius: 20px;
+                text-align: center;
+                box-shadow: 2px 2px 4px $color-shadow;
+
+                img {
+                    width: 250px;
+                    height: 100px;
+                }
+            } 
+
+            .item1 {
+                grid-column: span 3;
+
+                img {
+                    width: 715px;
+                }
+            }
+            
+            .item2 { 
+                grid-row: span 2;
+
+                img {
+                    height: 275px;
+                }
+            }
+            
+            .item4 { 
+                grid-column: span 2;
+
+                img {
+                    width: 425px;
+                }
+            }
+        }
+    }
+
+    .brands {
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
+
+        .containerBrands {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            height: auto;
+
+            .flexItem {
+                width: 5em;
+                height: 15em;
+                background-color: #f6fefd4d;
+                padding: 10px 0 0;
+                margin: 0 auto;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 2px 2px 4px $color-shadow;
+                transition: .5s ease;
+                cursor: pointer;
+                overflow: hidden;
+                filter: blur(.5px);
+
+                img {
+                    width: 3em;
+                    height: 150px;
+                    filter: blur(1px);
+                }
+
+                h3 {
+                    font-family: $font-title;
+                    opacity: 0;
+                    text-transform: uppercase;
+                    transition: .3s ease;
+                }
+
+                p { 
+                    font-family: $font-items;
+                    opacity: 0;
+                    color: $color-primaryLight;
+                    transition: .3s ease;
+
+                    &::after {
+                        content: " >";
+                    }
+                }
+
+                &:hover {
+                    width: 25em;
+                    border-radius: 20px;
+                    filter: blur(0);
+    
+                    img {
+                        width: 15em;
+                        filter: blur(0);
+                    }
+
+                    h3 {
+                        opacity: 1;
+                    }
+        
+                    p {
+                        opacity: 1;
+                        text-decoration: underline;
+                    }
+                }
+            } 
+        }
+    }
+}

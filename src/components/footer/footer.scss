@@ -1,0 +1,83 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+footer {
+    background-color: $color-secundaryLight;
+    color: $color-fontDark;
+    margin-top: -3em;
+    position: relative;
+
+    #footerContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px 0 10px 50px;
+        
+        img {
+            height: 100px;
+            width: 100px;
+        }
+
+        .navLinks {
+            display: flex;
+            gap: 5em;
+
+            h3 {
+                text-transform: uppercase;
+            }
+
+            li {
+                margin: 0 0 2px 5px;
+            }
+        }
+
+        .iconsNav {
+            width: 15em;
+
+            .icons {
+                padding: 0 12.5% 0;
+                .icon {
+                    margin: 5px;
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+
+            hr {
+                height: 3px;
+                width: 100%;
+
+                background-image: linear-gradient(to right, transparent, $color-fontDark);
+                border: none;
+            }
+        }
+    }
+
+    .authorship {
+        display: flex;
+        margin: 5px 20px 0 20px;
+        justify-content: space-between;
+        
+        a{
+            color: $color-fontDark;
+        }
+    }
+}
