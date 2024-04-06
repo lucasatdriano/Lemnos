@@ -20,9 +20,12 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-.dark {
-    background: $color-bgDark;
+
+@mixin darkMode {
+    background-color: $color-bgDark;
+    color: $color-fontDark;
 }
+
 
 main {
     padding: 6em 0 0;
@@ -55,12 +58,12 @@ main {
             text-align: justify;
 
             p {
-                width: 50%;
+                width: 75%;
                 font-size: 2rem;
             }
 
             img {
-                width: 40em;
+                width: 75%;
                 height: 25em;
             }
         }
@@ -70,15 +73,17 @@ main {
         .content {
             width: 95%;
             margin: 5em auto;
+            gap: 1.5em;
             display: flex;
-            align-items: center;
+            align-items: baseline;
             justify-content: space-around;
 
             .item {
                 background-color: $color-secundaryLight;
                 color: $color-fontDark;
-                width: 30em;
-                height: 20em;
+                width: 30%;
+                min-height: 20em;
+                height: auto;
                 padding: 10px;
                 border-radius: 20px;
                 text-align: justify;
@@ -90,7 +95,102 @@ main {
                 }
             
                 p {
-                    font-size: 2rem;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+    }
+}
+
+.dark {
+    .contentAbout, 
+    .contentMascot {
+        .title {
+            hr {
+                border: 2px solid $color-primaryLight;
+            }
+        }
+    }
+
+    .contentValues {
+        .content {
+            .item {
+                background-color: $color-secundaryDark;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    main {    
+        .contentAbout, 
+        .contentMascot {    
+            .content {
+                img {
+                    width: 90%;
+                }
+            }
+        }
+    
+        .contentValues {
+            .content {
+                .item {
+                    width: 32%;
+                    border-radius: 15px;
+    
+                    h3 {
+                        font-size: 2.2rem;
+                    }
+                
+                    p {
+                        font-size: 1.7rem;
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 600px) {
+
+    main {
+        .contentAbout, 
+        .contentMascot {
+            .title {
+                h2 {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .content {
+                flex-direction: column;
+                gap: 1.5em;
+
+                p {
+                    width: 100%;
+                    font-size: 1.6rem;
+                }
+
+                img {
+                    width: 100%;
+                    height: 15em;
+                }
+            }
+        }
+
+        .contentValues {
+            .content {
+                margin: 3em auto;
+                gap: 1.5em;
+                flex-direction: column;
+
+                .item {
+                    width: 90%;
+                    min-height: 5em;
+                    margin: auto;
+
+                    h3 {
+                        font-size: 2rem;
+                    }
                 }
             }
         }

@@ -9,12 +9,12 @@ import { Login } from './pages/loginPage/Login';
 
 const router = createBrowserRouter([
   {
-    path: 'Lemnos/', element: <App />,
+    path: '/', element: <App />,
     errorElement: <NotFound />,
     children: [
-      { path:"Lemnos/", element: <Home />},
-      { path:"Lemnos/about", element: <About />},
-      { path:"Lemnos/login", element: <Login />}
+      { path:"/", element: <Home />},
+      { path:"/about", element: <About />},
+      { path:"/login", element: <Login />}
     ]
   }
 ])

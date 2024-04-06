@@ -35,11 +35,9 @@ export function About() {
                     <h3>Missão</h3>
                     <p>Na Lemnos, buscamos democratizar o acesso à tecnologia 
                         através de produtos inovadores a preços acessíveis. 
-                        Acreditamos na igualdade de oportunidades para todos, 
-                        independentemente do orçamento ou localização. Nosso 
-                        compromisso é oferecer produtos de alta qualidade que 
-                        inspirem, conectem e capacitem nossos clientes em todas 
-                        as áreas de suas vidas.
+                        Nosso compromisso é oferecer produtos de alta qualidade 
+                        que conectem e capacitem nossos clientes em todas as 
+                        áreas de suas vidas.
                     </p>
                 </div>
                 <div className="item">

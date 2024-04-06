@@ -29,12 +29,12 @@ export function Header({ toggleTheme }) {
             <div id='headerContent'></div>
             <Menu toggleTheme={toggleTheme} />
             
-            <Link to="Lemnos/" className='logo'>LOGO</Link>
+            <Link to="/" className='logo'>LOGO</Link>
             
             <nav>
                 <ul className='navegation'>
-                    <li><Link to="Lemnos/">Home</Link></li>
-                    <li><Link to="Lemnos/about">Sobre</Link></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/about">Sobre</Link></li>
                 </ul>
             </nav>
             
@@ -44,13 +44,13 @@ export function Header({ toggleTheme }) {
             </div>
             
             <nav className='menuDesktop'>
-                <Link to="Lemnos/">
+                <Link to="/">
                     <RiHeartLine className='favoriteIcon' />
                 </Link>
-                <Link to="Lemnos/login">
+                <Link to="/login">
                     <RiUser3Line className='userIcon' />
                 </Link>
-                <Link to="Lemnos/">
+                <Link to="/">
                     <RiShoppingCartLine className='cartIcon' />
                 </Link>
             </nav>
