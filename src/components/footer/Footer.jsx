@@ -1,6 +1,5 @@
 import React from 'react';
 import { Infos } from './components/infos/Infos';
-import { Menu } from '../header/components/menuDep/Menu';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 
 export function Footer() {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './menu.scss';
 import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
 
-export function Menu({ toggleTheme }) {
+export function MenuDep({ toggleTheme }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
     const onClick = () => setIsActive(!isActive);
@@ -21,7 +21,7 @@ export function Menu({ toggleTheme }) {
                     <RiCloseFill className='menuIcon' />
                 </button>
 
-                <img src="" alt="Logo" />
+                <img src="" alt="Logo" className='logo'/>
                 <hr />
 
                 <h3>Departamentos</h3>

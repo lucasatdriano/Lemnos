@@ -51,7 +51,6 @@ $font-items: 'Poppins', Helvetica;
         }
 
         &.inactive {
-            animation: closeModal 0.2s ease-in forwards;
             display: none;
         } 
     }

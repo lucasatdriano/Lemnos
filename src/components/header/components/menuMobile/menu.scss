@@ -18,3 +18,105 @@ $color-shadow: #12171740;
 $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
+
+.menuNav {
+    color: $color-fontDark;
+
+    .menuButton {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+
+        .menuIcon {
+            color: $color-fontDark;
+            margin: 20px;
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: -20%;
+        width: 120vw;
+        height: 100vh;
+        background-color: #12171780;
+        z-index: -1;
+        opacity: 0;
+    
+        &.active {
+            animation: modal 0.2s ease-in forwards;
+            display: block;
+        }
+
+        &.inactive {
+            display: none;
+        } 
+    }
+
+    .menu {
+        position: absolute;
+        background-color: $color-secundaryLight;
+        top: 0;
+        right: -5.5em;
+        z-index: 999;
+        border-radius: 0 0 0 20px;
+        animation: menu 0.5s ease-in-out forwards;
+
+        &.inactive {
+            opacity: 0;
+            display: none;
+        }
+
+        .navegacao {
+            padding: 20px 5px 20px 0;
+            display: flex;
+            flex-direction: column;
+
+            .linkNav {
+                padding: 20px 15px 5px;
+                transition: .2s ease-in;
+                color: $color-fontDark;
+                display: flex;
+                align-items: center;
+                gap: 1em;
+
+                .favoriteIcon,
+                .userIcon,
+                .cartIcon {              
+                    height: 32px;
+                    width: 32px;
+                }
+        
+                &:hover {
+                    background-color: $color-secundaryDark;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@keyframes menu {
+    to {
+        transform: translateX(-3.5em);
+        opacity: 1;
+    }
+}
+@keyframes closeMenu {
+    from {
+        transform: translateX(150px);
+        opacity: 1;
+    }
+    from {
+        transform: translateX(-150px);
+        opacity: 0;
+    }
+}
+
+@keyframes modal {
+    to {
+        opacity: 1;
+    }
+}

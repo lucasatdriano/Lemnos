@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './header.scss'
-import { Menu } from './components/menuDep/Menu';
+import { MenuDep } from './components/menuDep/Menu';
+import { MenuNav } from './components/menuMobile/Menu';
 import { Link } from 'react-router-dom';
-import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line, RiMenuUnfoldLine } from "react-icons/ri";
+import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
 export function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
@@ -27,7 +28,7 @@ export function Header({ toggleTheme }) {
         <>
         <header className={`header ${shrinkHeader ? 'shrink' : ''}`}>
             <div id='headerContent'></div>
-            <Menu toggleTheme={toggleTheme} />
+            <MenuDep toggleTheme={toggleTheme} />
             
             <Link to="/" className='logo'>LOGO</Link>
             
@@ -55,7 +56,9 @@ export function Header({ toggleTheme }) {
                 </Link>
             </nav>
 
-            {/* <MenuMobile className='menuMobile'/> */}
+            <nav className='menuMobile'>
+                <MenuNav />
+            </nav>
         </header>
         </>
     )
