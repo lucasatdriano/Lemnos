@@ -59,13 +59,12 @@ body {
         }
 
         .menu {
-            position: fixed;
-            top: 0; /* Alinha o menu ao topo da tela */
-            left: 0; /* Alinha o menu ao canto esquerdo da tela */
-            width: 300px; /* Defina a largura desejada do menu */
-            height: 100vh; /* Ocupa toda a altura da tela */
+            position: fixed !important;
+            top: 0 !important; 
+            left: 0 !important;
+            height: 100vh;
             background-color: $color-secundaryLight;
-            z-index: 999;
+            z-index: 999 !important;
             border-radius: 0 20px 20px 0;
             animation: menu 0.5s ease-in-out forwards;
 

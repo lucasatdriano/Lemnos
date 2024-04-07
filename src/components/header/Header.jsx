@@ -10,11 +10,11 @@ export function Header({ toggleTheme }) {
 
     useEffect(() => {
         const handleScroll = () => {
-        if (window.scrollY > 0) {
-            setShrinkHeader(true);
-        } else {
-            setShrinkHeader(false);
-        }
+            if (window.scrollY > 0) {
+                setShrinkHeader(true);
+            } else {
+                setShrinkHeader(false);
+            }
         };
 
         window.addEventListener('scroll', handleScroll);

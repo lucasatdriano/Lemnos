@@ -10,7 +10,7 @@ import { Login } from './pages/loginPage/Login';
 const router = createBrowserRouter([
   {
     path: '/', element: <App />,
-    errorElement: <NotFound />,
+    path: "/*", element: <NotFound />,
     children: [
       { path:"/", element: <Home />},
       { path:"/about", element: <About />},
