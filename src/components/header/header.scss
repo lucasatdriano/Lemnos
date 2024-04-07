@@ -29,7 +29,8 @@ header {
     padding: 0 1em;
     box-shadow: 4px 2px 20px 3px $color-shadow;
     border-radius: 0 0 35px 35px;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1em;
     font-size: 2.0rem;
     position: fixed;
     top: 0;
@@ -39,6 +40,16 @@ header {
 
     &.shrink {
         animation: sizeHeader .3s linear forwards;
+
+        .logo {
+            width: 5em;
+            height: 3em;
+        }    
+    }
+
+    .logo {
+        width: 7em;
+        height: 4em;
     }
 
     .navegation {

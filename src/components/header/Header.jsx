@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './header.scss'
 import { MenuDep } from './components/menuDep/Menu';
 import { MenuNav } from './components/menuMobile/Menu';
+import LogoHorizontal from '../../assets/logoHorizontal.png';
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
@@ -30,7 +31,9 @@ export function Header({ toggleTheme }) {
             <div id='headerContent'></div>
             <MenuDep toggleTheme={toggleTheme} />
             
-            <Link to="/" className='logo'>LOGO</Link>
+            <Link to="/">
+                <img src={ LogoHorizontal } alt="logo" className='logo'/>
+            </Link>
             
             <nav>
                 <ul className='navegation'>

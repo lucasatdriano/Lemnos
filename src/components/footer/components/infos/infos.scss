@@ -5,7 +5,7 @@ $color-detailsLight: #850E5D;
 
 $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
+$color-terciaryDark: #f6fefd99;
 $color-detailsDark: #C75EA3;
 
 $color-bgDark: #2D2D2D;
@@ -22,12 +22,12 @@ $font-items: 'Poppins', Helvetica;
 .infosContent {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 2em;
     background-color: $color-primaryLight;
     color: $color-fontLight;
     border-radius: 50px;
-    padding: 10px 15px;
-    width: 55%;
+    padding: .5em 1em;
+    width: auto;
     box-shadow: 2px 2px 4px $color-shadow;
 
     position: absolute;
@@ -39,7 +39,7 @@ $font-items: 'Poppins', Helvetica;
     .containerMail {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: .5em;
 
         .containerIcon {
             position: relative;
@@ -56,6 +56,72 @@ $font-items: 'Poppins', Helvetica;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+.dark {   
+    .infosContent {
+        background-color: $color-primaryDark;
+        color: $color-fontLight;
+
+        .containerService,
+        .containerPhone,
+        .containerMail {
+            .containerIcon {
+                background-color: $color-terciaryDark;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .infosContent {   
+        top: -10%;
+        left: 5%;
+        gap: 1em;
+    
+        .containerService,
+        .containerPhone,
+        .containerMail {
+            p {
+                font-size: 1.4rem;
+            }
+    
+            .containerIcon {
+                width: 40px;
+                height: 40px;
+    
+                .icon {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 730px) {
+    .infosContent {   
+        left: 0;
+        gap: .5em;
+    
+        .containerService,
+        .containerPhone,
+        .containerMail {
+            p {
+                font-size: 1.2rem;
+            }
+    
+            .containerIcon {
+                min-width: 36px;
+                min-height: 36px;
+    
+                .icon {
+                    min-width: 28px;
+                    min-height: 28px;
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import LogoVertical from '../../../../assets/logoVertical.png';
 import './menu.scss';
 import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
 
@@ -21,7 +22,7 @@ export function MenuDep({ toggleTheme }) {
                     <RiCloseFill className='menuIcon' />
                 </button>
 
-                <img src="" alt="Logo" className='logo'/>
+                <img src={ LogoVertical } alt="Logo" className='logo'/>
                 <hr />
 
                 <h3>Departamentos</h3>
