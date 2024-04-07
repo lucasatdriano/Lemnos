@@ -89,6 +89,7 @@ html {
         font-size: 1.6rem;
         background-color: $color-bgLight;
         color: $color-fontLight;
+        position: relative;
 
         &::-webkit-scrollbar {
             width: 0.7em;

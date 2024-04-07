@@ -19,232 +19,240 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-.menuCat {
-    color: $color-fontDark;
+body {
+    position: relative;
 
-    .menuButton {
-        background: transparent;
-        border: none;
-        cursor: pointer;
+    .menuCat {
+        color: $color-fontDark;
 
-        .menuIcon {
-            color: $color-fontDark;
-            margin: 20px;
-            height: 32px;
-            width: 32px;
-        }
-    }
-
-    .modal {
-        position: fixed;
-        top: 0;
-        left: -19.1em;
-        width: 120vw;
-        height: 100vh;
-        background-color: #12171780;
-        z-index: -1;
-        opacity: 0;
-    
-        &.active {
-            animation: modal 0.2s ease-in forwards;
-            display: block;
-        }
-
-        &.inactive {
-            display: none;
-        } 
-    }
-
-    .menu {
-        position: absolute;
-        height: 100vh;
-        background-color: $color-secundaryLight;
-        top: 0;
-        left: -19.1em;
-        z-index: 999;
-        border-radius: 0 20px 20px 0;
-        animation: menu 0.5s ease-in-out forwards;
-
-        &.inactive {
-            opacity: 0;
-            display: none;
-        }
-
-        .btnFecharMenu {
+        .menuButton {
             background: transparent;
             border: none;
             cursor: pointer;
-            position: absolute;
-            left: 20em;
 
             .menuIcon {
                 color: $color-fontDark;
                 margin: 20px;
-                height: 50px;
-                width: 50px;
+                height: 32px;
+                width: 32px;
             }
         }
 
-        h3 {
-            font-family: $font-title;
-            font-size: 2rem;
-            padding: 15px 0 10px 0;
-            text-align: center;
-            box-shadow: 0 1px 10px $color-shadow;
-            animation: modal 0.8s ease-in;
-        }
-
-        .categorias {
-            padding: 0 0 20px 0;
-            height: 20em;
-            overflow-y: scroll;
-            scroll-behavior: smooth;
-            scroll-snap-type: y proximity;
-
-            &::-webkit-scrollbar {
-                width: 0.5em;
-                background:$color-secundaryLight;
-            }
-
-            &::-webkit-scrollbar-track {
-                border-radius: 50px;
-                background-color: $color-secundaryDark;
-            }
-            
-            &::-webkit-scrollbar-thumb {
-                border-radius: 50px;
-                background-color: $color-secundaryLight;
-                border: 1px solid $color-secundaryDark;
-            }
-
-            li {
-                padding: 15px 10px 0;
-                transition: .2s ease-in;
-                
-                &:hover {
-                    background-color: $color-secundaryDark; 
-                }
-
-                a {
-                    color: $color-fontDark;
-                    font-size: 1.8rem;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        .menuNav {
-            padding: 0 0 20px 0;
-            
-            li {
-                padding: 15px 10px 0;
-                transition: .2s ease-in;
-                
-                &:hover {
-                    background-color: $color-secundaryDark; 
-                }
-
-                a {
-                    color: $color-fontDark;
-                    font-size: 1.8rem;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        .toggleTheme {
-            display: flex;
-            padding: 0 0 10px;
-            justify-content: center;
+        .modal {
+            position: fixed;
+            top: 0;
+            left: -5em;
+            width: 120vw;
+            min-height: 100vh;
+            background-color: #12171780;
+            z-index: 10;
+            opacity: 0;
         
-            .checkbox {
+            &.active {
+                animation: modal 0.2s ease-in forwards;
+                display: block;
+            }
+
+            &.inactive {
                 display: none;
+            } 
+        }
 
-                &:checked + .label .ball {
-                    transform: translateX(63px);
-                }
+        .menu {
+            position: fixed;
+            top: 0; /* Alinha o menu ao topo da tela */
+            left: 0; /* Alinha o menu ao canto esquerdo da tela */
+            width: 300px; /* Defina a largura desejada do menu */
+            height: 100vh; /* Ocupa toda a altura da tela */
+            background-color: $color-secundaryLight;
+            z-index: 999;
+            border-radius: 0 20px 20px 0;
+            animation: menu 0.5s ease-in-out forwards;
 
-                &:checked + .label .iconMoon {
-                    color: $color-fontLight;
-                }
+            &.inactive {
+                opacity: 0;
+                display: none;
+            }
 
-                &:checked + .label .iconSun {
+            .btnFecharMenu {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                position: absolute;
+                left: 20em;
+
+                .menuIcon {
                     color: $color-fontDark;
+                    margin: 20px;
+                    height: 50px;
+                    width: 50px;
                 }
             }
-            
-            .label {
-                cursor: pointer;
-                display: block;
-                width: 100px;
-                height: 36px;
-                background-color: $color-secundaryDark;
-                border-radius: 20px;
-                position: relative;
-                box-shadow: 2px 2px 4px $color-shadow;
-           
-                .ball {
-                    width: 28px;
-                    height: 28px;
-                    background-color: $color-primaryLight;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 4px;
-                    left: 4px;
-                    transition: transform 0.5s ease;
+
+            h3 {
+                font-family: $font-title;
+                font-size: 2rem;
+                padding: 15px 0 10px 0;
+                text-align: center;
+                box-shadow: 0 1px 10px $color-shadow;
+                animation: modal 0.8s ease-in;
+            }
+
+            .categorias {
+                padding: 0 0 20px 0;
+                height: 20em;
+                overflow-y: scroll;
+                scroll-behavior: smooth;
+                scroll-snap-type: y proximity;
+
+                &::-webkit-scrollbar {
+                    width: 0.5em;
+                    background:$color-secundaryLight;
                 }
 
-                .iconSun {
-                    position: absolute;
-                    z-index: 10;
-                    color: $color-fontLight;
-                    width: 26px;
-                    height: 26px;
-                    left: 5px;
-                    top: 50%;
-                    transform: translateY(-50%);
+                &::-webkit-scrollbar-track {
+                    border-radius: 50px;
+                    background-color: $color-secundaryDark;
                 }
                 
-                .iconMoon {
-                    position: absolute;
-                    z-index: 10;
-                    color:$color-fontDark;
-                    width: 26px;
-                    height: 26px;
-                    right: 5px;
-                    top: 50%;
-                    transform: translateY(-50%);
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 50px;
+                    background-color: $color-secundaryLight;
+                    border: 1px solid $color-secundaryDark;
+                }
+
+                li {
+                    padding: 15px 10px 0;
+                    transition: .2s ease-in;
+                    
+                    &:hover {
+                        background-color: $color-secundaryDark; 
+                    }
+
+                    a {
+                        color: $color-fontDark;
+                        font-size: 1.8rem;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .menuNav {
+                padding: 0 0 20px 0;
+                
+                li {
+                    padding: 15px 10px 0;
+                    transition: .2s ease-in;
+                    
+                    &:hover {
+                        background-color: $color-secundaryDark; 
+                    }
+
+                    a {
+                        color: $color-fontDark;
+                        font-size: 1.8rem;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .toggleTheme {
+                display: flex;
+                padding: 0 0 10px;
+                justify-content: center;
+            
+                .checkbox {
+                    display: none;
+
+                    &:checked + .label .ball {
+                        transform: translateX(63px);
+                    }
+
+                    &:checked + .label .iconMoon {
+                        transform: translateY(88%);
+                        color: $color-fontLight;
+                    }
+
+                    &:checked + .label .iconSun {
+                        transform: translateY(-175%);
+                        color: $color-fontDark;
+                    }
+                }
+                
+                .label {
+                    cursor: pointer;
+                    display: block;
+                    width: 100px;
+                    height: 36px;
+                    background-color: $color-secundaryDark;
+                    border-radius: 20px;
+                    position: relative;
+                    box-shadow: 2px 2px 4px $color-shadow;
+                    overflow: hidden;
+            
+                    .ball {
+                        width: 28px;
+                        height: 28px;
+                        background-color: $color-primaryLight;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 4px;
+                        left: 4px;
+                        transition: transform 0.5s ease;
+                    }
+
+                    .iconSun {
+                        position: absolute;
+                        z-index: 10;
+                        color: $color-fontLight;
+                        width: 26px;
+                        height: 26px;
+                        left: 5px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    }
+                    
+                    .iconMoon {
+                        position: absolute;
+                        z-index: 10;
+                        color:$color-fontDark;
+                        width: 26px;
+                        height: 26px;
+                        right: 5px;
+                        top: -50%;
+                        transform: translateY(-50%);
+                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    }
                 }
             }
         }
     }
 }
-
-@keyframes menu {
-    to {
-        transform: translateX(15em);
-        opacity: 1;
-    }
-}
-@keyframes closeMenu {
-    from {
-        transform: translateX(150px);
-        opacity: 1;
-    }
-    from {
-        transform: translateX(-150px);
-        opacity: 0;
-    }
-}
-
-@keyframes modal {
-    to {
-        opacity: 1;
-    }
-}
+// @keyframes menu {
+//     to {
+//         // transform: translateX(5em);
+//         opacity: 1;
+//     }
+// }
+// @keyframes closeMenu {
+//     from {
+//         transform: translateX(150px);
+//         opacity: 1;
+//     }
+//     from {
+//         transform: translateX(-150px);
+//         opacity: 0;
+//     }
+// }
+// @keyframes modal {
+//     to {
+//         opacity: 1;
+//     }
+// }
