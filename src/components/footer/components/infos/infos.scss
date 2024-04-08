@@ -5,7 +5,7 @@ $color-detailsLight: #850E5D;
 
 $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6fefd99;
+$color-terciaryDark: #33a597;
 $color-detailsDark: #C75EA3;
 
 $color-bgDark: #2D2D2D;
@@ -22,6 +22,7 @@ $font-items: 'Poppins', Helvetica;
 .infosContent {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: 2em;
     background-color: $color-primaryLight;
     color: $color-fontLight;
@@ -59,12 +60,16 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
+
+    .containerService p {
+        max-width: 15em;
+    }
 }
 
 .dark {   
     .infosContent {
         background-color: $color-primaryDark;
-        color: $color-fontLight;
+        color: $color-fontDark;
 
         .containerService,
         .containerPhone,
@@ -79,7 +84,9 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 1024px) {
     .infosContent {   
         top: -10%;
-        left: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 75%;
         gap: 1em;
     
         .containerService,
@@ -90,8 +97,8 @@ $font-items: 'Poppins', Helvetica;
             }
     
             .containerIcon {
-                width: 40px;
-                height: 40px;
+                min-width: 40px;
+                min-height: 40px;
     
                 .icon {
                     width: 32px;
@@ -102,9 +109,9 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width: 730px) {
-    .infosContent {   
-        left: 0;
+@media only screen and (max-width: 720px) {
+    .infosContent {  
+        width: 100%;
         gap: .5em;
     
         .containerService,
@@ -112,15 +119,18 @@ $font-items: 'Poppins', Helvetica;
         .containerMail {
             p {
                 font-size: 1.2rem;
+                
             }
     
             .containerIcon {
-                min-width: 36px;
-                min-height: 36px;
+                min-width: 34px;
+                max-width: 34px;
+                min-height: 34px;
+                max-height: 34px;
     
                 .icon {
-                    min-width: 28px;
-                    min-height: 28px;
+                    width: 28px;
+                    height: 28px;
                 }
             }
         }

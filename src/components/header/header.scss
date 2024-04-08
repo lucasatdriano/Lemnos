@@ -15,6 +15,7 @@ $color-fontLight: #121717;
 
 $color-shadow: #12171740;
 
+$font-logo: 'Audiowide', sans-serif;
 $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
@@ -24,7 +25,6 @@ header {
     height: 4em;
     background-color: $color-secundaryLight;
     display: flex;
-    flex-direction: row;
     align-items: center;
     padding: 0 1em;
     box-shadow: 4px 2px 20px 3px $color-shadow;
@@ -39,17 +39,14 @@ header {
     z-index: 99;
 
     &.shrink {
-        animation: sizeHeader .3s linear forwards;
-
-        .logo {
-            width: 5em;
-            height: 3em;
-        }    
+        animation: sizeHeader .3s linear forwards;  
     }
 
     .logo {
-        width: 7em;
-        height: 4em;
+        font-family: $font-logo;
+        font-size: 3rem;
+        color: $color-fontDark;
+        text-shadow: 4px 4px 8px #121217b8;
     }
 
     .navegation {
@@ -133,13 +130,19 @@ header {
 }
 
 @media only screen and (max-width: 1024px) {
-    header {   
-        .navegation {   
-            li {
-                padding: 0 0.6em;
-            }
+    header {
+        .logo {
+            font-size: 2.5rem;
+        }
+
+        .navegation {
+            display: none;
         }
     
+        .inputSearch {
+            width: 70%;
+        }
+
         .menuDesktop {   
             .favoriteIcon,
             .userIcon,
@@ -153,6 +156,11 @@ header {
 @media only screen and (max-width: 720px) {
     header {
         padding: 0 0.5em;
+        gap: .5em;
+
+        .logo {
+            font-size: 2rem;
+        }
 
         .navegation {
             display: none;

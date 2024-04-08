@@ -32,7 +32,8 @@ export function Header({ toggleTheme }) {
             <MenuDep toggleTheme={toggleTheme} />
             
             <Link to="/">
-                <img src={ LogoHorizontal } alt="logo" className='logo'/>
+                <a href="" className='logo'>Lemnos</a>
+                {/* <img src={ LogoHorizontal } alt="logo" className='logo'/> */}
             </Link>
             
             <nav>

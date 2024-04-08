@@ -12,8 +12,7 @@ export function Infos() {
                     <RiTimeLine className='icon'/>
                 </div>
                 <p>
-                  Atendimento Loja Virtual - <br />
-                  Segunda a sexta 7h às 12h e das 14h às 20h
+                  Atendimento - Segunda a sexta 7h às 12h e das 14h às 20h
                 </p>
             </div>
             <div className='containerPhone'>
