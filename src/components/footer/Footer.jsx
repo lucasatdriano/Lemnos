@@ -1,4 +1,5 @@
 import React from 'react';
+import logoHorizontal from '../../assets/logoHorizontal.png'; 
 import { Infos } from './components/infos/Infos';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 
@@ -8,7 +9,7 @@ export function Footer() {
         <footer>
             <Infos />
             <section id="footerContent">
-                <a href="#"><img src='' alt=''></img></a>
+                <a href="#"><img src={ logoHorizontal } alt='logo'></img></a>
                 <nav className='navLinks'>
                     <ul>
                         <h3>Institucional</h3>
