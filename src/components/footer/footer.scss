@@ -32,8 +32,9 @@ footer {
         padding: 50px 0 10px 50px;
         
         img {
-            height: 100px;
-            width: 100px;
+            height: 125px;
+            width: 225px;
+            filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
 
         .navLinks {
@@ -85,7 +86,7 @@ footer {
     }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1150px) {
     footer {   
         #footerContent {
             padding: 50px 0 10px 20px;

@@ -29,9 +29,12 @@ $font-items: 'Poppins', Helvetica;
 
 main {
     padding: 6em 0 0;
-
+  
     .contentAbout, 
     .contentMascot {
+        width: auto;
+        margin: 0 auto;
+
         .title {
             display: flex;
             align-items: center;
@@ -60,12 +63,13 @@ main {
             p {
                 width: 75%;
                 text-wrap: balance;
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             img {
                 width: 75%;
-                height: 25em;
+                height: 30em;
+                filter: drop-shadow( 4px 4px 6px $color-shadow);
             }
         }
     }
@@ -83,21 +87,26 @@ main {
                 background-color: $color-secundaryLight;
                 color: $color-fontDark;
                 width: 30%;
-                min-height: 20em;
-                height: auto;
+                height: 20em;
                 padding: 10px;
                 border-radius: 20px;
                 text-align: justify;
+                overflow: hidden;      
 
                 h3 {
                     font-family: $font-title;
-                    font-size: 2.4rem;
+                    font-size: 2.6rem;
                     text-align: center;
                 }
             
                 p {
                     text-wrap: balance;
-                    font-size: 1.8rem;
+                    font-size: 2.4rem;
+                    max-height: 11em;
+                    scrollbar-color: $color-secundaryLight;
+                    overflow-y: auto;
+                    scroll-behavior: smooth;
+                    scroll-snap-type: y proximity;
                 }
             }
         }
@@ -124,7 +133,9 @@ main {
 }
 
 @media only screen and (max-width: 1024px) {
-    main {    
+    main {
+        margin: 0 0 6em;
+
         .contentAbout, 
         .contentMascot {    
             .content {
@@ -137,15 +148,15 @@ main {
         .contentValues {
             .content {
                 .item {
-                    width: 32%;
                     border-radius: 15px;
     
                     h3 {
-                        font-size: 2.2rem;
+                        font-size: 2.4rem;
                     }
                 
                     p {
-                        font-size: 1.7rem;
+                        font-size: 2.2rem;
+                        max-height: 12em;
                     }
                 }
             }
@@ -154,13 +165,15 @@ main {
 }
 
 @media only screen and (max-width: 600px) {
-
     main {
+        margin: 0 0 6em;
+        
         .contentAbout, 
         .contentMascot {
             .title {
                 h2 {
-                    font-size: 2.5rem;
+                    font-weight: 800;
+                    font-size: 2.6rem;
                 }
             }
 
@@ -170,7 +183,7 @@ main {
 
                 p {
                     width: 100%;
-                    font-size: 1.6rem;
+                    font-size: 1.8rem;
                 }
 
                 img {
@@ -189,9 +202,14 @@ main {
                 .item {
                     width: 90%;
                     min-height: 5em;
+                    height: auto;
                     margin: auto;
 
                     h3 {
+                        font-size: 2.2rem;
+                    }
+
+                    p {
                         font-size: 2rem;
                     }
                 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import './about.scss'
+import './about.scss';
+import LogoHorizontal from '../../assets/logoHorizontal.png';
 
 export function About() {
   return (
@@ -25,7 +26,7 @@ export function About() {
                     Bem-vindo à Lemnos, onde a paixão pela tecnologia e a busca 
                     pela excelência definem o futuro da inovação tecnológica.
                 </p>
-                <img src="" alt="" />
+                <img src={LogoHorizontal} alt="logo" />
             </div>
         </section>
 

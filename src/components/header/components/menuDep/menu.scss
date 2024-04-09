@@ -32,17 +32,17 @@ body {
 
             .menuIcon {
                 color: $color-fontDark;
-                margin: 20px;
-                height: 32px;
-                width: 32px;
+                margin: .5em .8em 0;
+                height: 36px;
+                width: 36px;
             }
         }
 
         .modal {
             position: fixed;
             top: 0;
-            left: -5em;
-            width: 120vw;
+            left: 0;
+            width: 100vw;
             min-height: 100vh;
             background-color: #12171780;
             z-index: 10;
@@ -66,7 +66,7 @@ body {
             background-color: $color-secundaryLight;
             z-index: 999;
             border-radius: 0 20px 20px 0;
-            padding: 0 0 0 1em;
+            padding: 0 0 0 1.2em;
             animation: menu 0.5s ease-in-out forwards;
 
             &.inactive {
@@ -79,7 +79,7 @@ body {
                 border: none;
                 cursor: pointer;
                 position: absolute;
-                left: 20em;
+                left: 25em;
 
                 .menuIcon {
                     color: $color-fontDark;
@@ -91,14 +91,15 @@ body {
 
             .logo {
                 width: 6em;
-                height: 3.5em;
-                margin: -.3em 15%;
+                height: 4em;
+                margin: -.3em 10%;
+                filter: drop-shadow( 4px 4px 4px $color-shadow);
             }
 
             h3 {
                 font-family: $font-title;
                 font-size: 2rem;
-                padding: 15px 0 10px 0;
+                padding: 10px 0 10px 0;
                 text-align: center;
                 box-shadow: 0 1px 10px $color-shadow;
                 animation: modal 0.8s ease-in;
@@ -106,29 +107,9 @@ body {
 
             .categorias {
                 padding: 0 0 20px 0;
-                height: 20em;
-                overflow-y: scroll;
-                scroll-behavior: smooth;
-                scroll-snap-type: y proximity;
-
-                &::-webkit-scrollbar {
-                    width: 0.5em;
-                    background:$color-secundaryLight;
-                }
-
-                &::-webkit-scrollbar-track {
-                    border-radius: 50px;
-                    background-color: $color-secundaryDark;
-                }
-                
-                &::-webkit-scrollbar-thumb {
-                    border-radius: 50px;
-                    background-color: $color-secundaryLight;
-                    border: 1px solid $color-secundaryDark;
-                }
 
                 li {
-                    padding: 15px 10px 0;
+                    padding: 10px 10px 0;
                     transition: .2s ease-in;
                     
                     &:hover {
@@ -243,7 +224,7 @@ body {
 }
 @keyframes menu {
     to {
-        transform: translateX(110em);
+        transform: translateX(0);
         opacity: 1;
     }
 }

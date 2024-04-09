@@ -1,18 +1,4 @@
-$color-primaryLight: #36CEC4;
-$color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
-
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
-
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
-$color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
-
 $color-shadow: #12171740;
 
 .scrollBtn{
@@ -27,12 +13,12 @@ $color-shadow: #12171740;
     z-index: 999;
     bottom: 20px;
     right: 10px;
-    height: 50px;
-    width: 50px;
+    height: 3.5em;
+    width: 3.5em;
     display: none;
     place-items: center;
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px $color-shadow;
     animation: appearScrollButton .3s ease-out forwards; 
 
     .arrowUp{
@@ -42,8 +28,8 @@ $color-shadow: #12171740;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 30px;
-      color: #212121;
+      font-size: 3rem;
+      color: $color-fontLight;
     }
   }
 }

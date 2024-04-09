@@ -21,17 +21,17 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 header { 
-    width: 98%;
-    height: 4em;
+    width: 99%;
+    height: 3.5em;
     background-color: $color-secundaryLight;
     display: flex;
     align-items: center;
     padding: 0 1em;
     box-shadow: 4px 2px 20px 3px $color-shadow;
-    border-radius: 0 0 35px 35px;
-    justify-content: center;
+    border-radius: 0 0 25px 25px;
+    justify-content: space-evenly;
     gap: 1em;
-    font-size: 2.0rem;
+    font-size: 2.5rem;
     position: fixed;
     top: 0;
     left: 50%;
@@ -39,12 +39,12 @@ header {
     z-index: 99;
 
     &.shrink {
-        animation: sizeHeader .3s linear forwards;  
+        animation: sizeHeader .3s linear forwards;
     }
 
     .logo {
         font-family: $font-logo;
-        font-size: 3rem;
+        font-size: 3.5rem;
         color: $color-fontDark;
         text-shadow: 4px 4px 8px #121217b8;
     }
@@ -112,9 +112,9 @@ header {
         .userIcon,
         .cartIcon {
             color: $color-fontDark;
-            margin: 20px;
-            height: 32px;
-            width: 32px;
+            margin: .5em .8em 0;
+            height: 36px;
+            width: 36px;
         }
     }
 
@@ -132,7 +132,7 @@ header {
 @media only screen and (max-width: 1024px) {
     header {
         .logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
         }
 
         .navegation {
@@ -159,7 +159,7 @@ header {
         gap: .5em;
 
         .logo {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         .navegation {

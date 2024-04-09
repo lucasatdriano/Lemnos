@@ -64,17 +64,22 @@ $font-items: 'Poppins', Helvetica;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
 
-::-webkit-scrollbar-track {
-    border-radius: 50px;
-    background-color: $color-secundaryDark;
-}
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        background:$color-secundaryLight;
+    }
 
-::-webkit-scrollbar-thumb {
-    border-radius: 50px;
-    background-color: $color-secundaryLight;
-    border: 1px solid $color-secundaryDark;
+    &::-webkit-scrollbar-track {
+        border-radius: 50px;
+        background-color: $color-secundaryDark;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 50px;
+        background-color: $color-secundaryLight;
+        border: 1px solid $color-secundaryDark;
+    }
 }
 
 html {
@@ -90,10 +95,10 @@ html {
         background-color: $color-bgLight;
         color: $color-fontLight;
         position: relative;
+        transition: .5s ease-in;
 
         &::-webkit-scrollbar {
             width: 0.7em;
-            background:$color-secundaryLight;
         }
 
         input {
