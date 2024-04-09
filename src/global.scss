@@ -90,7 +90,7 @@ html {
     body {
         width: 100%;
         min-width: 320px;
-        min-height: 100vh;
+        max-height: 100vh;
         font-size: 1.6rem;
         background-color: $color-bgLight;
         color: $color-fontLight;

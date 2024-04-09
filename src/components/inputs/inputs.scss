@@ -46,10 +46,37 @@ $font-items: 'Poppins', Helvetica;
   }
 
   label {
-    background-color: #f4f6f6;
+    background-color: $color-fontDark;
     position: absolute;
     top: -10px;
     left: 15px;
     padding: 0 10px;
+  }
+}
+
+.dark {
+  .singleInput {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 75%;
+    position: relative;
+  
+    input {
+      background-color: #e8f1f078;
+      border: 2px solid $color-shadow;
+      color: $color-fontLight;
+      box-shadow: 2px 2px 4px $color-shadow;
+  
+      &:disabled {
+        background-color: #eee;
+        cursor: not-allowed;
+      }
+    }
+  
+    label {
+      color: $color-fontLight;
+      background-color: transparent;
+    }
   }
 }
