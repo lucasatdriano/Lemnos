@@ -38,35 +38,34 @@ $font-items: 'Poppins', Helvetica;
     .modal {
         position: fixed;
         top: 0;
-        left: -20%;
-        width: 120vw;
-        height: 100vh;
+        left: 0;
+        width: 100vw;
+        min-height: 100vh;
         background-color: #12171780;
-        z-index: -1;
+        z-index: 90;
         opacity: 0;
+        display: none;
     
         &.active {
             animation: modal 0.2s ease-in forwards;
             display: block;
         }
-
-        &.inactive {
-            display: none;
-        } 
     }
 
-    .menu {
+    .menuMobile {
+        width: 8em;
         position: absolute;
         background-color: $color-secundaryLight;
         top: 0;
         right: -4em;
         z-index: 999;
         border-radius: 0 0 0 20px;
-        animation: menu 0.5s ease-in-out forwards;
-
-        &.inactive {
-            opacity: 0;
-            display: none;
+        animation: menuMob 0.5s ease-in-out forwards;
+        opacity: 0;
+        display: none;
+        
+        &.active {
+            display: block;
         }
 
         .navegacao {
@@ -98,20 +97,10 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@keyframes menu {
+@keyframes menuMob {
     to {
         transform: translateX(-3.5em);
         opacity: 1;
-    }
-}
-@keyframes closeMenu {
-    from {
-        transform: translateX(150px);
-        opacity: 1;
-    }
-    from {
-        transform: translateX(-150px);
-        opacity: 0;
     }
 }
 
@@ -119,4 +108,9 @@ $font-items: 'Poppins', Helvetica;
     to {
         opacity: 1;
     }
+}
+
+.modal-open {
+    overflow: hidden;
+    margin: 0 2.5px 0 0;
 }

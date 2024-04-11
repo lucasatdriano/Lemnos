@@ -23,9 +23,7 @@ export function LoginForm({ onLogin, onCadastroClick }) {
     <div className="login-form-container">
 
       <div className="loginCredencial">
-        <h2>Entre com suas <br />
-          Redes Sociais
-        </h2>
+        <h2>Entre com suas Redes Sociais</h2>
         <div className="btnCredencials">  
           <button></button>
           <button></button>
@@ -40,10 +38,7 @@ export function LoginForm({ onLogin, onCadastroClick }) {
       </div>
 
       <form action="" className="login">
-        <h2>Digite seu Email <br />
-          e sua Senha
-        </h2>
-
+        <h2>Digite seu Email e sua Senha</h2>
         <div className="inputsLogin">
           <CustomInput type="email" reference={emailRef} label="Email:"/>
           <CustomInput type="password" reference={pwdRef} label="Senha:"/>

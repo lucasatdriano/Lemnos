@@ -19,213 +19,213 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-body {
-    position: relative;
+.menuCat {
+    color: $color-fontDark;
 
-    .menuCat {
-        color: $color-fontDark;
+    .menuButton {
+        background: transparent;
+        border: none;
+        cursor: pointer;
 
-        .menuButton {
+        .menuIcon {
+            color: $color-fontDark;
+            margin: .5em .8em 0;
+            height: 36px;
+            width: 36px;
+        }
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-height: 100vh;
+        background-color: #12171780;
+        z-index: 90;
+        opacity: 0;
+        display: none;
+    
+        &.active {
+            animation: modal 0.2s ease-in forwards;
+            display: block;
+        }
+    }
+
+    .menu {
+        position: fixed;
+        top: 0;
+        left: -7em;
+        height: 100vh;
+        background-color: $color-secundaryLight;
+        z-index: 999;
+        border-radius: 0 20px 20px 0;
+        padding: 0 0 0 1.2em;
+        animation: menuDep 0.5s ease-in-out forwards;
+        opacity: 0;
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+        .btnFecharMenu {
             background: transparent;
             border: none;
             cursor: pointer;
+            position: absolute;
+            left: 25em;
 
             .menuIcon {
                 color: $color-fontDark;
-                margin: .5em .8em 0;
-                height: 36px;
-                width: 36px;
+                margin: 20px;
+                height: 50px;
+                width: 50px;
             }
         }
 
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            min-height: 100vh;
-            background-color: #12171780;
-            z-index: 10;
-            opacity: 0;
-        
-            &.active {
-                animation: modal 0.2s ease-in forwards;
-                display: block;
-            }
-
-            &.inactive {
-                display: none;
-            } 
+        .logo {
+            width: 6em;
+            height: 4em;
+            margin: -.3em 10%;
+            filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
 
-        .menu {
-            position: fixed;
-            top: 0; 
-            left: 2em;
-            height: 100vh;
-            background-color: $color-secundaryLight;
-            z-index: 999;
-            border-radius: 0 20px 20px 0;
-            padding: 0 0 0 1.2em;
-            animation: menu 0.5s ease-in-out forwards;
+        h3 {
+            font-family: $font-title;
+            font-size: 2rem;
+            padding: 10px 0 10px 0;
+            text-align: center;
+            box-shadow: 0 1px 10px $color-shadow;
+            animation: modal 0.8s ease-in;
+        }
 
-            &.inactive {
-                opacity: 0;
-                display: none;
-            }
+        .categorias {
+            padding: 0 0 20px 0;
 
-            .btnFecharMenu {
-                background: transparent;
-                border: none;
+            li {
+                padding: 10px 10px 0;
+                transition: .2s ease-in;
                 cursor: pointer;
-                position: absolute;
-                left: 25em;
-
-                .menuIcon {
-                    color: $color-fontDark;
-                    margin: 20px;
-                    height: 50px;
-                    width: 50px;
-                }
-            }
-
-            .logo {
-                width: 6em;
-                height: 4em;
-                margin: -.3em 10%;
-                filter: drop-shadow( 4px 4px 4px $color-shadow);
-            }
-
-            h3 {
-                font-family: $font-title;
-                font-size: 2rem;
-                padding: 10px 0 10px 0;
-                text-align: center;
-                box-shadow: 0 1px 10px $color-shadow;
-                animation: modal 0.8s ease-in;
-            }
-
-            .categorias {
-                padding: 0 0 20px 0;
-
-                li {
-                    padding: 10px 10px 0;
-                    transition: .2s ease-in;
-                    
-                    &:hover {
-                        background-color: $color-secundaryDark; 
-                    }
-
-                    a {
-                        color: $color-fontDark;
-                        font-size: 1.8rem;
-
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
-                }
-            }
-
-            .menuNav {
-                padding: 0 0 20px 0;
                 
-                li {
-                    padding: 15px 10px 0;
-                    transition: .2s ease-in;
-                    
-                    &:hover {
-                        background-color: $color-secundaryDark; 
-                    }
-
-                    a {
-                        color: $color-fontDark;
-                        font-size: 1.8rem;
-
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
-                }
-            }
-
-            .toggleTheme {
-                display: flex;
-                padding: 0 0 10px;
-                justify-content: center;
-            
-                .checkbox {
-                    display: none;
-
-                    &:checked + .label .ball {
-                        transform: translateX(63px);
-                    }
-
-                    &:checked + .label .iconMoon {
-                        transform: translateY(88%);
-                        color: $color-fontLight;
-                    }
-
-                    &:checked + .label .iconSun {
-                        transform: translateY(-175%);
-                        color: $color-fontDark;
-                    }
-                }
-                
-                .label {
-                    cursor: pointer;
-                    display: block;
-                    width: 100px;
-                    height: 36px;
+                &:hover {
                     background-color: $color-secundaryDark;
-                    border-radius: 20px;
-                    position: relative;
-                    box-shadow: 2px 2px 4px $color-shadow;
-                    overflow: hidden;
-            
-                    .ball {
-                        width: 28px;
-                        height: 28px;
-                        background-color: $color-primaryLight;
-                        border-radius: 50%;
-                        position: absolute;
-                        top: 4px;
-                        left: 4px;
-                        transition: transform 0.5s ease;
-                    }
+                    text-decoration: underline;
+                }
 
-                    .iconSun {
-                        position: absolute;
-                        z-index: 10;
-                        color: $color-fontLight;
-                        width: 26px;
-                        height: 26px;
-                        left: 5px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                a {
+                    color: $color-fontDark;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+
+        .menuNav {
+            padding: 0 0 20px 0;
+            
+            li {
+                padding: 15px 10px 0;
+                transition: .2s ease-in;
+                
+                &:hover {
+                    background-color: $color-secundaryDark; 
+                }
+
+                a {
+                    color: $color-fontDark;
+                    font-size: 1.8rem;
+
+                    &:hover {
+                        text-decoration: underline;
                     }
-                    
-                    .iconMoon {
-                        position: absolute;
-                        z-index: 10;
-                        color:$color-fontDark;
-                        width: 26px;
-                        height: 26px;
-                        right: 5px;
-                        top: -50%;
-                        transform: translateY(-50%);
-                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
-                    }
+                }
+            }
+        }
+
+        .toggleTheme {
+            display: flex;
+            padding: 0 0 10px;
+            justify-content: center;
+        
+            .checkbox {
+                display: none;
+
+                &:checked + .label .ball {
+                    transform: translateX(63px);
+                }
+
+                &:checked + .label .iconMoon {
+                    transform: translateY(88%);
+                    color: $color-fontLight;
+                }
+
+                &:checked + .label .iconSun {
+                    transform: translateY(-175%);
+                    color: $color-fontDark;
+                }
+            }
+            
+            .label {
+                cursor: pointer;
+                display: block;
+                width: 100px;
+                height: 36px;
+                background-color: $color-secundaryDark;
+                border-radius: 20px;
+                position: relative;
+                box-shadow: 2px 2px 4px $color-shadow;
+                overflow: hidden;
+        
+                .ball {
+                    width: 28px;
+                    height: 28px;
+                    background-color: $color-primaryLight;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 4px;
+                    left: 4px;
+                    transition: transform 0.5s ease;
+                }
+
+                .iconSun {
+                    position: absolute;
+                    z-index: 10;
+                    color: $color-fontLight;
+                    width: 26px;
+                    height: 26px;
+                    left: 5px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                }
+                
+                .iconMoon {
+                    position: absolute;
+                    z-index: 10;
+                    color:$color-fontDark;
+                    width: 26px;
+                    height: 26px;
+                    right: 5px;
+                    top: -50%;
+                    transform: translateY(-50%);
+                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
                 }
             }
         }
     }
 }
-@keyframes menu {
+
+@keyframes menuDep {
     to {
-        transform: translateX(0);
+        transform: translateX(5.75em);
         opacity: 1;
+    }
+}
+@keyframes menuDepFixed {
+    to {
+        transform: translateX(9.75em);
+        opacity: 1;
+
     }
 }
 
@@ -233,4 +233,9 @@ body {
     to {
         opacity: 1;
     }
+}
+
+.modal-open {
+    overflow: hidden;
+    margin: 0 2.5px 0 0;
 }

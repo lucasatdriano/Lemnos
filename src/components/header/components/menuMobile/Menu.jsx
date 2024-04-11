@@ -7,17 +7,30 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 export function MenuNav() {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
-    const onClick = () => setIsActive(!isActive);
+
+    const toggleMenu = () => {
+        setIsActive(!isActive);
+        toggleModal();
+    }
+
+    const toggleModal = () => {
+        const modalOpen = isActive;
+        if (modalOpen) {
+            document.body.classList.remove("modal-open");
+        } else {
+            document.body.classList.add("modal-open");
+        }
+    }
 
     return (
         <>
         <nav className='menuNav'>
-            <button onClick={onClick} className='menuButton'>
-                <BsThreeDotsVertical  className='menuIcon' />
+            <button onClick={toggleMenu} className='menuButton'>
+                <BsThreeDotsVertical className='menuIcon' />
             </button>
 
-            <div onClick={onClick} className={`modal ${isActive ? "active" : "inactive"}`}></div>
-            <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
+            <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
+            <nav ref={dropDownRef} className={`menuMobile ${isActive ? "active" : "inactive"}`}>
                 <ul className='navegacao'>
                     <Link to="/" className='linkNav'>
                         <RiHeartLine className='favoriteIcon' />Favoritos

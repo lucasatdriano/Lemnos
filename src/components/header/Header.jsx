@@ -13,6 +13,7 @@ export function Header({ toggleTheme }) {
         const handleScroll = () => {
             if (window.scrollY > 0) {
                 setShrinkHeader(true);
+                
             } else {
                 setShrinkHeader(false);
             }
@@ -21,7 +22,7 @@ export function Header({ toggleTheme }) {
         window.addEventListener('scroll', handleScroll);
         
         return () => {
-        window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
     

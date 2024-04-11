@@ -38,7 +38,7 @@ export function Login() {
             <button onClick={handleLogout}>Logout</button>
           </div>
         ) : (
-          <div>
+          <div className='loginScreen'>
             {showLogin ? (
               <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistrationClick} />
             ) : (

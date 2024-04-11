@@ -46,7 +46,7 @@ $font-items: 'Poppins', Helvetica;
   }
 
   label {
-    background-color: $color-fontDark;
+    background: linear-gradient( #F1F6F6, #F2F9F8);
     position: absolute;
     top: -10px;
     left: 15px;
@@ -76,7 +76,26 @@ $font-items: 'Poppins', Helvetica;
   
     label {
       color: $color-fontLight;
-      background-color: transparent;
+      background: linear-gradient(#858989, transparent) ;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .singleInput {
+    width: 100%;
+  
+    input {
+      border: 2px solid $color-shadow;
+      font-size: 2.4rem;
+      padding: .5em 1em .3em;
+      box-shadow: 2px 2px 4px $color-shadow;
+    }
+  
+    label {
+      top: -10px;
+      left: 15px;
+      padding: 0 10px;
     }
   }
 }

@@ -7,18 +7,32 @@ import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icon
 export function MenuDep({ toggleTheme }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
-    const onClick = () => setIsActive(!isActive);
+
+    const toggleMenu = () => {
+        setIsActive(!isActive);
+        toggleModal();
+    }
+
+    const toggleModal = () => {
+        const modalOpen = isActive;
+        if (modalOpen) {
+            document.body.classList.remove("modal-open");
+        } else {
+            document.body.classList.add("modal-open");
+        }
+    }
 
     return (
         <>
         <nav className='menuCat'>
-            <button onClick={onClick} className='menuButton'>
+            <button onClick={toggleMenu} className='menuButton'>
                 <RiMenuUnfoldLine className='menuIcon' />
             </button>
 
-            <div onClick={onClick} className={`modal ${isActive ? "active" : "inactive"}`}></div>
+            <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
+                        
             <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-                <button onClick={onClick} className='btnFecharMenu'>
+                <button onClick={toggleMenu} className='btnFecharMenu'>
                     <RiCloseFill className='menuIcon' />
                 </button>
 

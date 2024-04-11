@@ -22,24 +22,28 @@ $font-items: 'Poppins', Helvetica;
 
 .login-form-container {
   border-radius: 20px;
-  width: 50%;
-  margin: 8.6em auto 5em;
-  padding: 2em;
-  display: flex;
+  width: auto;
   justify-content: center;
+  margin: 3.1em auto 2em;
+  padding: 2em 0;
+  display: flex;
   background-color: #e8f1f078;
   box-shadow: 4px 4px 4px $color-shadow;
+  position: relative;
 
   h2 {
     font-size: 3.8rem;
     font-family: $font-title;
     text-align: left;
+    width: 8.5em;
   }
 
   .loginCredencial {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-around;
+    gap: 2.5em;
 
     .btnCredencials {
       display: flex;
@@ -70,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
     margin: 0 3em;
     height: 25em;
     color: $color-primaryLight;
-    gap: 10px;
+    gap: .5em;
 
     hr {
       border: none;
@@ -90,11 +94,12 @@ $font-items: 'Poppins', Helvetica;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    gap: 2.5em;
 
     .inputsLogin {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 1.5em;
     }
 
     .btnLoginForm {
@@ -157,105 +162,33 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 1024px) {
   .login-form-container {
-    border-radius: 20px;
-    width: 50%;
-    margin: 8.6em auto 5em;
-    padding: 2em;
-    display: flex;
-    justify-content: center;
-    background-color: #e8f1f078;
-    box-shadow: 4px 4px 4px $color-shadow;
-  
-    h2 {
-      font-size: 3.8rem;
-      font-family: $font-title;
-      text-align: left;
-    }
+    flex-direction: column;
   
     .loginCredencial {
-      display: flex;
       flex-direction: column;
-      justify-content: space-around;
-  
+
       .btnCredencials {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        gap: 1.5em;
-  
+        flex-direction: row;  
         
         button {
-          width: 20em;
-          height: 4em;
-          border-radius: 10px;
-          border: none;
-          cursor: pointer;
-          box-shadow: 4px 4px 4px $color-shadow;
-  
-          &:hover {
-            filter: brightness(.8);
-          }
+          width: 15em;
+          height: 3.5em;
         }
       }
     }
   
     .containerSeparate {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0 3em;
-      height: 25em;
-      color: $color-primaryLight;
-      gap: 10px;
+      flex-direction: row;
+      height: 8em;
   
       hr {
-        border: none;
-        background-color: $color-primaryLight;
-        width: 3px;
-        height: 50%;
-        border-radius: 5px;
-      }
-  
-      h3 {
-        font-family: $font-items;
-        font-size: 2rem;
+        width: 60%;
+        height: 3px;
       }
     }
   
     .login {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-  
-      .inputsLogin {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-  
-      .btnLoginForm {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        gap: 1em;
-  
-        button {
-          font-size: 2rem;
-          width: 10em;
-          height: 2.5em;
-          border-radius: 5px;
-          border: none;
-          background-color: $color-primaryLight;
-          color: $color-fontLight;
-          cursor: pointer;
-          box-shadow: 2px 2px 4px $color-shadow;
-  
-          &:hover {
-            filter: brightness(.9);
-          }
-        }
-      }
+      align-items: center;
     }
   }  
 }
@@ -263,8 +196,8 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 600px) {
   .login-form-container {
     border-radius: 20px;
-    width: 50%;
-    margin: 8.6em auto 5em;
+    width: 70%;
+    margin: 8em auto 5em;
     padding: 2em;
     display: flex;
     justify-content: center;
