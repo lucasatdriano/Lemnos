@@ -33,16 +33,18 @@ export function Login() {
     <>
       <div>
         {loggedIn ? (
-          <div>
-            <p>Você está logado como {username}</p>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
+          <></>
+          // <div>
+          //   <p>Você está logado como {username}</p>
+          //   <button onClick={handleLogout}>Logout</button>
+          // </div>
         ) : (
           <div className='loginScreen'>
             {showLogin ? (
               <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistrationClick} />
             ) : (
-              <RegistrationForm onBackToLogin={handleBackToLogin} />
+              <></>
+              // <RegistrationForm onBackToLogin={handleBackToLogin} />
             )}
           </div>
         )}

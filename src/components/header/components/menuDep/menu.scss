@@ -88,6 +88,7 @@ $font-items: 'Poppins', Helvetica;
             width: 6em;
             height: 4em;
             margin: -.3em 10%;
+            object-fit: contain;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
 

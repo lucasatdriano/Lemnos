@@ -20,35 +20,34 @@ export function LoginForm({ onLogin, onCadastroClick }) {
   // };
 
   return (
-    <div className="login-form-container">
-
-      <div className="loginCredencial">
-        <h2>Entre com suas Redes Sociais</h2>
-        <div className="btnCredencials">  
-          <button></button>
-          <button></button>
-          <button></button>
+    <section id="login">
+      <div className="login-form-container">
+        <div className="loginCredencial">
+          <h2>Entre com suas Redes Sociais</h2>
+          <div className="btnCredencials">  
+            <button></button>
+          </div>
         </div>
+
+        <div className='containerSeparate'>
+          <hr />
+          <h3>OU</h3>
+          <hr />
+        </div>
+
+        <form action="" className="login">
+          <h2>Digite seu Email e sua Senha</h2>
+          <div className="inputsLogin">
+            <CustomInput type="email" reference={emailRef} label="Email:"/>
+            <CustomInput type="password" reference={pwdRef} label="Senha:"/>
+          </div>
+
+          <div className="btnLoginForm">
+            <button onClick={handleLogin}>Entrar</button>
+            <button>Cadastre-se</button>
+          </div>
+        </form>
       </div>
-
-      <div className='containerSeparate'>
-        <hr />
-        <h3>OU</h3>
-        <hr />
-      </div>
-
-      <form action="" className="login">
-        <h2>Digite seu Email e sua Senha</h2>
-        <div className="inputsLogin">
-          <CustomInput type="email" reference={emailRef} label="Email:"/>
-          <CustomInput type="password" reference={pwdRef} label="Senha:"/>
-        </div>
-
-        <div className="btnLoginForm">
-          <button onClick={handleLogin}>Entrar</button>
-          <button>Cadastre-se</button>
-        </div>
-      </form>
-    </div>
+    </section>
   );
 };
