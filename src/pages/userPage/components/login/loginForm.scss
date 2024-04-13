@@ -40,7 +40,7 @@ $font-items: 'Poppins', Helvetica;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5em;
+    gap: 2em;
 
     .btnCredencials {
       display: flex;
@@ -100,10 +100,10 @@ $font-items: 'Poppins', Helvetica;
     }
 
     .btnLoginForm {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      gap: 1em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-self: center;
+      gap: 3em; 
 
       button {
         font-size: 2rem;
@@ -215,8 +215,11 @@ $font-items: 'Poppins', Helvetica;
   
     .login {
       .btnLoginForm {  
+        grid-template-columns: 1fr;
+        gap: 1em;
+
         button {
-          width: 8em;
+          width: 10em;
         }
       }
     }

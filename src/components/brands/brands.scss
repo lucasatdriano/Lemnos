@@ -1,0 +1,80 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.brandCard {
+    width: 5em;
+    height: 15em;
+    background-color: #f6fefd4d;
+    padding: 10px 0 0;
+    margin: 0 auto;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 4px $color-shadow;
+    transition: .5s ease;
+    cursor: pointer;
+    overflow: hidden;
+    filter: blur(.5px);
+
+    .brandImage {
+        width: 3em;
+        height: 150px;
+        filter: blur(1px);
+    }
+
+    .brandName {
+        font-family: $font-title;
+        opacity: 0;
+        text-transform: uppercase;
+        transition: .3s ease;
+    }
+
+    p { 
+        font-family: $font-items;
+        opacity: 0;
+        color: $color-primaryLight;
+        transition: .3s ease;
+
+        &::after {
+            content: " >";
+        }
+    }
+
+    &:hover {
+        width: 25em;
+        border-radius: 20px;
+        filter: blur(0);
+
+        .brandImage {
+            width: 15em;
+            filter: blur(0);
+        }
+
+        .brandName {
+            opacity: 1;
+        }
+
+        p {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    }
+} 

@@ -40,7 +40,7 @@ $font-items: 'Poppins', Helvetica;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5em;
+    gap: 4em;
 
     .btnCredencials {
       display: flex;
@@ -94,16 +94,17 @@ $font-items: 'Poppins', Helvetica;
     gap: 2.5em;
 
     .inputsRegistration {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
       gap: 1.5em;
     }
 
     .btnRegistrationForm {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      gap: 1em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-self: center;
+      gap: 3em;
 
       button {
         font-size: 2rem;
@@ -161,7 +162,7 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 1024px) {
   .registration-form-container {
     flex-direction: column;
-    margin: 4em auto 10em;
+    margin: 4em auto 5em;
   
     h2 {
       text-align: center;
@@ -170,7 +171,7 @@ $font-items: 'Poppins', Helvetica;
 
     .loginCredencial {
       flex-direction: column;
-      padding: 2em 0 0;
+      padding: 1em 0 0;
 
       .btnCredencials {
         margin: 0;
@@ -192,6 +193,11 @@ $font-items: 'Poppins', Helvetica;
     .registration {
       align-items: center;
       padding: 0 1em 2em;
+
+      .inputsRegistration {
+        grid-template-columns: 1fr ;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+      }
     }
   }  
 }
@@ -214,9 +220,12 @@ $font-items: 'Poppins', Helvetica;
     }
       
     .registration {
-      .btnRegistrationForm {  
+      .btnRegistrationForm {
+        grid-template-columns: 1fr;
+        gap: 1em;
+
         button {
-          width: 8em;
+          width: 12em;
         }
       }
     }

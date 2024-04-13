@@ -1,13 +1,15 @@
 import React from 'react';
 import { Slide } from '../../components/carousel/Carousel';
 import './home.scss'
-import { ProductList } from './components/ProductList'
+import { ProductList } from './components/ProductList';
+import { BrandsList } from './components/BrandsList';
 
 export function Home() {
   return (
     <>
       <main>
         <Slide />
+        
         <section className='mainDep'>
             <h2>Principais Departamentos</h2>
 
@@ -51,140 +53,12 @@ export function Home() {
 
         <section className='mainProd'>
           <h2>Principais Produtos</h2>
-          <ProductList />
+          <ProductList className="productList"/>
         </section>
 
         <section className='brands'>
           <h2>Principais Marcas</h2>
-
-          <div className="containerBrands">
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Computadores Gamers</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Notebook e Portáteis</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Kit Upgrade</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-
-            
-            <div className='flexItem'>
-              <img src="" alt="" />
-              <h3>Video Games</h3>
-              <p>Ver Produtos</p>
-            </div>
-          </div>
+          <BrandsList className="brandsList"/>
         </section>
       </main>
     </>

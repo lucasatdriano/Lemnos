@@ -1,4 +1,4 @@
-.product-card {
+.productCard {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 16px;
@@ -6,28 +6,28 @@
     align-items: center;
     width: 300px;
   
-    .product-image {
+    .productImage {
       width: 100px;
       height: 100px;
       object-fit: cover;
       margin-right: 16px;
     }
   
-    .product-details {
+    .productDetails {
       flex-grow: 1;
     }
   
-    .product-name {
+    .productName {
       font-size: 18px;
       margin-bottom: 8px;
     }
   
-    .product-description {
+    .productDescription {
       font-size: 14px;
       margin-bottom: 8px;
     }
   
-    .product-price {
+    .productPrice {
       font-size: 16px;
       font-weight: bold;
     }

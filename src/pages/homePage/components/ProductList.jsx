@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../../../components/card/Card'; // Importe o componente ProductCard
+import { Card } from '../../../components/card/Card';
 
 export function ProductList() {
   const products = [
@@ -21,7 +21,7 @@ export function ProductList() {
   ];
 
   return (
-    <div className="product-list">
+    <div>
       {products.map(product => (
         <Card key={product.id} product={product} />
       ))}
