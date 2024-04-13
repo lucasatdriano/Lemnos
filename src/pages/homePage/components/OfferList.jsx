@@ -1,13 +1,14 @@
 import React from 'react';
-import { Card } from '../../../components/card/Card';
+import { CardOffer } from '../../../components/cardOffer/CardOffer';
 
-export function ProductList() {
-  const products = [
+export function OfferList() {
+  const offers = [
     {
       id: 1,
       name: 'Product 1',
       description: 'Description of Product 1',
       price: 19.99,
+      descont: 12,
       image: 'product1.jpg'
     },
     {
@@ -15,6 +16,7 @@ export function ProductList() {
       name: 'Product 2',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -22,6 +24,7 @@ export function ProductList() {
       name: 'Product 3',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -29,6 +32,7 @@ export function ProductList() {
       name: 'Product 4',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -36,6 +40,7 @@ export function ProductList() {
       name: 'Product 5',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -43,6 +48,7 @@ export function ProductList() {
       name: 'Product 6',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -50,6 +56,7 @@ export function ProductList() {
       name: 'Product 7',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -57,6 +64,7 @@ export function ProductList() {
       name: 'Product 8',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -64,6 +72,7 @@ export function ProductList() {
       name: 'Product 9',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
     {
@@ -71,14 +80,15 @@ export function ProductList() {
       name: 'Product 10',
       description: 'Description of Product 2',
       price: 24.99,
+      descont: 12,
       image: 'product2.jpg'
     },
   ];
 
   return (
     <div>
-      {products.map(product => (
-        <Card key={product.id} product={product} />
+      {offers.map(offer => (
+        <CardOffer key={offer.id} offer={offer} />
       ))}
     </div>
   );

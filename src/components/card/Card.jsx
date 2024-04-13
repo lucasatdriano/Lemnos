@@ -8,7 +8,7 @@ export function Card({ product }) {
       <div className="productDetails">
         <h2 className="productName">{product.name}</h2>
         <p className="productDescription">{product.description}</p>
-        <p className="productPrice">${product.price}</p>
+        <p className="productPrice">R${product.price}</p>
       </div>
     </div>
   );

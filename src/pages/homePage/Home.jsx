@@ -3,6 +3,7 @@ import { Slide } from '../../components/carousel/Carousel';
 import './home.scss'
 import { ProductList } from './components/ProductList';
 import { BrandsList } from './components/BrandsList';
+import { OfferList } from './components/OfferList';
 
 export function Home() {
   return (
@@ -49,6 +50,7 @@ export function Home() {
 
         <section className='offer'>
           <h2>Ofertas</h2>
+          <OfferList className="offerList" />
         </section>
 
         <section className='mainProd'>
