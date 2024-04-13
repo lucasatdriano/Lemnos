@@ -236,7 +236,7 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-.modal-open {
-    overflow: hidden;
+body {
+    overflow-y: hidden !important;
     margin: 0 2.5px 0 0;
 }

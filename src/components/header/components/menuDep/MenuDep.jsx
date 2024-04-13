@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LogoVertical from '../../../../assets/logoVertical.png';
-import './menu.scss';
+import './menuDep.scss';
 import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
 
 export function MenuDep({ toggleTheme }) {
@@ -62,7 +62,12 @@ export function MenuDep({ toggleTheme }) {
                 </ul>
                 
                 <div className='toggleTheme'>
-                    <input type="checkbox" className="checkbox" onClick={toggleTheme} name="chk" id="chk" />
+                    <input 
+                      type="checkbox" 
+                      className="checkbox" 
+                      onClick={toggleTheme} 
+                      name="chk" 
+                    />
                     <label htmlFor="chk" className="label">
                         <RiSunLine className='iconSun'/>
                         <RiMoonLine className='iconMoon'/>

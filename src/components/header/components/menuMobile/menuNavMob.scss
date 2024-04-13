@@ -111,6 +111,5 @@ $font-items: 'Poppins', Helvetica;
 }
 
 .modal-open {
-    overflow: hidden;
-    margin: 0 2.5px 0 0;
+    overflow: hidden !important;
 }

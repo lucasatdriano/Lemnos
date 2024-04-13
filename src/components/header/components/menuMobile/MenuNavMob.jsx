@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import './menu.scss';
+import './menuNavMob.scss';
 import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -30,6 +30,7 @@ export function MenuNav() {
             </button>
 
             <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
+            
             <nav ref={dropDownRef} className={`menuMobile ${isActive ? "active" : "inactive"}`}>
                 <ul className='navegacao'>
                     <Link to="/" className='linkNav'>

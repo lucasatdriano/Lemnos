@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slide } from '../../components/carousel/Carousel';
 import './home.scss'
+import { ProductList } from './components/ProductList'
 
 export function Home() {
   return (
@@ -50,6 +51,7 @@ export function Home() {
 
         <section className='mainProd'>
           <h2>Principais Produtos</h2>
+          <ProductList />
         </section>
 
         <section className='brands'>

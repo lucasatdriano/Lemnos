@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './header.scss'
-import { MenuDep } from './components/menuDep/Menu';
-import { MenuNav } from './components/menuMobile/Menu';
+import { MenuDep } from './components/menuDep/MenuDep';
+import { MenuNav } from './components/menuMobile/MenuNavMob';
 import LogoHorizontal from '../../assets/logoHorizontal.png';
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
