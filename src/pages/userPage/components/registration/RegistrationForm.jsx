@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { CustomInput } from '../../../../components/inputs/Inputs';
 import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex'
 
-export function RegistrationForm({ onCadastroSuccess }) {
+export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const [form, setForm] = useState({
     name: "",
     cpf: "",
@@ -11,19 +12,21 @@ export function RegistrationForm({ onCadastroSuccess }) {
     password: "",
     confPassword: ""
   });
-
-  const [cadastrado, setCadastrado] = useState(false);
   
   const [errors, setErrors] = useState({
     cpf: false,
     email: false,
-    password: false
+    confEmail: false,
+    password: false,
+    confPassword: false
   });
 
   const nameRef = useRef();
-  const cpfRef = useRef()
+  const cpfRef = useRef();
   const emailRef = useRef();
+  const confEmailRef = useRef();
   const pwdRef = useRef();
+  const confPwdRef = useRef();
 
   const [emptyValue, setEmptyValue] = useState(false)
 
@@ -45,21 +48,24 @@ export function RegistrationForm({ onCadastroSuccess }) {
     const newErrors = {
       cpf: !validateCpf.test(form.cpf),
       email: !validateEmail.test(form.email),
-      password: !validatePwd.test(form.password)
+      confEmail: form.email !== form.confEmail,
+      password: !validatePwd.test(form.password),
+      confPassword: form.password !== form.confPassword
     };
   
     setErrors(newErrors);
   
-    if (!emptyValues && !newErrors.cpf && !newErrors.email && !newErrors.password) {
+    if (!emptyValues && !Object.values(newErrors).some(error => error)) {
       // Por exemplo, enviar uma requisição POST com os dados para uma API
   
       // Após o cadastro ser concluído com sucesso, chame a função onCadastroSuccess
-      setCadastrado(true);
       onCadastroSuccess();
+      handleBackToLogin();
     }
   };
 
   const handleBackToLoginClick = () => {
+    handleBackToLogin();
   };
 
   return (
@@ -84,6 +90,7 @@ export function RegistrationForm({ onCadastroSuccess }) {
             type="text" 
             reference={nameRef} 
             label="Nome Completo:"
+            maxlength="40"
             name="name"
             onBlur={(e) => handleChange(e)}
           />
@@ -92,6 +99,7 @@ export function RegistrationForm({ onCadastroSuccess }) {
             type="text" 
             reference={cpfRef} 
             label="CPF:"
+            maxlength="14"
             name="cpf"
             value={form.cpf}
             onBlur={(e) => handleChange(e)}
@@ -99,18 +107,20 @@ export function RegistrationForm({ onCadastroSuccess }) {
           { emptyValue && form["cpf"] ? <span className='invalide'>O Campo CPF precisa ser preenchido</span> : ""}
           { errors.cpf && <span className='invalide'>Digite um CPF válido!</span>}
           <CustomInput 
-            type="email" 
+            type="text" 
             reference={emailRef} 
             label="Email:"
+            maxlength="40"
             name="email"
             onBlur={(e) => handleChange(e)}
           />
           { emptyValue && form["email"] ? <span className='invalide'>O Campo Email precisa ser preenchido</span> : ""}
           { errors.email && <span className='invalide'>Digite um Email válido!</span>}
           <CustomInput 
-            type="email" 
+            type="text" 
             reference={confEmailRef} 
             label="Confirme seu Email:"
+            maxlength="40"
             name="confEmail"
             onBlur={(e) => handleChange(e)}
           />
@@ -119,6 +129,7 @@ export function RegistrationForm({ onCadastroSuccess }) {
             type="password" 
             reference={pwdRef} 
             label="Senha:"
+            maxlength="16"
             name="password"
             onBlur={(e) => handleChange(e)}
           />
@@ -128,14 +139,19 @@ export function RegistrationForm({ onCadastroSuccess }) {
             type="password" 
             reference={confPwdRef} 
             label="Confirme sua Senha:"
+            maxlength="16"
             name="confPassword"
             onBlur={(e) => handleChange(e)}
           />
           { emptyValue && form["confPassword"] ? <span className='invalide'>A Senha precisa ser verificado</span> : ""}
         </div>
-        <button type="submit">Cadastrar</button>
+        
+        <div className="btnRegistrationForm">
+          <button type="submit">Cadastrar</button>
+          <button type='button' onClick={handleBackToLoginClick}>Voltar para Login</button>
+        </div>
       </form>
-      <button type='button' onClick={handleBackToLoginClick}>Voltar para Login</button>
+    
     </div>
   );
 };

@@ -1,69 +1,224 @@
-.registration-form-container {
-    text-align: center;
-    margin-top: 50px;
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
 
-    &.show-registration {
-        animation: rotateContainer 0.5s ease forwards;
-    }
-  
-    h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-  
-    form {
-      max-width: 300px;
-      margin: 0 auto;
-  
-      label {
-        display: block;
-        margin-bottom: 5px;
-        text-align: left;
-      }
-  
-      input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-      }
-  
+$color-primaryDark: #0d977e;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.registration-form-container {
+  border-radius: 20px;
+  margin: 6em auto 0;
+  padding: 1em 2em;
+  display: flex;
+  justify-content: center;
+  background-color: #e8f1f078;
+  box-shadow: 4px 4px 4px $color-shadow;
+
+  h2 {
+    font-size: 3.8rem;
+    font-family: $font-title;
+    text-align: left;
+    width: 8.5em;
+  }
+
+  .loginCredencial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+
+    .btnCredencials {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 2.5em 0;
+
       button {
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
+        width: 25em;
+        height: 5em;
+        border-radius: 10px;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-  
+        box-shadow: 4px 4px 4px $color-shadow;
+
         &:hover {
-          background-color: #0056b3;
+          filter: brightness(.8);
+        }
+      }
+    }
+  }
+
+  .containerSeparate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2.5em;
+    color: $color-primaryLight;
+    gap: .5em;
+
+    hr {
+      border: none;
+      background-color: $color-primaryLight;
+      width: 3px;
+      height: 100%;
+      border-radius: 5px;
+    }
+
+    h3 {
+      font-family: $font-items;
+      font-size: 2rem;
+    }
+  }
+
+  .registration {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 2.5em;
+
+    .inputsRegistration {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+    }
+
+    .btnRegistrationForm {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 1em;
+
+      button {
+        font-size: 2rem;
+        width: 10em;
+        height: 2.5em;
+        border-radius: 5px;
+        border: none;
+        background-color: $color-primaryLight;
+        color: $color-fontLight;
+        cursor: pointer;
+        box-shadow: 2px 2px 4px $color-shadow;
+
+        &:hover {
+          filter: brightness(.9);
+        }
+      }
+    }
+  }
+}
+
+
+.dark {
+  .registration-form-container {
+    background-color: #e8f1f078;
+    box-shadow: 4px 4px 8px #b1b9b978;
+  
+    .loginCredencial {  
+      .btnCredencials {        
+        button {
+          box-shadow: 4px 4px 4px $color-shadow;
         }
       }
     }
   
-    .back-to-login {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #007bff;
-      cursor: pointer;
-      text-decoration: underline;
+    .containerSeparate {
+      color: $color-primaryDark;
   
-      &:hover {
-        color: #0056b3;
+      hr {
+        background-color: $color-primaryDark;
       }
     }
-  }
+  
+    .registration {  
+      .btnRegistrationForm {
+        button {
+          background-color: $color-primaryDark;
+          color: $color-fontDark;
+          box-shadow: 2px 2px 4px $color-shadow;
+        }
+      }
+    }
+  }  
+}
 
-  @keyframes rotateContainer {
-    from {
-      transform: rotateY(0deg);
+@media only screen and (max-width: 1024px) {
+  .registration-form-container {
+    flex-direction: column;
+    margin: 4em auto 10em;
+  
+    h2 {
+      text-align: center;
+      width: 10em;
     }
-    to {
-      transform: rotateY(180deg);
+
+    .loginCredencial {
+      flex-direction: column;
+      padding: 2em 0 0;
+
+      .btnCredencials {
+        margin: 0;
+      }
     }
-  }
+  
+    .containerSeparate {
+      flex-direction: row;
+      margin: 0;
+      height: 4em;
+      width: 100%;
+  
+      hr {
+        width: 100%;
+        height: 3px;
+      }
+    }
+  
+    .registration {
+      align-items: center;
+      padding: 0 1em 2em;
+    }
+  }  
+}
+
+@media only screen and (max-width: 600px) {
+  .registration-form-container {
+    padding: 0 1em;
+  
+    h2 {
+      font-size: 3rem;
+    }
+
+    .loginCredencial {
+      .btnCredencials {
+        button {
+          height: 4em;
+          width: 20em;
+        }
+      }
+    }
+      
+    .registration {
+      .btnRegistrationForm {  
+        button {
+          width: 8em;
+        }
+      }
+    }
+  }  
+}

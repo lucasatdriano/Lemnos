@@ -8,24 +8,24 @@ export function LoginForm({ onLogin, onCadastroClick }) {
     email: "",
     password: "",
   });
+
   const emailRef = useRef();
   const pwdRef = useRef();
 
   const handleChange = (e) => {
-    e.target.name;
-    e.target.value;
-    let newProp = form;
-    newProp[e.target.name] = e.target.value;
-    setForm({...newProp})
+    const { name, value } = e.target;
+    setForm(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   }
 
-  const handleLogin = () => {
-    // Aqui você pode adicionar a lógica para realizar o login
-    onLogin(email, password);
+  const handleLogin = (e) => {
+    e.preventDefault(); // Evitar que o formulário seja submetido
+    onLogin(form.email, form.password); // Acesso aos valores do estado form
   };
 
   const handleCadastroClick = () => {
-    // Chama a função para mudar para a tela de cadastro
     onCadastroClick();
   };
 
@@ -52,12 +52,16 @@ export function LoginForm({ onLogin, onCadastroClick }) {
             type="email" 
             reference={emailRef} 
             label="Email:"
+            name="email"
+            value={form.email}
             onBlur={(e) => handleChange(e)}
           />
           <CustomInput 
             type="password" 
             reference={pwdRef} 
             label="Senha:"
+            name="password"
+            value={form.password}
             onBlur={(e) => handleChange(e)}
           />
         </div>
