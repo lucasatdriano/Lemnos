@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './login.scss';
+import './user.scss';
 import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { LoginForm } from './components/login/LoginForm';
@@ -28,10 +28,10 @@ export function Login() {
   const handleBackToLogin = () => {
     setShowLogin(true);
   };
-
+  
   return (
     <>
-      <div>
+      <div className='container'>
         {loggedIn ? (
           <></>
           // <div>
@@ -43,8 +43,7 @@ export function Login() {
             {showLogin ? (
               <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistrationClick} />
             ) : (
-              <></>
-              // <RegistrationForm onBackToLogin={handleBackToLogin} />
+              <RegistrationForm onBackToLogin={handleBackToLogin} />
             )}
           </div>
         )}

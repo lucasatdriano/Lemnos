@@ -5,7 +5,7 @@ import { App } from './App';
 import { NotFound } from './pages/notFoundPage/NotFound';
 import { Home } from './pages/homePage/Home';
 import { About } from './pages/aboutPage/About';
-import { Login } from './pages/loginPage/Login';
+import { Login } from './pages/userPage/User';
 
 const router = createBrowserRouter([
   {
