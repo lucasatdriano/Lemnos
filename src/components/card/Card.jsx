@@ -1,9 +1,9 @@
 import React from 'react';
 import './card.scss';
 
-export function Card({ product }) {
+export function Card({ product, onClick }) {
   return (
-    <div className="productCard">
+    <div className="productCard" onClick={() => onClick(product.id)}>
       <img src={product.image} alt={product.name} className="productImage" />
       <div className="productDetails">
         <h2 className="productName">{product.name}</h2>

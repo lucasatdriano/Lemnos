@@ -14,7 +14,7 @@ export function NotFound() {
   };
 
   return (
-    <body className={`${theme}`}>
+    <div className={`${theme}`}>
         <Header toggleTheme={toggleTheme}/>
 
         <main className='bgScreen'>
@@ -28,6 +28,6 @@ export function NotFound() {
           </div>
           <button className='btnHome' onClick={() => navigate('/')}>Voltar para o início</button>
         </main>
-    </body>
+    </div>
   );
 }

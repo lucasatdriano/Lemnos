@@ -119,11 +119,14 @@ $font-items: 'Poppins', Helvetica;
         &:hover {
           filter: brightness(.9);
         }
+        &:active + .login-form-container {
+          transition: 2s linear;
+          transform: rotateX(180deg);
+        }
       }
     }
   }
 }
-
 
 .dark {
   .login-form-container {
@@ -224,27 +227,4 @@ $font-items: 'Poppins', Helvetica;
       }
     }
   }  
-}
-
-.flipped-enter {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.flipped-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Estilos para animação de saída */
-.flipped-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.flipped-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }

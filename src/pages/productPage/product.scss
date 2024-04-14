@@ -1,0 +1,33 @@
+.productDetailsContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .closeButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .productName {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .productPrice {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .productPrice span {
+    font-weight: bold;
+  }
+  
+  .productImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }

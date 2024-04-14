@@ -1,9 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Card } from '../../../components/card/Card';
 import '../home.scss';
 import logoHorizontal from '../../../assets/logoHorizontal.png'
 
 export function ProductList() {
+  const history = useHistory();
+
   const products = [
     {
       id: 1,
@@ -67,10 +70,14 @@ export function ProductList() {
     },
   ];
 
+  const handleProductClick = (productId) => {
+    history.push(`/product/${productId}`);
+  };
+
   return (
     <div className='productsList'>
       {products.map(product => (
-        <Card key={product.id} product={product} />
+        <Card key={product.id} product={product} onClick={() => handleProductClick(product.id)} />
       ))}
     </div>
   );
