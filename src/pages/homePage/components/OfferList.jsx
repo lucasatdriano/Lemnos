@@ -1,21 +1,22 @@
 import React from 'react';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { CardOffer } from '../../../components/cardOffer/CardOffer';
 import '../home.scss';
+import logoHorizontal from '../../../assets/logoHorizontal.png'
 
 export function OfferList() {
   const offers = [
     {
       id: 1,
-      name: 'Product 1',
-      description: 'Description of Product 1',
-      price: 19.99,
+      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
+      price: 2049.99,
       descont: 12,
-      image: 'product1.jpg'
+      image: logoHorizontal
     },
     {
       id: 2,
       name: 'Product 2',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -23,7 +24,6 @@ export function OfferList() {
     {
       id: 3,
       name: 'Product 3',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -31,7 +31,6 @@ export function OfferList() {
     {
       id: 4,
       name: 'Product 4',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -39,7 +38,6 @@ export function OfferList() {
     {
       id: 5,
       name: 'Product 5',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -47,7 +45,6 @@ export function OfferList() {
     {
       id: 6,
       name: 'Product 6',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -55,7 +52,6 @@ export function OfferList() {
     {
       id: 7,
       name: 'Product 7',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -63,7 +59,6 @@ export function OfferList() {
     {
       id: 8,
       name: 'Product 8',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -71,7 +66,6 @@ export function OfferList() {
     {
       id: 9,
       name: 'Product 9',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
@@ -79,18 +73,30 @@ export function OfferList() {
     {
       id: 10,
       name: 'Product 10',
-      description: 'Description of Product 2',
       price: 24.99,
       descont: 12,
       image: 'product2.jpg'
     },
   ];
 
-  return (
+
+  return (    
     <div className="offersList">
-      {offers.map(offer => (
-        <CardOffer key={offer.id} offer={offer} />
-      ))}
+      <Splide
+        options={{
+          type: 'carousel',
+          perPage: 4,
+          gap: '-8.6em',
+          speed: 1000,
+          arrows: true,
+        }}
+      >  
+        {offers.map(offer => (     
+          <SplideSlide>
+            <CardOffer key={offer.id} offer={offer} />
+          </SplideSlide>
+        ))}
+      </Splide>
     </div>
   );
 }

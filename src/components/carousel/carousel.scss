@@ -65,6 +65,7 @@ $color-shadow: #12171740;
             font-size: 2.4rem;
             transition: 0.3s ease;
             background-color: #f7efef5e;
+            box-shadow: 2px 2px 4px $color-shadow;
         
             &:hover {
                 background-color: $color-shadow;

@@ -9,7 +9,7 @@ export function Slide() {
     <div className='carousel'>
       <Splide
         options={{
-          type: 'carousel',
+          type: 'loop',
           perPage: 1,
           autoplay: true,
           pauseOnHover: true,

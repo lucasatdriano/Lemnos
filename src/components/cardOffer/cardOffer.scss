@@ -1,0 +1,80 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+
+.offerCard {
+  width: 20em;
+  height: 25em;
+  background-color: #f6fefd4d;
+  padding: 10px;
+  margin: 1em 0;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 2px 2px 4px $color-shadow;
+  cursor: pointer;
+  font-family: $font-items;
+  position: relative;
+
+  .offerImage {
+    width: 15em;
+    height: 10em;
+    object-fit: contain;
+    margin-right: 16px;
+  }
+  .offerDescont {
+    background-color: $color-primaryLight;
+    padding: 12px 6px;
+    width: 36px;
+    border-radius: 5px;
+
+    position: absolute;
+    top: -15px;
+    right: 15px;
+  }
+
+  .offerDetails {  
+    .offerName {
+      font-size: 1.7rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .offerPrice {
+      color: $color-detailsLight;
+      text-decoration: line-through;
+      font-size: 1.8rem;
+      line-height: 2;
+    }
+
+    .offerPriceDescont {
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.2;
+  
+      span {
+        font-weight: 700;
+        color: $color-primaryLight;
+        font-size: 3.6rem;
+      }
+    }
+  }
+}

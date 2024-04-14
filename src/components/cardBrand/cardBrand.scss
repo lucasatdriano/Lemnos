@@ -21,7 +21,7 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .brandCard {
-    width: 5em;
+    width: 20em;
     height: 15em;
     background-color: #f6fefd4d;
     padding: 10px 0 0;
@@ -31,50 +31,45 @@ $font-items: 'Poppins', Helvetica;
     box-shadow: 2px 2px 4px $color-shadow;
     transition: .5s ease;
     cursor: pointer;
-    overflow: hidden;
-    filter: blur(.5px);
+
 
     .brandImage {
         width: 3em;
         height: 150px;
-        filter: blur(1px);
     }
 
     .brandName {
         font-family: $font-title;
-        opacity: 0;
         text-transform: uppercase;
         transition: .3s ease;
     }
 
     p { 
         font-family: $font-items;
-        opacity: 0;
         color: $color-primaryLight;
-        transition: .3s ease;
 
         &::after {
             content: " >";
         }
     }
 
-    &:hover {
-        width: 25em;
-        border-radius: 20px;
-        filter: blur(0);
+    // &:hover {
+    //     width: 25em;
+    //     border-radius: 20px;
+    //     filter: blur(0);
 
-        .brandImage {
-            width: 15em;
-            filter: blur(0);
-        }
+    //     .brandImage {
+    //         width: 15em;
+    //         filter: blur(0);
+    //     }
 
-        .brandName {
-            opacity: 1;
-        }
+    //     .brandName {
+    //         opacity: 1;
+    //     }
 
-        p {
-            opacity: 1;
-            text-decoration: underline;
-        }
-    }
+    //     p {
+    //         opacity: 1;
+    //         text-decoration: underline;
+    //     }
+    // }
 } 
