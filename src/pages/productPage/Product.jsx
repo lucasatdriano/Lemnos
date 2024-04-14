@@ -1,10 +1,10 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './product.scss';
 
 export function Product({ products }) {
     const { id } = useParams();
-    const history = useHistory();
+    // const history = useHistory();
 
     const product = products.find(product => product.id === parseInt(id));
   

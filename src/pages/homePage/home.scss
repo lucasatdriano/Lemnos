@@ -82,6 +82,12 @@ body {
             flex-direction: row;
             height: auto;
 
+            .splide__list {
+                width: 112em;
+            }
+            .splide__slide {
+                margin: 0 -89em 0 0;
+            }
             .splide__pagination__page {
                 display: none;
             }

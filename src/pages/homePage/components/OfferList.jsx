@@ -85,8 +85,7 @@ export function OfferList() {
       <Splide
         options={{
           type: 'carousel',
-          perPage: 4,
-          gap: '-8.6em',
+          perPage: 1,
           speed: 1000,
           arrows: true,
         }}

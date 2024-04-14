@@ -1,11 +1,11 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { Card } from '../../../components/card/Card';
 import '../home.scss';
 import logoHorizontal from '../../../assets/logoHorizontal.png'
 
 export function ProductList() {
-  const history = useHistory();
+  // const history = useHistory();
 
   const products = [
     {
