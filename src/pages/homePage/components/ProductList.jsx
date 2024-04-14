@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from '../../../components/card/Card';
+import '../home.scss';
 
 export function ProductList() {
   const products = [
@@ -76,7 +77,7 @@ export function ProductList() {
   ];
 
   return (
-    <div>
+    <div className='productsList'>
       {products.map(product => (
         <Card key={product.id} product={product} />
       ))}

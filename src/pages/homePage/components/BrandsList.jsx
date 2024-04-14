@@ -1,5 +1,6 @@
 import React from 'react';
-import { Brands } from '../../../components/brands/Brands';
+import { Brands } from '../../../components/cardBrand/CardBrand';
+import '../home.scss';
 
 export function BrandsList() {
   const brands = [
@@ -56,7 +57,7 @@ export function BrandsList() {
   ];
 
   return (
-    <div>
+    <div className="brandsList">
       {brands.map(brand => (
         <Brands key={brand.id} brand={brand} />
       ))}

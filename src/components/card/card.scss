@@ -1,34 +1,66 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+
 .productCard {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    width: 300px;
-  
-    .productImage {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin-right: 16px;
-    }
-  
-    .productDetails {
-      flex-grow: 1;
-    }
-  
-    .productName {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-  
-    .productDescription {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-  
-    .productPrice {
-      font-size: 16px;
-      font-weight: bold;
-    }
+  width: 3em;
+  height: 20em;
+  background-color: #f6fefd4d;
+  padding: 10px 0 0;
+  margin: 0 auto;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 4px $color-shadow;
+  transition: .5s ease;
+  cursor: pointer;
+  overflow: hidden;
+  filter: blur(.5px);
+
+  border: 1px solid #ccc;
+  width: 300px;
+
+  .productImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 16px;
   }
+
+  .productDetails {
+    flex-grow: 1;
+  }
+
+  .productName {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .productDescription {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .productPrice {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}

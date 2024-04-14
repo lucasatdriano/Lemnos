@@ -1,5 +1,5 @@
 import React from 'react';
-import './brands.scss';
+import './cardBrand.scss';
 
 export function Brands({ brand }) {
   return (

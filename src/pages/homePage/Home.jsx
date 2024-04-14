@@ -48,19 +48,19 @@ export function Home() {
           </div>
         </section>
 
-        <section className='offer'>
+        <section className='offers'>
           <h2>Ofertas</h2>
-          <OfferList className="offerList" />
+          <OfferList  />
         </section>
 
-        <section className='mainProd'>
+        <section className='mainProds'>
           <h2>Principais Produtos</h2>
-          <ProductList className="productList"/>
+          <ProductList />
         </section>
 
         <section className='brands'>
           <h2>Principais Marcas</h2>
-          <BrandsList className="brandsList"/>
+          <BrandsList />
         </section>
       </main>
     </>

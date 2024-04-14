@@ -1,5 +1,6 @@
 import React from 'react';
 import { CardOffer } from '../../../components/cardOffer/CardOffer';
+import '../home.scss';
 
 export function OfferList() {
   const offers = [
@@ -86,7 +87,7 @@ export function OfferList() {
   ];
 
   return (
-    <div>
+    <div className="offersList">
       {offers.map(offer => (
         <CardOffer key={offer.id} offer={offer} />
       ))}

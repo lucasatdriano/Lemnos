@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiArrowUpLine } from "react-icons/ri";
-import imgBtnScroll from '../../assets/btnScroll.png'
+import imgBtnScroll from '../../assets/btnScrollToTop.png'
 
 export function BackToTopButton() {
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     const cvlScroll = () => {
       const progressBar = document.getElementById('progressBar');
@@ -14,13 +16,13 @@ export function BackToTopButton() {
 
       if (position > 100) {
         progressBar.style.display = 'grid';
+        progressBar.classList.add('visible');
+        
       } else {
         progressBar.style.display = 'none';
+        progressBar.classList.remove('visible');
       }
 
-      progressBar.addEventListener('click', () => {
-        document.documentElement.scrollTop = 0;
-      });
       progressBar.style.background = `conic-gradient(#36CEC4 ${vlScroll}%, #2D3A3A ${vlScroll}%)`;
     };
 
@@ -33,9 +35,14 @@ export function BackToTopButton() {
     };
   }, []);
 
+  const scrollToTop = () => {
+    document.documentElement.scrollTop = 0;
+    window.removeEventListener('scroll', cvlScroll);
+  };
+
   return (
     <section className="scrollBtn">
-      <div className="progressBar" id="progressBar">
+      <div className={`progressBar ${isVisible ? 'visible' : ''}`} id="progressBar" onClick={scrollToTop}>
         <img src={imgBtnScroll} alt="iconArrow" className="arrowUp" />
       </div>
     </section>

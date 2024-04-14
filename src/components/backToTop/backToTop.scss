@@ -19,7 +19,16 @@ $color-shadow: #12171740;
     place-items: center;
     border-radius: 50%;
     box-shadow: 0 0 10px $color-shadow;
-    animation: appearScrollButton .3s ease-out forwards; 
+
+    &.visible {
+      animation-name: is-bouncing, appearScrollButton;
+      animation-duration: 1s, 0.3s;
+      animation-timing-function: ease-in-out, cubic-bezier(0, .30, .80, 1);
+      animation-direction: alternate, forwards;
+      animation-iteration-count: infinite, 1;
+
+      animation-direction: alternate, normal;
+    }
 
     .arrowUp{
       display: block;
@@ -44,6 +53,12 @@ $color-shadow: #12171740;
   }
   100% {
     opacity: 1;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes is-bouncing {
+  to {
     transform: translateY(10px);
   }
 }

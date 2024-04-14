@@ -71,6 +71,35 @@ body {
         }
     }
 
+    .offers {
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
+
+        .offersList {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 10px;
+            height: auto;
+        }
+    }
+
+    .mainProds {
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
+
+        .productsList {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            margin-top: 10px;
+            height: auto;
+        }
+    }
+
     .brands {
         width: 90%;
         margin: 0 auto;
