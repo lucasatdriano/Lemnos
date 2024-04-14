@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Flipper, Flipped } from 'react-flip-toolkit';
 import { CustomInput } from '../../../../components/inputs/Inputs';
 import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex'
@@ -20,6 +21,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
     password: false,
     confPassword: false
   });
+  const [flipKey, setFlipKey] = useState(0);
 
   const nameRef = useRef();
   const cpfRef = useRef();
@@ -66,92 +68,96 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
 
   const handleBackToLoginClick = () => {
     handleBackToLogin();
+    setFlipKey(prevKey => prevKey + 1);
   };
 
-  return (
-    <div className="registration-form-container">
-        <div className="loginCredencial">
-        <h2>Entre com sua Conta do Google</h2>
-        <div className="btnCredencials">  
-          <button></button>
-        </div>
-      </div>
+  return (    
+    <Flipper flipKey={flipKey}>
+      <Flipped flipId="registration-container">
+        <div className="registration-form-container">
+          <div className="loginCredencial">
+          <h2>Entre com sua Conta do Google</h2>
+          <div className="btnCredencials">  
+            <button></button>
+          </div>
+          </div>
 
-      <div className='containerSeparate'>
-        <hr />
-        <h3>OU</h3>
-        <hr />
-      </div>
+          <div className='containerSeparate'>
+            <hr />
+            <h3>OU</h3>
+            <hr />
+          </div>
 
-      <form onSubmit={(e) => {handleSubmit(e)}} className="registration">
-        <h2>Digite seu Email e sua Senha</h2>
-        <div className="inputsRegistration">
-          <CustomInput 
-            type="text" 
-            reference={nameRef} 
-            label="Nome Completo:"
-            maxlength="40"
-            name="name"
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["name"] ? <span className='invalide'>O Campo Nome precisa ser preenchido</span> : ""}
-          <CustomInput 
-            type="text" 
-            reference={cpfRef} 
-            label="CPF:"
-            maxlength="14"
-            name="cpf"
-            value={form.cpf}
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["cpf"] ? <span className='invalide'>O Campo CPF precisa ser preenchido</span> : ""}
-          { errors.cpf && <span className='invalide'>Digite um CPF válido!</span>}
-          <CustomInput 
-            type="text" 
-            reference={emailRef} 
-            label="Email:"
-            maxlength="40"
-            name="email"
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["email"] ? <span className='invalide'>O Campo Email precisa ser preenchido</span> : ""}
-          { errors.email && <span className='invalide'>Digite um Email válido!</span>}
-          <CustomInput 
-            type="text" 
-            reference={confEmailRef} 
-            label="Confirme seu Email:"
-            maxlength="40"
-            name="confEmail"
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["confEmail"] ? <span className='invalide'>O Email precisa ser verificado</span> : ""}
-          <CustomInput 
-            type="password" 
-            reference={pwdRef} 
-            label="Senha:"
-            maxlength="16"
-            name="password"
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["password"] ? <span className='invalide'>O Campo Senha precisa ser preenchido</span> : ""}
-          {errors.password && <span className='invalide'>Digite uma Senha válida! (Com no mínimo 8 caracteres)</span>}
-          <CustomInput 
-            type="password" 
-            reference={confPwdRef} 
-            label="Confirme sua Senha:"
-            maxlength="16"
-            name="confPassword"
-            onBlur={(e) => handleChange(e)}
-          />
-          { emptyValue && form["confPassword"] ? <span className='invalide'>A Senha precisa ser verificado</span> : ""}
+          <form onSubmit={(e) => {handleSubmit(e)}} className="registration">
+            <h2>Crie sua Conta Lemnos</h2>
+            <div className="inputsRegistration">
+              <CustomInput 
+                type="text" 
+                reference={nameRef} 
+                label="Nome Completo:"
+                maxlength="40"
+                name="name"
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["name"] ? <span className='invalide'>O Campo Nome precisa ser preenchido</span> : ""}
+              <CustomInput 
+                type="text" 
+                reference={cpfRef} 
+                label="CPF:"
+                maxlength="14"
+                name="cpf"
+                value={form.cpf}
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["cpf"] ? <span className='invalide'>O Campo CPF precisa ser preenchido</span> : ""}
+              { errors.cpf && <span className='invalide'>Digite um CPF válido!</span>}
+              <CustomInput 
+                type="text" 
+                reference={emailRef} 
+                label="Email:"
+                maxlength="40"
+                name="email"
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["email"] ? <span className='invalide'>O Campo Email precisa ser preenchido</span> : ""}
+              { errors.email && <span className='invalide'>Digite um Email válido!</span>}
+              <CustomInput 
+                type="text" 
+                reference={confEmailRef} 
+                label="Confirme seu Email:"
+                maxlength="40"
+                name="confEmail"
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["confEmail"] ? <span className='invalide'>O Email precisa ser verificado</span> : ""}
+              <CustomInput 
+                type="password" 
+                reference={pwdRef} 
+                label="Senha:"
+                maxlength="16"
+                name="password"
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["password"] ? <span className='invalide'>O Campo Senha precisa ser preenchido</span> : ""}
+              {errors.password && <span className='invalide'>Digite uma Senha válida! (Com no mínimo 8 caracteres)</span>}
+              <CustomInput 
+                type="password" 
+                reference={confPwdRef} 
+                label="Confirme sua Senha:"
+                maxlength="16"
+                name="confPassword"
+                onBlur={(e) => handleChange(e)}
+              />
+              { emptyValue && form["confPassword"] ? <span className='invalide'>A Senha precisa ser verificado</span> : ""}
+            </div>
+            
+            <div className="btnRegistrationForm">
+              <button type="submit">Cadastrar</button>
+              <button type='button' onClick={handleBackToLoginClick}>Voltar para Login</button>
+            </div>
+          </form>
         </div>
-        
-        <div className="btnRegistrationForm">
-          <button type="submit">Cadastrar</button>
-          <button type='button' onClick={handleBackToLoginClick}>Voltar para Login</button>
-        </div>
-      </form>
-    
-    </div>
+      </Flipped>
+    </Flipper>
   );
 };

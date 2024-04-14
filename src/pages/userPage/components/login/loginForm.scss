@@ -40,7 +40,7 @@ $font-items: 'Poppins', Helvetica;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2em;
+    gap: 7%;
 
     .btnCredencials {
       display: flex;
@@ -224,4 +224,27 @@ $font-items: 'Poppins', Helvetica;
       }
     }
   }  
+}
+
+.flipped-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.flipped-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilos para animação de saída */
+.flipped-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.flipped-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
