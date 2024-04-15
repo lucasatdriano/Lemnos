@@ -20,7 +20,7 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-body {
+main {
     .mainDep {
         width: 90%;
         margin: 12em auto 0;
@@ -76,18 +76,22 @@ body {
         margin: 0 auto;
         height: auto;
         padding-top: 1em;
-        
+
         .offersList {
             display: flex;
             flex-direction: row;
             height: auto;
 
             .splide__list {
-                width: 107em;
+                margin: auto;
+                width: 85vw;
             }
+            
             .splide__slide {
-                margin: 0 -84em 0 0;
+                margin-right: -3em;
+                padding-left: 5em;
             }
+
             .splide__pagination__page {
                 display: none;
             }
@@ -103,9 +107,6 @@ body {
                     &:hover {
                         opacity: .8;
                     }
-                }
-                &.splide__arrow--prev {
-                    left: -3em;
                 }
 
                 &.splide__arrow--next {
@@ -139,11 +140,11 @@ body {
 
         .brandsList {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-columns: repeat(5, minmax(100px, 1fr));
             gap: 2em;
             height: auto;
             padding-top: .5em;
+            grid-auto-flow: row;
         }
     }
 }

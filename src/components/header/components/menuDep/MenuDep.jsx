@@ -36,7 +36,7 @@ export function MenuDep({ toggleTheme }) {
                     <RiCloseFill className='menuIcon' />
                 </button>
 
-                <img src={ LogoVertical } alt="Logo" className='logo'/>
+                <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
                 <hr />
 
                 <h3>Departamentos</h3>

@@ -43,21 +43,18 @@ export function About() {
                 </div>
                 <div className="item">
                     <h3>Plataforma</h3>
-                    <p>A plataforma Lemnos é uma vitrine digital completa e 
-                        intuitiva, oferecendo diversos produtos tecnológicos de 
-                        última geração. Projetada para simplificar a experiência 
-                        de compra, proporciona navegação fácil e atendimento 
-                        personalizado, garantindo uma jornada de compra 
-                        excepcional.
+                    <p>A plataforma Lemnos oferece uma vitrine digital intuitiva 
+                        com uma ampla gama de produtos tecnológicos de ponta, 
+                        proporcionando uma experiência de compra simplificada e 
+                        personalizada.
                     </p>
                 </div>
                 <div className="item">
                     <h3>Valores</h3>
-                    <p>Na Lemnos, comprometemo-nos com a excelência em cada 
-                        interação, buscando capacitar os clientes com tecnologia 
-                        e oferecer soluções alinhadas às suas necessidades. Seja 
-                        um entusiasta ou iniciante, proporcionamos um ambiente 
-                        acolhedor e informativo.
+                    <p>Na Lemnos, priorizamos a excelência e a satisfação do 
+                        cliente, oferecendo tecnologia e soluções adaptadas às 
+                        suas necessidades. Nosso ambiente acolhedor e 
+                        informativo atende tanto entusiastas quanto iniciantes.
                     </p>
                 </div>
             </div>

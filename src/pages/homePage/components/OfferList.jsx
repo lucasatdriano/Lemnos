@@ -85,11 +85,23 @@ export function OfferList() {
       <Splide
         options={{
           type: 'carousel',
-          perPage: 1,
+          perPage: 3,
+          perMove: 1,
           speed: 1000,
           arrows: true,
+          breakpoints: {
+            1300: {
+              perPage: 2,
+            },
+            860: {
+              perPage: 1,
+            },
+            500: {
+              perPage: 1,
+            },
+          },
         }}
-      >  
+      >
         {offers.map(offer => (     
           <SplideSlide>
             <CardOffer key={offer.id} offer={offer} />
