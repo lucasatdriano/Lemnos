@@ -17,7 +17,7 @@ $color-shadow: #12171740;
 
 .carousel {
     width: 85%;
-    height: 50vh;
+    height: 45vh;
     margin: 0 auto;
 
     &:hover .splide__pagination .splide__pagination__page.is-active::after {
@@ -27,7 +27,7 @@ $color-shadow: #12171740;
     .splide__slide {
         img {
             width: 100%; 
-            height: 65vh;
+            height: 60vh;
             border-radius: 20px;
         }
     }
@@ -62,6 +62,9 @@ $color-shadow: #12171740;
     .splide__arrow {
         &.splide__arrow--prev,
         &.splide__arrow--next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 2.4rem;
             transition: 0.3s ease;
             background-color: #f7efef5e;

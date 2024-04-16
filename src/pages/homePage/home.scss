@@ -225,6 +225,31 @@ main {
 
 @media only screen and (max-width: 700px) {
     main {
+        .mainDep {
+            .containerDeps {
+                display: flex;
+                margin: auto;
+                width: 90%;
+                padding: 10px;
+                overflow-x: scroll;
+                scroll-behavior: smooth;
+                scroll-snap-type: x proximity;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+        
+                .gridItem {
+                    width: 500px;
+                    height: 275px;
+
+                    img {
+                        width: 450px;
+                        height: 200px;
+                    }
+                }
+            }
+        }
         .offers {
             .offersList {   
                 .splide__list {
