@@ -32,7 +32,6 @@ $font-items: 'Poppins', Helvetica;
     transition: .5s ease;
     cursor: pointer;
 
-
     .brandImage {
         width: 3em;
         height: 150px;
@@ -52,24 +51,4 @@ $font-items: 'Poppins', Helvetica;
             content: " >";
         }
     }
-
-    // &:hover {
-    //     width: 25em;
-    //     border-radius: 20px;
-    //     filter: blur(0);
-
-    //     .brandImage {
-    //         width: 15em;
-    //         filter: blur(0);
-    //     }
-
-    //     .brandName {
-    //         opacity: 1;
-    //     }
-
-    //     p {
-    //         opacity: 1;
-    //         text-decoration: underline;
-    //     }
-    // }
 } 
