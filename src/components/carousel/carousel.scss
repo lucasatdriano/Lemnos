@@ -79,3 +79,15 @@ $color-shadow: #12171740;
         width: 100%;
     }
 }
+
+@media only screen and (max-width: 760px) {
+    .carousel {
+        height: 30vh;
+        
+        .splide__slide {
+            img {
+                height: 45vh;
+            }
+        }
+    }
+}

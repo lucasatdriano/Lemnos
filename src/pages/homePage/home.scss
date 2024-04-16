@@ -67,13 +67,12 @@ main {
     .offers {
         width: 90%;
         margin: 0 auto;
-        height: auto;
         padding-top: 1em;
 
         .offersList {
             display: flex;
+            justify-content: center;
             flex-direction: row;
-            height: auto;
 
             .splide__list {
                 margin: auto;
@@ -82,7 +81,6 @@ main {
             
             .splide__slide {
                 margin-right: -5em;
-                padding-left: 5em;
             }
 
             .splide__pagination__page {
@@ -102,6 +100,9 @@ main {
                     }
                 }
 
+                &.splide__arrow--prev {
+                    left: -3em;
+                }
                 &.splide__arrow--next {
                     right: -3em;
                 }
@@ -230,7 +231,16 @@ main {
                     width: 75vw;
                 }
                 .splide__slide {
-                    padding-left: 4.5em;
+                    margin-right: 0;
+                    padding-left: 2em;
+                }
+                .splide__arrow {   
+                    &.splide__arrow--prev {
+                        left: -2em;
+                    }
+                    &.splide__arrow--next {
+                        right: -2em;
+                    }
                 }
             }
         }

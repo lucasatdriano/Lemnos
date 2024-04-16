@@ -110,6 +110,12 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-.modal-open {
-    overflow: hidden !important;
+.shrink {
+    .modal {
+        left: -5em;
+        width: 120vw;
+    }
+    .menuMobile {
+        right: -5em;
+    }
 }

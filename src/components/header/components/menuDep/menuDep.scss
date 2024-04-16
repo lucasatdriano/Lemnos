@@ -42,7 +42,7 @@ $font-items: 'Poppins', Helvetica;
         width: 100vw;
         min-height: 100vh;
         background-color: #12171780;
-        z-index: 90;
+        z-index: 99;
         opacity: 0;
         display: none;
     
@@ -123,22 +123,18 @@ $font-items: 'Poppins', Helvetica;
 
         .menuNav {
             padding: 0 0 20px 0;
+            display: flex;
+            flex-direction: column;
             
-            li {
+            .link {
                 padding: 15px 10px 0;
                 transition: .2s ease-in;
-                
+                color: $color-fontDark;
+                font-size: 1.8rem;
+
                 &:hover {
-                    background-color: $color-secundaryDark; 
-                }
-
-                a {
-                    color: $color-fontDark;
-                    font-size: 1.8rem;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
+                    background-color: $color-secundaryDark;
+                    text-decoration: underline; 
                 }
             }
         }
@@ -236,7 +232,14 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-body {
-    overflow-y: hidden !important;
-    margin: 0 2.5px 0 0;
+.shrink {
+    .modal {
+        left: -5em;
+        width: 120vw;
+    }
+
+    .menu {
+        left: -10em;
+        padding: 0 0 0 2em;
+    }
 }

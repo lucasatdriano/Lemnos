@@ -110,4 +110,9 @@ html {
     body.dark {
         @include darkMode;
     }
+    
+    &.modalOpen {
+        overflow-y: hidden !important;
+        margin: 0 2.5px 0 0;
+    }
 }

@@ -39,8 +39,8 @@ export function Header({ toggleTheme }) {
             
             <nav>
                 <ul className='navegation'>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/about">Sobre</Link></li>
+                    <Link to="/" className='link'>Home</Link>
+                    <Link to="/about" className='link'>Sobre</Link>
                 </ul>
             </nav>
             

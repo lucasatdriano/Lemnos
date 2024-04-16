@@ -14,11 +14,12 @@ export function MenuDep({ toggleTheme }) {
     }
 
     const toggleModal = () => {
+        const htmlTag = document.querySelector('html');
         const modalOpen = isActive;
         if (modalOpen) {
-            document.body.classList.remove("modal-open");
+            htmlTag.classList.remove('modalOpen');
         } else {
-            document.body.classList.add("modal-open");
+            htmlTag.classList.add('modalOpen');
         }
     }
 
@@ -26,7 +27,9 @@ export function MenuDep({ toggleTheme }) {
         <>
         <nav className='menuCat'>
             <button onClick={toggleMenu} className='menuButton'>
-                <RiMenuUnfoldLine className='menuIcon' />
+                <a href="#">
+                    <RiMenuUnfoldLine className='menuIcon' />
+                </a>
             </button>
 
             <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
@@ -56,10 +59,13 @@ export function MenuDep({ toggleTheme }) {
                 </ul>
 
                 <h3>Navegação</h3>
-                <ul className='menuNav'>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/about">Sobre</Link></li>
-                </ul>
+                <nav>
+                    <ul className='menuNav'>
+                        <Link to="/" className='link'>Home</Link>
+                        <Link to="/about" className='link'>Sobre</Link>
+                    </ul>
+                </nav>
+ 
                 
                 <div className='toggleTheme'>
                     <input 

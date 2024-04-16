@@ -14,11 +14,12 @@ export function MenuNav() {
     }
 
     const toggleModal = () => {
+        const htmlTag = document.querySelector('html');
         const modalOpen = isActive;
         if (modalOpen) {
-            document.body.classList.remove("modal-open");
+            htmlTag.classList.remove('modalOpen');
         } else {
-            document.body.classList.add("modal-open");
+            htmlTag.classList.add('modalOpen');
         }
     }
 
