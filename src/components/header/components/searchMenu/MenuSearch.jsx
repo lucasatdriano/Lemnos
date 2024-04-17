@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
+import logoHorizontal from '../../../../assets/logoHorizontal.png'
 
 export function MenuSearch({ onSearchResultClick }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,15 +11,70 @@ export function MenuSearch({ onSearchResultClick }) {
       const value = event.target.value;
       setSearchTerm(value);
   
-      // Aqui você pode fazer a chamada à API para buscar os produtos
-      // Por enquanto, vamos apenas simular uma lista de produtos estática
-      const products = [
-        { id: 1, name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)' },
-        { id: 2, name: 'Product 2' },
-        { id: 3, name: 'Product 3' },
-      ];
+      //chamada da API
+    const products = [
+      {
+        id: 1,
+        name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
+        price: 19.99,
+        image: logoHorizontal
+      },
+      {
+        id: 2,
+        name: 'Product 2',
+        price: 24.99,
+        image: '../../../assets/logoHorizontal.png'
+      },
+      {
+        id: 3,
+        name: 'Product 3',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 4,
+        name: 'Product 4',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 5,
+        name: 'Product 5',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 6,
+        name: 'Product 6',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 7,
+        name: 'Product 7',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 8,
+        name: 'Product 8',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 9,
+        name: 'Product 9',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+      {
+        id: 10,
+        name: 'Product 10',
+        price: 24.99,
+        image: 'product2.jpg'
+      },
+    ];
 
-      // Filtra os produtos com base no termo de pesquisa
       const filteredResults = products.filter(product =>
         product.name.toLowerCase().includes(value.toLowerCase())
       );
@@ -27,8 +83,7 @@ export function MenuSearch({ onSearchResultClick }) {
     };
   
     const handleSearch = (event) => {
-      event.preventDefault(); // Impede o envio do formulário padrão
-      // Aqui você pode adicionar mais lógica se necessário
+      event.preventDefault();
     };
   
     const handleSearchResultClick = (productId) => {
@@ -55,7 +110,7 @@ export function MenuSearch({ onSearchResultClick }) {
               <ul className="searchResults">
               {searchResults.map(product => (
                 <li key={product.id} onClick={() => handleSearchResultClick(product.id)}>
-                  {product.name}
+                  {product.image} {product.name} {product.price}
                 </li>
               ))}
             </ul>

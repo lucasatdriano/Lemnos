@@ -6,6 +6,8 @@ import '../home.scss';
 import logoHorizontal from '../../../assets/logoHorizontal.png'
 
 export function OfferList() {
+  
+    //chamada da API
   const offers = [
     {
       id: 1,
@@ -78,7 +80,6 @@ export function OfferList() {
       image: 'product2.jpg'
     },
   ];
-
 
   return (    
     <div className="offersList">

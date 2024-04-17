@@ -3,6 +3,8 @@ import { Brands } from '../../../components/cardBrand/CardBrand';
 import '../home.scss';
 
 export function BrandsList() {
+
+    //chamada da API
   const brands = [
     {
       id: 1,

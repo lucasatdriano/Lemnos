@@ -7,6 +7,7 @@ import logoHorizontal from '../../../assets/logoHorizontal.png'
 export function ProductList() {
   const navigate = useNavigate();
 
+    //chamada da API
   const products = [
     {
       id: 1,

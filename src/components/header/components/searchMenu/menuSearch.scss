@@ -19,38 +19,41 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-.inputSearch {
+.searchContainer {
     width: 50%;
-    position: relative;
+     
+    .inputSearch {
+        position: relative;
 
-    #inputSearch {
-        width: 100%;
-        height: 2em;
-        border-radius: 20px;
-        background-color: $color-bgLight;
-        color: $color-fontLight;
-        text-indent: 20px;
-        font-size: 2.0rem;
-    }
-
-    button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        position: absolute;
-        right: 2%;
-        top: 10%;
-        
-        .searchIcon {
+        #inputSearch {
+            width: 100%;
+            height: 2em;
+            border-radius: 20px;
+            background-color: $color-bgLight;
             color: $color-fontLight;
-            height: 28px;
-            width: 28px;
+            text-indent: 20px;
+            font-size: 2.0rem;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 2%;
+            top: 10%;
+            
+            .searchIcon {
+                color: $color-fontLight;
+                height: 28px;
+                width: 28px;
+            }
         }
     }
 }
 
 @media only screen and (max-width: 1024px) {
-    .inputSearch {
+    .searchContainer {
         width: 70%;
     }
 }
