@@ -29,7 +29,7 @@ footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 50px 0 10px 50px;
+        padding: 3em 0 .7em 3em;
 
         img {
             height: 120px;
@@ -43,31 +43,35 @@ footer {
             gap: 5em;
 
             h3 {
+                font-size: 2.6rem;
                 text-transform: uppercase;
             }
 
             li {
+                font-size: 2.2rem;
                 margin: 0 0 2px 5px;
             }
         }
 
         .iconsNav {
-            width: 15em;
+            width: 20em;
 
             .icons {
-                display: grid;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
                 padding: 0 0 0 20px;
-                grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: .5em;
 
                 .icon {
                     margin: 5px;
-                    width: 32px;
-                    height: 32px;
+                    width: 42px;
+                    height: 42px;
                 }
             }
 
             hr {
-                height: 3px;
+                height: 5px;
                 width: 100%;
                 background-image: linear-gradient(to right, transparent, $color-fontDark);
                 border: none;
@@ -80,16 +84,16 @@ footer {
         margin: 5px 20px 0 20px;
         justify-content: space-between;
         
-        a{
+        a {
             color: $color-fontDark;
         }
     }
 }
 
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1320px) {
     footer {   
         #footerContent {
-            padding: 50px 0 10px 20px;
+            padding-left: .7em;
 
             img {
                 display: none;
@@ -100,46 +104,64 @@ footer {
             }
 
             .iconsNav {
-                width: 12em;
+                width: 17em;
     
                 .icons {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
-
                     .icon {
-                        width: 28px;
-                        height: 28px;
+                        width: 40px;
+                        height: 40px;
                     }
+                }
+
+                hr {
+                    height: 4px;
                 }
             }
         }
     }
 }
 
-@media only screen and (max-width: 620px) {
+@media only screen and (max-width: 1080px) {
     footer {   
         #footerContent {
-            padding: 50px 0 10px 20px;
-
-            img {
-                display: none;
-            }
+            padding-bottom: 2em;
+            flex-direction: column;
 
             .navLinks {
-                gap: 3em;
+                padding: 0 0 20px;
             }
 
             .iconsNav {
-                width: 12em;
+                width: 20em;
     
                 .icons {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
-
                     .icon {
-                        width: 28px;
-                        height: 28px;
+                        width: 42px;
+                        height: 42px;
                     }
+                }
+
+                hr {
+                    height: 5px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    footer {   
+        padding-top: 8em;
+        margin-top: 8em;
+
+        #footerContent {
+            .navLinks {
+                gap: 2em;
+                flex-direction: column;
+                text-align: center;
+
+                li {
+                    margin: 0 0 2px;
                 }
             }
         }
