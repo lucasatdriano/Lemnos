@@ -11,14 +11,14 @@ import { Product } from './pages/productPage/Product';
 const router = createBrowserRouter([
   {
     path: '/', element: <App />,
-    errorElement: <NotFound />,
     children: [
-      { path:"/", element: <Home />},
+      { path:"", element: <Home />},
       { path:"/product/:id", element: <Product />},
       { path:"/about", element: <About />},
-      { path:"/login", element: <Login />}
-    ]
-  }
+      { path:"/login", element: <Login />},
+      { path: '*', element: <NotFound /> },
+    ],
+  },
 ]);
 
 ReactDOM.render(

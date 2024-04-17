@@ -81,29 +81,6 @@ header {
         }
     }
 
-    .inputSearch {
-        width: 50%;
-        position: relative;
-
-        #inputSearch {
-            width: 100%;
-            height: 2em;
-            border-radius: 20px;
-            background-color: $color-bgLight;
-            color: $color-fontLight;
-            text-indent: 20px;
-            font-size: 2.0rem;
-        }
-
-        .searchIcon {
-            position: absolute;
-            right: 2%;
-            top: 10%;
-            height: 28px;
-            width: 28px;
-        }
-    }
-
     .menuDesktop {
         display: flex;
         align-items: center;
@@ -137,10 +114,6 @@ header {
 
         .navegation {
             display: none;
-        }
-    
-        .inputSearch {
-            width: 70%;
         }
 
         .menuDesktop {   

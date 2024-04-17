@@ -1,15 +1,15 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './product.scss';
 
 export function Product({ products }) {
     const { id } = useParams();
-    // const history = useHistory();
+    const navigate = useNavigate();
 
     const product = products.find(product => product.id === parseInt(id));
   
     if (!product) {
-        history.push('/Error404');
+        navigate.push('/Error404');
         return null;
     }
 

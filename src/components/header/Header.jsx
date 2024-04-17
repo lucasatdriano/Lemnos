@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './header.scss'
 import { MenuDep } from './components/menuDep/MenuDep';
 import { MenuNav } from './components/menuMobile/MenuNavMob';
+import { MenuSearch } from './components/searchMenu/MenuSearch';
 import LogoHorizontal from '../../assets/logoHorizontal.png';
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
@@ -25,6 +26,10 @@ export function Header({ toggleTheme }) {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const handleSearchResultClick = (productId) => {
+        // Lógica para manipular o clique no resultado de pesquisa
+    };
     
     return (
         <>
@@ -34,7 +39,6 @@ export function Header({ toggleTheme }) {
             
             <Link to="/">
                 <a href="" className='logo'>Lemnos</a>
-                {/* <img src={ LogoHorizontal } alt="logo" className='logo'/> */}
             </Link>
             
             <nav>
@@ -44,10 +48,7 @@ export function Header({ toggleTheme }) {
                 </ul>
             </nav>
             
-            <div className='inputSearch'>
-                <input type="text" placeholder='Search:' name='search' id='inputSearch'/>
-                <RiSearch2Line className='searchIcon'/>
-            </div>
+            <MenuSearch onSearchResultClick={handleSearchResultClick} />
             
             <nav className='menuDesktop'>
                 <Link to="/">

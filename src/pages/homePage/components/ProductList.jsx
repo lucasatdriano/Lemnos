@@ -1,11 +1,11 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../../../components/card/Card';
 import '../home.scss';
 import logoHorizontal from '../../../assets/logoHorizontal.png'
 
 export function ProductList() {
-  // const history = useHistory();
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -71,7 +71,7 @@ export function ProductList() {
   ];
 
   const handleProductClick = (productId) => {
-    history.push(`/product/${productId}`);
+    navigate.push(`/product/${productId}`);
   };
 
   return (

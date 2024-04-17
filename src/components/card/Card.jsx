@@ -7,7 +7,7 @@ export function Card({ product, onClick }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
   function handleClickButton() {
-    navigate(`/products/${id}`);
+    navigate(`/product/${id}`);
   }
 
   return (
