@@ -71,14 +71,10 @@ export function ProductList() {
     },
   ];
 
-  const handleProductClick = (productId) => {
-    navigate.push(`/product/${productId}`);
-  };
-
   return (
     <div className='productsList'>
       {products.map(product => (
-        <Card key={product.id} product={product} onClick={() => handleProductClick(product.id)} />
+        <Card key={product.id} product={product} />
       ))}
     </div>
   );

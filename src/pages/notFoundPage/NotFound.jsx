@@ -15,8 +15,6 @@ export function NotFound() {
 
   return (
     <div className={`${theme}`}>
-        <Header toggleTheme={toggleTheme}/>
-
         <main className='bgScreen'>
           <div className="notFound">
               <h1>404</h1>

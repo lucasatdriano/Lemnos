@@ -2,16 +2,16 @@ import React from 'react';
 import './card.scss';
 import { useNavigate } from 'react-router-dom';
 
-export function Card({ product, onClick }) {
+export function Card({ product }) {
   const navigate = useNavigate();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-  function handleClickButton() {
-    navigate(`/product/${id}`);
+  function handleClickCard() {
+    navigate(`/product/${product.id}`);
   }
 
   return (
-    <div className="productCard" onClick={handleClickButton}>
+    <div className="productCard" onClick={handleClickCard}>
       <img src={product.image} alt={product.name} className="productImage" />
       <div className="productDetails">
         <h2 className="productName">{product.name}</h2>
