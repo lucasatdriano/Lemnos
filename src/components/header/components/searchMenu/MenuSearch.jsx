@@ -6,10 +6,16 @@ import logoHorizontal from '../../../../assets/logoHorizontal.png'
 export function MenuSearch({ onSearchResultClick }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   
     const handleSearchChange = (event) => {
       const value = event.target.value;
       setSearchTerm(value);
+
+      if (value.trim() === '') {
+        setSearchResults([]);
+        return;
+      }
   
       //chamada da API
     const products = [
@@ -107,13 +113,17 @@ export function MenuSearch({ onSearchResultClick }) {
                     <RiSearch2Line className='searchIcon' />
                 </button>
             </form>
+            {searchResults.length > 0 && (
               <ul className="searchResults">
-              {searchResults.map(product => (
-                <li key={product.id} onClick={() => handleSearchResultClick(product.id)}>
-                  {product.image} {product.name} {product.price}
-                </li>
-              ))}
-            </ul>
+                {searchResults.map(product => (
+                  <li className='itemSearch' key={product.id} onClick={() => handleSearchResultClick(product.id)}>
+                    <img src={product.image} alt="imagem produto" /> 
+                    <h4>{product.name}</h4> 
+                    <p>{BRL.format(product.price)}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
         </div>
     );
 }

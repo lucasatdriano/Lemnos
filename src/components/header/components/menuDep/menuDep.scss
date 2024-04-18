@@ -54,6 +54,10 @@ $font-items: 'Poppins', Helvetica;
 
     .menu {
         position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         top: 0;
         left: -7em;
         height: 100vh;
@@ -85,9 +89,9 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            width: 6em;
-            height: 4em;
-            margin: -.3em 10%;
+            width: 8em;
+            height: 8em;
+            margin: -1em .8em;
             object-fit: contain;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
@@ -102,10 +106,10 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .categorias {
-            padding: 0 0 20px 0;
+            padding: 5px 0 10px 0;
 
             li {
-                padding: 5px 10px 0;
+                padding: 5px 10px;
                 transition: .2s ease-in;
                 cursor: pointer;
                 
@@ -122,7 +126,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .menuNav {
-            padding: 0 0 20px 0;
+            padding: 5px 0 10px 0;
             display: flex;
             flex-direction: column;
             
@@ -143,9 +147,17 @@ $font-items: 'Poppins', Helvetica;
             display: flex;
             padding: 0 0 10px;
             justify-content: center;
+            position: relative;
         
             .checkbox {
-                display: none;
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 60px;
+                z-index: 1;
+                width: 8em;
+                height: 8em;
+                opacity: 0;
 
                 &:checked + .label .ball {
                     transform: translateX(63px);
