@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './user.scss';
-import { Header } from '../../components/header/Header';
-import { Footer } from '../../components/footer/Footer';
+import { CustomInput } from '../../components/inputs/Inputs';
 import { LoginForm } from './components/login/LoginForm';
 import { RegistrationForm } from './components/registration/RegistrationForm';
 
@@ -35,6 +34,37 @@ export function Login() {
   return (
     <>
       <div className='container'>
+        <div className="userContainer">
+          <div className="user">
+            <img src="" alt="" />
+            <h3></h3>
+            <h3></h3>
+          </div>
+          <div className="updateInfos">
+           {/* colocar inputs */}
+            <button type="button"></button>
+            <button type="button"></button>
+          </div>
+          <hr />
+          <div className="configuration">
+            {/* icon */}
+            <h4>Ajuda e Configurações</h4>
+            {/* icon */}
+            <div className="confContainer">
+              <Link>Home</Link>
+              <Link>Quem Somos</Link>
+              <p>Linguagem</p>
+              {/* icon */}
+              <div className="langs">
+                {/* icon */}
+                <p></p>
+                <hr />
+                {/* icon */}
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
         {loggedIn ? (
           <div>
             <p>Você está logado como {username}</p>

@@ -56,26 +56,11 @@ $font-items: 'Poppins', Helvetica;
 
 .dark {
   .singleInput {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 75%;
-    position: relative;
-  
     input {
       background-color: #e8f1f078;
-      border: 2px solid $color-shadow;
-      color: $color-fontLight;
-      box-shadow: 2px 2px 4px $color-shadow;
-  
-      &:disabled {
-        background-color: #eee;
-        cursor: not-allowed;
-      }
     }
   
     label {
-      color: $color-fontLight;
       background: linear-gradient(#858989, transparent) ;
     }
   }
