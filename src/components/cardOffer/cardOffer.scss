@@ -22,7 +22,7 @@ $font-items: 'Poppins', Helvetica;
 
 
 .offerCard {
-  width: 20em;
+  width: 18em;
   height: 25em;
   background-color: #f6fefd4d;
   padding: 10px;
@@ -41,9 +41,10 @@ $font-items: 'Poppins', Helvetica;
     margin-right: 16px;
   }
   .offerDescont {
-    background-color: $color-primaryLight;
+    background-color: $color-detailsLight;
     padding: 12px 6px;
     width: 36px;
+    color: $color-fontDark;
     border-radius: 5px;
 
     position: absolute;

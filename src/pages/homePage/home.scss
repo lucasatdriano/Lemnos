@@ -229,7 +229,7 @@ main {
             .containerDeps {
                 display: flex;
                 margin: auto;
-                width: 90%;
+                width: 95%;
                 padding: 10px;
                 overflow-x: scroll;
                 scroll-behavior: smooth;
@@ -240,11 +240,11 @@ main {
                 }
         
                 .gridItem {
-                    width: 25em;
+                    width: 82vw;
                     height: 17em;
 
                     img {
-                        width: 22em;
+                        width: 72vw;
                         height: 12em;
                     }
                 }
@@ -277,6 +277,32 @@ main {
         .brands {
             .brandsList {
                 grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    main {
+        .offers {
+            .offersList {   
+                .splide__list {
+                    width: 77vw;
+                }
+                .splide__slide {
+                    margin-right: 1em;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 375px) {
+    main {
+        .offers {
+            .offersList {
+                .splide__slide {
+                    padding-left: .8em;
+                }
             }
         }
     }

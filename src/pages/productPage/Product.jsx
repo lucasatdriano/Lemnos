@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './product.scss';
 
@@ -23,16 +23,36 @@ export function Product() {
     }
 
     return (
-        <div className="productDetailsOverlay">
-        <div className="productDetailsContainer">
-            <h2 className="productName">{product.name}</h2>
-
-            <p className="productPrice">À vista <br />
-              <span>{BRL.format(product.price)}</span> <br />
-              no PIX com 15% de desconto
-            </p>
-            <img src={product.image} alt={product.name} className="productImage" />
-        </div>
+        <div className="productContainer">
+            <hr />
+            <div className='containerMain'>
+                <div className="containerImages">
+                    <img src="" alt="" className='mainImage'/>
+                    <div className="optionsImages">
+                        <img src="" alt="" />
+                        <img src="" alt="" />
+                        <img src="" alt="" />
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <div className="containerInfos">
+                    {/* icon favorite */}
+                    <h3 className='productName'>Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)</h3>
+                    <p className='priceOrigin'>R$ 2.049,99</p>
+                    <p className="productPrice">À vista <br />
+                        <span>R$ 1.799,99</span> <br />
+                        no PIX com 15% de desconto
+                    </p>
+                    <p className='priceFees'>No Cartão <br />
+                        <span>R$ 1.959,99</span> <br />
+                        Em até 12x de R$ 162,99 sem juros no cartão
+                    </p>
+                    <button className='addCart'>
+                        Adicionar ao Carrinho
+                        {/* icon */}
+                    </button>
+                </div>
+            </div>
         </div>
     );
   }

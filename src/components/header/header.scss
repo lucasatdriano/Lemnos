@@ -21,7 +21,7 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 header { 
-    width: 90%;
+    width: 95%;
     height: 3.5em;
     margin: 0 auto;
     background-color: $color-secundaryLight;
@@ -96,6 +96,7 @@ header {
     }
 
     .menuMobile {
+        margin: .5em 0 0;
         display: none;
     }
 }
@@ -129,7 +130,7 @@ header {
 @media only screen and (max-width: 800px) {
     header {
         padding: 0 0.5em;
-        gap: .5em;
+        gap: 0em;
 
         .logo {
             font-size: 2.5rem;

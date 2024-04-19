@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './user.scss';
+import { Link } from 'react-router-dom';
 import { CustomInput } from '../../components/inputs/Inputs';
 import { LoginForm } from './components/login/LoginForm';
 import { RegistrationForm } from './components/registration/RegistrationForm';
+import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
 
-export function Login() {
+export function Login({ toggleTheme }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [username, setUsername] = useState("");
@@ -35,15 +37,17 @@ export function Login() {
     <>
       <div className='container'>
         <div className="userContainer">
-          <div className="user">
-            <img src="" alt="" />
-            <h3></h3>
-            <h3></h3>
+          <div className="userData">
+            <div className="user">
+              <img src="" alt="user" />
+              <h3>Lucas</h3>
+            </div>
+            <h3>Editar Perfil</h3>
           </div>
           <div className="updateInfos">
-           {/* colocar inputs */}
-            <button type="button"></button>
-            <button type="button"></button>
+            {/* colocar inputs */}
+            <button type="button">Adicionar Endereço</button>
+            <button type="button">Alterar Senha</button>
           </div>
           <hr />
           <div className="configuration">
@@ -51,19 +55,37 @@ export function Login() {
             <h4>Ajuda e Configurações</h4>
             {/* icon */}
             <div className="confContainer">
-              <Link>Home</Link>
-              <Link>Quem Somos</Link>
+              <Link to="/">Home</Link>
+              <Link to="/about">Quem Somos</Link>
               <p>Linguagem</p>
               {/* icon */}
               <div className="langs">
-                {/* icon */}
-                <p></p>
+                <div className="portuguese">
+                  {/* icon */}
+                  <p>Português</p>
+                </div>
                 <hr />
-                {/* icon */}
-                <p></p>
+                <div className="english">
+                  {/* icon */}
+                  <p>Inglês</p>
+                </div>
               </div>
+              <div className='toggleTheme'>
+                <input 
+                  type="checkbox" 
+                  className="checkbox" 
+                  onClick={toggleTheme} 
+                  name="chk" 
+                />
+                <label htmlFor="chk" className="label">
+                  <RiSunLine className='iconSun'/>
+                  <RiMoonLine className='iconMoon'/>
+                  <div className="ball"></div>
+                </label>
+                </div>
             </div>
           </div>
+          <button type="button">Sou Admin</button>
         </div>
         {loggedIn ? (
           <div>
@@ -73,6 +95,7 @@ export function Login() {
         ) : (
           <div className='loginScreen'>
             {showLogin ? (
+              // <></>
               <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistration} />
             ) : (
               <RegistrationForm handleBackToLogin={handleBackToLogin} />
