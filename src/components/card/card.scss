@@ -2,8 +2,6 @@ $color-primaryLight: #36CEC4;
 
 $color-primaryDark: #10A88D;
 
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
@@ -25,9 +23,12 @@ $font-items: 'Poppins', Helvetica;
   box-shadow: 2px 2px 8px $color-shadow;
   cursor: pointer;
   font-family: $font-items;
+  overflow: hidden;
+  position: relative;
+  transition: .5s ease-in-out;
 
   .productImage {
-    width: 15em;
+    width: 100%;
     height: 10em;
     object-fit: contain;
     margin-right: 16px;
@@ -35,23 +36,87 @@ $font-items: 'Poppins', Helvetica;
 
   .productDetails {
     flex-grow: 1;
-  }
 
-  .productName {
-    font-size: 1.7rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-  }
 
-  .productPrice {
-    font-size: 1.4rem;
-    font-weight: 500;
-    line-height: 1.2;
-
-    span {
+    .productName {
+      font-size: 1.7rem;
+      margin-bottom: 24px;
       font-weight: 700;
-      color: $color-primaryLight;
-      font-size: 3.6rem;
+      transition: .5s ease-in-out;
     }
+
+    .productPrice {
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.2;
+
+      span {
+        font-weight: 700;
+        color: $color-primaryLight;
+        font-size: 3.6rem;
+      }
+    }
+  }
+
+  .btnAdd {
+    position: absolute;
+    bottom: -70px;
+    left: 0;
+    border-radius: 10px;
+    background-color: $color-primaryLight;
+    box-shadow: 0 0 10px $color-primaryDark;
+    border: none;
+    width: 100%;
+    font-size: 2rem;
+    font-family: $font-title;
+    padding: .8em 0;
+    transition: .5s ease-out;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 40px $color-primaryLight;
+    }
+  }
+
+  &:hover {
+    .productDetails {
+      .productName {
+        margin-bottom: 8px;
+      }
+    }
+    .btnAdd {
+      bottom: 0;
+    }
+  }
+}
+
+.dark {
+  .productCard {
+    .productDetails {
+      .productPrice {
+        span {
+          color: $color-primaryDark;
+        }
+      }
+    }
+
+    .btnAdd {
+      background-color: $color-primaryDark;
+      
+      &:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 0 40px $color-primaryDark;
+      }
+    }
+  }
+}
+
+@keyframes gradient {
+  from {
+      background-position: 0 50%;
+  }
+  to {
+      background-position: 100% 50%;
   }
 }

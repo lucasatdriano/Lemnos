@@ -15,7 +15,12 @@ export function CardOffer({ offer }) {
           <span>{BRL.format(offer.price - (offer.price / 100 * offer.descont))}</span> <br />
           no PIX com 15% de desconto
         </p>
+        <button type="button" className='btnAdd'>
+          Adicionar ao Carrinho
+          {/* icon */}
+        </button>
       </div>
+
     </div>
   );
 }

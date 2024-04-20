@@ -10,6 +10,11 @@ export function Card({ product }) {
     navigate(`/product/${product.id}`);
   }
 
+  function handleAddToCart() {
+    // Adicione sua lógica para adicionar o produto ao carrinho aqui
+    console.log('Produto adicionado ao carrinho:', product);
+  }
+
   return (
     <div className="productCard" onClick={handleClickCard}>
       <img src={product.image} alt={product.name} className="productImage" />
@@ -20,6 +25,10 @@ export function Card({ product }) {
           no PIX com 15% de desconto
         </p>
       </div>
+      <button type="button" className='btnAdd' onClick={handleAddToCart}>
+        Adicionar ao Carrinho
+        {/* icon */}
+      </button>
     </div>
   );
 }

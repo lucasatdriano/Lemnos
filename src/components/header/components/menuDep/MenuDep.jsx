@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import LogoVertical from '../../../../assets/logoVertical.png';
+import LogoVertical from '../../../../assets/logoVerticalClaro.svg';
 import './menuDep.scss';
 import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
 

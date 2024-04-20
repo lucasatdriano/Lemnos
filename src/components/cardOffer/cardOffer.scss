@@ -25,7 +25,6 @@ $font-items: 'Poppins', Helvetica;
   width: 18em;
   height: 25em;
   background-color: #f6fefd4d;
-  padding: 10px;
   margin: 1em 0;
   border-radius: 10px;
   text-align: left;
@@ -35,11 +34,13 @@ $font-items: 'Poppins', Helvetica;
   position: relative;
 
   .offerImage {
-    width: 15em;
+    width: 100%;
     height: 10em;
+    padding: 10px 10px 0;
     object-fit: contain;
     margin-right: 16px;
   }
+
   .offerDescont {
     background-color: $color-detailsLight;
     padding: 12px 6px;
@@ -52,29 +53,103 @@ $font-items: 'Poppins', Helvetica;
     right: 15px;
   }
 
-  .offerDetails {  
+  .offerDetails {
+    overflow-y: hidden;
+    position: relative;
+    padding-bottom: 3.8em;
+    width: 100%;
+    height: 15em;
+    border-radius: 10px;
+
     .offerName {
       font-size: 1.7rem;
       margin-bottom: 8px;
       font-weight: 700;
+      padding: 0 10px;
     }
 
     .offerPrice {
       color: $color-detailsLight;
       text-decoration: line-through;
       font-size: 1.8rem;
+      opacity: 1;
+      visibility: visible;
       line-height: 2;
+      padding: 0 10px;
+      transition: .2s ease-in-out;
     }
 
     .offerPriceDescont {
       font-size: 1.4rem;
       font-weight: 500;
       line-height: 1.2;
+      padding: 0 10px;
+      transition: .7s ease;
   
       span {
         font-weight: 700;
         color: $color-primaryLight;
         font-size: 3.6rem;
+      }
+    }
+
+    .btnAdd {
+      position: absolute;
+      bottom: -70px;
+      left: 0;
+      border-radius: 10px;
+      background-color: $color-primaryLight;
+      box-shadow: 0 0 10px $color-primaryDark;
+      border: none;
+      width: 100%;
+      font-size: 2rem;
+      font-family: $font-title;
+      padding: .8em 0;
+      transition: .5s ease-out;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 0 40px $color-primaryLight;
+      }
+    }
+  }
+
+  &:hover {
+    .offerDetails {
+      padding-bottom: 4em;
+
+      .offerPrice {
+        opacity: 0;
+      }
+
+      .offerPriceDescont {
+        margin-top: -24px;
+      }
+
+      .btnAdd {
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.dark { 
+  .offerCard {
+    .offerDetails {
+      .offerPriceDescont {    
+        span {
+          color: $color-primaryDark;
+        }
+      }
+
+      .btnAdd {
+        background-color: $color-primaryDark;
+
+        &:hover {
+          filter: brightness(1.1);
+          box-shadow: 0 0 40px $color-primaryDark;
+        }
       }
     }
   }
