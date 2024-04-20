@@ -54,10 +54,10 @@ export function LoginForm({ onLogin, onCadastroClick }) {
             <div className="inputsLogin">
 
               <CustomInput 
-                type="email" 
+                type="text" 
                 reference={emailRef} 
                 label="Email:"
-                name="email"
+                id="email"
                 value={form.email}
                 onBlur={(e) => handleChange(e)}
               />
@@ -65,7 +65,7 @@ export function LoginForm({ onLogin, onCadastroClick }) {
                 type="password" 
                 reference={pwdRef} 
                 label="Senha:"
-                name="password"
+                id="password"
                 value={form.password}
                 onBlur={(e) => handleChange(e)}
               />

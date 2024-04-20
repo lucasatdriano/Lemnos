@@ -1,5 +1,210 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #0d977e;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
 .container {
     display: grid;
     place-content: center;
     min-height: calc( 100vh - 4em - 20em);
+
+    .userContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      
+        .userData {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+      
+        .user {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+      
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              margin-right: 10px;
+            }
+        }
+      
+        h3 {
+            margin: 0;
+        }
+      
+        .updateInfos {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+      
+            button {
+                padding: 8px 16px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+    }
+      
+    hr {
+        width: 100%;
+        margin: 20px 0;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+      
+    .configuration {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        h4 {
+            margin-bottom: 10px;
+        }
+    
+        .confContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+      
+            a, p {
+                color: #007bff;
+                text-decoration: none;
+            }
+      
+            .langs {
+                display: flex;
+                gap: 10px;
+      
+                .portuguese, .english {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    cursor: pointer;
+        
+                    p {
+                        margin: 0;
+                    }
+                }
+      
+                .portuguese {
+                    color: #007bff;
+                }
+        
+                .english {
+                    color: #000;
+                }
+            }
+      
+            .toggleTheme {
+                display: flex;
+                padding: 0 0 10px;
+                justify-content: center;
+                position: relative;
+            
+                .checkbox {
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    left: 60px;
+                    z-index: 1;
+                    width: 8em;
+                    height: 8em;
+                    opacity: 0;
+    
+                    &:checked + .label .ball {
+                        transform: translateX(63px);
+                    }
+    
+                    &:checked + .label .iconMoon {
+                        transform: translateY(88%);
+                        color: $color-fontLight;
+                    }
+    
+                    &:checked + .label .iconSun {
+                        transform: translateY(-175%);
+                        color: $color-fontDark;
+                    }
+                }
+                
+                .label {
+                    cursor: pointer;
+                    display: block;
+                    width: 100px;
+                    height: 36px;
+                    background-color: $color-secundaryDark;
+                    border-radius: 20px;
+                    position: relative;
+                    box-shadow: 2px 2px 4px $color-shadow;
+                    overflow: hidden;
+            
+                    .ball {
+                        width: 28px;
+                        height: 28px;
+                        background-color: $color-primaryLight;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 4px;
+                        left: 4px;
+                        transition: transform 0.5s ease;
+                    }
+    
+                    .iconSun {
+                        position: absolute;
+                        z-index: 10;
+                        color: $color-fontLight;
+                        width: 26px;
+                        height: 26px;
+                        left: 5px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    }
+                    
+                    .iconMoon {
+                        position: absolute;
+                        z-index: 10;
+                        color:$color-fontDark;
+                        width: 26px;
+                        height: 26px;
+                        right: 5px;
+                        top: -50%;
+                        transform: translateY(-50%);
+                        transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+      
+        button {
+          padding: 8px 16px;
+          border: none;
+          border-radius: 5px;
+          background-color: #007bff;
+          color: #fff;
+          cursor: pointer;
+          margin-top: 20px;
+        }
+    }
 }

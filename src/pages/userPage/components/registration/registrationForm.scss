@@ -98,6 +98,17 @@ $font-items: 'Poppins', Helvetica;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr 1fr;
       gap: 1.5em;
+
+      p {
+        position: relative;
+      
+        .invalid {
+          padding-bottom: 1em;
+          color: $color-detailsLight;
+          position: relative;
+          left: 15px;
+        }
+      }
     }
 
     .btnRegistrationForm {

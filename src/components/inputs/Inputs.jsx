@@ -1,26 +1,18 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './inputs.scss';
 
-export function CustomInput({ type, reference, label }) {
+export function CustomInput({ type, reference, label, id, maxLength}) {
   return (
-    <div className='singleInput'>
+    <p className='singleInput'>
       <input
       type={type} 
-      ref={reference} 
+      ref={reference}
+      id={id}
+      maxLength={maxLength}
       required
       />
-      <label>{label}</label>
-    </div>
+      <label htmlFor={id}>{label}</label>
+    </p>
   );
 };
-
-// CustomInput.defaultProps = {
-//   type: 'text',
-// };
-
-// CustomInput.propTypes = {
-//   label: PropTypes.string.isRequired,
-//   reference: PropTypes.shape().isRequired,
-//   type: PropTypes.string,
-// };
