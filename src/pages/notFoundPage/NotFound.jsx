@@ -15,7 +15,7 @@ export function NotFound() {
 
   return (
     <div className={`${theme}`}>
-        <main className='bgScreen'>
+        <section className='bgScreen'>
           <div className="notFound">
               <h1>404</h1>
               <FaExclamation className="iconError"/>
@@ -25,7 +25,7 @@ export function NotFound() {
               <p>A página que você procura não existe ou não está disponível no momento.</p>
           </div>
           <button className='btnHome' onClick={() => navigate('/')}>Voltar para o início</button>
-        </main>
+        </section>
     </div>
   );
 }

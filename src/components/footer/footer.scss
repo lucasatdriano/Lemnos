@@ -123,6 +123,8 @@ footer {
 
 @media only screen and (max-width: 1080px) {
     footer {   
+        margin-top: 2em;
+
         #footerContent {
             padding-bottom: 2em;
             flex-direction: column;
@@ -151,7 +153,7 @@ footer {
 
 @media only screen and (max-width: 800px) {
     footer {   
-        padding-top: 8em;
+        padding-top: 9em;
         margin-top: 8em;
 
         #footerContent {

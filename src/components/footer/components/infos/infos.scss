@@ -48,16 +48,16 @@ $font-items: 'Poppins', Helvetica;
 
         .containerIcon {
             position: relative;
-            width: 45px;
-            height: 45px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             background-color: $color-terciaryLight;
             box-shadow: 2px 2px 4px $color-shadow;
 
             .icon {
                 position: absolute;
-                width: 36px;
-                height: 36px;
+                width: 46px;
+                height: 46px;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
@@ -85,28 +85,28 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1080px) {
     .infosContent {   
-        top: -10%;
+        top: -12%;
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
-        gap: 1em;
+        width: 96%;
+        gap: .8em;
     
         .containerService,
         .containerPhone,
         .containerMail {
             p {
-                font-size: 1.4rem;
+                font-size: 2rem;
             }
-    
+
             .containerIcon {
-                min-width: 40px;
-                min-height: 40px;
+                min-width: 46px;
+                min-height: 46px;
     
                 .icon {
-                    width: 32px;
-                    height: 32px;
+                    width: 42px;
+                    height: 42px;
                 }
             }
         }
@@ -123,18 +123,14 @@ $font-items: 'Poppins', Helvetica;
     
         .containerService,
         .containerPhone,
-        .containerMail {
+        .containerMail {     
             p {
-                font-size: 2rem;
-                
+                font-size: 2.4rem;
             }
-    
-            .containerIcon {    
-                .icon {
-                    width: 36px;
-                    height: 36px;
-                }
-            }
+        }
+
+        .containerService p {
+            max-width: 30em;
         }
     }
 }

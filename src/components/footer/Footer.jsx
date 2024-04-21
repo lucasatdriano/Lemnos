@@ -5,7 +5,6 @@ import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "
 
 export function Footer() {
     return (
-        <>
         <footer>
             <Infos />
             <section id="footerContent">
@@ -50,6 +49,5 @@ export function Footer() {
                 <small><a href="#">Term And Conditions | Privacy Policy</a></small>
             </div>
         </footer>
-        </>
     )
 }

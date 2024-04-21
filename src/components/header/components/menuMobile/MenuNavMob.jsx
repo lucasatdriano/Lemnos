@@ -24,7 +24,6 @@ export function MenuNav() {
     }
 
     return (
-        <>
         <nav className='menuNav'>
             <button onClick={toggleMenu} className='menuButton'>
                 <BsThreeDotsVertical className='menuIcon' />
@@ -46,6 +45,5 @@ export function MenuNav() {
                 </ul>
             </nav>
         </nav>
-        </>
     )
 }

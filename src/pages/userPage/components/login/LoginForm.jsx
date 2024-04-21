@@ -58,6 +58,7 @@ export function LoginForm({ onLogin, onCadastroClick }) {
                 reference={emailRef} 
                 label="Email:"
                 id="email"
+                name="email"
                 value={form.email}
                 onBlur={(e) => handleChange(e)}
               />
@@ -66,6 +67,7 @@ export function LoginForm({ onLogin, onCadastroClick }) {
                 reference={pwdRef} 
                 label="Senha:"
                 id="password"
+                name="password"
                 value={form.password}
                 onBlur={(e) => handleChange(e)}
               />

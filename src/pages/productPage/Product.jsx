@@ -23,7 +23,7 @@ export function Product() {
     }
 
     return (
-        <div className="productContainer">
+        <section className="productContainer">
             <hr />
             <div className='containerMain'>
                 <div className="containerImages">
@@ -53,6 +53,6 @@ export function Product() {
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
     );
   }

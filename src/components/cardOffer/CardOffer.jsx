@@ -1,5 +1,6 @@
 import React from 'react';
 import './cardOffer.scss';
+import iconAddCart from '../../assets/iconAddCart.svg';
 
 export function CardOffer({ offer }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -17,10 +18,9 @@ export function CardOffer({ offer }) {
         </p>
         <button type="button" className='btnAdd'>
           Adicionar ao Carrinho
-          {/* icon */}
+          <img src={iconAddCart} alt="icon add Cart" className='iconAdd' />
         </button>
       </div>
-
     </div>
   );
 }

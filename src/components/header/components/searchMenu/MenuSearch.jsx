@@ -99,31 +99,31 @@ export function MenuSearch({ onSearchResultClick }) {
     };
   
     return (
-        <div className="searchContainer">
-            <form onSubmit={handleSearch} className="inputSearch">
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    name='search'
-                    id='inputSearch'
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
-                <button type="submit">
-                    <RiSearch2Line className='searchIcon' />
-                </button>
-            </form>
-            {searchResults.length > 0 && (
-              <ul className="searchResults">
-                {searchResults.map(product => (
-                  <li className='itemSearch' key={product.id} onClick={() => handleSearchResultClick(product.id)}>
-                    <img src={product.image} alt="imagem produto" /> 
-                    <h4>{product.name}</h4> 
-                    <p>{BRL.format(product.price)}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-        </div>
+      <div className="searchContainer">
+          <form onSubmit={handleSearch} className="inputSearch">
+              <input
+                  type="text"
+                  placeholder="Search..."
+                  name='search'
+                  id='inputSearch'
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+              />
+              <button type="submit">
+                  <RiSearch2Line className='searchIcon' />
+              </button>
+          </form>
+          {searchResults.length > 0 && (
+            <ul className="searchResults">
+              {searchResults.map(product => (
+                <li className='itemSearch' key={product.id} onClick={() => handleSearchResultClick(product.id)}>
+                  <img src={product.image} alt="imagem produto" /> 
+                  <h4>{product.name}</h4> 
+                  <p>{BRL.format(product.price)}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+      </div>
     );
 }

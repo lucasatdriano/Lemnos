@@ -5,8 +5,7 @@ import './carousel.scss'
 
 export function Slide() {
   return (
-    <>
-    <div className='carousel'>
+    <section className='carousel'>
       <Splide
         options={{
           type: 'loop',
@@ -34,7 +33,6 @@ export function Slide() {
           <img src="https://via.placeholder.com/400x200" alt="Slide 5" />
         </SplideSlide>
       </Splide>
-    </div>
-    </>
+    </section>
   );
 };

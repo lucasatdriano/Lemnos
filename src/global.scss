@@ -107,7 +107,7 @@ html {
         @include lightMode; 
     }
 
-    body.dark {
+    .dark {
         @include darkMode;
     }
     

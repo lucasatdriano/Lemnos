@@ -84,7 +84,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   };
 
   return (    
-    <div className="registration-form-container">
+    <section className="registration-form-container">
       <div className="loginCredencial">
         <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
@@ -108,6 +108,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="Nome Completo:"
               maxLength="40"
               id="name"
+              name="name"
               onChange={(e) => handleChange(e)}
             />
           </p>
@@ -118,6 +119,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="CPF:"
               maxLength="14"
               id="cpf"
+              name="cpf"
               value={form.cpf}
               onChange={(e) => handleChange(e)}
             />
@@ -130,6 +132,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="Email:"
               maxLength="40"
               id="email"
+              name="email"
               onChange={(e) => handleChange(e)}
             />
             {errors.email && <span className='invalid'>Digite um Email válido!</span>}
@@ -141,6 +144,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="Confirme seu Email:"
               maxLength="40"
               id="confEmail"
+              name="confEmail"
               onChange={(e) => handleChange(e)}
             />
             {errors.confEmail && <span className='invalid'>O Email precisa ser verificado</span>}
@@ -152,6 +156,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="Senha:"
               maxLength="16"
               id="password"
+              name="password"
               onChange={(e) => handleChange(e)}
             />
             {errors.password && <span className='invalid'>Digite uma Senha válida! (Com no mínimo 8 caracteres)</span>}
@@ -163,6 +168,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               label="Confirme sua Senha:"
               maxLength="16"
               id="confPassword"
+              name="confPassword"
               onChange={(e) => handleChange(e)}
             />
             {errors.confPassword && <span className='invalid'>A Senha precisa ser verificada</span>}
@@ -174,6 +180,6 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
           <button type='button' onClick={handleBackToLogin}>Voltar para Login</button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };

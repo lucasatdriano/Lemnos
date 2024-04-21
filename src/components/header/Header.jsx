@@ -32,7 +32,6 @@ export function Header({ toggleTheme }) {
     };
     
     return (
-        <>
         <header className={`header ${shrinkHeader ? 'shrink' : ''}`}>
             <div id='headerContent'></div>
             <MenuDep toggleTheme={toggleTheme} />
@@ -66,6 +65,5 @@ export function Header({ toggleTheme }) {
                 <MenuNav />
             </nav>
         </header>
-        </>
     )
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './card.scss';
 import { useNavigate } from 'react-router-dom';
+import iconAddCart from '../../assets/iconAddCart.svg';
 
 export function Card({ product }) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export function Card({ product }) {
       </div>
       <button type="button" className='btnAdd' onClick={handleAddToCart}>
         Adicionar ao Carrinho
-        {/* icon */}
+        <img src={iconAddCart} alt="icon add Cart" className='iconAdd' />
       </button>
     </div>
   );

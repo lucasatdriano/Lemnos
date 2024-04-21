@@ -24,7 +24,6 @@ export function MenuDep({ toggleTheme }) {
     }
 
     return (
-        <>
         <nav className='menuCat'>
             <button onClick={toggleMenu} className='menuButton'>
                 <a href="#">
@@ -82,6 +81,5 @@ export function MenuDep({ toggleTheme }) {
                 </div>
             </nav>
         </nav>
-        </>
     )
 }

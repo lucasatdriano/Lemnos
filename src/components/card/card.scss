@@ -59,6 +59,10 @@ $font-items: 'Poppins', Helvetica;
   }
 
   .btnAdd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
     position: absolute;
     bottom: -70px;
     left: 0;
@@ -76,6 +80,11 @@ $font-items: 'Poppins', Helvetica;
     &:hover {
       filter: brightness(1.1);
       box-shadow: 0 0 40px $color-primaryLight;
+    }
+
+    .iconAdd {
+      width: 24px;
+      height: 24px;
     }
   }
 

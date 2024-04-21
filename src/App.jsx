@@ -14,12 +14,12 @@ export function App() {
 
   return (
     <>
-      <body className={`${theme}`}>
+      <section className={`${theme}`}>
         <Header toggleTheme={toggleTheme} />
         <Outlet />
         <BackToTopButton />
         <Footer />
-      </body>
+      </section>
     </>
   );
 }
