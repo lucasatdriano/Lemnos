@@ -1,6 +1,12 @@
 import React from 'react';
 import { Slide } from '../../components/carousel/Carousel';
 import './home.scss'
+import kitUpgrade from '../../assets/imgKitUpgrade.svg';
+import videoGame from '../../assets/imgVideoGame.svg';
+import monitor from '../../assets/imgMonitor.svg';
+import computadorGamer from '../../assets/imgPcGamer.svg';
+import portatil from '../../assets/imgNotebookPortatil.svg';
+import perifericos from '../../assets/imgPerifericos.svg';
 import { ProductList } from './components/ProductList';
 import { BrandsList } from './components/BrandsList';
 import { OfferList } from './components/OfferList';
@@ -16,32 +22,32 @@ export function Home() {
 
           <div className="containerDeps">
             <div className='gridItem item1'>
-              <img src="" alt="" />
+              <img src={computadorGamer} alt="imagem filtro computadores gamers" />
               <h3>Computadores Gamers</h3>
             </div>
 
             <div className='gridItem item2'>
-              <img src="" alt="" />
+              <img src={portatil} alt="imagem filtro notebook e portáteis" />
               <h3>Notebook e Portáteis</h3>
             </div>
 
             <div className='gridItem item3'>
-              <img src="" alt="" />
+              <img src={kitUpgrade} alt="imagem filtro kit upgrade" />
               <h3>Kit Upgrade</h3>
             </div>
 
             <div className='gridItem item4'>
-              <img src="" alt="" />
+              <img src={perifericos} alt="imagem filtro periféricos" />
               <h3>Periféricos</h3>
             </div>
             
             <div className='gridItem item5'>
-              <img src="" alt="" />
+              <img src={monitor} alt="imagem filtro monitores" />
               <h3>Monitores</h3>
             </div>
 
             <div className='gridItem item6'>
-              <img src="" alt="" />
+              <img src={videoGame} alt="imagem filtro video games" />
               <h3>Video Games</h3>
             </div>
         

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../../../components/card/Card';
 import '../home.scss';
-import logoHorizontal from '../../../assets/logoHorizontal.png'
+import logoHorizontal from '../../../assets/logoHorizontal.svg'
 
 export function ProductList() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.scss';
-import LogoHorizontal from '../../assets/logoHorizontal.png';
+import LogoHorizontal from '../../assets/logoHorizontal.svg';
 
 export function About() {
   return (

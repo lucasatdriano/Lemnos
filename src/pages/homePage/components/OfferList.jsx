@@ -3,7 +3,7 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { CardOffer } from '../../../components/cardOffer/CardOffer';
 import '../home.scss';
-import logoHorizontal from '../../../assets/logoHorizontal.png'
+import logoHorizontal from '../../../assets/logoHorizontal.svg'
 
 export function OfferList() {
   
