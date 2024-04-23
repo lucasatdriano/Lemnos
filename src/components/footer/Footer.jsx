@@ -45,8 +45,8 @@ export function Footer() {
             </section>
             <hr />
             <div className='authorship'>
-                <small>© 2024 Lemnos Shop - All rights reserved. - By <a href="">TechVerse</a></small>
-                <small><a href="#">Term And Conditions | Privacy Policy</a></small>
+                <small>© 2024 Lemnos - All rights reserved. - By <a href="https://techverse-gilt.vercel.app/">TechVerse</a></small>
+                <small><a href="#">Term And Conditions</a> | <a href="#">Privacy Policy</a></small>
             </div>
         </footer>
     )

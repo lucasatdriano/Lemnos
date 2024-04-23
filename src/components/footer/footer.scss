@@ -85,7 +85,7 @@ footer {
         justify-content: space-between;
         
         a {
-            color: $color-fontDark;
+            color: $color-primaryLight;
         }
     }
 }
@@ -166,6 +166,11 @@ footer {
                     margin: 0 0 2px;
                 }
             }
+        }
+        .authorship {
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
         }
     }
 }
