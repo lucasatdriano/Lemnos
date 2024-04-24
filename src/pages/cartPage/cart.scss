@@ -1,0 +1,121 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+section {
+    .title {
+        hr {
+
+        }
+
+        h2 {
+
+        }
+    }
+
+    .containerMain {
+        .containerCart {
+            .listCart {
+                .order {
+                    .labels {
+
+                    }
+                    hr {
+
+                    }
+                    .productDesc {
+                        img {
+
+                        }
+
+                        .nameProduct {
+                            
+                        }
+                        .amount {
+                            .buttonQtd {
+
+                            }
+                            h4 {
+
+                            }
+                        }
+                        .priceProduct {
+
+                        }
+                        .btnRemove {
+
+                        }
+                    }
+                }
+            }
+
+            .cleanCart {
+
+            }
+
+            .delivery {
+                h4 {
+
+                }
+                hr {
+
+                }
+                .inputCep {
+                    input {
+
+                    }
+                    button {
+                        
+                    }
+                }
+            }
+        }
+
+        .resumeBuy {
+            h3 {
+
+            }
+            
+            hr {
+
+            }
+
+            .values {
+
+            }
+
+            .paymentOptions {
+                .options {
+                    strong {
+
+                    }
+                    span {
+
+                    }
+                }
+            }
+
+            .endOrder {
+
+            }
+        }
+    }
+}

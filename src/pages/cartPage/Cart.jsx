@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './CarrinhoDeCompras.css'; // Importe seu arquivo CSS de estilos
+import './cart.scss';
 
-export function CarrinhoDeCompras() {
+export function Cart() {
+    const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
     const [carrinho, setCarrinho] = useState([
         { id: 1, nome: 'Produto A', quantidade: 2, precoUnitario: 50 },
         { id: 2, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
@@ -34,46 +36,78 @@ export function CarrinhoDeCompras() {
                     <h2>Meu Carrinho</h2>
                 <hr />
             </div>
-            <div>
-                <div>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+            <div className='containerMain'>
+                <div className='containerCart'>
+                    <ul className='listCart'>
+                        {carrinho.map(item => (
+                            <li key={item.id} className='order'>
+                                <div className='labels'>
+                                    <p>Produto</p>
+                                    <p>Quantidade</p>
+                                    <p>Valor</p>
+                                </div>
+                                <hr />
+                                <div className="productDesc">
+                                    <img src="" alt="" />
+                                    <h4 className='nameProduct'>{item.nome}</h4>
+                                    <p className='amount'>
+                                        <button type='button' className='buttonQtd' id='minusQtd'>-</button>
+                                        <h4 id='qtdNumber'>1</h4>
+                                        <button type='button' className='buttonQtd' id='plusQtd'>+</button>
+                                        <input
+                                            type="number"
+                                            value={item.quantidade}
+                                            onChange={(e) => handleAlterarQuantidade(item.id, parseInt(e.target.value))}
+                                        />
+                                    </p>
+                                    <h4 className='priceProduct'>{BRL.format(item.quantidade * item.precoUnitario)}</h4>
+                                    <p>
+                                        <button className="btnRemove" onClick={() => handleRemoverItem(item.id)}> {/* icon */}Remover</button>
+                                    </p>
+                                </div>                     
+                            </li>
+                        ))}
                     </ul>
-                    <button type="button">Limpar Carrinho {/* icon */}</button>
-                    <div>
+                    <button type="button" className='cleanCart'>
+                        Limpar Carrinho 
+                        {/* icon */}
+                    </button>
+                    <div className='delivery'>
                         <h4>Calcular Entrega</h4>
                         <hr />
+                        <div className="inputCep">
+                            <input type='text' placeholder='Digite seu CEP' />
+                            <button type="button">Calcular</button>
+                        </div>
                     </div>
                 </div>
-                <div>
+                <div className='resumeBuy'>
                     <h3>Resumo</h3>
                     <hr />
-                    <div>
+                    <div className='values'>
                         <p>SubTotal:</p>
                         <p>R$ 1.799,99</p>
                     </div>
                     <hr />
-                    <div>
+                    <div className='values'>
                         <p>Entrega:</p>
                         <p>R$ 24,90</p>
                     </div>
                     <hr />
-                    <div>
+                    <div className='values'>
                         <strong>Total:</strong> 
                         <strong>R$ {calcularTotal().toFixed(2)}</strong>
                     </div>
                     <hr />
-                    <div>
-                        <div>
+                    <div className='paymentOptions'>
+                        <div className='options'>
                             {/* icon */}
                             <p>
                                 <strong>R$ 1.799,99</strong> <br />
                                 em 12x de <span>R$ 162,99</span> s/ juros
                             </p>
                         </div>
-                        <div>
+                        <div className='options'>
                             {/* icon */}
                             <p>
                                 <strong>R$ 1.529,99</strong> <br />
@@ -81,37 +115,9 @@ export function CarrinhoDeCompras() {
                             </p>
                         </div>
                     </div>
-                    <button type="button">Finalizar Pedido</button>
+                    <button type="button" className='endOrder'>Finalizar Pedido</button>
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Preço Total</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {carrinho.map(item => (
-                        <tr key={item.id}>
-                            <td>{item.nome}</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    value={item.quantidade}
-                                    onChange={(e) => handleAlterarQuantidade(item.id, parseInt(e.target.value))}
-                                />
-                            </td>
-                            <td>R$ {item.quantidade * item.precoUnitario}</td>
-                            <td>
-                                <button className="botao-acao" onClick={() => handleRemoverItem(item.id)}>Remover</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
         </section>
     );
 }

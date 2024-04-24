@@ -7,6 +7,7 @@ import { Home } from './pages/homePage/Home';
 import { About } from './pages/aboutPage/About';
 import { Login } from './pages/userPage/User';
 import { Product } from './pages/productPage/Product';
+import { Cart } from './pages/cartPage/Cart';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.render(
           <Route path="/product" element={<Product />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
