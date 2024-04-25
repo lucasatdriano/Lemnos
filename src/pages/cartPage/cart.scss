@@ -22,76 +22,208 @@ $font-items: 'Poppins', Helvetica;
 
 section {
     .title {
-        hr {
-
-        }
+        padding-top: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         h2 {
+            font-family: $font-title;
+            font-size: 3rem;
+            padding: 0 15px;
+            white-space: nowrap;
+        }
 
+        hr {
+            width: 50%;
+            height: 0;
+            border: 2px solid $color-primaryLight;
         }
     }
 
     .containerMain {
+        width: 95%;
+        margin: 2em auto;
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+
         .containerCart {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+
             .listCart {
+                display: flex;
+                flex-direction: column;
+                gap: 2em;
+
                 .order {
+                    font-family: $font-items;
+                    color: $color-fontDark;
+                    background-color: $color-secundaryLight;
+                    border-radius: 10px;
+                    padding: 20px 0;
+
                     .labels {
-
+                        display: flex;
+                        justify-content: space-around;
+                        font-size: 2rem;
                     }
+
                     hr {
-
+                        border: 1px solid $color-primaryLight;
                     }
-                    .productDesc {
-                        img {
 
+                    .productDesc {
+                        display: flex;
+                        align-items: center; 
+                        gap: 5em;
+                        padding: 1em 1em 0;
+                  
+                        img {
+                            height: 10em;
+                            width: 20em;
+                            border: 2px solid white;
                         }
 
                         .nameProduct {
-                            
+                            width: 20em;
+                            font-size: 2rem;
                         }
+
                         .amount {
+                            display: flex;
+                            align-items: center;
+                            gap: 1em;
+
                             .buttonQtd {
-
+                                background: none;
+                                border: none;
+                                font-size: 2.4rem;
+                                cursor: pointer;
                             }
-                            h4 {
 
+                            h4 {
+                                font-size: 2.4rem;
                             }
                         }
                         .priceProduct {
-
+                            font-size: 2rem;
                         }
                         .btnRemove {
-
+                            background: none;
+                            border: none;
+                            font-size: 4rem;
+                            cursor: pointer;
                         }
                     }
                 }
             }
 
             .cleanCart {
+                margin: 1em 0;
+                padding: .5em 1.5em;
+                gap: .5em;
+                display: flex;
+                align-items: center;
+                border: none;
+                cursor: pointer;
+                font-size: 2rem;
+                border-radius: 5px;
+                background: $color-secundaryDark;
+                font-family: $font-items;
 
+                .icon {
+                    font-size: 3rem;
+                }
             }
 
             .delivery {
+                font-family: $font-items;
+                color: $color-fontDark;
+                background-color: $color-secundaryLight;
+                border-radius: 10px;
+                padding: 15px 0;
+
                 h4 {
-
+                    font-family: $font-title;
+                    font-size: 2rem;
+                    padding: 0 1em .5em ;
                 }
+
                 hr {
-
+                    border: 1px solid $color-primaryLight;
                 }
-                .inputCep {
-                    input {
 
+                .inputCep {
+                    margin: 1.5em 2em 2em;
+                    position: relative;
+                    width: 30em;
+                    height: 3em;
+
+                    input {
+                        height: 100%;
+                        width: 70%;
+                        border-radius: 10px 0 0 10px;
+                        text-indent: 10px;
+                        font-size: 2rem;
+                        font-weight: 600;
+                        font-family: $font-items;
+                        background: $color-bgLight;
+                        color: $color-fontLight;
+                        border: 1px solid $color-primaryLight;
                     }
-                    button {
-                        
+
+                    .calcDelivery {
+                        display: flex;
+                        align-items: center;
+                        gap: .5em;
+                        position: absolute;
+                        height: 100%;
+                        right: 0;
+                        top: 0;
+                        font-size: 2.2rem;
+                        padding: .5em 1.5em;
+                        border: 1px solid $color-primaryLight;
+                        background-color: $color-primaryLight;
+                        color: $color-fontLight;
+                        font-weight: 600;
+                        border-radius: 0 10px 10px 0;
+                        cursor: pointer;
+
+                        &:hover {
+
+                        }
+
+                        .icon {
+                            font-size: 3rem;
+                        }
+                    }
+
+                    .SearchCep {
+                        position: absolute;
+                        right: 10px;
+                        bottom: -25px;
+                        text-decoration: underline;
+                        color: $color-primaryLight;
                     }
                 }
             }
         }
 
         .resumeBuy {
-            h3 {
+            font-family: $font-items;
+            color: $color-fontDark;
+            background-color: $color-secundaryLight;
+            border-radius: 10px;
+            padding: 15px 0;
+            height: 20em;
 
+            h3 {
+                font-family: $font-title;
+                text-align: center;
+                font-size: 2.6rem;
             }
             
             hr {
@@ -119,3 +251,9 @@ section {
         }
     }
 }
+
+// <input
+// type="number"
+// value={item.quantidade}
+// onChange={(e) => handleAlterarQuantidade(item.id, parseInt(e.target.value))}
+// />

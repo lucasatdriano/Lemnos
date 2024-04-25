@@ -208,6 +208,12 @@ main {
                     grid-column: span 1;
                     grid-row: span 1;
                 }
+
+                .item5 {
+                    img {
+                        object-fit: contain;
+                    }
+                }
             }
         }
         .offers {

@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import './cart.scss';
+import { MdDelete } from "react-icons/md";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaMinus, FaPlus  } from "react-icons/fa6";
+import { TbTruckDelivery } from "react-icons/tb";
 
 export function Cart() {
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const priceDelivery = 24.99; 
 
     const [carrinho, setCarrinho] = useState([
-        { id: 1, nome: 'Produto A', quantidade: 2, precoUnitario: 50 },
+        { id: 1, nome: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)', quantidade: 1, precoUnitario: 1799.99 },
         { id: 2, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
+        { id: 3, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
+        { id: 4, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
+        { id: 5, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
         // Adicione mais itens ao carrinho conforme necessário
     ]);
 
@@ -51,18 +59,19 @@ export function Cart() {
                                     <img src="" alt="" />
                                     <h4 className='nameProduct'>{item.nome}</h4>
                                     <p className='amount'>
-                                        <button type='button' className='buttonQtd' id='minusQtd'>-</button>
+                                        <button type='button' className='buttonQtd' id='minusQtd'>
+                                            <FaMinus />
+                                        </button>
                                         <h4 id='qtdNumber'>1</h4>
-                                        <button type='button' className='buttonQtd' id='plusQtd'>+</button>
-                                        <input
-                                            type="number"
-                                            value={item.quantidade}
-                                            onChange={(e) => handleAlterarQuantidade(item.id, parseInt(e.target.value))}
-                                        />
+                                        <button type='button' className='buttonQtd' id='plusQtd'>
+                                            <FaPlus />
+                                        </button>
                                     </p>
                                     <h4 className='priceProduct'>{BRL.format(item.quantidade * item.precoUnitario)}</h4>
                                     <p>
-                                        <button className="btnRemove" onClick={() => handleRemoverItem(item.id)}> {/* icon */}Remover</button>
+                                        <button className="btnRemove" onClick={() => handleRemoverItem(item.id)}>
+                                            <TiDeleteOutline />
+                                        </button>
                                     </p>
                                 </div>                     
                             </li>
@@ -70,15 +79,20 @@ export function Cart() {
                     </ul>
                     <button type="button" className='cleanCart'>
                         Limpar Carrinho 
-                        {/* icon */}
+                        <MdDelete className='icon'/>
                     </button>
                     <div className='delivery'>
                         <h4>Calcular Entrega</h4>
                         <hr />
                         <div className="inputCep">
                             <input type='text' placeholder='Digite seu CEP' />
-                            <button type="button">Calcular</button>
+                            <button type="button" className='calcDelivery'>
+                                Calcular
+                                <TbTruckDelivery className='icon'/>
+                            </button>
+                            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target='_blank' className='SearchCep'>Não sei meu CEP</a>
                         </div>
+                       
                     </div>
                 </div>
                 <div className='resumeBuy'>
@@ -86,31 +100,31 @@ export function Cart() {
                     <hr />
                     <div className='values'>
                         <p>SubTotal:</p>
-                        <p>R$ 1.799,99</p>
+                        <p>{BRL.format(calcularTotal())}</p>
                     </div>
                     <hr />
                     <div className='values'>
                         <p>Entrega:</p>
-                        <p>R$ 24,90</p>
+                        <p>{BRL.format(priceDelivery)}</p>
                     </div>
                     <hr />
                     <div className='values'>
                         <strong>Total:</strong> 
-                        <strong>R$ {calcularTotal().toFixed(2)}</strong>
+                        <strong>{BRL.format(calcularTotal() + priceDelivery)}</strong>
                     </div>
                     <hr />
                     <div className='paymentOptions'>
                         <div className='options'>
                             {/* icon */}
                             <p>
-                                <strong>R$ 1.799,99</strong> <br />
-                                em 12x de <span>R$ 162,99</span> s/ juros
+                                <strong>{BRL.format(calcularTotal())}</strong> <br />
+                                em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
                             </p>
                         </div>
                         <div className='options'>
                             {/* icon */}
                             <p>
-                                <strong>R$ 1.529,99</strong> <br />
+                                <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
                                 com desconto à vista no boleto ou pix
                             </p>
                         </div>
