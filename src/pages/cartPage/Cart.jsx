@@ -1,25 +1,69 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './cart.scss';
 import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
-import { FaMinus, FaPlus  } from "react-icons/fa6";
+import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
 
 export function Cart() {
+    const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    const priceDelivery = 24.99; 
+    const [cep, setCep] = useState('');
+    const [showOptions, setShowOptions] = useState(false);
+    const [deliveryOption, setDeliveryOption] = useState('');
+
+    let priceDelivery = 0;
+
+    switch (deliveryOption) {        
+        case 'sedex':
+            priceDelivery = 26.99;
+            break;
+        case 'jadlog':
+            priceDelivery = 32.99;
+            break;
+        case 'express':
+            priceDelivery = 45.99;
+            break;
+        default:
+            priceDelivery = 0;
+    }
+
+    const handleDeliveryOptionChange = (option) => {
+        setDeliveryOption(option);
+    };
 
     const [carrinho, setCarrinho] = useState([
         { id: 1, nome: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)', quantidade: 1, precoUnitario: 1799.99 },
         { id: 2, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
         { id: 3, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
-        { id: 4, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
-        { id: 5, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
-        // Adicione mais itens ao carrinho conforme necessário
     ]);
 
-    const calcularTotal = () => {
+    const handleCepChange = (event) => {
+        let formattedCep = event.target.value.replace(/\D/g, '');
+        if (formattedCep.length > 5) {
+            formattedCep = formattedCep.replace(/^(\d{5})(\d)/, '$1-$2');
+        } 
+        setCep(formattedCep);
+        if (cep.length !== 10) {
+            setShowOptions(false);
+        }
+    }
+
+    const handleCalculateDelivery = () => {
+        if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
+            setShowOptions(true);
+        } else {
+            setShowOptions(false);
+        }
+    }
+
+    const calcularSubTotal = () => {
         return carrinho.reduce((total, item) => total + (item.quantidade * item.precoUnitario), 0);
+    }
+
+    const calcularTotal = () => {
+        return calcularSubTotal() + priceDelivery;
     }
 
     const handleRemoverItem = (id) => {
@@ -27,14 +71,35 @@ export function Cart() {
         setCarrinho(novoCarrinho);
     }
 
-    const handleAlterarQuantidade = (id, novaQuantidade) => {
+    const handleAlterarQuantidade = (id, operacao) => {
         const novoCarrinho = carrinho.map(item => {
             if (item.id === id) {
+                let novaQuantidade = item.quantidade;
+                if (operacao === 'aumentar') {
+                    novaQuantidade++;
+                } else if (operacao === 'diminuir' && novaQuantidade > 1) {
+                    novaQuantidade--;
+                }
                 return { ...item, quantidade: novaQuantidade };
             }
             return item;
         });
         setCarrinho(novoCarrinho);
+    }
+
+    const limparCarrinho = () => {
+        setCarrinho([]);
+    }
+
+    const finalizarPedido = () => {
+        if (carrinho.length === 0) {
+            alert("Por favor, adicione algum item no carrinho.");
+        } else if(cep.length !== 9) {
+            alert("Por favor, adicione o seu CEP.")
+        } else {
+            limparCarrinho();
+            alert("Compra finalizada com sucesso!");
+        }
     }
 
     return (
@@ -46,24 +111,42 @@ export function Cart() {
             </div>
             <div className='containerMain'>
                 <div className='containerCart'>
+                {carrinho.length === 0 ? (
+                    <div className="emptyCartMessage">
+                        <h2 className='textEmpty'>O seu carrinho está vazio.</h2>
+                        <button className='btnBackBuy' onClick={() => navigate('/')}>Voltar para às compras</button>
+                    </div>
+                ) : (
                     <ul className='listCart'>
                         {carrinho.map(item => (
                             <li key={item.id} className='order'>
                                 <div className='labels'>
                                     <p>Produto</p>
-                                    <p>Quantidade</p>
-                                    <p>Valor</p>
+                                    <div className='labelsNumber'>
+                                        <p>Quantidade</p>
+                                        <p>Valor</p>
+                                    </div>
                                 </div>
                                 <hr />
                                 <div className="productDesc">
                                     <img src="" alt="" />
                                     <h4 className='nameProduct'>{item.nome}</h4>
                                     <p className='amount'>
-                                        <button type='button' className='buttonQtd' id='minusQtd'>
+                                        <button 
+                                        type='button' 
+                                        className='buttonQtd' 
+                                        id='minusQtd' 
+                                        onClick={() => handleAlterarQuantidade(item.id, 'diminuir')}
+                                        >
                                             <FaMinus />
                                         </button>
-                                        <h4 id='qtdNumber'>1</h4>
-                                        <button type='button' className='buttonQtd' id='plusQtd'>
+                                        <h4 id='qtdNumber'>{item.quantidade}</h4>
+                                        <button 
+                                        type='button' 
+                                        className='buttonQtd' 
+                                        id='plusQtd' 
+                                        onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
+                                        >
                                             <FaPlus />
                                         </button>
                                     </p>
@@ -77,7 +160,8 @@ export function Cart() {
                             </li>
                         ))}
                     </ul>
-                    <button type="button" className='cleanCart'>
+                    )}
+                    <button type="button" className='cleanCart' onClick={limparCarrinho}>
                         Limpar Carrinho 
                         <MdDelete className='icon'/>
                     </button>
@@ -85,51 +169,103 @@ export function Cart() {
                         <h4>Calcular Entrega</h4>
                         <hr />
                         <div className="inputCep">
-                            <input type='text' placeholder='Digite seu CEP' />
-                            <button type="button" className='calcDelivery'>
+                            <input
+                                type="text"
+                                placeholder="Digite seu CEP"
+                                value={cep}
+                                onChange={handleCepChange}
+                                maxLength={9}
+                                pattern="\d{5}-?\d{3}"
+                            />
+                            <button type="button" className='calcDelivery' onClick={handleCalculateDelivery}>
                                 Calcular
                                 <TbTruckDelivery className='icon'/>
                             </button>
                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target='_blank' className='SearchCep'>Não sei meu CEP</a>
                         </div>
-                       
+                        {showOptions && (
+                            <div>
+                                <div className='optionsDelivery'>
+                                    <label class="radio-container">
+                                        <input 
+                                            type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
+                                            onClick={() => handleDeliveryOptionChange('sedex')} 
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label htmlFor='rbSedex' className='labelOp'>
+                                        <strong>Sedex:</strong>
+                                        <p>Prazo de entrega: até 7 dias úteis</p>
+                                    </label> 
+                                    <strong>{BRL.format(26.99)}</strong>
+                                </div>
+                                <div className='optionsDelivery'>
+                                    <label class="radio-container">
+                                        <input 
+                                            type="radio" name="optionsDel" id="rbJadLog" className='rbDelivery'
+                                            onClick={() => handleDeliveryOptionChange('jadlog')}
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label htmlFor='rbJadLog' className='labelOp'>
+                                        <strong>JadLog:</strong>
+                                        <p>Prazo de entrega: até 5 dias úteis</p>
+                                    </label>  
+                                    <strong>{BRL.format(32.99)}</strong>
+                                </div>
+                                <div className='optionsDelivery'>
+                                    <label class="radio-container">
+                                        <input 
+                                            type="radio" name="optionsDel" id="rbExpress" className='rbDelivery'
+                                            onClick={() => handleDeliveryOptionChange('express')}
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label htmlFor='rbExpress' className='labelOp'>
+                                        <strong>Express:</strong>
+                                        <p>Prazo de entrega: até 12 dias úteis</p>
+                                    </label> 
+                                    <strong>{BRL.format(45.99)}</strong>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className='resumeBuy'>
                     <h3>Resumo</h3>
-                    <hr />
+                    <hr className='hrResume'/>
                     <div className='values'>
                         <p>SubTotal:</p>
-                        <p>{BRL.format(calcularTotal())}</p>
+                        <p>{BRL.format(calcularSubTotal())}</p>
                     </div>
-                    <hr />
+                    <hr className='hrValues'/>
                     <div className='values'>
                         <p>Entrega:</p>
                         <p>{BRL.format(priceDelivery)}</p>
                     </div>
-                    <hr />
+                    <hr className='hrValues'/>
                     <div className='values'>
                         <strong>Total:</strong> 
-                        <strong>{BRL.format(calcularTotal() + priceDelivery)}</strong>
+                        <strong>{BRL.format(calcularTotal())}</strong>
                     </div>
-                    <hr />
+                    <hr className='hrOptions'/>
                     <div className='paymentOptions'>
                         <div className='options'>
-                            {/* icon */}
+                            <FaRegCreditCard className='icon'/>
                             <p>
                                 <strong>{BRL.format(calcularTotal())}</strong> <br />
                                 em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
                             </p>
                         </div>
                         <div className='options'>
-                            {/* icon */}
+                            <FaBarcode className='icon'/>
                             <p>
                                 <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
                                 com desconto à vista no boleto ou pix
                             </p>
                         </div>
                     </div>
-                    <button type="button" className='endOrder'>Finalizar Pedido</button>
+                    <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
                 </div>
             </div>
         </section>

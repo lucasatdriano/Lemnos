@@ -32,13 +32,18 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
     const { name, value } = e.target;
     let newValue = value;
     if (name === 'cpf') {
+      let formattedCpf = value.replace(/\D/g, '');
+      if (formattedCpf.length > 9) {
+        formattedCpf = formattedCpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      }
+      setForm(prevState => ({ ...prevState, cpf: formattedCpf }));
       newValue = formatCPF(value);
     }
-    
+  
     setForm(prevState => ({ ...prevState, [name]: newValue }));
-
-    const isValid = name === 'cpf' ? validateCpf.test(newValue) : validateEmail.test(newValue);
-
+  
+    const isValid = name === 'cpf' ? validateCpf.test(newValue) : validateEmail.test(form.email);
+  
     setErrors(prevErrors => ({
       ...prevErrors,
       [name]: !isValid,

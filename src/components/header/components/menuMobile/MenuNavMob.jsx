@@ -39,7 +39,7 @@ export function MenuNav() {
                     <Link to="/login" className='linkNav'>
                         <RiUser3Line className='userIcon' />Login
                     </Link>
-                    <Link to="/" className='linkNav'>
+                    <Link to="/cart" className='linkNav'>
                         <RiShoppingCartLine className='cartIcon' />Carrinho
                     </Link>
                 </ul>

@@ -55,7 +55,7 @@ export function Header({ toggleTheme }) {
                 <Link to="/login">
                     <RiUser3Line className='userIcon' />
                 </Link>
-                <Link to="/">
+                <Link to="/cart">
                     <RiShoppingCartLine className='cartIcon' />
                 </Link>
             </nav>
