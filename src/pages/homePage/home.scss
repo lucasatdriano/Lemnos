@@ -242,22 +242,23 @@ main {
             .containerDeps {
                 display: flex;
                 margin: auto;
-                width: 95%;
+                width: 100%;
                 padding: 10px;
                 overflow-x: scroll;
                 scroll-behavior: smooth;
                 scroll-snap-type: x proximity;
+                scroll-snap-align: center;
 
                 &::-webkit-scrollbar {
                     display: none;
                 }
         
                 .gridItem {
-                    width: 82vw;
+                    width: 80vw;
                     height: 17em;
 
                     img {
-                        width: 72vw;
+                        width: 70vw;
                         height: 12em;
                     }
                 }

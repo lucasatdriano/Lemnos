@@ -11,7 +11,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
     email: "",
     confEmail: "",
     password: "",
-    confPassword: ""
+    confPassword: "",
   });
   
   const [errors, setErrors] = useState({
@@ -19,11 +19,11 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
     email: false,
     confEmail: false,
     password: false,
-    confPassword: false
+    confPassword: false,
   });
 
   const nameRef = useRef();
-  const cpfRef = useRef(); // Adicione a referência para o campo de CPF
+  const cpfRef = useRef();
   const emailRef = useRef();
   const confEmailRef = useRef();
   const pwdRef = useRef();
