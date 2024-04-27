@@ -4,6 +4,7 @@ import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
 
 export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
+  const [cpf, setCpf] = useState('');
   const [form, setForm] = useState({
     name: "",
     cpf: "",
@@ -22,7 +23,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   });
 
   const nameRef = useRef();
-  const cpfRef = useRef();
+  const cpfRef = useRef(); // Adicione a referência para o campo de CPF
   const emailRef = useRef();
   const confEmailRef = useRef();
   const pwdRef = useRef();
@@ -31,14 +32,6 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
-    if (name === 'cpf') {
-      let formattedCpf = value.replace(/\D/g, '');
-      if (formattedCpf.length > 9) {
-        formattedCpf = formattedCpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      }
-      setForm(prevState => ({ ...prevState, cpf: formattedCpf }));
-      newValue = formatCPF(value);
-    }
   
     setForm(prevState => ({ ...prevState, [name]: newValue }));
   
@@ -49,6 +42,14 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
       [name]: !isValid,
     }));
   };
+
+  const handleCpfChange = (e) => {
+    let formattedCpf = e.target.value.replace(/\D/g, '');
+    if (formattedCpf.length > 3) {
+      formattedCpf = formattedCpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } 
+    setCpf(formattedCpf);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,11 +123,12 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
               type="text"
               reference={cpfRef}
               label="CPF:"
-              maxLength="14"
+              maxLength={14}
               id="cpf"
               name="cpf"
-              value={form.cpf}
-              onChange={(e) => handleChange(e)}
+              value={cpf}
+              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+              onChange={handleCpfChange}
             />
             {errors.cpf && <span className='invalid'>Digite um CPF válido!</span>}
           </p>

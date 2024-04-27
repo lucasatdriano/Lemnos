@@ -9,7 +9,9 @@ import { Login } from './pages/userPage/User';
 import { Product } from './pages/productPage/Product';
 import { Cart } from './pages/cartPage/Cart';
 
-ReactDOM.render(
+import { createRoot } from 'react-dom/client';
+
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
@@ -24,6 +26,5 @@ ReactDOM.render(
         </Route>
       </Routes>
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

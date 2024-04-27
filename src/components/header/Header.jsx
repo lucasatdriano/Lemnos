@@ -27,7 +27,7 @@ export function Header({ toggleTheme }) {
     }, []);
 
     const handleSearchResultClick = (productId) => {
-        // Lógica para manipular o clique no resultado de pesquisa
+    
     };
     
     return (

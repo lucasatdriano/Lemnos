@@ -15,7 +15,7 @@ export function Cart() {
 
     let priceDelivery = 0;
 
-    switch (deliveryOption) {        
+    switch (deliveryOption) {
         case 'sedex':
             priceDelivery = 26.99;
             break;
