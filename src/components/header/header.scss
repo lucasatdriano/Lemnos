@@ -20,23 +20,26 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-header { 
+header {
+    position: fixed;
     width: 95%;
     height: 3.5em;
-    margin: 0 auto;
-    background-color: $color-secundaryLight;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
-    padding: 0 1em;
+    background-color: $color-secundaryLight;
     box-shadow: 4px 2px 20px 3px $color-shadow;
     border-radius: 0 0 25px 25px;
-    justify-content: space-evenly;
+    padding: 0 1em;
     gap: 1em;
     font-size: 2.5rem;
     z-index: 50;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    animation: expandHeader .3s linear forwards;
 
     &.shrink {
-        position: fixed;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
@@ -104,6 +107,15 @@ header {
 @keyframes sizeHeader {
     to {
         height: 3em;
+    }
+}
+
+@keyframes expandHeader {
+    from {
+        height: 3em;
+    }
+    to {
+        height: 3.5em;
     }
 }
 
