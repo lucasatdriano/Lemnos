@@ -5,7 +5,7 @@ import { App } from './App';
 import { NotFound } from './pages/notFoundPage/NotFound';
 import { Home } from './pages/homePage/Home';
 import { About } from './pages/aboutPage/About';
-import { Login } from './pages/userPage/User';
+import { Login } from './pages/userPage/Login';
 import { Product } from './pages/productPage/Product';
 import { Cart } from './pages/cartPage/Cart';
 

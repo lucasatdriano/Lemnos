@@ -3,7 +3,7 @@ import { Flipper, Flipped } from 'react-flip-toolkit';
 import { CustomInput } from '../../../../components/inputs/Inputs';
 import './loginForm.scss';
 
-export function LoginForm({ onLogin, onCadastroClick }) {
+export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
     email: "",
     password: "",

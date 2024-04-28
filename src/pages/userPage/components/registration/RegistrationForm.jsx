@@ -3,8 +3,8 @@ import { CustomInput } from '../../../../components/inputs/Inputs';
 import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
 
-export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
-  const [cpf, setCpf] = useState('');
+export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
+  const [firstName, setFirstName] = useState("");
   const [form, setForm] = useState({
     name: "",
     cpf: "",
@@ -32,58 +32,62 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
-  
-    setForm(prevState => ({ ...prevState, [name]: newValue }));
-  
-    const isValid = name === 'cpf' ? validateCpf.test(newValue) : validateEmail.test(form.email);
-  
-    setErrors(prevErrors => ({
-      ...prevErrors,
-      [name]: !isValid,
-    }));
-  };
 
-  const handleCpfChange = (e) => {
-    let formattedCpf = e.target.value.replace(/\D/g, '');
-    if (formattedCpf.length > 3) {
-      formattedCpf = formattedCpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-    } 
-    setCpf(formattedCpf);
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const newErrors = {
-      cpf: !validateCpf.test(form.cpf),
-      email: !validateEmail.test(form.email),
-      confEmail: form.email !== form.confEmail,
-      password: !validatePwd.test(form.password),
-      confPassword: form.password !== form.confPassword
-    };
-  
-    setErrors(newErrors);
-  
-    const hasEmptyValues = Object.values(form).some(obj => obj === "");
-    const hasErrors = Object.values(newErrors).some(error => error);
-  
-    if (!hasEmptyValues && !hasErrors) {
-      try {
-        await fetch('url-da-api', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        });
-  
-        onCadastroSuccess();
-        handleBackToLogin();
-      } catch (error) {
-        console.error('Erro ao enviar dados:', error);
-      }
+    if (name === "cpf") {
+      // Formatando o CPF
+      newValue = value.replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})/, '$1-$2');
     }
+
+    if (name === "email") {
+      // Validando o email
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      setErrors({ ...errors, [name]: !isValidEmail });
+    }
+
+    if (name === "name") {
+      // Extraindo o primeiro nome
+      const firstSpaceIndex = value.indexOf(" ");
+      const newName = firstSpaceIndex !== -1 ? value.substring(0, firstSpaceIndex) : value;
+      setFirstName(newName);
+    }
+
+    setForm({ ...form, [name]: newValue });
   };
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   const newErrors = {
+  //     cpf: !validateCpf.test(form.cpf),
+  //     email: !validateEmail.test(form.email),
+  //     confEmail: form.email !== form.confEmail,
+  //     password: !validatePwd.test(form.password),
+  //     confPassword: form.password !== form.confPassword
+  //   };
+  
+  //   setErrors(newErrors);
+  
+  //   const hasEmptyValues = Object.values(form).some(obj => obj === "");
+  //   const hasErrors = Object.values(newErrors).some(error => error);
+  
+    // if (!hasEmptyValues && !hasErrors) {
+    //   try {
+    //     await fetch('url-da-api', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(form),
+    //     });
+  
+    //     onCadastroSuccess(firstName);
+    //     handleBackToLogin();
+    //   } catch (error) {
+    //     console.error('Erro ao enviar dados:', error);
+    //   }
+  //   }
+  // };
 
   const handleBackToLoginClick = () => {
     handleBackToLogin();
@@ -104,13 +108,14 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
         <hr />
       </div>
 
-      <form onSubmit={handleSubmit} className="registration">
+      <form className="registration">
+        {/*onSubmit={handleSubmit}*/}
         <h2>Crie sua Conta Lemnos</h2>
         <div className="inputsRegistration">
           <p>
             <CustomInput
               type="text"
-              reference={nameRef}
+              // reference={nameRef}
               label="Nome Completo:"
               maxLength="40"
               id="name"
@@ -121,21 +126,21 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
           <p>
             <CustomInput
               type="text"
-              reference={cpfRef}
+              // reference={cpfRef}
               label="CPF:"
-              maxLength={14}
+              maxLength="14"
               id="cpf"
               name="cpf"
-              value={cpf}
+              // value={form.cpf}
               pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-              onChange={handleCpfChange}
+              onChange={(e) => handleChange(e)}
             />
             {errors.cpf && <span className='invalid'>Digite um CPF válido!</span>}
           </p>
           <p>
             <CustomInput
               type="text"
-              reference={emailRef}
+              // reference={emailRef}
               label="Email:"
               maxLength="40"
               id="email"
@@ -147,7 +152,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
           <p>
             <CustomInput
               type="text"
-              reference={confEmailRef}
+              // reference={confEmailRef}
               label="Confirme seu Email:"
               maxLength="40"
               id="confEmail"
@@ -159,7 +164,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
           <p>
             <CustomInput
               type="password"
-              reference={pwdRef}
+              // reference={pwdRef}
               label="Senha:"
               maxLength="16"
               id="password"
@@ -171,7 +176,7 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
           <p>
             <CustomInput
               type="password"
-              reference={confPwdRef}
+              // reference={confPwdRef}
               label="Confirme sua Senha:"
               maxLength="16"
               id="confPassword"
