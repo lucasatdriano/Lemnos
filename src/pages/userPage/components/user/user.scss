@@ -36,12 +36,13 @@ $color-card: #f6fefd4d;
         .user {
             display: flex;
             align-items: center;
-            gap: 1em;
+            gap: .75em;
             padding: .5em 0;
             font-size: 2rem;
     
             img {
-                border: 2px solid black;
+                object-fit: contain;
+                border: 1px solid $color-primaryLight;
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
@@ -96,9 +97,9 @@ hr {
 .typeUser {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-direction: row-reverse;
-    padding: 1em;
+    padding: 1em 5em;
 
     .logout {
         button {

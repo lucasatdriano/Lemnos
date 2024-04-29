@@ -1,93 +1,67 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { CustomInput } from '../../../../components/inputs/Inputs';
 import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
 
 export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
-  const [firstName, setFirstName] = useState("");
   const [form, setForm] = useState({
-    name: "",
-    cpf: "",
-    email: "",
-    confEmail: "",
-    password: "",
-    confPassword: "",
-  });
-  
-  const [errors, setErrors] = useState({
-    cpf: false,
-    email: false,
-    confEmail: false,
-    password: false,
-    confPassword: false,
+    name: '',
+    cpf: '',
+    email: '',
+    confEmail: '',
+    password: '',
+    confPassword: '',
   });
 
-  const nameRef = useRef();
-  const cpfRef = useRef();
-  const emailRef = useRef();
-  const confEmailRef = useRef();
-  const pwdRef = useRef();
-  const confPwdRef = useRef();
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let newValue = value;
-
-    if (name === "cpf") {
-      // Formatando o CPF
-      newValue = value.replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})/, '$1-$2');
-    }
-
-    if (name === "email") {
-      // Validando o email
-      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      setErrors({ ...errors, [name]: !isValidEmail });
-    }
-
-    if (name === "name") {
-      // Extraindo o primeiro nome
-      const firstSpaceIndex = value.indexOf(" ");
-      const newName = firstSpaceIndex !== -1 ? value.substring(0, firstSpaceIndex) : value;
-      setFirstName(newName);
-    }
-
-    setForm({ ...form, [name]: newValue });
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  
-  //   const newErrors = {
-  //     cpf: !validateCpf.test(form.cpf),
-  //     email: !validateEmail.test(form.email),
-  //     confEmail: form.email !== form.confEmail,
-  //     password: !validatePwd.test(form.password),
-  //     confPassword: form.password !== form.confPassword
-  //   };
-  
-  //   setErrors(newErrors);
-  
-  //   const hasEmptyValues = Object.values(form).some(obj => obj === "");
-  //   const hasErrors = Object.values(newErrors).some(error => error);
-  
-    // if (!hasEmptyValues && !hasErrors) {
-    //   try {
-    //     await fetch('url-da-api', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(form),
-    //     });
-  
-    //     onCadastroSuccess(firstName);
-    //     handleBackToLogin();
-    //   } catch (error) {
-    //     console.error('Erro ao enviar dados:', error);
-    //   }
-  //   }
-  // };
+    const errors = {};
+    if (!form.name) {
+      errors.name = 'Campo obrigatório';
+    }
+
+    if (!form.cpf.match(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)) {
+      errors.cpf = 'Digite um CPF válido';
+    }
+
+    if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+      errors.email = 'Digite um Email válido';
+    } 
+
+    if (form.email !== form.confEmail) {
+      errors.confEmail = 'Os Emails devem ser iguais';
+    }
+
+    if (!form.password || form.password.length < 8) {
+      errors.password = 'A Senha deve ter no mínimo 8 caracteres';
+    }
+
+    if (form.password !== form.confPassword) {
+      errors.confPassword = 'As Senhas devem ser iguais';
+    }
+
+    setErrors(errors);
+
+    console.log('Formulário:', form);
+    console.log('Erros:', errors);
+
+    if (Object.keys(errors).length === 0) {
+      // Lógica de envio do formulário aqui
+      console.log('Dados do formulário:', form);
+      handleBackToLogin();
+    }
+  };
 
   const handleBackToLoginClick = () => {
     handleBackToLogin();
@@ -108,82 +82,90 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
         <hr />
       </div>
 
-      <form className="registration">
-        {/*onSubmit={handleSubmit}*/}
+      <form className="registration" onSubmit={handleSubmit}>
         <h2>Crie sua Conta Lemnos</h2>
         <div className="inputsRegistration">
           <p>
             <CustomInput
               type="text"
-              // reference={nameRef}
               label="Nome Completo:"
-              maxLength="40"
               id="name"
               name="name"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              minLength={5}
+              value={form.name}
+              onChange={handleChange}
             />
+            {errors.name && <span className='invalid'>{errors.name}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              // reference={cpfRef}
               label="CPF:"
-              maxLength="14"
               id="cpf"
               name="cpf"
-              // value={form.cpf}
+              maxLength={14}
+              minLength={14}
+              value={form.cpf}
+              mask="CPF"
               pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
             />
-            {errors.cpf && <span className='invalid'>Digite um CPF válido!</span>}
+            {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              // reference={emailRef}
               label="Email:"
-              maxLength="40"
               id="email"
               name="email"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              value={form.email}
+              onChange={handleChange}
             />
-            {errors.email && <span className='invalid'>Digite um Email válido!</span>}
+            {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              // reference={confEmailRef}
               label="Confirme seu Email:"
-              maxLength="40"
               id="confEmail"
               name="confEmail"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              value={form.confEmail}
+              onChange={handleChange}
             />
-            {errors.confEmail && <span className='invalid'>O Email precisa ser verificado</span>}
+            {errors.confEmail && <span className='invalid'>{errors.confEmail}</span>}
           </p>
+
           <p>
             <CustomInput
               type="password"
-              // reference={pwdRef}
               label="Senha:"
-              maxLength="16"
               id="password"
               name="password"
-              onChange={(e) => handleChange(e)}
+              minLength={8}
+              maxLength={16}
+              value={form.password}
+              onChange={handleChange}
             />
-            {errors.password && <span className='invalid'>Digite uma Senha válida! (Com no mínimo 8 caracteres)</span>}
+            {errors.password && <span className='invalid'>{errors.password}</span>}
           </p>
+
           <p>
             <CustomInput
               type="password"
-              // reference={confPwdRef}
               label="Confirme sua Senha:"
-              maxLength="16"
               id="confPassword"
               name="confPassword"
-              onChange={(e) => handleChange(e)}
+              maxLength={16}
+              value={form.confPassword}
+              onChange={handleChange}
             />
-            {errors.confPassword && <span className='invalid'>A Senha precisa ser verificada</span>}
+            {errors.confPassword && <span className='invalid'>{errors.confPassword}</span>}
           </p>
         </div>
         

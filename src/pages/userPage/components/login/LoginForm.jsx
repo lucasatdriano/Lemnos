@@ -52,25 +52,32 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
           <form onSubmit={handleLogin} className="login">
             <h2>Digite seu Email e sua Senha</h2>
             <div className="inputsLogin">
+              <p>
+                <CustomInput
+                  type="text"
+                  label="Email:"
+                  id="email"
+                  name="email"
+                  maxLength={40}
+                  value={form.email}
+                  onChange={handleChange}
+                />
+                {/* {errors.email && <span className='invalid'>{errors.email}</span>} */}
+              </p>
 
-              <CustomInput 
-                type="text" 
-                reference={emailRef} 
-                label="Email:"
-                id="email"
-                name="email"
-                value={form.email}
-                onBlur={(e) => handleChange(e)}
-              />
-              <CustomInput 
-                type="password" 
-                reference={pwdRef} 
-                label="Senha:"
-                id="password"
-                name="password"
-                value={form.password}
-                onBlur={(e) => handleChange(e)}
-              />
+              <p>
+                <CustomInput
+                  type="password"
+                  label="Senha:"
+                  id="password"
+                  name="password"
+                  minLength={8}
+                  maxLength={16}
+                  value={form.password}
+                  onChange={handleChange}
+                />
+                {/* {errors.password && <span className='invalid'>{errors.password}</span>} */}
+              </p>
             </div>
 
             <div className="btnLoginForm">

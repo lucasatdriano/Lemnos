@@ -52,11 +52,13 @@ export function ProductList() {
   }, [loading]);
 
   return (
-    <div className='productsList'>
-      {products.map(product => (
-        <Card key={product.id} product={product} />
-      ))}
-      {loading && <div>Carregando...</div>}
-    </div>
+    <main>
+      <div className='productsList'>
+        {products.map(product => (
+          <Card key={product.id} product={product} />
+        ))}
+        {loading && <div>Carregando...</div>}
+      </div>
+    </main>
   );
 }

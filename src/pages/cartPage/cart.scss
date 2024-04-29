@@ -20,7 +20,9 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-section {
+main {
+    padding-top: 5em;
+    
     .title {
         padding-top: 1.5em;
         display: flex;

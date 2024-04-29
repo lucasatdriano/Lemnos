@@ -103,13 +103,13 @@ export function Cart() {
     }
 
     return (
-        <section>
+        <main>
             <div className="title">
                 <hr />
                     <h2>Meu Carrinho</h2>
                 <hr />
             </div>
-            <div className='containerMain'>
+            <section className='containerMain'>
                 <div className='containerCart'>
                 {carrinho.length === 0 ? (
                     <div className="emptyCartMessage">
@@ -267,7 +267,7 @@ export function Cart() {
                     </div>
                     <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
     );
 }

@@ -55,10 +55,10 @@ export function Product() {
     // }
 
     return (
-        <section className="productContainer">
+        <main className="productContainer">
             <hr />
-            <div className='containerMain'>
-                <div className='productMain'>
+            <section className='containerMain'>
+                <section className='productMain'>
                     <div className="containerImages">
                     <img src={mainImage} alt="Main" className='imageMain'/>
                         <div className="optionsImages">
@@ -98,8 +98,8 @@ export function Product() {
                             <img src={iconAddCart} alt="icon add Cart" className='iconAdd' />
                         </button>
                     </div>
-                </div>
-                <div className='containerDetails'>
+                </section>
+                <section className='containerDetails'>
                     <div className='containerDescription'>
                         <h3>Descrição do Produto</h3>
                         <p>{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}{productData.description}</p>
@@ -138,8 +138,8 @@ export function Product() {
                             <p>{productData.weight}</p>
                         </p>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
+            </section>
+        </main>
     );
   }

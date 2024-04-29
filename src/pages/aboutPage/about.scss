@@ -11,9 +11,7 @@ $color-shadow: #12171740;
 
 $font-title: 'Merriweather Sans', sans-serif;
 
-main {
-    padding: 2em 0 0;
-  
+main {    
     .contentAbout, 
     .contentMascot {
         width: auto;
@@ -46,7 +44,7 @@ main {
             text-align: justify;
 
             p {
-                width: 75%;
+                width: 50%;
                 text-wrap: balance;
                 font-size: 2rem;
             }

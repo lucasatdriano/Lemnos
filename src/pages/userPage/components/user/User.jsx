@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './user.scss';
 import { CustomInput } from '../../../../components/inputs/Inputs';
+import UserImg from '../../../../assets/imgUser.svg';
 
 export default function User() {
   const [username, setUsername] = useState("");
@@ -30,7 +31,6 @@ export default function User() {
     setUsername("");
   };
 
-
   const handleRegistrationSuccess = (firstName) => {
     // Lógica para lidar com o cadastro bem-sucedido
     console.log("Cadastro bem-sucedido! Primeiro nome:", firstName);
@@ -49,7 +49,7 @@ export default function User() {
     <section className="userContainer">
         <div className="userData">
             <div className="user">
-            <img src='{}' alt="user" />
+            <img src={UserImg} alt="user" />
             <h3>{username}Lucas</h3>
             </div>
             <h3 className='editUser'>Editar Perfil</h3>
@@ -59,31 +59,35 @@ export default function User() {
 
         <div className="updateInfos">
             <div className="updateInputs">
-            <p>
+              <p>
                 <CustomInput
-                type="text"
-                reference={nameRef}
-                label="Nome Completo:"
-                maxLength="40"
-                id="name"
-                name="name"
-                onChange={(e) => handleChange(e)}
+                  type="text"
+                  label="Nome Completo:"
+                  id="name"
+                  name="name"
+                  maxLength={40}
+                  minLength={5}
+                  value={form.name}
+                  onChange={handleChange}
                 />
-            </p>
-            <p>
+                {errors.name && <span className='invalid'>{errors.name}</span>}
+              </p>
+
+              <p>
                 <CustomInput
-                type="text"
-                reference={cpfRef}
-                label="CPF:"
-                maxLength={14}
-                id="cpf"
-                name="cpf"
-                value={form.cpf}
-                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                onChange={(e) => handleChange(e)}
+                  type="text"
+                  label="CPF:"
+                  id="cpf"
+                  name="cpf"
+                  maxLength={14}
+                  minLength={14}
+                  value={form.cpf}
+                  mask="CPF"
+                  pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                  onChange={handleChange}
                 />
-                {errors.cpf && <span className='invalid'>Digite um CPF válido!</span>}
-            </p>
+                {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
+              </p>
             </div>
             <button type="button">Alterar Email</button>
             <button type="button">Alterar Senha</button>
