@@ -1,18 +1,10 @@
 import React from 'react';
 import './inputs.scss';
 
-export function CustomInput({ type, reference, label, id, maxLength, minLength, onChange, name, pattern, mask, value}) {
+export function CustomInput({ type, reference, label, id, maxLength, minLength, 
+                              onChange, name, pattern, mask, value, disabled}) {
   
-  // Função para formatar o valor com base na máscara especificada
-  const formatValue = (value) => {
-    if (mask === "CPF") {
-      return formatCPF(value); // Formata CPF
-    } else {
-      return value; // Retorna o valor sem formatação para outros campos
-    }
-  };
-
-  // Função para formatar CPF
+  // Função para formatar o CPF
   const formatCPF = (value) => {
     const cleanedValue = value.replace(/\D/g, '');
     const match = cleanedValue.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
@@ -24,8 +16,16 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength, 
 
   // Função de tratamento de mudanças no campo
   const handleChange = (e) => {
-    const formattedValue = formatValue(e.target.value); // Formata o valor com base na máscara
-    onChange({ target: { name, value: formattedValue }}); // Chama a função de mudança de estado do componente pai
+    let formattedValue = e.target.value;
+
+    // Se a máscara for "CPF", formate o valor
+    if (mask === "CPF") {
+      formattedValue = formatCPF(formattedValue);
+       console.log('CPF formatado:', formattedValue);
+    }
+
+    // Chama a função de mudança de estado do componente pai
+    onChange({ target: { name, value: formattedValue }});
   };
   
   return (
@@ -41,6 +41,7 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength, 
         pattern={pattern}
         onChange={handleChange} // Chama a função handleChange para formatar o valor
         onBlur={handleChange}
+        disabled={disabled}
         required
       />
       <label htmlFor={id}>{label}</label>

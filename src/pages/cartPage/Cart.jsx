@@ -105,9 +105,9 @@ export function Cart() {
     return (
         <main>
             <div className="title">
-                <hr />
+                <hr className='hrTitle'/>
                     <h2>Meu Carrinho</h2>
-                <hr />
+                <hr className='hrTitle'/>
             </div>
             <section className='containerMain'>
                 <div className='containerCart'>
@@ -127,7 +127,7 @@ export function Cart() {
                                         <p>Valor</p>
                                     </div>
                                 </div>
-                                <hr />
+                                <hr className='hrLabels'/>
                                 <div className="productDesc">
                                     <img src="" alt="" />
                                     <h4 className='nameProduct'>{item.nome}</h4>
@@ -167,7 +167,7 @@ export function Cart() {
                     </button>
                     <div className='delivery'>
                         <h4>Calcular Entrega</h4>
-                        <hr />
+                        <hr className='hrDelivery'/>
                         <div className="inputCep">
                             <input
                                 type="text"

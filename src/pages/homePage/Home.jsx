@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slide } from '../../components/carousel/Carousel';
+import { Slide } from './components/carousel/Carousel';
 import './home.scss'
 import kitUpgrade from '../../assets/imgKitUpgrade.svg';
 import videoGame from '../../assets/imgVideoGame.svg';
@@ -18,7 +18,7 @@ export function Home() {
         <Slide />
         
         <section className='mainDep'>
-            <h2>Principais Departamentos</h2>
+          <h2>Principais Departamentos</h2>
 
           <div className="containerDeps">
             <div className='gridItem item1'>

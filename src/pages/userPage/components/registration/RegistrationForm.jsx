@@ -15,6 +15,11 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
   const [errors, setErrors] = useState({});
 
+  const formatCPFToNumbers = (cpf) => {
+    // Remove todos os caracteres não numéricos do CPF
+    return cpf.replace(/\D/g, '');
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prevForm => ({
@@ -26,12 +31,18 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const formattedForm = {
+      ...form,
+      cpf: formatCPFToNumbers(form.cpf),
+    };
+
     const errors = {};
     if (!form.name) {
-      errors.name = 'Campo obrigatório';
+      errors.name = 'O campo Senha é obrigatório';
     }
 
-    if (!form.cpf.match(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)) {
+   const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
+    if (!formattedForm.cpf.match(cpfRegex)) {
       errors.cpf = 'Digite um CPF válido';
     }
 
@@ -53,7 +64,6 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
     setErrors(errors);
 
-    console.log('Formulário:', form);
     console.log('Erros:', errors);
 
     if (Object.keys(errors).length === 0) {

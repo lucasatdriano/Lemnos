@@ -21,13 +21,12 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 main {
-    padding-top: 5em;
     
     .title {
-        padding-top: 1.5em;
         display: flex;
         align-items: center;
         justify-content: center;
+        margin: -1em auto 0;
 
         h2 {
             font-family: $font-title;
@@ -125,7 +124,8 @@ main {
                         }
                     }
 
-                    hr {
+                    .hrLabels {
+                        width: 100%;
                         border: 1px solid $color-primaryLight;
                     }
 
@@ -219,7 +219,8 @@ main {
                     padding: 0 1em .5em ;
                 }
 
-                hr {
+                .hrDelivery {
+                    width: 100%;
                     border: 1px solid $color-primaryLight;
                 }
 
@@ -344,6 +345,7 @@ main {
             }
             
             .hrResume {
+                width: 100%;
                 border: 2px solid $color-primaryLight;
             }
             .hrValues {

@@ -9,13 +9,8 @@ export function Login() {
   const [showLogin, setShowLogin] = useState(true);
   const [username, setUsername] = useState("");
 
-  const handleLogin = (username, password) => {
-    if (username === 'user' && password === 'password') {
-      setLoggedIn(true);
-      setUsername(username);
-    } else {
-      alert('Usuário ou senha incorretos.');
-    }
+  const handleLogin = () => {
+    setLoggedIn(true);
   };
 
   const handleRegistrationSuccess = (firstName) => {
@@ -25,7 +20,6 @@ export function Login() {
 
   const handleLogout = () => {
     setLoggedIn(false);
-    setUsername("");
   };
 
   const handleRegistration = () => {
@@ -38,10 +32,8 @@ export function Login() {
 
   return (
     <main className='container'>
-       <User />
       {loggedIn ? (
-        <></>
-        // <User />
+        <User onLogout={handleLogout}/>
       ) : (
         <div className='loginScreen'>
           {showLogin ? (

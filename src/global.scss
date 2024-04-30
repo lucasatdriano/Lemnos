@@ -1,7 +1,6 @@
 @import './components/backToTop/backToTop.scss';
 @import './components/card/card.scss';
 @import './components/cardOffer/cardOffer.scss';
-@import './components/carousel/carousel.scss';
 @import './components/footer/footer.scss';
 @import './components/inputs/inputs.scss';
 
@@ -89,6 +88,10 @@ html {
         
         &::-webkit-scrollbar {
             width: 0.7em;
+        }
+
+        main {
+            padding-top: 8em;
         }
 
         input {

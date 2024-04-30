@@ -84,6 +84,13 @@ $color-card: #f6fefd4d;
             border-radius: 5px;
             background: $color-primaryLight;
             cursor: pointer;
+
+            &:disabled {
+                filter: brightness(.9);
+                color: $color-fontDark;
+                opacity: .5;
+                cursor: not-allowed;
+            }
         }
     }
 }
