@@ -35,9 +35,7 @@ export function Header({ toggleTheme }) {
             <div id='headerContent'></div>
             <MenuDep toggleTheme={toggleTheme} />
             
-            <Link to="/">
-                <a href="" className='logo'>Lemnos</a>
-            </Link>
+            <Link to="/" className='logo'>Lemnos</Link>
             
             <nav>
                 <ul className='navegation'>

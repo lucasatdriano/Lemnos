@@ -25,11 +25,9 @@ export function MenuDep({ toggleTheme }) {
 
     return (
         <nav className='menuCat'>
-            <button onClick={toggleMenu} className='menuButton'>
-                <a href="#">
-                    <RiMenuUnfoldLine className='menuIcon' />
-                </a>
-            </button>
+            <a href="#" onClick={toggleMenu} className='menuButton'>
+                <RiMenuUnfoldLine className='menuIcon' />
+            </a>
 
             <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
                         

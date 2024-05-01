@@ -4,7 +4,6 @@ import './inputs.scss';
 export function CustomInput({ type, reference, label, id, maxLength, minLength, 
                               onChange, name, pattern, mask, value, disabled}) {
   
-  // Função para formatar o CPF
   const formatCPF = (value) => {
     const cleanedValue = value.replace(/\D/g, '');
     const match = cleanedValue.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
@@ -14,17 +13,14 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength,
     return '';
   };
 
-  // Função de tratamento de mudanças no campo
   const handleChange = (e) => {
     let formattedValue = e.target.value;
 
-    // Se a máscara for "CPF", formate o valor
     if (mask === "CPF") {
       formattedValue = formatCPF(formattedValue);
        console.log('CPF formatado:', formattedValue);
     }
 
-    // Chama a função de mudança de estado do componente pai
     onChange({ target: { name, value: formattedValue }});
   };
   
@@ -39,7 +35,7 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength,
         maxLength={maxLength}
         minLength={minLength}
         pattern={pattern}
-        onChange={handleChange} // Chama a função handleChange para formatar o valor
+        onChange={handleChange}
         onBlur={handleChange}
         disabled={disabled}
         required

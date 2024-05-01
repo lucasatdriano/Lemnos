@@ -39,7 +39,7 @@ export default function EmailModal({ onSave, onClose }) {
   };
 
   return (
-    <div className="modal">
+    <div className="modal" onClick={onClose}>
       <div className="containerModal">
         <h2>Atualizar Email</h2>
         <p>

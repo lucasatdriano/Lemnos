@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './user.scss';
 import { CustomInput } from '../../../../components/inputs/Inputs';
+import EmailModal from './components/modals/EmailModal';
+import PasswordModal from './components/modals/PasswordModal';
+import HistoricoCompras from './components/history/History';
 import UserImg from '../../../../assets/imgUser.svg';
 import { MdLogout } from "react-icons/md";
 
 export default function User({ onLogout }) {
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
   const [form, setForm] = useState({
     name: "Lucas Adriano Tavares Gonçalves",
     cpf: "123.456.789-00",
@@ -24,6 +27,18 @@ export default function User({ onLogout }) {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
+  const historicoExemplo = [
+    { id: 1, produto: 'Camiseta', preco: 25.99 },
+    { id: 2, produto: 'Calça Jeans', produto2: 'Tênis', preco: 39.99 },
+    { id: 3, produto: 'Tênis', preco: 49.99 },
+    { id: 4, produto: 'Cinto', preco: 12.99 },
+    { id: 5, produto: 'Cinto', preco: 12.99 },
+    { id: 6, produto: 'Tênis', preco: 12.99 },
+    { id: 7, produto: 'Meia', produto2: 'Camisa', preco: 12.99 },    
+    { id: 8, produto: 'Sapato', produto2: 'Blusa', preco: 12.99 },
+    { id: 9, produto: 'Cinto', produto2: 'Tênis', preco: 12.99 },
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -38,7 +53,6 @@ export default function User({ onLogout }) {
   };
 
   const handleSaveChanges = () => {
-    // Simula a lógica de salvar alterações
     console.log('Dados atualizados:', form);
   };
 
@@ -101,8 +115,12 @@ export default function User({ onLogout }) {
 
         <hr />
 
+        <div className='containerHistory'>
+          <HistoricoCompras compras={historicoExemplo}/>
+        </div>
+
         <div className="typeUser">
-          {setAdmin ? (
+          {admin ? (
             <div className="logout">
               <button type='button' onClick={onLogout}>Logout <MdLogout className='icon'/></button>
             </div>
@@ -119,11 +137,11 @@ export default function User({ onLogout }) {
         </div>
 
         {showEmailModal && (
-          <EmailModal onSave={handleSaveChanges} onClose={() => setShowEmailModal(false)} />
+          <EmailModal onSave={handleSaveEmail} onClose={() => setShowEmailModal(false)} />
         )}
 
         {showPasswordModal && (
-          <PasswordModal onSave={handleSaveChanges} onClose={() => setShowPasswordModal(false)} />
+          <PasswordModal onSave={handleSavePassword} onClose={() => setShowPasswordModal(false)} />
         )}
     </section>
   );
