@@ -33,6 +33,7 @@ $font-items: 'Poppins', Helvetica;
             border-radius: 20px;
             background-color: $color-bgLight;
             color: $color-fontLight;
+            font-family: $font-items;
             text-indent: 20px;
             font-size: 2.0rem;
             position: relative;
@@ -60,6 +61,7 @@ $font-items: 'Poppins', Helvetica;
     .searchResults {
         position: absolute;
         background-color: $color-bgLight;
+        font-family: $font-items;
         display: flex;
         flex-direction: column;
         gap: .1em;

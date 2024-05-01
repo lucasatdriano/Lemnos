@@ -125,11 +125,14 @@ $font-items: 'Poppins', Helvetica;
         border: none;
         background-color: $color-primaryLight;
         color: $color-fontLight;
+        font-family: $font-title;
         cursor: pointer;
         box-shadow: 2px 2px 4px $color-shadow;
+        transition: .2s ease;
 
         &:hover {
           filter: brightness(.9);
+          box-shadow: 0 0 10px $color-primaryLight;
         }
       }
     }

@@ -16,7 +16,6 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
   const [errors, setErrors] = useState({});
 
   const formatCPFToNumbers = (cpf) => {
-    // Remove todos os caracteres não numéricos do CPF
     return cpf.replace(/\D/g, '');
   };
 
@@ -37,6 +36,7 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     };
 
     const errors = {};
+    
     if (!form.name) {
       errors.name = 'O campo Senha é obrigatório';
     }

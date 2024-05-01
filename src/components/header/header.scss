@@ -21,6 +21,7 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 header {
+    font-family: $font-title;
     position: fixed;
     width: 95%;
     height: 3.5em;

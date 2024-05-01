@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { Flipper, Flipped } from 'react-flip-toolkit';
+import React, { useState } from 'react';
 import { CustomInput } from '../../../../components/inputs/Inputs';
 import './loginForm.scss';
 
@@ -9,25 +8,42 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     password: "",
   });
 
-  const emailRef = useRef();
-  const pwdRef = useRef();
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    onLogin(form.email, form.password);
+  
+    let newErrors = {};
+  
+    if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+      newErrors.email = 'Digite um Email válido';
+    } 
+  
+    if (!form.password || form.password.length < 8) {
+      newErrors.password = 'A Senha deve ter no mínimo 8 caracteres';
+    }
+  
+    setErrors(newErrors);
+  
+    console.log('Erros:', newErrors);
+  
+    if (Object.keys(newErrors).length === 0) {
+      // Lógica de envio do formulário aqui
+      console.log('Dados do formulário:', form);
+      onLogin(form.email, form.password);
+    }
   };
 
   const handleCadastroClick = () => {
     onCadastroClick();
-    setFlipKey(prevKey => prevKey + 1);
   };
 
   return (
@@ -58,7 +74,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
               value={form.email}
               onChange={handleChange}
             />
-            {/* {errors.email && <span className='invalid'>{errors.email}</span>} */}
+            {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
 
           <p>
@@ -72,7 +88,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
               value={form.password}
               onChange={handleChange}
             />
-            {/* {errors.password && <span className='invalid'>{errors.password}</span>} */}
+            {errors.password && <span className='invalid'>{errors.password}</span>}
           </p>
         </div>
 

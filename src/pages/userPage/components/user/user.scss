@@ -16,6 +16,10 @@ $color-fontLight: #121717;
 $color-shadow: #12171740;
 $color-card: #f6fefd4d;
 
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
 .userContainer {
     background: #e8f1f078;
     display: flex;
@@ -76,57 +80,113 @@ $color-card: #f6fefd4d;
             gap: 1.5em;
         }
 
-        button {
-            font-size: 2.2rem;
-            width: 10em;
-            padding: .5em 1em;
-            border: none;
-            border-radius: 5px;
-            background: $color-primaryLight;
-            cursor: pointer;
+        .containerButtons {
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            width: 100%;
+            justify-content: space-evenly;
+                      
+            button {
+                font-size: 2.2rem;
+                width: 10em;
+                padding: .5em 1em;
+                border: none;
+                border-radius: 5px;
+                background: $color-primaryLight;
+                font-family: $font-web;
+                cursor: pointer;
 
-            &:disabled {
-                filter: brightness(.9);
-                color: $color-fontDark;
-                opacity: .5;
-                cursor: not-allowed;
+                &:disabled {
+                    filter: brightness(.9);
+                    color: $color-fontDark;
+                    opacity: .5;
+                    cursor: not-allowed;
+                }
+            }
+    
+            .updateButtons {
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
             }
         }
     }
-}
   
-hr {
-    width: 90%;
-    height: 0;
-    border: 1.5px solid $color-primaryLight;
-}
-  
-.typeUser {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    padding: 1em 5em;
+    hr {
+        width: 90%;
+        height: 0;
+        border: 1.5px solid $color-primaryLight;
+    }
+    
+    .typeUser {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        padding: 1em 5em;
 
-    .logout {
-        button {
-            font-size: 2.2rem;
-            padding: .5em 1em;
-            border: none;
-            border-radius: 5px;
-            background: $color-primaryLight;
-            cursor: pointer;
+        .logout, .adminPage {
+            button {
+                display: flex;
+                align-items: center;
+                gap: .5em;
+                font-size: 2.2rem;
+                padding: .5em 1em;
+                border: none;
+                border-radius: 5px;
+                background: $color-primaryLight;
+                font-family: $font-web;
+                cursor: pointer;
+
+                .icon {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
         }
     }
 
-    .adminPage {
-        button {
-            font-size: 2.2rem;
-            padding: .5em 1em;
-            border: none;
-            border-radius: 5px;
-            background: $color-primaryLight;
-            cursor: pointer;
+    
+    .modal {
+        display: grid;
+        place-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background: $color-shadow;
+        z-index: 99;
+    
+        .containerModal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            gap: 1.5em;
+            background: $color-bgLight;
+            padding: 1.5em;
+            border-radius: 15px;
+    
+            button {
+                font-size: 2.2rem;
+                padding: .5em 1em;
+                border: none;
+                border-radius: 5px;
+                background: $color-primaryLight;
+                font-family: $font-web;
+                cursor: pointer;
+            }
+    
+            .iconClose {
+                width: 32px;
+                height: 32px;
+                cursor: pointer;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
         }
     }
 }

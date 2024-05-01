@@ -97,6 +97,17 @@ $font-items: 'Poppins', Helvetica;
       display: flex;
       flex-direction: column;
       gap: 1.5em;
+
+      p {
+        position: relative;
+      
+        .invalid {
+          padding-bottom: 1em;
+          color: $color-detailsLight;
+          position: relative;
+          left: 15px;
+        }
+      }
     }
 
     .btnLoginForm {
@@ -113,11 +124,14 @@ $font-items: 'Poppins', Helvetica;
         border: none;
         background-color: $color-primaryLight;
         color: $color-fontLight;
+        font-family: $font-title;
         cursor: pointer;
         box-shadow: 2px 2px 4px $color-shadow;
+        transition: .2s ease;
 
         &:hover {
           filter: brightness(.9);
+          box-shadow: 0 0 10px $color-primaryLight;
         }
         &:active + .login-form-container {
           transition: 2s linear;

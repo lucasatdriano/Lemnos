@@ -21,6 +21,7 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 main {
+    font-family: $font-title;
     padding-top: 8em;
 
     .mainDep {
@@ -33,6 +34,7 @@ main {
             grid-template-rows: repeat(2, minmax(200px, 1fr)); 
             gap: 20px;
             padding: .5em 0 1em;
+            font-family: $font-items;
         
             .gridItem {
                 background-color: $color-card;
