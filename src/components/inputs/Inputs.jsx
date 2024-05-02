@@ -25,7 +25,7 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength,
   };
   
   return (
-    <p className='singleInput'>
+    <span className='singleInput'>
       <input
         type={type} 
         ref={reference}
@@ -41,6 +41,6 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength,
         required
       />
       <label htmlFor={id}>{label}</label>
-    </p>
+    </span>
   );
 };

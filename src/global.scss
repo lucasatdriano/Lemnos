@@ -29,11 +29,13 @@ $font-web: 'Roboto Flex', Arial;
 @mixin lightMode {
     background-color: $color-bgLight;
     color: $color-fontLight;
+    transition: .25s ease-in;
 }
 
 @mixin darkMode {
     background-color: $color-bgDark;
     color: $color-fontDark;
+    transition: .25s ease-in;
 }
 
 :root {

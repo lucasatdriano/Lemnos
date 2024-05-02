@@ -146,7 +146,6 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
-
     
     .modal {
         display: grid;
@@ -189,4 +188,58 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
+}
+
+.dark {
+    .userContainer {      
+        .userData {      
+            .user {        
+                img {
+                    border: 1px solid $color-primaryDark;
+                }
+            }
+        
+            .editUser {
+                color: $color-fontDark;
+            }
+        }
+    
+        .lineUser {
+            border: 1.5px solid $color-primaryDark;
+        }
+    
+        .updateInfos {
+            .containerButtons {                          
+                button {
+                    background: $color-primaryDark;
+                }
+            }
+        }
+      
+        hr {
+            border: 1.5px solid $color-primaryDark;
+        }
+        
+        .typeUser {    
+            .logout, .adminPage {
+                button {
+                    background: $color-primaryDark;
+                }
+            }
+        }
+        
+        .modal {        
+            .containerModal {
+                color: $color-fontLight;
+        
+                button {
+                    background: $color-primaryDark;
+                }
+            }
+        }
+    }    
+}
+
+@media only screen and (max-width: 670px) {
+
 }

@@ -82,15 +82,20 @@ $font-items: 'Poppins', Helvetica;
             border-radius: 5px;
             padding: 10px 15px;
 
-            img {
-                padding: 20px;
-                height: 100%;
-                width: 20%;
-            }
-            h4 {
-                font-size: 2rem;
-                color: $color-fontLight;
-                width: 45%;
+            .containerVisual {
+                display: flex;
+                align-items: center;
+
+                img {
+                    padding: 20px;
+                    height: 100%;
+                    width: 30%;
+                }
+                h4 {
+                    font-size: 2rem;
+                    color: $color-fontLight;
+                    width: 75%;
+                }
             }
             p {
                 font-size: 2.2rem;
@@ -109,7 +114,6 @@ $font-items: 'Poppins', Helvetica;
             min-width: 32em;
             padding-top: 1.5em;
 
-
             .itemSearch {
                 background-color: $color-bgLight;
                 padding: 10px 15px;
@@ -120,7 +124,7 @@ $font-items: 'Poppins', Helvetica;
                 }
                 h4 {
                     font-size: 2rem;
-                    width: 40%;
+                    width: 0%;
                 }
             }
         }
@@ -157,6 +161,9 @@ $font-items: 'Poppins', Helvetica;
                     font-size: 1.8rem;
                     width: 35%;
                 }
+                p {
+                    font-size: 1.8rem;
+                }
             }
         }
     }
@@ -169,8 +176,24 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .searchResults {
-            left: 40%;
+            left: 50%;
             min-width: 90vw;
+
+            .itemSearch {
+                flex-direction: column;
+                
+                .containerVisual {
+                    display: flex;
+
+                    img {
+                        width: 35%;
+                    }
+                    h4 {
+                        font-size: 1.6rem;
+                        width: 70%;
+                    }
+                }
+            }
         }
     }
 }

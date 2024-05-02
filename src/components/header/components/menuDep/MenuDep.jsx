@@ -32,10 +32,6 @@ export function MenuDep({ toggleTheme }) {
             <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
                         
             <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-                <button onClick={toggleMenu} className='btnFecharMenu'>
-                    <RiCloseFill className='menuIcon' />
-                </button>
-
                 <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
                 <hr />
 

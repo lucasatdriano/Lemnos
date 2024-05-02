@@ -56,6 +56,18 @@ export default function User({ onLogout }) {
     console.log('Dados atualizados:', form);
   };
 
+  const handleEmailSave = (newEmail) => {
+    setForm(prevForm => ({
+      ...prevForm,
+      email: newEmail
+    }));
+    console.log("Novo email:", newEmail);
+  };
+
+  const handlePasswordSave = (newPassword) => {
+    console.log("Nova senha:", newPassword);
+  };
+
   return (
     <section className="userContainer">
         <div className="userData">
@@ -114,10 +126,7 @@ export default function User({ onLogout }) {
         </div>
 
         <hr />
-
-        <div className='containerHistory'>
-          <HistoricoCompras compras={historicoExemplo}/>
-        </div>
+        <HistoricoCompras compras={historicoExemplo}/>
 
         <div className="typeUser">
           {admin ? (
@@ -137,11 +146,11 @@ export default function User({ onLogout }) {
         </div>
 
         {showEmailModal && (
-          <EmailModal onSave={handleSaveEmail} onClose={() => setShowEmailModal(false)} />
+          <EmailModal onSave={handleEmailSave} onClose={() => setShowEmailModal(false)} />
         )}
 
         {showPasswordModal && (
-          <PasswordModal onSave={handleSavePassword} onClose={() => setShowPasswordModal(false)} />
+          <PasswordModal onSave={handlePasswordSave} onClose={() => setShowPasswordModal(false)} />
         )}
     </section>
   );
