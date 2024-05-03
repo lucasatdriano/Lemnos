@@ -4,6 +4,7 @@ import './global.scss';
 import { Header } from './components/header/Header';
 import { BackToTopButton } from './components/backToTop/BackToTop';
 import { Footer } from './components/footer/Footer';
+import { useTheme } from './ThemeProvinder';
 
 export function App() {
   const [theme, setTheme] = useState('light');

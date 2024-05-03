@@ -33,7 +33,7 @@ export function MenuDep({ toggleTheme }) {
                         
             <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
                 <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
-                <hr />
+                <hr className='hrMenu'/>
 
                 <h3>Departamentos</h3>
                 <ul className='categorias'>
@@ -52,8 +52,8 @@ export function MenuDep({ toggleTheme }) {
                 </ul>
 
                 <h3>Navegação</h3>
-                <nav>
-                    <ul className='menuNav'>
+                <nav className='menuNav'>
+                    <ul>
                         <Link to="/" className='link'>Home</Link>
                         <Link to="/about" className='link'>Sobre</Link>
                     </ul>

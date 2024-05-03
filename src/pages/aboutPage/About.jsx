@@ -1,6 +1,7 @@
 import React from 'react';
 import './about.scss';
-import LogoHorizontal from '../../assets/logoHorizontal.svg';
+import LogoHorizontalLight from '../../assets/logoHorizontal.svg';
+import LogoHorizontalDark from '../../assets/logoHorizontalClaro.svg';
 import TechFesto from '../../assets/imgMascote.svg';
 
 export function About() {
@@ -26,7 +27,16 @@ export function About() {
                     Bem-vindo à Lemnos, onde a paixão pela tecnologia e a busca 
                     pela excelência definem o futuro da inovação tecnológica.
                 </p>
-                <img src={LogoHorizontal} alt="logo" />
+                <img 
+                    className='logoDark'
+                    src={LogoHorizontalLight} 
+                    alt="logo" 
+                  />
+                  <img 
+                    className='logoLight' 
+                    src={LogoHorizontalDark} 
+                    alt="logo" 
+                  />
             </div>
         </section>
 
