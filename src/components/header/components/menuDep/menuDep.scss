@@ -74,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: -20px 0 10px;
+            margin: -10px 0 10px;
             width: 4em;
             height: 4em;
             object-fit: contain;
@@ -99,7 +99,7 @@ $font-items: 'Poppins', Helvetica;
         .categorias {
             padding: 5px 0 10px 0;
             overflow-y: auto;
-            height: clamp(50%, 20% + 15em, 75%);
+            // height: clamp(50%, 20% + 15em, 75%);
 
             li {
                 padding: 5px 10px;
@@ -257,13 +257,13 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width:768px) {
     .menuCat {    
         .menu {       
-            // .logoMenu {
-            //     margin: -5em 0 10px;
-            // }
+            .logoMenu {
+                margin: -5em 0 10px;
+            }
 
-            // .categorias {
-            //     height: 50%;
-            // }
+            .categorias {
+                height: clamp(50%, 20% + 15em, 75%);
+            }
         }
     }
 }
