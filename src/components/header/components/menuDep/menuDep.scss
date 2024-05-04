@@ -99,7 +99,7 @@ $font-items: 'Poppins', Helvetica;
         .categorias {
             padding: 5px 0 10px 0;
             overflow-y: auto;
-            // height: clamp(50%, 50% + 10em, 75%);
+            height: clamp(50%, 20% + 15em, 75%);
 
             li {
                 padding: 5px 10px;
