@@ -2,74 +2,30 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../../../components/card/Card';
 import '../home.scss';
-import logoHorizontal from '../../../assets/logoHorizontal.svg'
 
-export function ProductList() {
+export function ProductList({ products }) {
   const navigate = useNavigate();
 
     //chamada da API
-  const products = [
-    {
-      id: 1,
-      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
-      price: 19.99,
-      image: logoHorizontal
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 24.99,
-      image: '../../../assets/logoHorizontal.png'
-    },
-    {
-      id: 3,
-      name: 'Product 3',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 4,
-      name: 'Product 4',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 5,
-      name: 'Product 5',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 6,
-      name: 'Product 6',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 7,
-      name: 'Product 7',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 8,
-      name: 'Product 8',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 9,
-      name: 'Product 9',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-    {
-      id: 10,
-      name: 'Product 10',
-      price: 24.99,
-      image: 'product2.jpg'
-    },
-  ];
+  // const products = [
+  //   {
+  //     id: 1,
+  //     name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
+  //     price: 19.99,
+  //     image: logoHorizontal
+  //   },
+  // ];
+  // for (let i = 2; i <= 40; i++) {
+  //   products.push({
+  //     id: i,
+  //     name: `Product ${i}`,
+  //     price: Math.random() * 1000, // Preço aleatório entre 0 e 100
+  //     image: 'product2.jpg', // Imagem de exemplo
+  //     brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`, // Marcas aleatórias de A a Z
+  //     category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`, // Categorias aleatórias de A a Z
+  //     subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}` // Subcategorias aleatórias de A a Z
+  //   });
+  // }
 
   return (
     <div className='productsList'>

@@ -61,7 +61,7 @@ $font-items: 'Poppins', Helvetica;
     }
 
     .lineUser {
-        width: 120%;
+        width: 110%;
         height: 0;
         border: 1.5px solid $color-primaryLight;
     }
@@ -83,13 +83,14 @@ $font-items: 'Poppins', Helvetica;
         .containerButtons {
             display: flex;
             align-items: center;
-            flex-direction: row-reverse;
+            flex-direction: column-reverse;
+            gap: 1em;
             width: 100%;
             justify-content: space-evenly;
                       
             button {
                 font-size: 2.2rem;
-                width: 10em;
+                width: clamp(7em, 7em + 3em, 10em);
                 padding: .5em 1em;
                 border: none;
                 border-radius: 5px;
@@ -107,14 +108,13 @@ $font-items: 'Poppins', Helvetica;
     
             .updateButtons {
                 display: flex;
-                flex-direction: column;
-                gap: 1em;
+                gap: 2em;
             }
         }
     }
   
     hr {
-        width: 90%;
+        width: 95%;
         height: 0;
         border: 1.5px solid $color-primaryLight;
     }
@@ -240,6 +240,30 @@ $font-items: 'Poppins', Helvetica;
     }    
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 690px) {
+    .userContainer {
+        .userData {
+            padding: 0 .5em;
 
+            .user {
+                max-width: 10em;
+                flex-direction: column;
+                gap: .25em;
+            }
+        }
+
+        .updateInfos {
+            .updateInputs {
+                grid-template-columns: 1fr ;
+                grid-template-rows: 1fr 1fr;
+            }
+
+            .containerButtons {                          
+                .updateButtons {
+                    flex-direction: column;
+                    gap: 1em;
+                }
+            }
+        }
+    }    
 }

@@ -1,64 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card } from '../../components/card/Card';
-import './productFilter.scss';
-import logoHorizontal from '../../assets/logoHorizontal.png';
+import { useParams } from 'react-router-dom';
 
-export function ProductList() {
-  const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+export function ProductFilter() {
+  const { category } = useParams(); // Obtém a categoria da URL
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState('');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
 
-  // Função para carregar mais produtos quando o usuário rolar para o final da página
-  const loadMoreProducts = () => {
-    setLoading(true);
-    // Simulação de chamada assíncrona para a API
-    setTimeout(() => {
-      const newProducts = [
-        // Aqui você carrega os próximos produtos da API, por exemplo, com uma chamada fetch
-        // Você pode adicionar os produtos em uma nova página ou apenas anexá-los à lista existente
-        // Neste exemplo, estou apenas simulando a adição de produtos
-        ...products,
-        {
-          id: products.length + 1,
-          name: `Product ${products.length + 1}`,
-          price: Math.floor(Math.random() * 10000), // Preço aleatório
-          image: logoHorizontal
-        }
-      ];
-      setProducts(newProducts);
-      setLoading(false);
-    }, 1000); // Simula uma chamada assíncrona de 1 segundo
+  const products = [
+    {
+      id: 1,
+      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
+      price: 19.99,
+      image: logoHorizontal,
+      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
+      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
+      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}` 
+    },
+  ];
+  for (let i = 2; i <= 40; i++) {
+    products.push({
+      id: i,
+      name: `Product ${i}`,
+      price: Math.random() * 1000,
+      image: 'product2.jpg',
+      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
+      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
+      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`
+    });
+  }
+
+  // Função para aplicar os filtros aos dados
+  const applyFilters = (products) => {
+    return products.filter(item => {
+      // Aplicar filtros conforme necessário
+      if (selectedBrand && item.brand !== selectedBrand) {
+        return false;
+      }
+      if (selectedPrice && item.price > parseInt(selectedPrice)) {
+        return false;
+      }
+      if (selectedSubCategory && item.subcategory !== selectedSubCategory) {
+        return false;
+      }
+      return true;
+    });
   };
 
-  // Efeito para carregar mais produtos quando a página for carregada inicialmente
-  useEffect(() => {
-    loadMoreProducts();
-  }, []);
+  const filteredData = applyFilters(products);
 
-  // Efeito para adicionar event listener para verificar quando o usuário rolar até o final da página
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        loadMoreProducts();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]);
+    // Simula a seleção da categoria ao acessar a tela de filtros
+    setSelectedBrand(category); // Ou setSelectedPrice(category), dependendo do que você deseja usar como categoria inicial
+  }, [category]);
 
   return (
-    <main>
-      <div className='productsList'>
-        {products.map(product => (
-          <Card key={product.id} product={product} />
+    <div>
+      {/* Componentes de filtro */}
+      <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
+        <option value="">Todas as marcas</option>
+        <option value="Brand A">Brand A</option>
+        <option value="Brand B">Brand B</option>
+        {/* Adicione mais opções de marca conforme necessário */}
+      </select>
+
+      <select value={selectedPrice} onChange={(e) => setSelectedPrice(e.target.value)}>
+        <option value="">Qualquer preço</option>
+        <option value="10">Até R$ 10,00</option>
+        <option value="20">Até R$ 20,00</option>
+        {/* Adicione mais opções de preço conforme necessário */}
+      </select>
+
+      <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
+        <option value="">Todas as subcategorias</option>
+        <option value="Subcategory 1">Subcategoria 1</option>
+        <option value="Subcategory 2">Subcategoria 2</option>
+        {/* Adicione mais opções de subcategoria conforme necessário */}
+      </select>
+
+      {/* Dados filtrados */}
+      <ul>
+        {filteredData.map(item => (
+          <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, Subcategoria: {item.subcategory}</li>
         ))}
-        {loading && <div>Carregando...</div>}
-      </div>
-    </main>
+      </ul>
+    </div>
   );
 }
