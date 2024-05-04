@@ -91,7 +91,7 @@ export function About() {
                         excelência e inovação, onde a inspiração mitológica 
                         impulsiona a tecnologia do futuro.
                 </p>
-                <img src={TechFesto} alt="" />
+                <img src={TechFesto} alt="Mascot TechFesto" className='imgMascot'/>
             </div>
         </section>
     </main>

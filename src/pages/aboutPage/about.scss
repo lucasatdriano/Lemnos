@@ -51,7 +51,7 @@ main {
                 font-size: 2rem;
             }
 
-            .logoDark, .logoLight {
+            .logoDark, .logoLight,.imgMascot {
                 width: 50%;
                 height: 30em;
                 object-fit: contain;
@@ -68,19 +68,20 @@ main {
         .content {
             width: 95%;
             margin: 5em auto;
-            gap: 1.5em;
+            gap: 1em;
             display: flex;
             align-items: baseline;
             justify-content: space-around;
+            flex-wrap: wrap;
 
             .item {
                 background-color: $color-secundaryLight;
                 color: $color-fontDark;
-                width: 30%;
+                width: 30vw;
                 height: 20em;
                 padding: 10px;
-                border-radius: 20px;
                 text-align: justify;
+                border-radius: 20px;
                 letter-spacing: 1.5px;
                 overflow: hidden;
                 box-shadow: 4px 4px 8px $color-shadow;
@@ -138,11 +139,12 @@ main {
 @media only screen and (max-width: 1024px) {
     main {
         margin: 0 0 6em;
-    
+
         .contentValues {
             .content {
                 .item {
-                    border-radius: 15px;
+                    width: 45vw;
+                    text-align: left;
     
                     h3 {
                         font-size: 2.4rem;
@@ -180,7 +182,7 @@ main {
                     font-size: 1.8rem;
                 }
 
-                img {
+                .logoDark, .logoLight, .imgMascot {
                     width: 100%;
                     height: 15em;
                 }
@@ -198,6 +200,7 @@ main {
                     min-height: 5em;
                     height: auto;
                     margin: auto;
+                    text-align: justify;
 
                     h3 {
                         font-size: 2.2rem;
