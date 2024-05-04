@@ -74,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: -10px 0 10px;
+            margin: -5px 0 10px;
             width: 4em;
             height: 4em;
             object-fit: contain;
@@ -256,13 +256,9 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width:768px) {
     .menuCat {    
-        .menu {       
-            .logoMenu {
-                margin: -5em 0 10px;
-            }
-
+        .menu {
             .categorias {
-                height: clamp(50%, 20% + 15em, 75%);
+                height: clamp(45%, 30% + 15em, 60%);
             }
         }
     }
