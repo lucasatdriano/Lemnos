@@ -26,7 +26,7 @@ main {
 
     .mainDep {
         width: 90%;
-        margin: 12em auto 0;
+        margin: 11em auto 0;
 
         .containerDeps {
             display: grid;
@@ -78,7 +78,7 @@ main {
     .offers {
         width: 90%;
         margin: 0 auto;
-        padding-top: 1em;
+        padding-top: .5em;
 
         .offersList {
             display: flex;
@@ -319,7 +319,7 @@ main {
         .offers {
             .offersList {
                 .splide__slide {
-                    padding-left: .8em;
+                    padding-left: .3em;
                 }
             }
         }

@@ -74,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: -10px 0 10px;
+            margin: -20px 0 10px;
             width: 4em;
             height: 4em;
             object-fit: contain;
@@ -83,8 +83,7 @@ $font-items: 'Poppins', Helvetica;
 
         .hrMenu {
             width: 100%;
-            height: 2px;
-            border: 1px solid $color-primaryLight;
+            border: 1.5px solid $color-primaryLight;
         }
 
         h3 {
@@ -100,7 +99,7 @@ $font-items: 'Poppins', Helvetica;
         .categorias {
             padding: 5px 0 10px 0;
             overflow-y: auto;
-            height: clamp(50%, 30% + 30%, 60%);
+            // height: clamp(50%, 50% + 10em, 75%);
 
             li {
                 padding: 5px 10px;
@@ -131,7 +130,7 @@ $font-items: 'Poppins', Helvetica;
                 text-align: left;
                 
                 .link {
-                    padding: 15px 10px 0;
+                    padding: 15px 10px 5px;
                     transition: .2s ease-in;
                     color: $color-fontDark;
                     font-size: 1.8rem;
@@ -154,7 +153,6 @@ $font-items: 'Poppins', Helvetica;
                 cursor: pointer;
                 position: absolute;
                 top: 0;
-                // left: 60px;
                 z-index: 1;
                 width: 8em;
                 height: 3em;
@@ -259,16 +257,13 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width:768px) {
     .menuCat {    
         .menu {       
-            .logoMenu {
-                width: 3.5em;
-                height: 3.5em;
-                margin: 0 35%;
-        
-            }
+            // .logoMenu {
+            //     margin: -5em 0 10px;
+            // }
 
-            .categorias {
-                height: 50%;
-            }
+            // .categorias {
+            //     height: 50%;
+            // }
         }
     }
 }
