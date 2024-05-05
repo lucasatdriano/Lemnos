@@ -12,25 +12,24 @@ export function Footer() {
                 <nav className='navLinks'>
                     <ul>
                         <h3>Institucional</h3>
-                        <li>Quem Somos</li>
-                        <li>Localização</li>
-                        <li>Nossas Lojas</li>
-                        <li>Blog</li>
+                        <li><a href="#">Quem Somos</a></li>
+                        <li><a href="#">Nossas Lojas</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
                     <ul>
                         <h3>Ajuda</h3>
-                        <li>SAC</li>
-                        <li>Fale Conosco</li>
-                        <li>Termos de Aceite</li>
-                        <li>Politicas de Privacidade</li>
+                        <li><a href="#">SAC</a></li>
+                        <li><a href="#">Fale Conosco</a></li>
+                        <li><a href="#">Termos de Aceite</a></li>
+                        <li><a href="#">Politicas de Privacidade</a></li>
                     </ul>
                     <ul>
                         <h3>Dúvidas</h3>
-                        <li>Entrega</li>
-                        <li>Garantia</li>
-                        <li>Como Comprar</li>
-                        <li>Formas de Pagamento</li>
-                        <li>Sobre Boletos</li>
+                        <li><a href="#">Entrega</a></li>
+                        <li><a href="#">Garantia</a></li>
+                        <li><a href="#">Como Comprar</a></li>
+                        <li><a href="#">Formas de Pagamento</a></li>
+                        <li><a href="#">Sobre Boletos</a></li>
                     </ul>
                 </nav>
                 <div className='iconsNav'>

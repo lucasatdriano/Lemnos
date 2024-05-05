@@ -96,8 +96,13 @@ export function Cart() {
             alert("Por favor, adicione algum item no carrinho.");
         } else if(cep.length !== 9) {
             alert("Por favor, adicione o seu CEP.")
+        } else if (deliveryOption === '') {
+            alert("Por favor, selecione uma opção de entrega.");
         } else {
             limparCarrinho();
+            setShowOptions(false);
+            setDeliveryOption('');
+            setCep('');
             alert("Compra finalizada com sucesso!");
         }
     }
