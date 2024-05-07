@@ -64,7 +64,7 @@ $font-items: 'Poppins', Helvetica;
         animation: menuDep 0.5s ease-in-out forwards;
         opacity: 0;
         display: none;
-        overflow: visible;
+        overflow-y: auto;
 
         &.active {
             display: flex;
@@ -74,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: -5px 0 10px;
+            margin: 5em 0 .25em;
             width: 4em;
             height: 4em;
             object-fit: contain;
@@ -98,8 +98,6 @@ $font-items: 'Poppins', Helvetica;
 
         .categorias {
             padding: 5px 0 10px 0;
-            overflow-y: auto;
-            // height: clamp(50%, 20% + 15em, 75%);
 
             li {
                 padding: 5px 10px;
@@ -130,6 +128,9 @@ $font-items: 'Poppins', Helvetica;
                 text-align: left;
                 
                 .link {
+                    display: flex;
+                    gap: .5em;
+                    align-items: center;
                     padding: 15px 10px 5px;
                     transition: .2s ease-in;
                     color: $color-fontDark;
@@ -138,6 +139,11 @@ $font-items: 'Poppins', Helvetica;
                     &:hover {
                         background-color: $color-secundaryDark;
                         text-decoration: underline; 
+                    }
+
+                    [class*=Icon] {
+                        width: 28px;
+                        height: 28px;
                     }
                 }
             }
@@ -153,7 +159,7 @@ $font-items: 'Poppins', Helvetica;
                 cursor: pointer;
                 position: absolute;
                 top: 0;
-                z-index: 1;
+                z-index: 99;
                 width: 8em;
                 height: 3em;
                 opacity: 0;
@@ -254,11 +260,17 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width: 500px) {
     .menuCat {    
-        .menu {
-            .categorias {
-                height: clamp(45%, 30% + 15em, 60%);
+       
+        .menuButton {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+
+            .menuIcon {
+                color: $color-fontDark;
+                margin: .5em 0 0 -2em;
             }
         }
     }

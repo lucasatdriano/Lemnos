@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LogoVertical from '../../../../assets/logoVerticalClaro.svg';
 import './menuDep.scss';
-import { RiMenuUnfoldLine, RiCloseFill, RiSunLine, RiMoonLine } from "react-icons/ri";
+import { AiOutlineTeam } from "react-icons/ai";
+import { RiMenuUnfoldLine, RiHome4Line , RiShoppingCartLine, RiHeartLine, RiUser3Line, RiSunLine, RiMoonLine } from "react-icons/ri";
 
 export function MenuDep({ toggleTheme }) {
     const dropDownRef = useRef(null);
@@ -54,8 +55,26 @@ export function MenuDep({ toggleTheme }) {
                 <h3>Navegação</h3>
                 <nav className='menuNav'>
                     <ul>
-                        <Link to="/" className='link'>Home</Link>
-                        <Link to="/about" className='link'>Sobre</Link>
+                        <Link to="/" className='link'>
+                            <RiHome4Line className='homeIcon'/>
+                            Home
+                        </Link>
+                        <Link to="/about" className='link'>
+                            <AiOutlineTeam className='aboutIcon'/>
+                            Sobre
+                        </Link>
+                        <Link to="/" className='link'>
+                            <RiHeartLine className='favoriteIcon' />
+                            Favoritos
+                        </Link>
+                        <Link to="/login" className='link'>
+                            <RiUser3Line className='userIcon' />
+                            Conta
+                        </Link>
+                        <Link to="/cart" className='link'>
+                            <RiShoppingCartLine className='cartIcon' />
+                            Carrinho
+                        </Link>
                     </ul>
                 </nav>
  

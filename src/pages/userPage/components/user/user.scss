@@ -70,7 +70,7 @@ $font-items: 'Poppins', Helvetica;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1em;
+        gap: 2em;
         padding: 2em;
 
         .updateInputs {
@@ -86,25 +86,7 @@ $font-items: 'Poppins', Helvetica;
             flex-direction: column-reverse;
             gap: 1em;
             width: 100%;
-            justify-content: space-evenly;
-                      
-            button {
-                font-size: 2.2rem;
-                width: clamp(7em, 7em + 3em, 10em);
-                padding: .5em 1em;
-                border: none;
-                border-radius: 5px;
-                background: $color-primaryLight;
-                font-family: $font-web;
-                cursor: pointer;
-
-                &:disabled {
-                    filter: brightness(.9);
-                    color: $color-fontDark;
-                    opacity: .5;
-                    cursor: not-allowed;
-                }
-            }
+            justify-content: space-evenly;  
     
             .updateButtons {
                 display: flex;
@@ -119,32 +101,22 @@ $font-items: 'Poppins', Helvetica;
         border: 1.5px solid $color-primaryLight;
     }
     
+    .adminPage {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        place-items: center;
+        gap: 1em 0;
+        padding: 1em 0;
+    }
+
     .typeUser {
         width: 100%;
         display: flex;
         justify-content: space-between;
         flex-direction: row-reverse;
         padding: 1em 5em;
-
-        .logout, .adminPage {
-            button {
-                display: flex;
-                align-items: center;
-                gap: .5em;
-                font-size: 2.2rem;
-                padding: .5em 1em;
-                border: none;
-                border-radius: 5px;
-                background: $color-primaryLight;
-                font-family: $font-web;
-                cursor: pointer;
-
-                .icon {
-                    width: 28px;
-                    height: 28px;
-                }
-            }
-        }
     }
     
     .modal {
@@ -188,6 +160,47 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5em;
+        font-size: 2.2rem;
+        width: clamp(7em, 7em + 3em, 10em);
+        padding: .5em 1em;
+        border: none;
+        border-radius: 5px;
+        background: $color-primaryLight;
+        box-shadow: 2px 2px 8px $color-shadow;
+        font-family: $font-web;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: .5s ease;
+
+        &:disabled {
+            filter: brightness(.9);
+            color: $color-fontDark;
+            opacity: .5;
+            cursor: not-allowed;
+
+            &:hover {
+                filter: brightness(.9);
+                box-shadow: 2px 2px 8px $color-shadow;
+            }
+            
+        }
+
+        &:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 0 10px $color-primaryLight;
+        }
+
+        .icon {
+            width: 28px;
+            height: 28px;
+        }
+    }
 }
 
 .dark {
@@ -207,34 +220,28 @@ $font-items: 'Poppins', Helvetica;
         .lineUser {
             border: 1.5px solid $color-primaryDark;
         }
-    
-        .updateInfos {
-            .containerButtons {                          
-                button {
-                    background: $color-primaryDark;
-                }
-            }
-        }
       
         hr {
             border: 1.5px solid $color-primaryDark;
         }
-        
-        .typeUser {    
-            .logout, .adminPage {
-                button {
-                    background: $color-primaryDark;
-                }
-            }
-        }
-        
+    
         .modal {        
             .containerModal {
                 color: $color-fontLight;
-        
-                button {
-                    background: $color-primaryDark;
+            }
+        }
+
+        button {
+            background: $color-primaryDark;
+    
+            &:disabled {    
+                &:hover {
+                    box-shadow: 2px 2px 8px $color-shadow;
                 }
+            }
+    
+            &:hover {
+                box-shadow: 0 0 10px $color-primaryDark;
             }
         }
     }    

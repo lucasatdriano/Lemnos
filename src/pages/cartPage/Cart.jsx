@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './cart.scss';
 import { MdDelete } from "react-icons/md";
@@ -12,6 +12,28 @@ export function Cart() {
     const [cep, setCep] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const [deliveryOption, setDeliveryOption] = useState('');
+    const deliveryOptionsRef = useRef(null);
+    const cepInputRef = useRef(null);
+    const [isResumoFixo, setIsResumoFixo] = useState(false);
+
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const resumoElement = document.querySelector('.resumeBuy');
+    //         const resumoTopOffset = resumoElement.offsetTop;
+
+    //         if (window.pageYOffset >= resumoTopOffset) {
+    //             setIsResumoFixo(true);
+    //         } else {
+    //             setIsResumoFixo(false);
+    //         }
+    //     };
+
+    //     window.addEventListener('scroll', handleScroll);
+
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //     };
+    // }, []);
 
     let priceDelivery = 0;
 
@@ -54,6 +76,7 @@ export function Cart() {
         if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
             setShowOptions(true);
         } else {
+            alert("Por favor, adicione o seu CEP para calcularmos.");
             setShowOptions(false);
         }
     }
@@ -95,9 +118,11 @@ export function Cart() {
         if (carrinho.length === 0) {
             alert("Por favor, adicione algum item no carrinho.");
         } else if(cep.length !== 9) {
-            alert("Por favor, adicione o seu CEP.")
+            alert("Por favor, adicione o seu CEP para prosseguir.");
+            cepInputRef.current.focus();
         } else if (deliveryOption === '') {
             alert("Por favor, selecione uma opção de entrega.");
+            deliveryOptionsRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
             limparCarrinho();
             setShowOptions(false);
@@ -105,7 +130,7 @@ export function Cart() {
             setCep('');
             alert("Compra finalizada com sucesso!");
         }
-    }
+    }    
 
     return (
         <main>
@@ -181,6 +206,7 @@ export function Cart() {
                                 onChange={handleCepChange}
                                 maxLength={9}
                                 pattern="\d{5}-?\d{3}"
+                                ref={cepInputRef}
                             />
                             <button type="button" className='calcDelivery' onClick={handleCalculateDelivery}>
                                 Calcular
@@ -190,7 +216,7 @@ export function Cart() {
                         </div>
                         {showOptions && (
                             <div>
-                                <div className='optionsDelivery'>
+                                <div className='optionsDelivery' ref={deliveryOptionsRef}>
                                     <label class="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
@@ -236,7 +262,7 @@ export function Cart() {
                         )}
                     </div>
                 </div>
-                <div className='resumeBuy'>
+                <div className={`resumeBuy ${isResumoFixo ? 'fixed' : ''}`}>
                     <h3>Resumo</h3>
                     <hr className='hrResume'/>
                     <div className='values'>

@@ -121,28 +121,29 @@ export default function User({ onLogout }) {
             <div className='updateButtons'>
               <button type="button" onClick={() => setShowEmailModal(true)} disabled={!isEditing}>Alterar Email</button>
               <button type="button" onClick={() => setShowPasswordModal(true)} disabled={!isEditing}>Alterar Senha</button>
+              <button type="button" disabled={!isEditing}>Adicionar Endereco</button>
             </div>
           </div>
         </div>
 
         <hr />
-        <HistoricoCompras compras={historicoExemplo}/>
+        {admin ? (
+          <HistoricoCompras compras={historicoExemplo}/>
+        ) : (
+          <>
+            <div className='adminPage'>
+              <button type="button">Adicionar Produto</button>
+              <button type="button">Adicionar Funcionário</button>
+              <button type="button">Adicionar Fornecedor</button>
+              <button type="button">Atualizar Funcionário</button>
+            </div>
+          </>
+        )}
 
         <div className="typeUser">
-          {admin ? (
-            <div className="logout">
-              <button type='button' onClick={onLogout}>Logout <MdLogout className='icon'/></button>
-            </div>
-          ) : (
-            <>
-              <div className="logout">
-                <button type='button' onClick={onLogout}>Logout <MdLogout className='icon'/></button>
-              </div>
-              <div className='adminPage'>
-                <button type="button">Sou Admin</button>
-              </div>
-            </>
-          )}
+          <div className="logout">
+            <button type='button' onClick={onLogout}>Logout <MdLogout className='icon'/></button>
+          </div>
         </div>
 
         {showEmailModal && (
