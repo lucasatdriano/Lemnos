@@ -1,20 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import './carousel.scss'
+import './carousel.scss';
 
-export function Slide() {
+export const Slide = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const splideRef = useRef(null);
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const [splideOptions, setSplideOptions] = useState({
+    type: 'loop',
+    perPage: 1,
+    pauseOnHover: false,
+    speed: 1000,
+    rewind: true,
+  });
+
+  const nextSlide = () => {
+    const splide = splideRef.current.splide;
+    splide.go('+1');
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!autoplayPaused) {
+        nextSlide();
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [autoplayPaused]); 
+
   return (
     <section className='carousel'>
       <Splide
-        options={{
-          type: 'loop',
-          perPage: 1,
-          autoplay: true,
-          pauseOnHover: true,
-          gap: '1rem',
-          speed: 1000, 
-          rewind: true,
+        options={splideOptions}
+        ref={splideRef}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          setAutoplayPaused(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          setTimeout(() => setAutoplayPaused(false), 100);
         }}
       >
         <SplideSlide>

@@ -133,8 +133,8 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 1024px) {
     .searchContainer {
-        .searchContainer {
-            width: 70%;
+        .inputSearch {
+            width: 100%;
         }
 
         .searchResults {
@@ -145,8 +145,8 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 800px) {
     .searchContainer {
-        .searchContainer {
-            width: 85%;
+        .inputSearch {
+            width: 100%;
         }
 
         .searchResults {
@@ -169,15 +169,14 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     .searchContainer {
-        width: 75%;
-        .searchContainer {
-            width: 95%;
+        .inputSearch {
+            width: 250%;
         }
 
         .searchResults {
-            left: 15%;
+            left: 35%;
             min-width: 90vw;
 
             .itemSearch {
@@ -195,6 +194,13 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
+        }
+    }
+}
+@media only screen and (max-width: 500px) {
+    .searchContainer {
+        .inputSearch {
+            width: 150%;
         }
     }
 }

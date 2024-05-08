@@ -60,7 +60,7 @@ $font-items: 'Poppins', Helvetica;
         background-color: $color-secundaryLight;
         z-index: 999;
         border-radius: 0 20px 20px 0;
-        padding: 0 0 0 1.2em;
+        padding: 8em 0 1em 1.2em;
         animation: menuDep 0.5s ease-in-out forwards;
         opacity: 0;
         display: none;
@@ -74,7 +74,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: 5em 0 .25em;
+            margin: 2em 0 .25em;
             width: 4em;
             height: 4em;
             object-fit: contain;

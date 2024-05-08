@@ -36,7 +36,10 @@ export function BackToTopButton() {
   }, []);
 
   const scrollToTop = () => {
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     window.removeEventListener('scroll', cvlScroll);
   };
 

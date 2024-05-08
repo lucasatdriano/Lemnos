@@ -77,7 +77,6 @@ export function MenuDep({ toggleTheme }) {
                         </Link>
                     </ul>
                 </nav>
- 
                 
                 <div className='toggleTheme'>
                     <input 
