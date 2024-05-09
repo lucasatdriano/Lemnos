@@ -104,8 +104,8 @@ export function OfferList() {
         }}
       >
         {offers.map(offer => (     
-          <SplideSlide>
-            <CardOffer key={offer.id} offer={offer} />
+          <SplideSlide key={offer.id}>
+            <CardOffer offer={offer} />
           </SplideSlide>
         ))}
       </Splide>

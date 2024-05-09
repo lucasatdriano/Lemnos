@@ -278,12 +278,7 @@ main {
                     padding-left: 2em;
                 }
                 .splide__arrow {   
-                    &.splide__arrow--prev {
-                        left: -2em;
-                    }
-                    &.splide__arrow--next {
-                        right: -2em;
-                    }
+                   display: none;
                 }
             }
         }
