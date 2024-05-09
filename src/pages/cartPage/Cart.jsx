@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './cart.scss';
 import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -14,6 +16,7 @@ export function Cart() {
     const [deliveryOption, setDeliveryOption] = useState('');
     const deliveryOptionsRef = useRef(null);
     const cepInputRef = useRef(null);
+    const cartRef = useRef(null);
     const [isResumoFixo, setIsResumoFixo] = useState(false);
 
     // useEffect(() => {
@@ -116,25 +119,26 @@ export function Cart() {
 
     const finalizarPedido = () => {
         if (carrinho.length === 0) {
-            alert("Por favor, adicione algum item no carrinho.");
+            toast.error('Por favor, adicione algum item no carrinho.');
+            cartRef.current.scrollIntoView({ behavior: 'smooth' });
         } else if(cep.length !== 9) {
-            alert("Por favor, adicione o seu CEP para prosseguir.");
+            toast.error('Por favor, adicione o seu CEP para prosseguir.');
             cepInputRef.current.focus();
         } else if (deliveryOption === '') {
-            alert("Por favor, selecione uma opção de entrega.");
+            toast.error('Por favor, selecione uma opção de entrega.');
             deliveryOptionsRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
             limparCarrinho();
             setShowOptions(false);
             setDeliveryOption('');
             setCep('');
-            alert("Compra finalizada com sucesso!");
+            toast.success('Compra finalizada com sucesso!');
         }
     }    
 
     return (
         <main>
-            <div className="title">
+            <div className="title" ref={cartRef}>
                 <hr className='hrTitle'/>
                     <h2>Meu Carrinho</h2>
                 <hr className='hrTitle'/>
@@ -172,10 +176,10 @@ export function Cart() {
                                         </button>
                                         <h4 id='qtdNumber'>{item.quantidade}</h4>
                                         <button 
-                                        type='button' 
-                                        className='buttonQtd' 
-                                        id='plusQtd' 
-                                        onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
+                                            type='button' 
+                                            className='buttonQtd' 
+                                            id='plusQtd' 
+                                            onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
                                         >
                                             <FaPlus />
                                         </button>
@@ -205,6 +209,7 @@ export function Cart() {
                                 value={cep}
                                 onChange={handleCepChange}
                                 maxLength={9}
+                                inputMode='numeric'
                                 pattern="\d{5}-?\d{3}"
                                 ref={cepInputRef}
                             />

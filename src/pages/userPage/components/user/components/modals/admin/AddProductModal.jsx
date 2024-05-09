@@ -5,9 +5,21 @@ import { IoClose } from "react-icons/io5";
 export default function ProdutoModal({ onSave, onClose }) {
   const [form, setForm] = useState({
     nome: '',
+    descricao: '',
+    imagemPrinc: '',
+    imagemDois: '',
+    imagemTres: '',
+    imagemQuatro: '',
+    cor: '',
     preco: '',
-    quantidade: '',
+    modelo: '',
+    peso: '',
+    altura: '',
+    comprimento: '',
+    largura: '',
+    fabricante: '',
     categoria: '',
+    subCategoria: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -20,16 +32,46 @@ export default function ProdutoModal({ onSave, onClose }) {
     e.preventDefault();
 
     const newErrors = {};
-    // Validação dos campos aqui, por exemplo:
     if (!form.nome) {
-      newErrors.nome = 'Nome do produto é obrigatório';
+      newErrors.nome = 'O Nome do produto é obrigatório';
     }
-    // Adicione mais validações conforme necessário
+    if (!form.descricao) {
+      newErrors.descricao = 'A Descrição do produto é obrigatória';
+    }
+    if (!form.imagemPrinc) {
+      newErrors.imagemPrinc = 'A Imagem do produto é obrigatória';
+    }
+    if (!form.preco) {
+      newErrors.preco = 'O Preço do produto é obrigatório';
+    }
+    if (!form.modelo) {
+      newErrors.modelo = 'O Modelo do produto é obrigatório';
+    }
+    if (!form.peso) {
+      newErrors.peso = 'O Peso do produto é obrigatório';
+    }
+    if (!form.altura) {
+      newErrors.altura = 'A Altura do produto é obrigatória';
+    }
+    if (!form.comprimento) {
+      newErrors.comprimento = 'O Comprimento do produto é obrigatório';
+    }
+    if (!form.largura) {
+      newErrors.largura = 'A Largura do produto é obrigatória';
+    }
+    if (!form.fabricante) {
+      newErrors.fabricante = 'O Fabricante do produto é obrigatório';
+    }
+    if (!form.categoria) {
+      newErrors.categoria = 'A Categoria do produto é obrigatória';
+    }
+    if (!form.subCategoria) {
+      newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
+    }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Lógica de envio do formulário aqui
       console.log('Dados do produto:', form);
       onSave(form);
       onClose();
@@ -46,7 +88,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             label="Nome do Produto:"
             id="nome"
             name="nome"
-            maxLength={50}
+            maxLength={100}
             value={form.nome}
             onChange={handleChange}
           />
@@ -55,11 +97,36 @@ export default function ProdutoModal({ onSave, onClose }) {
 
         <p>
           <CustomInput
-            type="number"
+            type="text"
+            label="Descrição:"
+            id="descricao"
+            name="descricao"
+            maxLength={200}
+            value={form.descricao}
+            onChange={handleChange}
+          />
+          {errors.descricao && <span className='invalid'>{errors.descricao}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Cor:"
+            id="cor"
+            name="cor"
+            maxLength={30}
+            value={form.cor}
+            onChange={handleChange}
+          />
+          {errors.cor && <span className='invalid'>{errors.cor}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
             label="Preço:"
             id="preco"
             name="preco"
-            min={0}
             value={form.preco}
             onChange={handleChange}
           />
@@ -68,15 +135,80 @@ export default function ProdutoModal({ onSave, onClose }) {
 
         <p>
           <CustomInput
-            type="number"
-            label="Quantidade:"
-            id="quantidade"
-            name="quantidade"
-            min={0}
-            value={form.quantidade}
+            type="text"
+            label="Modelo:"
+            id="modelo"
+            name="modelo"
+            maxLength={30}
+            value={form.modelo}
             onChange={handleChange}
           />
-          {errors.quantidade && <span className='invalid'>{errors.quantidade}</span>}
+          {errors.modelo && <span className='invalid'>{errors.modelo}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Peso (kg):"
+            id="peso"
+            name="peso"
+            maxLength={6}
+            value={form.peso}
+            onChange={handleChange}
+          />
+          {errors.peso && <span className='invalid'>{errors.peso}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Altura (cm):"
+            id="altura"
+            name="altura"
+            maxLength={6}
+            value={form.altura}
+            onChange={handleChange}
+          />
+          {errors.altura && <span className='invalid'>{errors.altura}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Comprimento (cm):"
+            id="comprimento"
+            name="comprimento"
+            maxLength={6}
+            value={form.comprimento}
+            onChange={handleChange}
+          />
+          {errors.comprimento && <span className='invalid'>{errors.comprimento}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Largura (cm):"
+            id="largura"
+            name="largura"
+            maxLength={6}
+            value={form.largura}
+            onChange={handleChange}
+          />
+          {errors.largura && <span className='invalid'>{errors.largura}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Fabricante:"
+            id="fabricante"
+            name="fabricante"
+            maxLength={50}
+            value={form.fabricante}
+            onChange={handleChange}
+          />
+          {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
         </p>
 
         <p>
@@ -90,6 +222,19 @@ export default function ProdutoModal({ onSave, onClose }) {
             onChange={handleChange}
           />
           {errors.categoria && <span className='invalid'>{errors.categoria}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Subcategoria:"
+            id="subCategoria"
+            name="subCategoria"
+            maxLength={30}
+            value={form.subCategoria}
+            onChange={handleChange}
+          />
+          {errors.subCategoria && <span className='invalid'>{errors.subCategoria}</span>}
         </p>
 
         <button type='button' onClick={handleSave}>Salvar</button>

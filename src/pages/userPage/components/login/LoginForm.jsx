@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { CustomInput } from '../../../../components/inputs/Inputs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.scss';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
@@ -38,6 +40,8 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     if (Object.keys(newErrors).length === 0) {
       // Lógica de envio do formulário aqui
       console.log('Dados do formulário:', form);
+      toast.success(`Bem Vindo de volta!`);
+
       onLogin(form.email, form.password);
     }
   };

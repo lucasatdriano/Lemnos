@@ -5,9 +5,11 @@ import { IoClose } from "react-icons/io5";
 export default function FuncionarioModal({ onSave, onClose }) {
   const [form, setForm] = useState({
     nome: '',
-    cargo: '',
-    salario: '',
-    departamento: '',
+    cpf: '',
+    dataNasc: '',
+    dataAdmissao: '',
+    telefone: '',
+    cep: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -20,16 +22,28 @@ export default function FuncionarioModal({ onSave, onClose }) {
     e.preventDefault();
 
     const newErrors = {};
-    // Validação dos campos aqui, por exemplo:
     if (!form.nome) {
       newErrors.nome = 'Nome do funcionário é obrigatório';
     }
-    // Adicione mais validações conforme necessário
+    if (!form.cpf) {
+      newErrors.cpf = 'CPF do funcionário é obrigatório';
+    }
+    if (!form.dataNasc) {
+      newErrors.dataNasc = 'Data de nascimento é obrigatória';
+    }
+    if (!form.dataAdmissao) {
+      newErrors.dataAdmissao = 'Data de admissão é obrigatória';
+    }
+    if (!form.telefone) {
+      newErrors.telefone = 'Telefone do funcionário é obrigatório';
+    }
+    if (!form.cep) {
+      newErrors.cep = 'CEP do funcionário é obrigatório';
+    }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Lógica de envio do formulário aqui
       console.log('Dados do funcionário:', form);
       onSave(form);
       onClose();
@@ -56,40 +70,66 @@ export default function FuncionarioModal({ onSave, onClose }) {
         <p>
           <CustomInput
             type="text"
-            label="Cargo:"
-            id="cargo"
-            name="cargo"
-            maxLength={30}
-            value={form.cargo}
+            label="CPF:"
+            id="cpf"
+            name="cpf"
+            mask="CPF"
+            maxLength={14}
+            value={form.cpf}
             onChange={handleChange}
           />
-          {errors.cargo && <span className='invalid'>{errors.cargo}</span>}
+          {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
         </p>
 
         <p>
           <CustomInput
-            type="number"
-            label="Salário:"
-            id="salario"
-            name="salario"
-            min={0}
-            value={form.salario}
+            type="date"
+            label="Data de Nascimento:"
+            id="dataNasc"
+            name="dataNasc"
+            value={form.dataNasc}
             onChange={handleChange}
           />
-          {errors.salario && <span className='invalid'>{errors.salario}</span>}
+          {errors.dataNasc && <span className='invalid'>{errors.dataNasc}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="date"
+            label="Data de Admissão:"
+            id="dataAdmissao"
+            name="dataAdmissao"
+            value={form.dataAdmissao}
+            onChange={handleChange}
+          />
+          {errors.dataAdmissao && <span className='invalid'>{errors.dataAdmissao}</span>}
         </p>
 
         <p>
           <CustomInput
             type="text"
-            label="Departamento:"
-            id="departamento"
-            name="departamento"
-            maxLength={30}
-            value={form.departamento}
+            label="Telefone:"
+            id="telefone"
+            name="telefone"
+            mask="TEL"
+            maxLength={14}
+            value={form.telefone}
             onChange={handleChange}
           />
-          {errors.departamento && <span className='invalid'>{errors.departamento}</span>}
+          {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="CEP:"
+            id="cep"
+            name="cep"
+            maxLength={9}
+            value={form.cep}
+            onChange={handleChange}
+          />
+          {errors.cep && <span className='invalid'>{errors.cep}</span>}
         </p>
 
         <button type='button' onClick={handleSave}>Salvar</button>

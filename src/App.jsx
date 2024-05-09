@@ -4,6 +4,8 @@ import './global.scss';
 import { Header } from './components/header/Header';
 import { BackToTopButton } from './components/backToTop/BackToTop';
 import { Footer } from './components/footer/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   const [theme, setTheme] = useState('light');
@@ -23,6 +25,7 @@ export function App() {
         <Header toggleTheme={toggleTheme} />
         <Outlet />
         <BackToTopButton />
+        <ToastContainer />
         <Footer />
       </section>
     </>

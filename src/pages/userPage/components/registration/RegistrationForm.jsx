@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { CustomInput } from '../../../../components/inputs/Inputs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';
 import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
 
@@ -69,6 +71,8 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     if (Object.keys(errors).length === 0) {
       // Lógica de envio do formulário aqui
       console.log('Dados do formulário:', form);
+      alert(`Cadastrado realizado!!`)
+      toast.success('Cadastrado realizado!!');
       handleBackToLogin();
     }
   };

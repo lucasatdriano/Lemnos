@@ -6,7 +6,7 @@ export default function FornecedorModal({ onSave, onClose }) {
   const [form, setForm] = useState({
     nome: '',
     cnpj: '',
-    endereco: '',
+    cep: '',
     telefone: '',
   });
   const [errors, setErrors] = useState({});
@@ -20,11 +20,18 @@ export default function FornecedorModal({ onSave, onClose }) {
     e.preventDefault();
 
     const newErrors = {};
-    // Validação dos campos aqui, por exemplo:
     if (!form.nome) {
-      newErrors.nome = 'Nome do fornecedor é obrigatório';
+      newErrors.nome = 'O Nome do fornecedor é obrigatório';
     }
-    // Adicione mais validações conforme necessário
+    if (!form.cnpj) {
+      newErrors.cnpj = 'O CNPJ do fornecedor é obrigatório';
+    }
+    if (!form.cep) {
+      newErrors.cep = 'O CEP do fornecedor é obrigatório';
+    }
+    if (!form.telefone) {
+      newErrors.telefone = 'O Telefone do fornecedor é obrigatório';
+    }
 
     setErrors(newErrors);
 
@@ -59,6 +66,7 @@ export default function FornecedorModal({ onSave, onClose }) {
             label="CNPJ:"
             id="cnpj"
             name="cnpj"
+            mask="CNPJ"
             maxLength={18}
             value={form.cnpj}
             onChange={handleChange}
@@ -69,22 +77,24 @@ export default function FornecedorModal({ onSave, onClose }) {
         <p>
           <CustomInput
             type="text"
-            label="Endereço:"
-            id="endereco"
-            name="endereco"
-            maxLength={100}
-            value={form.endereco}
+            label="CEP:"
+            id="cep"
+            name="cep"
+            mask="CEP"
+            maxLength={9}
+            value={form.cep}
             onChange={handleChange}
           />
-          {errors.endereco && <span className='invalid'>{errors.endereco}</span>}
+          {errors.cep && <span className='invalid'>{errors.cep}</span>}
         </p>
-
+   
         <p>
           <CustomInput
             type="text"
             label="Telefone:"
             id="telefone"
             name="telefone"
+            mask="TEL"
             maxLength={15}
             value={form.telefone}
             onChange={handleChange}
