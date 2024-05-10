@@ -97,9 +97,6 @@ export function OfferList() {
             860: {
               perPage: 1,
             },
-            500: {
-              perPage: 1,
-            },
           },
         }}
       >

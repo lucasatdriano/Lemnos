@@ -60,7 +60,7 @@ $font-items: 'Poppins', Helvetica;
         background-color: $color-secundaryLight;
         z-index: 999;
         border-radius: 0 20px 20px 0;
-        padding: 8em 0 1em 1.2em;
+        padding: 3em 0 1em 1.2em;
         animation: menuDep 0.5s ease-in-out forwards;
         opacity: 0;
         display: none;
@@ -75,8 +75,8 @@ $font-items: 'Poppins', Helvetica;
 
         .logoMenu {
             margin: 2em 0 .25em;
-            width: 4em;
-            height: 4em;
+            width: clamp(4em, 4em + 10vw, 5em);
+            height: clamp(4em, 4em + 10vh, 5em);
             object-fit: contain;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
@@ -100,7 +100,7 @@ $font-items: 'Poppins', Helvetica;
             padding: 5px 0 10px 0;
 
             li {
-                padding: 5px 10px;
+                padding: 5px 3em 5px 10px;
                 transition: .2s ease-in;
                 cursor: pointer;
                 
@@ -239,7 +239,6 @@ $font-items: 'Poppins', Helvetica;
     to {
         transform: translateX(9.75em);
         opacity: 1;
-
     }
 }
 
@@ -271,6 +270,18 @@ $font-items: 'Poppins', Helvetica;
             .menuIcon {
                 color: $color-fontDark;
                 margin: .5em 0 0 -2em;
+            }
+        }
+
+        .menu {
+            padding: 8em 0 2em 1.25em;
+
+            .logoMenu {
+                margin: 2em 0 .25em;
+                width: clamp(4em, 4em + 10vw, 4.5em);
+                height: clamp(4em, 4em + 10vh, 4.5em);
+                object-fit: contain;
+                filter: drop-shadow( 4px 4px 4px $color-shadow);
             }
         }
     }

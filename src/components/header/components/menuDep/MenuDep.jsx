@@ -40,9 +40,8 @@ export function MenuDep({ toggleTheme }) {
                 <ul className='categorias'>
                     <li><a href="#">Periféricos</a></li>
                     <li><a href="#">Hardware</a></li>
-                    <li><a href="#">Computadores Gamer</a></li>
-                    <li><a href="#">Computadores Workstation</a></li>
-                    <li><a href="#">Kit Upgrade</a></li>
+                    <li><a href="#">Computadores</a></li>
+                    <li><a href="#">Kits</a></li>
                     <li><a href="#">Eletrônicos</a></li>
                     <li><a href="#">Notebooks e Portáteis</a></li>
                     <li><a href="#">Video Games</a></li>

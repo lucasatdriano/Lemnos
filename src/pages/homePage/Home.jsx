@@ -49,7 +49,7 @@ export function Home() {
           <div className="containerDeps">
             <div className='gridItem item1'>
               <img src={computadorGamer} alt="imagem filtro computadores gamers" />
-              <h3>Computadores Gamers</h3>
+              <h3>Computadores</h3>
             </div>
 
             <div className='gridItem item2'>
@@ -59,7 +59,7 @@ export function Home() {
 
             <div className='gridItem item3'>
               <img src={kitUpgrade} alt="imagem filtro kit upgrade" />
-              <h3>Kit Upgrade</h3>
+              <h3>Kits</h3>
             </div>
 
             <div className='gridItem item4'>
