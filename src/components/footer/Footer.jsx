@@ -1,5 +1,5 @@
 import React from 'react';
-import logoHorizontal from '../../assets/logoHorizontalClaro.svg'; 
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontalClaro.svg'; 
 import { Infos } from './components/infos/Infos';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 

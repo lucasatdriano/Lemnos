@@ -29,10 +29,13 @@ $color-shadow: #12171740;
     }
 
     .splide__slide {
+        height: 60vh;
+
         img {
             margin: 0 0 0 -.5em;
+            object-fit: contain;
             width: 100%;
-            height: 60vh;
+            height: 100%;
             border-radius: 20px;
         }
     }

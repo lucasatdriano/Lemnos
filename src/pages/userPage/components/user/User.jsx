@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './user.scss';
 import { CustomInput } from '../../../../components/inputs/Inputs';
 import EmailModal from './components/modals/EmailModal';
 import PasswordModal from './components/modals/PasswordModal';
@@ -10,8 +9,9 @@ import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddProdutoModal from './components/modals/admin/AddProductModal'; 
 
 import HistoricoCompras from './components/history/History';
-import UserImg from '../../../../assets/imgUser.svg';
+import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import { MdLogout } from "react-icons/md";
+import './user.scss';
 
 export default function User({ onLogout }) {
   const [admin, setAdmin] = useState(false);

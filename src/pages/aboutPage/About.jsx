@@ -1,8 +1,8 @@
 import React from 'react';
 import './about.scss';
-import LogoHorizontalLight from '../../assets/logoHorizontal.svg';
-import LogoHorizontalDark from '../../assets/logoHorizontalClaro.svg';
-import TechFesto from '../../assets/imgMascote.svg';
+import LogoHorizontalLight from '../../assets/imgLemnos/logoHorizontal.svg';
+import LogoHorizontalDark from '../../assets/imgLemnos/logoHorizontalClaro.svg';
+import TechFesto from '../../assets/imgLemnos/imgMascote.svg';
 
 export function About() {
   return (

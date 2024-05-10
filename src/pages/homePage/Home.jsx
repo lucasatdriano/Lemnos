@@ -1,13 +1,13 @@
 import React from 'react';
 import { Slide } from './components/carousel/Carousel';
 import './home.scss'
-import kitUpgrade from '../../assets/imgKitUpgrade.svg';
-import videoGame from '../../assets/imgVideoGame.svg';
-import monitor from '../../assets/imgMonitor.svg';
-import computadorGamer from '../../assets/imgPcGamer.svg';
-import portatil from '../../assets/imgNotebookPortatil.svg';
-import perifericos from '../../assets/imgPerifericos.svg';
-import logoHorizontal from '../../assets/logoHorizontal.svg'
+import kits from '../../assets/deps/imgKitUpgrade.svg';
+import videoGame from '../../assets/deps/imgVideoGame.svg';
+import monitor from '../../assets/deps/imgMonitor.svg';
+import computador from '../../assets/deps/imgPcGamer.svg';
+import portatil from '../../assets/deps/imgNotebookPortatil.svg';
+import perifericos from '../../assets/deps/imgPerifericos.svg';
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
 import { ProductList } from './components/ProductList';
 import { BrandsList } from './components/BrandsList';
 import { OfferList } from './components/OfferList';
@@ -48,7 +48,7 @@ export function Home() {
 
           <div className="containerDeps">
             <div className='gridItem item1'>
-              <img src={computadorGamer} alt="imagem filtro computadores gamers" />
+              <img src={computador} alt="imagem filtro computadores" />
               <h3>Computadores</h3>
             </div>
 
@@ -58,7 +58,7 @@ export function Home() {
             </div>
 
             <div className='gridItem item3'>
-              <img src={kitUpgrade} alt="imagem filtro kit upgrade" />
+              <img src={kits} alt="imagem filtro kits" />
               <h3>Kits</h3>
             </div>
 

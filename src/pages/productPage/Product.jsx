@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './product.scss';
-import img from '../../assets/logoHorizontal.svg'
-import iconAddCart from '../../assets/iconAddCart.svg';
+import img from '../../assets/imgLemnos/logoHorizontal.svg'
+import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite  } from "react-icons/md";
 
 export function Product() {

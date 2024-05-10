@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RiArrowUpLine } from "react-icons/ri";
-import imgBtnScroll from '../../assets/btnScrollToTop.svg'
+import imgBtnScroll from '../../assets/icons/btnScrollToTop.svg'
 
 export function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);

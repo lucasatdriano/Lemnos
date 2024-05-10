@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import imgBanner1 from '../../../../assets/banners/banner1.svg';
+import imgBanner2 from '../../../../assets/banners/banner2.svg';
+import imgBanner3 from '../../../../assets/banners/banner3.svg';
 import './carousel.scss';
 
 export const Slide = () => {
@@ -44,13 +47,13 @@ export const Slide = () => {
         }}
       >
         <SplideSlide>
-          <img src="https://via.placeholder.com/400x200" alt="Slide 1" />
+          <img src={imgBanner1} alt="Slide 1" />
         </SplideSlide>
         <SplideSlide>
-          <img src="https://via.placeholder.com/400x200" alt="Slide 2" />
+          <img src={imgBanner2} alt="Slide 2" />
         </SplideSlide>
         <SplideSlide>
-          <img src="https://via.placeholder.com/400x200" alt="Slide 3" />
+          <img src={imgBanner3} alt="Slide 3" />
         </SplideSlide>
         <SplideSlide>
           <img src="https://via.placeholder.com/400x200" alt="Slide 4" />

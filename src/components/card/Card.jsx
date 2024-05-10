@@ -1,7 +1,7 @@
 import React from 'react';
 import './card.scss';
 import { useNavigate } from 'react-router-dom';
-import iconAddCart from '../../assets/iconAddCart.svg';
+import iconAddCart from '../../assets/icons/iconAddCart.svg';
 
 export function Card({ product }) {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
-import logoHorizontal from '../../../../assets/logoHorizontal.svg'
+import logoHorizontal from '../../../../assets/imgLemnos/logoHorizontal.svg'
 
 export function MenuSearch({ onSearchResultClick }) {
     const [searchTerm, setSearchTerm] = useState('');
