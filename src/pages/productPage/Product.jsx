@@ -62,7 +62,7 @@ export function Product() {
                     <div className="containerImages">
                     <img src={mainImage} alt="Main" className='imageMain'/>
                         <div className="optionsImages">
-                         {[
+                            {[
                                 "https://via.placeholder.com/150",
                                 "https://via.placeholder.com/150/0000FF/808080",
                                 "https://via.placeholder.com/150/FF0000/FFFFFF",

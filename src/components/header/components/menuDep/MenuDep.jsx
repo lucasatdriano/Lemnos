@@ -5,7 +5,7 @@ import './menuDep.scss';
 import { AiOutlineTeam } from "react-icons/ai";
 import { RiMenuUnfoldLine, RiHome4Line , RiShoppingCartLine, RiHeartLine, RiUser3Line, RiSunLine, RiMoonLine } from "react-icons/ri";
 
-export function MenuDep({ toggleTheme }) {
+export default function MenuDep({ toggleTheme }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
 

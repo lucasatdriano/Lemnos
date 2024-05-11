@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './header.scss'
-import { MenuDep } from './components/menuDep/MenuDep';
-import { MenuSearch } from './components/searchMenu/MenuSearch';
+import MenuDep from './components/menuDep/MenuDep';
+import MenuSearch from './components/searchMenu/MenuSearch';
+import MenuFavorite from './components/favoriteMenu/MenuFavorite';
 import { Link } from 'react-router-dom';
+import img from '../../assets/imgLemnos/logoHorizontal.svg';
 import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
 export function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
+
+    const [favorites, setFavorites] = useState([
+        { id: 1, name: "Produto 1", image: 'img', price: 10.99 },
+        { id: 2, name: "Produto 2", image: "caminho/para/imagem2.jpg", price: 19.99 }
+    ]);
+
+    const removeFromFavorites = (index) => {
+        const updatedFavorites = [...favorites];
+        updatedFavorites.splice(index, 1);
+        setFavorites(updatedFavorites);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,9 +59,7 @@ export function Header({ toggleTheme }) {
             <MenuSearch onSearchResultClick={handleSearchResultClick} />
             
             <nav className='menuDesktop'>
-                <Link to="/">
-                    <RiHeartLine className='favoriteIcon' />
-                </Link>
+                <MenuFavorite favorites={favorites} removeFromFavorites={removeFromFavorites} />
                 <Link to="/login">
                     <RiUser3Line className='userIcon' />
                 </Link>

@@ -3,7 +3,7 @@ import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import logoHorizontal from '../../../../assets/imgLemnos/logoHorizontal.svg'
 
-export function MenuSearch({ onSearchResultClick }) {
+export default function MenuSearch({ onSearchResultClick }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });

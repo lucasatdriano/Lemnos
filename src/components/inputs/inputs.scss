@@ -71,8 +71,19 @@ $font-items: 'Poppins', Helvetica;
       opacity: 1;
       color: $color-primaryDark;
     }
+
+    &:not(:placeholder-shown) + label {
+      top: -8px;
+      opacity: 1;
+    }
+
+    &:placeholder-shown + label {
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: .6;
+    }
   }
-  
+
   input[type="file"] + label,
   input[type="date"] + label {
     top: -10px;

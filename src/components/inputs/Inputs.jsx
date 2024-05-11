@@ -67,6 +67,7 @@ export function CustomInput({ type, reference, label, id, maxLength, minLength,
   return (
     <span className='singleInput'>
       <input
+        placeholder=''
         type={type} 
         ref={reference}
         id={id}

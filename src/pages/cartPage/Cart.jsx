@@ -14,7 +14,6 @@ export function Cart() {
     const [cep, setCep] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const [deliveryOption, setDeliveryOption] = useState('');
-    const deliveryOptionsRef = useRef(null);
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
     const [isResumoFixo, setIsResumoFixo] = useState(false);
@@ -39,7 +38,6 @@ export function Cart() {
     // }, []);
 
     let priceDelivery = 0;
-
     switch (deliveryOption) {
         case 'sedex':
             priceDelivery = 26.99;
@@ -80,9 +78,11 @@ export function Cart() {
             setShowOptions(true);
         } else if (cep.length === 0) {
             toast.warning('Por favor, adicione o seu CEP para calcularmos.');
+            cepInputRef.current.focus();
             setShowOptions(false);
         } else if (cep.length !== 9) {
             toast.warning('Por favor, adicione o seu CEP completo para calcularmos.');
+            cepInputRef.current.focus();
             setShowOptions(false);
         }
     }
@@ -224,7 +224,7 @@ export function Cart() {
                         </div>
                         {showOptions && (
                             <div>
-                                <div className='optionsDelivery' ref={deliveryOptionsRef}>
+                                <div className='optionsDelivery' >
                                     <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
