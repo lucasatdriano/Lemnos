@@ -78,8 +78,11 @@ export function Cart() {
     const handleCalculateDelivery = () => {
         if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
             setShowOptions(true);
-        } else {
-            alert("Por favor, adicione o seu CEP para calcularmos.");
+        } else if (cep.length === 0) {
+            toast.error('Por favor, adicione o seu CEP para calcularmos.');
+            setShowOptions(false);
+        } else if (cep.length !== 9) {
+            toast.error('Por favor, adicione o seu CEP completo para calcularmos.');
             setShowOptions(false);
         }
     }
@@ -126,7 +129,7 @@ export function Cart() {
             cepInputRef.current.focus();
         } else if (deliveryOption === '') {
             toast.error('Por favor, selecione uma opção de entrega.');
-            deliveryOptionsRef.current.scrollIntoView({ behavior: 'smooth' });
+            cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
             limparCarrinho();
             setShowOptions(false);

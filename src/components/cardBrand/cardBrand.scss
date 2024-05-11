@@ -34,7 +34,7 @@ $font-items: 'Poppins', Helvetica;
 
     .brandImage {
         width: 85%;
-        height: 125px;
+        height: 100px;
         margin: 1em 0;
         object-fit: contain;
         border-radius: 10px;
@@ -47,10 +47,15 @@ $font-items: 'Poppins', Helvetica;
     }
 
     p { 
+        position: relative;
         font-family: $font-items;
         color: $color-primaryLight;
 
         &::after {
+            position: absolute;
+            right: 28%;
+            top: 1px;
+            transform: translate(-50%);
             content: " >";
         }
     }
