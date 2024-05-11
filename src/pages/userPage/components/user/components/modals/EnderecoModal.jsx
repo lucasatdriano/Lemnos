@@ -7,7 +7,7 @@ const estados = [
   'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES',
   'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR',
   'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC',
-  'SP', 'SE', 'TO'
+  'SP', 'SE', 'TO', ''
 ];
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
@@ -93,128 +93,117 @@ export default function EnderecoModal({ onSave, onClose }) {
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
         <h2>Adicionar Endereço</h2>
-        <p>
-          <CustomInput
-            type="text"
-            label="CEP:"
-            id="cep"
-            name="cep"
-            mask="CEP"
-            maxLength={9}
-            value={form.cep}
-            onChange={(e) => setForm({ ...form, cep: e.target.value })}
-          />
-          {errors.cep && <span className='invalid'>{errors.cep}</span>}
-        </p>
-   
-        <p>
-          <CustomInput
-            type="text"
-            label="Número do Logradouro:"
-            id="nLogradouro"
-            name="nLogradouro"
-            maxLength={10}
-            value={form.nLogradouro}
-            onChange={(e) => handleChange('nLogradouro', e.target.value)}
-          />
-          {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
-        </p>
+        <div className="modalEndereco">
+          <p>
+            <CustomInput
+              type="text"
+              label="CEP:"
+              id="cep"
+              name="cep"
+              mask="CEP"
+              maxLength={9}
+              value={form.cep}
+              onChange={(e) => setForm({ ...form, cep: e.target.value })}
+              />
+            {errors.cep && <span className='invalid'>{errors.cep}</span>}
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="Complemento:"
-            id="complemento"
-            name="complemento"
-            maxLength={40}
-            value={form.complemento}
-            onChange={(e) => handleChange('complemento', e.target.value)}
-          />
-          {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
-        </p>
+          <p>
+            <CustomInput
+              type="text"
+              label="Bairro:"
+              id="bairro"
+              name="bairro"
+              maxLength={40}
+              value={form.bairro}
+              onChange={(e) => handleChange('bairro', e.target.value)}
+              />
+            {errors.bairro && <span className='invalid'>{errors.bairro}</span>}
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="Logradouro:"
-            id="logradouro"
-            name="logradouro"
-            maxLength={50}
-            value={form.logradouro}
-            onChange={(e) => handleChange('logradouro', e.target.value)}
-          />
-          {errors.logradouro && <span className='invalid'>{errors.logradouro}</span>}
-        </p>
+          <p>
+            <CustomInput
+              type="text"
+              label="Cidade:"
+              id="cidade"
+              name="cidade"
+              maxLength={40}
+              value={form.cidade}
+              onChange={(e) => handleChange('cidade', e.target.value)}
+              />
+            {errors.cidade && <span className='invalid'>{errors.cidade}</span>}
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="Bairro:"
-            id="bairro"
-            name="bairro"
-            maxLength={40}
-            value={form.bairro}
-            onChange={(e) => handleChange('bairro', e.target.value)}
-          />
-          {errors.bairro && <span className='invalid'>{errors.bairro}</span>}
-        </p>
+          <p>
+            <CustomInput
+              type="text"
+              label="Estado:"
+              id="estado"
+              name="estado"
+              maxLength={2}
+              value={form.estado}
+              onFocus={handleDropdownToggle}
+              onChange={(e) => {
+                const upperCaseValue = e.target.value.toUpperCase();
+                handleSearch(upperCaseValue);
+              }}
+            />
+            {isDropdownOpen ? 
+              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
+            : 
+              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
+            }
+            <Dropdown
+              isOpen={isDropdownOpen}
+              options={estados}
+              onSelect={(option) => {
+                handleChange('estado', option);
+                setIsDropdownOpen(false);
+              }}
+              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+            />
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="Cidade:"
-            id="cidade"
-            name="cidade"
-            maxLength={40}
-            value={form.cidade}
-            onChange={(e) => handleChange('cidade', e.target.value)}
-          />
-          {errors.cidade && <span className='invalid'>{errors.cidade}</span>}
-        </p>
+          <p>
+            <CustomInput
+              type="text"
+              label="Logradouro:"
+              id="logradouro"
+              name="logradouro"
+              maxLength={50}
+              value={form.logradouro}
+              onChange={(e) => handleChange('logradouro', e.target.value)}
+              />
+            {errors.logradouro && <span className='invalid'>{errors.logradouro}</span>}
+          </p>
+    
+          <p>
+            <CustomInput
+              type="text"
+              label="Número do Logradouro:"
+              id="nLogradouro"
+              name="nLogradouro"
+              maxLength={10}
+              value={form.nLogradouro}
+              onChange={(e) => handleChange('nLogradouro', e.target.value)}
+              />
+            {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="Estado:"
-            id="estado"
-            name="estado"
-            maxLength={2}
-            value={form.estado}
-            onFocus={handleDropdownToggle}
-            onChange={(e) => {
-              const upperCaseValue = e.target.value.toUpperCase();
-              handleSearch(upperCaseValue);
-            }}
-          />
-          {isDropdownOpen ? 
-            <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
-          : 
-            <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
-          }
-          <Dropdown
-            isOpen={isDropdownOpen}
-            options={estados}
-            onSelect={(option) => {
-              handleChange('estado', option);
-              setIsDropdownOpen(false);
-            }}
-            filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-          />
-        </p>
+          <p>
+            <CustomInput
+              type="text"
+              label="Complemento:"
+              id="complemento"
+              name="complemento"
+              maxLength={40}
+              value={form.complemento}
+              onChange={(e) => handleChange('complemento', e.target.value)}
+              />
+            {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
+          </p>
 
-        <p>
-          <CustomInput
-            type="text"
-            label="País:"
-            id="pais"
-            name="pais"
-            maxLength={20}
-            value={form.pais}
-            onChange={(e) => setForm({ ...form, pais: e.target.value })}
-          />
-          {errors.pais && <span className='invalid'>{errors.pais}</span>}
-        </p>
-
+        </div>
         <button type='button' onClick={handleSave}>Salvar</button>
         <IoClose onClick={onClose} className='iconClose' />
       </div>

@@ -3,7 +3,7 @@ import { CustomInput } from '../../../../components/inputs/Inputs';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';
-import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
+import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 
 export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const [form, setForm] = useState({
@@ -14,7 +14,8 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     password: '',
     confPassword: '',
   });
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfPassword, setShowConfPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
   const formatCPFToNumbers = (cpf) => {
@@ -78,6 +79,13 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
   const handleBackToLoginClick = () => {
     handleBackToLogin();
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfPasswordVisibility = () => {
+    setShowConfPassword(!showConfPassword);
   };
 
   return (    
@@ -156,7 +164,7 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
           <p>
             <CustomInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Senha:"
               id="password"
               name="password"
@@ -165,12 +173,17 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
               value={form.password}
               onChange={handleChange}
             />
+            {showPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={togglePasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={togglePasswordVisibility} />
+            }
             {errors.password && <span className='invalid'>{errors.password}</span>}
           </p>
 
           <p>
             <CustomInput
-              type="password"
+              type={showConfPassword ? "text" : "password"}
               label="Confirme sua Senha:"
               id="confPassword"
               name="confPassword"
@@ -178,6 +191,11 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
               value={form.confPassword}
               onChange={handleChange}
             />
+            {showConfPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={toggleConfPasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={toggleConfPasswordVisibility} />
+            }
             {errors.confPassword && <span className='invalid'>{errors.confPassword}</span>}
           </p>
         </div>

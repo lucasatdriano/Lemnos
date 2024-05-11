@@ -20,4 +20,11 @@ $color-card: #f6fefd4d;
     display: grid;
     place-content: center;
     min-height: calc( 100vh - 4em - 20em);
+    
+    .invalid {
+        padding-bottom: 1em;
+        color: $color-detailsLight;
+        position: relative;
+        left: 15px;
+      }
 }

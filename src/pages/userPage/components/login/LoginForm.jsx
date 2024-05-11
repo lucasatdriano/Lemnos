@@ -3,13 +3,14 @@ import { CustomInput } from '../../../../components/inputs/Inputs';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.scss';
+import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -50,6 +51,10 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     onCadastroClick();
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <section className="login-form-container">
       <div className="loginCredencial">
@@ -83,7 +88,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
 
           <p>
             <CustomInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               label="Senha:"
               id="password"
               name="password"
@@ -92,6 +97,11 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
               value={form.password}
               onChange={handleChange}
             />
+            {showPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={togglePasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={togglePasswordVisibility} />
+            }
             {errors.password && <span className='invalid'>{errors.password}</span>}
           </p>
         </div>

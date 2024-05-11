@@ -10,7 +10,11 @@ export default function EmailModal({ onSave, onClose }) {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setForm(e.target.value);
+    const { name, value } = e.target;
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
   const handleSave = () => {
@@ -21,7 +25,6 @@ export default function EmailModal({ onSave, onClose }) {
     if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
       errors.email = 'Digite um Email válido';
     } 
-
     if (form.email !== form.confEmail) {
       errors.confEmail = 'Os Emails devem ser iguais';
     }
@@ -40,7 +43,7 @@ export default function EmailModal({ onSave, onClose }) {
 
   return (
     <div className="modal" onClick={onClose}>
-      <div className="containerModal">
+      <div className="containerModal" onClick={(e) => e.stopPropagation()}>
         <h2>Atualizar Email</h2>
         <p>
             <CustomInput

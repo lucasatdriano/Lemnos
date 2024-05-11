@@ -101,11 +101,14 @@ $font-items: 'Poppins', Helvetica;
       p {
         position: relative;
       
-        .invalid {
-          padding-bottom: 1em;
-          color: $color-detailsLight;
-          position: relative;
-          left: 15px;
+        .iconPwd {
+          position: absolute;
+          right: 15px;
+          top: 25px;
+          transform: translateY(-50%);
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
         }
       }
     }

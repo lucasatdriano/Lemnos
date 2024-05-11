@@ -225,12 +225,12 @@ export function Cart() {
                         {showOptions && (
                             <div>
                                 <div className='optionsDelivery' ref={deliveryOptionsRef}>
-                                    <label class="radio-container">
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('sedex')} 
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbSedex' className='labelOp'>
                                         <strong>Sedex:</strong>
@@ -239,12 +239,12 @@ export function Cart() {
                                     <strong>{BRL.format(26.99)}</strong>
                                 </div>
                                 <div className='optionsDelivery'>
-                                    <label class="radio-container">
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbJadLog" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('jadlog')}
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbJadLog' className='labelOp'>
                                         <strong>JadLog:</strong>
@@ -253,12 +253,12 @@ export function Cart() {
                                     <strong>{BRL.format(32.99)}</strong>
                                 </div>
                                 <div className='optionsDelivery'>
-                                    <label class="radio-container">
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbExpress" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('express')}
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbExpress' className='labelOp'>
                                         <strong>Express:</strong>
