@@ -3,7 +3,6 @@ import { CustomInput } from '../../../../../../components/inputs/Inputs';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine  } from "react-icons/ri";
 
-// Lista de siglas dos estados do Brasil
 const estados = [
   'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES',
   'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR',
@@ -30,13 +29,12 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 export default function EnderecoModal({ onSave, onClose }) {
   const [form, setForm] = useState({
     cep: '',
+    logradouro: '',
     nLogradouro: '',
     complemento: '',
-    logradouro: '',
     bairro: '',
     cidade: '',
     estado: '',
-    pais: '',
   });
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -60,7 +58,25 @@ export default function EnderecoModal({ onSave, onClose }) {
     const newErrors = {};
 
     if (!form.cep) {
-      newErrors.cep = 'CEP é obrigatório';
+      newErrors.cep = 'O Campo CEP é obrigatório';
+    }
+    if (!form.logradouro) {
+      newErrors.logradouro = 'O Campo Logradouro é obrigatório';
+    }
+    if (!form.nLogradouro) {
+      newErrors.nLogradouro = 'O Campo Número do Logradouro é obrigatório';
+    }
+    if (!form.complemento) {
+      newErrors.complemento = 'O Campo Complemento é obrigatório';
+    }
+    if (!form.bairro) {
+      newErrors.bairro = 'O Campo Bairro é obrigatório';
+    }
+    if (!form.cidade) {
+      newErrors.cidade = 'O Campo Cidade é obrigatória';
+    }
+    if (!form.estado) {
+      newErrors.estado = 'O Campo Estado é obrigatório';
     }
 
     setErrors(newErrors);
@@ -168,7 +184,6 @@ export default function EnderecoModal({ onSave, onClose }) {
             onChange={(e) => {
               const upperCaseValue = e.target.value.toUpperCase();
               handleSearch(upperCaseValue);
-              handleChange('estado', upperCaseValue);
             }}
           />
           {isDropdownOpen ? 

@@ -17,25 +17,25 @@ $color-shadow: #12171740;
 
 .carousel {
     width: 85%;
-    height: 45vh;
+    height: 50%;
     margin: 0 auto;
-
-    .splide__slide {
-        padding: 0 0 0 1em;
-    }
 
     &:hover .splide__pagination .splide__pagination__page.is-active::after {
         animation-play-state: paused;
     }
 
     .splide__slide {
-        height: 60vh;
+        padding: 0 .5em;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
 
         img {
-            margin: 0 0 0 -.5em;
-            object-fit: contain;
-            width: 100%;
-            height: 100%;
+            margin: 0;
+            object-fit: contain; 
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 20px;
         }
     }
@@ -103,13 +103,16 @@ $color-shadow: #12171740;
 
 @media only screen and (max-width: 760px) {
     .carousel {
-        height: 30vh;
-
-        .splide__slide {
-            height: 45vh;
-            
+        .splide__slide {    
             img {
-              
+                border-radius: 10px;
+            }
+        }
+
+        .splide__pagination {
+            .splide__pagination__page {
+                width: 20px;
+                height: 3px;
             }
         }
     }

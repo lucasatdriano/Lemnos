@@ -10,6 +10,9 @@ export default function FuncionarioModal({ onSave, onClose }) {
     dataAdmissao: '',
     telefone: '',
     cep: '',
+    nLogradouro: '',
+    complemento: '',
+    situacao: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -39,6 +42,15 @@ export default function FuncionarioModal({ onSave, onClose }) {
     }
     if (!form.cep) {
       newErrors.cep = 'CEP do funcionário é obrigatório';
+    }
+    if (!form.nLogradouro) {
+      newErrors.nLogradouro = 'Número do logradouro é obrigatório';
+    }
+    if (!form.complemento) {
+      newErrors.complemento = 'Complemento é obrigatório';
+    }
+    if (!form.situacao) {
+      newErrors.situacao = 'Situação do funcionário é obrigatória';
     }
 
     setErrors(newErrors);
@@ -125,11 +137,51 @@ export default function FuncionarioModal({ onSave, onClose }) {
             label="CEP:"
             id="cep"
             name="cep"
+            mask='CEP'
             maxLength={9}
             value={form.cep}
             onChange={handleChange}
           />
           {errors.cep && <span className='invalid'>{errors.cep}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Número do Logradouro:"
+            id="nLogradouro"
+            name="nLogradouro"
+            maxLength={10}
+            value={form.nLogradouro}
+            onChange={handleChange}
+          />
+          {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Complemento:"
+            id="complemento"
+            name="complemento"
+            maxLength={50}
+            value={form.complemento}
+            onChange={handleChange}
+          />
+          {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Situação:"
+            id="situacao"
+            name="situacao"
+            maxLength={20}
+            value={form.situacao}
+            onChange={handleChange}
+          />
+          {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
         </p>
 
         <button type='button' onClick={handleSave}>Salvar</button>

@@ -33,6 +33,8 @@ $font-items: 'Poppins', Helvetica;
     color: $color-fontLight;
     font-size: 2.4rem;
     padding: .5em 1em .3em;
+    width: clamp(12.5em, 12.5em, 12.5em);
+    margin: 0 auto;
     border-radius: 15px;
     transition: border-color 0.3s ease;
     cursor: text;

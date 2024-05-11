@@ -5,9 +5,13 @@ import { IoClose } from "react-icons/io5";
 export default function FornecedorModal({ onSave, onClose }) {
   const [form, setForm] = useState({
     nome: '',
-    cnpj: '',
-    cep: '',
+    email: '',
     telefone: '',
+    cnpj: '',
+    situacao: '',
+    nLogradouro: '',
+    complemento: '',
+    cep: ''
   });
   const [errors, setErrors] = useState({});
 
@@ -21,16 +25,28 @@ export default function FornecedorModal({ onSave, onClose }) {
 
     const newErrors = {};
     if (!form.nome) {
-      newErrors.nome = 'O Nome do fornecedor é obrigatório';
+      newErrors.nome = 'O Campo Nome do fornecedor é obrigatório';
     }
-    if (!form.cnpj) {
-      newErrors.cnpj = 'O CNPJ do fornecedor é obrigatório';
-    }
-    if (!form.cep) {
-      newErrors.cep = 'O CEP do fornecedor é obrigatório';
+    if (!form.email) {
+      newErrors.email = 'O Campo Email do fornecedor é obrigatório';
     }
     if (!form.telefone) {
-      newErrors.telefone = 'O Telefone do fornecedor é obrigatório';
+      newErrors.telefone = 'O Campo Telefone é obrigatório';
+    }
+    if (!form.cnpj) {
+      newErrors.cnpj = 'O Campo CNPJ é obrigatório';
+    }
+    if (!form.situacao) {
+      newErrors.situacao = 'A Campo Situação é obrigatória';
+    }
+    if (!form.nLogradouro) {
+      newErrors.nLogradouro = 'O Campo Número do logradouro é obrigatório';
+    }
+    if (!form.complemento) {
+      newErrors.complemento = 'O Campo Complemento é obrigatório';
+    }
+    if (!form.cep) {
+      newErrors.cep = 'O Campo CEP é obrigatório';
     }
 
     setErrors(newErrors);
@@ -62,6 +78,33 @@ export default function FornecedorModal({ onSave, onClose }) {
 
         <p>
           <CustomInput
+            type="email"
+            label="Email:"
+            id="email"
+            name="email"
+            maxLength={50}
+            value={form.email}
+            onChange={handleChange}
+          />
+          {errors.email && <span className='invalid'>{errors.email}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Telefone:"
+            id="telefone"
+            name="telefone"
+            mask="TEL"
+            maxLength={15}
+            value={form.telefone}
+            onChange={handleChange}
+          />
+          {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
+        </p>
+
+        <p>
+          <CustomInput
             type="text"
             label="CNPJ:"
             id="cnpj"
@@ -77,6 +120,45 @@ export default function FornecedorModal({ onSave, onClose }) {
         <p>
           <CustomInput
             type="text"
+            label="Situação:"
+            id="situacao"
+            name="situacao"
+            maxLength={20}
+            value={form.situacao}
+            onChange={handleChange}
+          />
+          {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Número do Logradouro:"
+            id="nLogradouro"
+            name="nLogradouro"
+            maxLength={10}
+            value={form.nLogradouro}
+            onChange={handleChange}
+          />
+          {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
+            label="Complemento:"
+            id="complemento"
+            name="complemento"
+            maxLength={40}
+            value={form.complemento}
+            onChange={handleChange}
+          />
+          {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
+        </p>
+
+        <p>
+          <CustomInput
+            type="text"
             label="CEP:"
             id="cep"
             name="cep"
@@ -86,20 +168,6 @@ export default function FornecedorModal({ onSave, onClose }) {
             onChange={handleChange}
           />
           {errors.cep && <span className='invalid'>{errors.cep}</span>}
-        </p>
-   
-        <p>
-          <CustomInput
-            type="text"
-            label="Telefone:"
-            id="telefone"
-            name="telefone"
-            mask="TEL"
-            maxLength={15}
-            value={form.telefone}
-            onChange={handleChange}
-          />
-          {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
         </p>
 
         <button type='button' onClick={handleSave}>Salvar</button>

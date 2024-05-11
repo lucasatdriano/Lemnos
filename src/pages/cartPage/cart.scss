@@ -153,13 +153,14 @@ main {
                             gap: 1em;
 
                             .buttonQtd {
+                                color: $color-fontDark;
                                 background: none;
                                 border: none;
                                 font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
                                 cursor: pointer;
                             }
 
-                            h4 {
+                            span {
                                 font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
                             }
                         }
@@ -170,6 +171,7 @@ main {
                         }
 
                         .btnRemove {
+                            color: $color-fontDark;
                             background: none;
                             border: none;
                             font-size: 4rem;
@@ -189,6 +191,7 @@ main {
                 cursor: pointer;
                 font-size: 2rem;
                 border-radius: 5px;
+                color: $color-fontDark;
                 background: $color-secundaryDark;
                 box-shadow: 0 0 10px $color-shadow;
                 font-family: $font-items;
@@ -401,11 +404,12 @@ main {
             .endOrder {
                 width: 100%;
                 font-size: 2.4rem;
-                padding: .75em 1.5em;
+                padding: .75em 1em;
                 border-radius: 0 0 10px 10px;
                 border: none;
                 position: absolute;
                 bottom: 0;
+                font-family: $font-title;
                 background: $color-primaryLight;
                 cursor: pointer;
                 transition: .5s ease;
@@ -583,7 +587,7 @@ main {
                                     font-size: 2.4rem;
                                 }
     
-                                h4 {
+                                span {
                                     font-size: 2.4rem;
                                 }
                             }

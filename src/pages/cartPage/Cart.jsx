@@ -79,10 +79,10 @@ export function Cart() {
         if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
             setShowOptions(true);
         } else if (cep.length === 0) {
-            toast.error('Por favor, adicione o seu CEP para calcularmos.');
+            toast.warning('Por favor, adicione o seu CEP para calcularmos.');
             setShowOptions(false);
         } else if (cep.length !== 9) {
-            toast.error('Por favor, adicione o seu CEP completo para calcularmos.');
+            toast.warning('Por favor, adicione o seu CEP completo para calcularmos.');
             setShowOptions(false);
         }
     }
@@ -122,13 +122,13 @@ export function Cart() {
 
     const finalizarPedido = () => {
         if (carrinho.length === 0) {
-            toast.error('Por favor, adicione algum item no carrinho.');
+            toast.warning('Por favor, adicione algum item no carrinho.');
             cartRef.current.scrollIntoView({ behavior: 'smooth' });
         } else if(cep.length !== 9) {
-            toast.error('Por favor, adicione o seu CEP para prosseguir.');
+            toast.warning('Por favor, adicione o seu CEP para prosseguir.');
             cepInputRef.current.focus();
         } else if (deliveryOption === '') {
-            toast.error('Por favor, selecione uma opção de entrega.');
+            toast.warning('Por favor, selecione uma opção de entrega.');
             cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
             limparCarrinho();
@@ -177,7 +177,7 @@ export function Cart() {
                                         >
                                             <FaMinus />
                                         </button>
-                                        <h4 id='qtdNumber'>{item.quantidade}</h4>
+                                        <span id='qtdNumber'>{item.quantidade}</span>
                                         <button 
                                             type='button' 
                                             className='buttonQtd' 

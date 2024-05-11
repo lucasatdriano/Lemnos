@@ -6,7 +6,7 @@ import imgBanner2 from '../../../../assets/banners/banner2.svg';
 import imgBanner3 from '../../../../assets/banners/banner3.svg';
 import './carousel.scss';
 
-export const Slide = () => {
+export default function Slide() {
   const [isHovered, setIsHovered] = useState(false);
   const splideRef = useRef(null);
   const [autoplayPaused, setAutoplayPaused] = useState(false);

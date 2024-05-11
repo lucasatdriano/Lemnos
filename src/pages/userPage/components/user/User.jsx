@@ -19,9 +19,7 @@ export default function User({ onLogout }) {
     name: "Lucas Adriano Tavares Gonçalves",
     cpf: "123.456.789-00",
     email: '',
-    confEmail: '',
     password: '',
-    confPassword: '',
   });
   const [username, setUsername] = useState(form.name.split(" ")[0]);
   

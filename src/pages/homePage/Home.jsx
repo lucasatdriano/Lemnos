@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slide } from './components/carousel/Carousel';
+import Slide from './components/carousel/Carousel';
 import './home.scss'
 import kits from '../../assets/deps/imgKitUpgrade.svg';
 import videoGame from '../../assets/deps/imgVideoGame.svg';

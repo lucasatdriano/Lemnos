@@ -1,6 +1,29 @@
 import React, { useState } from 'react';
 import { CustomInput } from '../../../../../../../components/inputs/Inputs';
 import { IoClose } from "react-icons/io5";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+
+const categorias = [
+  'Periféricos', 'Hardware', 'Computadores', 'Kits', 'Eletrônicos',
+	'Notebooks e Portáteis', 'Video Games', 'Redes e wireless', 
+  'Realidade Virtual', 'Casa Inteligente', 'Monitores'
+];
+
+const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
+  const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
+
+  return (
+    <div className={`dropdown ${isOpen ? 'open' : ''}`}>
+      {isOpen &&
+        filteredOptions.map((option, index) => (
+          <div key={index} className="dropdown-item" onClick={() => onSelect(option)}>
+            {option}
+          </div>
+        ))
+      }
+    </div>
+  );
+};
 
 export default function ProdutoModal({ onSave, onClose }) {
   const [form, setForm] = useState({
@@ -22,10 +45,19 @@ export default function ProdutoModal({ onSave, onClose }) {
     subCategoria: '',
   });
   const [errors, setErrors] = useState({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
+  };
+  
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
   };
 
   const handleSave = (e) => {
@@ -90,7 +122,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="nome"
             maxLength={100}
             value={form.nome}
-            onChange={handleChange}
+            onChange={(e) => handleChange('nome', e.target.value)}
           />
           {errors.nome && <span className='invalid'>{errors.nome}</span>}
         </p>
@@ -103,7 +135,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="descricao"
             maxLength={200}
             value={form.descricao}
-            onChange={handleChange}
+            onChange={(e) => handleChange('descricao', e.target.value)}
           />
           {errors.descricao && <span className='invalid'>{errors.descricao}</span>}
         </p>
@@ -116,7 +148,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="cor"
             maxLength={30}
             value={form.cor}
-            onChange={handleChange}
+            onChange={(e) => handleChange('cor', e.target.value)}
           />
           {errors.cor && <span className='invalid'>{errors.cor}</span>}
         </p>
@@ -128,7 +160,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             id="preco"
             name="preco"
             value={form.preco}
-            onChange={handleChange}
+            onChange={(e) => handleChange('preco', e.target.value)}
           />
           {errors.preco && <span className='invalid'>{errors.preco}</span>}
         </p>
@@ -141,7 +173,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="modelo"
             maxLength={30}
             value={form.modelo}
-            onChange={handleChange}
+            onChange={(e) => handleChange('modelo', e.target.value)}
           />
           {errors.modelo && <span className='invalid'>{errors.modelo}</span>}
         </p>
@@ -154,7 +186,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="peso"
             maxLength={6}
             value={form.peso}
-            onChange={handleChange}
+            onChange={(e) => handleChange('peso', e.target.value)}
           />
           {errors.peso && <span className='invalid'>{errors.peso}</span>}
         </p>
@@ -167,7 +199,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="altura"
             maxLength={6}
             value={form.altura}
-            onChange={handleChange}
+            onChange={(e) => handleChange('altura', e.target.value)}
           />
           {errors.altura && <span className='invalid'>{errors.altura}</span>}
         </p>
@@ -180,7 +212,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="comprimento"
             maxLength={6}
             value={form.comprimento}
-            onChange={handleChange}
+            onChange={(e) => handleChange('comprimento', e.target.value)}
           />
           {errors.comprimento && <span className='invalid'>{errors.comprimento}</span>}
         </p>
@@ -193,7 +225,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="largura"
             maxLength={6}
             value={form.largura}
-            onChange={handleChange}
+            onChange={(e) => handleChange('largura', e.target.value)}
           />
           {errors.largura && <span className='invalid'>{errors.largura}</span>}
         </p>
@@ -206,7 +238,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="fabricante"
             maxLength={50}
             value={form.fabricante}
-            onChange={handleChange}
+            onChange={(e) => handleChange('fabricante', e.target.value)}
           />
           {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
         </p>
@@ -219,9 +251,27 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="categoria"
             maxLength={30}
             value={form.categoria}
-            onChange={handleChange}
+            onFocus={handleDropdownToggle}
+            onChange={(e) => {
+              const upperCaseValue = e.target.value.toUpperCase();
+              handleSearch(upperCaseValue);
+            }}
           />
           {errors.categoria && <span className='invalid'>{errors.categoria}</span>}
+          {isDropdownOpen ? 
+            <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
+          : 
+            <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
+          }
+          <Dropdown
+            isOpen={isDropdownOpen}
+            options={categorias}
+            onSelect={(option) => {
+              handleChange('categoria', option);
+              setIsDropdownOpen(false);
+            }}
+            filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+          />
         </p>
 
         <p>
@@ -232,7 +282,7 @@ export default function ProdutoModal({ onSave, onClose }) {
             name="subCategoria"
             maxLength={30}
             value={form.subCategoria}
-            onChange={handleChange}
+            onChange={(e) => handleChange('subCategoria', e.target.value)}
           />
           {errors.subCategoria && <span className='invalid'>{errors.subCategoria}</span>}
         </p>
