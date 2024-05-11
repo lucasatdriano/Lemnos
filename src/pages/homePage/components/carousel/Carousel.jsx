@@ -4,6 +4,8 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import imgBanner1 from '../../../../assets/banners/banner1.svg';
 import imgBanner2 from '../../../../assets/banners/banner2.svg';
 import imgBanner3 from '../../../../assets/banners/banner3.svg';
+import imgBanner4 from '../../../../assets/banners/banner4.svg';
+import imgBanner5 from '../../../../assets/banners/banner5.svg';
 import './carousel.scss';
 
 export default function Slide() {
@@ -56,10 +58,10 @@ export default function Slide() {
           <img src={imgBanner3} alt="Slide 3" />
         </SplideSlide>
         <SplideSlide>
-          <img src="https://via.placeholder.com/400x200" alt="Slide 4" />
+        <img src={imgBanner4} alt="Slide 4" />
         </SplideSlide>
         <SplideSlide>
-          <img src="https://via.placeholder.com/400x200" alt="Slide 5" />
+        <img src={imgBanner5} alt="Slide 5" />
         </SplideSlide>
       </Splide>
     </section>
