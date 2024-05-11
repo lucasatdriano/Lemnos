@@ -34,8 +34,6 @@ $font-web: 'Roboto Flex', Arial;
     line-height: 1.5;
     font-weight: 400;
   
-    color-scheme: light dark;
-  
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -76,8 +74,7 @@ html {
         background-color: $color-bgLight;
         color: $color-fontLight;
         position: relative;
-        transition: .5s ease-in;
-        
+     
         &::-webkit-scrollbar {
             width: 0.7em;
         }
@@ -99,15 +96,18 @@ html {
         ul {
             list-style: none;
         }
-        @include lightMode; 
-    }
+        
+        .light {
+            @include lightMode; 
+        }
 
-    .dark {
-        @include darkMode;
+        .dark {
+            @include darkMode;
+        }
     }
     
     &.modalOpen {
-        overflow-y: hidden !important;
+        overflow-y: hidden;
         margin: 0 2.5px 0 0;
     }
 }

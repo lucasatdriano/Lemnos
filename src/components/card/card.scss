@@ -12,7 +12,6 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-
 .productCard {
   width: 18em;
   height: 25em;
@@ -128,5 +127,31 @@ $font-items: 'Poppins', Helvetica;
   }
   to {
       background-position: 100% 50%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .productCard {    
+    .productImage {
+      height: 9em;
+    }
+  
+    .productDetails {  
+      .productName {
+        margin-bottom: 1em;
+      }
+    }
+  
+    .btnAdd {
+      bottom: 0;
+    }
+
+    &:hover {
+      .productDetails {
+        .productName {
+          margin-bottom: 1em;
+        }
+      }
+    }
   }
 }

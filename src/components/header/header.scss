@@ -169,6 +169,7 @@ header {
 
 @media only screen and (max-width: 500px) {
     header {
-        padding: 0 1em 0 0;
+        gap: .5em;
+        padding: 0 2em 0 0;
     }
 }
