@@ -4,7 +4,7 @@ import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
 
-export function Login() {
+export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [username, setUsername] = useState("");

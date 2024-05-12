@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './cart.scss';
 import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
+import './cart.scss';
 
-export function Cart() {
+export default function Cart() {
     const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
     const [cep, setCep] = useState('');

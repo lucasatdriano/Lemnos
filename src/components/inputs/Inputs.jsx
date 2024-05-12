@@ -1,7 +1,7 @@
 import React from 'react';
 import './inputs.scss';
 
-export function CustomInput({ type, reference, label, id, maxLength, minLength, 
+export default function CustomInput({ type, reference, label, id, maxLength, minLength, 
                               onChange, name, pattern, mask, value, disabled }) {
   
   const formatCPF = (value) => {

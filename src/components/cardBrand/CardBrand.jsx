@@ -1,7 +1,7 @@
 import React from 'react';
 import './cardBrand.scss';
 
-export function Brands({ brand }) {
+export default function CardBrands({ brand }) {
   return (
     <div className='brandCard'>
         <img src={brand.image} alt={brand.name} className="brandImage" />

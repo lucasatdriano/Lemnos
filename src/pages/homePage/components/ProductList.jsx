@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/card/Card';
+import Card from '../../../components/card/Card';
 import '../home.scss';
 
-export function ProductList({ products }) {
+export default function ProductList({ products }) {
   const navigate = useNavigate();
 
     //chamada da API

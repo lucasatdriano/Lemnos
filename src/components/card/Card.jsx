@@ -3,7 +3,7 @@ import './card.scss';
 import { useNavigate } from 'react-router-dom';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 
-export function Card({ product }) {
+export default function Card({ product }) {
   const navigate = useNavigate();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 

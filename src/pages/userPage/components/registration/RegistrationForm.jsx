@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CustomInput } from '../../../../components/inputs/Inputs';
+import CustomInput from '../../../../components/inputs/Inputs';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';

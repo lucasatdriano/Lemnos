@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { RiErrorWarningLine } from "react-icons/ri";
 import { FaExclamation } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header } from '../../components/header/Header'
+import Header from '../../components/header/Header'
 import './notFound.scss';
 
-export function NotFound() {
+export default function NotFound() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState('light');
 

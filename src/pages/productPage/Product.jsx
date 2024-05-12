@@ -5,7 +5,7 @@ import img from '../../assets/imgLemnos/logoHorizontal.svg'
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite  } from "react-icons/md";
 
-export function Product() {
+export default function Product() {
     const { id } = useParams();
     const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });

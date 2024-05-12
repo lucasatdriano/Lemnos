@@ -8,11 +8,11 @@ import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
-import { ProductList } from './components/ProductList';
-import { BrandsList } from './components/BrandsList';
-import { OfferList } from './components/OfferList';
+import ProductList from './components/ProductList';
+import BrandsList from './components/BrandsList';
+import OfferList from './components/OfferList';
 
-export function Home() {
+export default function Home() {
   const products = [
     {
       id: 1,

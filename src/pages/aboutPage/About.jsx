@@ -4,7 +4,7 @@ import LogoHorizontalLight from '../../assets/imgLemnos/logoHorizontal.svg';
 import LogoHorizontalDark from '../../assets/imgLemnos/logoHorizontalClaro.svg';
 import TechFesto from '../../assets/imgLemnos/imgMascote.svg';
 
-export function About() {
+export default function About() {
   return (
     <main>
         <section className='contentAbout'>

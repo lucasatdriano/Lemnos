@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-export function ProductFilter() {
-  const { category } = useParams(); // Obtém a categoria da URL
+export default function ProductFilter() {
+  const { category } = useParams();
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');

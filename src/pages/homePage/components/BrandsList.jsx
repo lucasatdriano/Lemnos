@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brands } from '../../../components/cardBrand/CardBrand';
+import CardBrands from '../../../components/cardBrand/CardBrand';
 import imgAMD from '../../../assets/brands/AMD.svg';
 import imgDell from '../../../assets/brands/Dell.svg';
 import imgIntel from '../../../assets/brands/Intel.svg';
@@ -7,12 +7,12 @@ import imgIphone from '../../../assets/brands/Iphone.svg';
 import imgLG from '../../../assets/brands/LG.svg';
 import imgNvidia from '../../../assets/brands/Nvidia.svg';
 import imgPhilips from '../../../assets/brands/Philips.svg';
-import imgPlayStation from '../../../assets/brands/PlayStation.svg';
 import imgPositivo from '../../../assets/brands/Positivo.svg';
 import imgSamsung from '../../../assets/brands/Samsung.svg';
+import imgSony from '../../../assets/brands/Sony.svg';
 import '../home.scss';
 
-export function BrandsList() {
+export default function BrandsList() {
 
     //chamada da API
   const brands = [
@@ -53,25 +53,25 @@ export function BrandsList() {
     },    
     {
       id: 8,
-      name: 'PlayStation',
-      image: imgPlayStation
-    },    
-    {
-      id: 9,
       name: 'Positivo',
       image: imgPositivo
     },    
     {
-      id: 10,
+      id: 9,
       name: 'Samsung',
       image: imgSamsung
     },
+    {
+      id: 10,
+      name: 'Sony',
+      image: imgSony
+    },    
   ];
 
   return (
     <div className="brandsList">
       {brands.map(brand => (
-        <Brands key={brand.id} brand={brand} />
+        <CardBrands key={brand.id} brand={brand} />
       ))}
     </div>
   );

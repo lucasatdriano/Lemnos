@@ -1,9 +1,9 @@
 import React from 'react';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontalClaro.svg'; 
-import { Infos } from './components/infos/Infos';
+import Infos from './components/infos/Infos';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 
-export function Footer() {
+export default function Footer() {
     return (
         <footer>
             <Infos />

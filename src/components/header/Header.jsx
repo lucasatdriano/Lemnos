@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import img from '../../assets/imgLemnos/logoHorizontal.svg';
 import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
-export function Header({ toggleTheme }) {
+export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
 
     const [favorites, setFavorites] = useState([

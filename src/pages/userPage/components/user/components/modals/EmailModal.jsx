@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CustomInput } from '../../../../../../components/inputs/Inputs';
+import CustomInput from '../../../../../../components/inputs/Inputs';
 import { IoClose } from "react-icons/io5";
 
 export default function EmailModal({ onSave, onClose }) {

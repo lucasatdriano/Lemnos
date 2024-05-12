@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { App } from './App';
-import { NotFound } from './pages/notFoundPage/NotFound';
-import { Home } from './pages/homePage/Home';
-import { About } from './pages/aboutPage/About';
-import { Login } from './pages/userPage/Login';
-import { Product } from './pages/productPage/Product';
-import { Cart } from './pages/cartPage/Cart';
+import App from './App';
+import NotFound from './pages/notFoundPage/NotFound';
+import Home from './pages/homePage/Home';
+import About from './pages/aboutPage/About';
+import Login from './pages/userPage/Login';
+import Product from './pages/productPage/Product';
+import Cart from './pages/cartPage/Cart';
+import ProductFilter from './pages/productFilterPage/ProductFilter'
 
 import { createRoot } from 'react-dom/client';
 
