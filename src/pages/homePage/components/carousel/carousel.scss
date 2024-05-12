@@ -17,7 +17,8 @@ $color-shadow: #12171740;
 
 .carousel {
     width: 85%;
-    height: 50%;
+    min-height: 20em;
+    height: 100%;
     margin: 0 auto;
 
     &:hover .splide__pagination .splide__pagination__page.is-active::after {
@@ -103,9 +104,20 @@ $color-shadow: #12171740;
 
 @media only screen and (max-width: 760px) {
     .carousel {
-        .splide__slide {    
+        width: 90%;
+
+        .splide__slide {
             img {
-                border-radius: 10px;
+                max-height: 70vh;
+                max-width: 100%
+            }
+        }
+
+        .splide__arrow {
+            &.splide__arrow--prev,
+            &.splide__arrow--next {
+                font-size: 1.8rem;
+
             }
         }
 

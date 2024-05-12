@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
+import OfferList from '../../components/lists/OfferList'
 import './cart.scss';
 
 export default function Cart() {
@@ -306,6 +307,10 @@ export default function Cart() {
                     </div>
                     <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
                 </div>
+            </section>
+            <section className='offers'>
+                <h2>Continue Comprando</h2>
+                <OfferList  />
             </section>
         </main>
     );

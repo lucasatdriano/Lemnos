@@ -97,21 +97,20 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .categorias {
+            display: flex;
+            flex-direction: column;
             padding: 5px 0 10px 0;
 
-            li {
-                padding: 5px 3em 5px 10px;
-                transition: .2s ease-in;
+            .filterDeps {
+                padding: 8px 3em 8px 10px;
+                color: $color-fontDark;
+                font-size: 2rem;
+                transition: .3s ease-in;
                 cursor: pointer;
                 
                 &:hover {
                     background-color: $color-secundaryDark;
                     text-decoration: underline;
-                }
-
-                a {
-                    color: $color-fontDark;
-                    font-size: 1.8rem;
                 }
             }
         }
@@ -120,7 +119,7 @@ $font-items: 'Poppins', Helvetica;
             text-align: left;
             width: 100%;
 
-            ul {
+            .navegacoes {
                 width: 100%;
                 padding: 5px 0 10px 0;
                 display: flex;
@@ -131,10 +130,10 @@ $font-items: 'Poppins', Helvetica;
                     display: flex;
                     gap: .5em;
                     align-items: center;
-                    padding: 15px 10px 5px;
-                    transition: .2s ease-in;
+                    padding: 10px 10px 5px;
+                    transition: .3s ease-in;
                     color: $color-fontDark;
-                    font-size: 1.8rem;
+                    font-size: 2rem;
 
                     &:hover {
                         background-color: $color-secundaryDark;

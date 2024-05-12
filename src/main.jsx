@@ -18,8 +18,9 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          {/* <Route path="/product/:id" element={<Product />} /> */}
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/productFilter/:category" element={<ProductFilter />} />
+          <Route path="/productFilter" element={<ProductFilter />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />

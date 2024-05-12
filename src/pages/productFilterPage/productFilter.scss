@@ -1,3 +1,54 @@
+.product-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    select, input {
+        margin-top: 8em;
+        margin-bottom: 10px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #fff;
+        width: calc(25% - 10px);
+        transition: border-color 0.3s ease;
+    
+        &:hover {
+          border-color: #888;
+        }
+    
+        &:focus {
+          outline: none;
+          border-color: #555;
+        }
+    }
+}
+  
+.filtered-data-container {
+    ul {
+        list-style-type: none;
+        padding: 0;
+    
+        li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            transition: background-color 0.3s ease;
+    
+            &:last-child {
+                border-bottom: none;
+            }
+    
+            &:hover {
+                background-color: #ccc6c6;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { Card } from '../../components/card/Card';

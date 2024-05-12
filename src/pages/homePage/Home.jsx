@@ -1,5 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slide from './components/carousel/Carousel';
+import ProductList from './components/ProductList';
+import BrandsList from './components/BrandsList';
+import OfferList from '../../components/lists/OfferList';
 import './home.scss'
 import kits from '../../assets/deps/imgKitUpgrade.svg';
 import videoGame from '../../assets/deps/imgVideoGame.svg';
@@ -8,9 +12,6 @@ import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
-import ProductList from './components/ProductList';
-import BrandsList from './components/BrandsList';
-import OfferList from './components/OfferList';
 
 export default function Home() {
   const products = [
@@ -47,35 +48,35 @@ export default function Home() {
           <h2>Principais Departamentos</h2>
 
           <div className="containerDeps">
-            <div className='gridItem item1'>
+            <Link to="/productFilter/Computadores" className='gridItem item1'>
               <img src={computador} alt="imagem filtro computadores" />
               <h3>Computadores</h3>
-            </div>
+            </Link>
 
-            <div className='gridItem item2'>
+            <Link to="/productFilter/Notebooks e Portáteis" className='gridItem item2'>
               <img src={portatil} alt="imagem filtro notebook e portáteis" />
               <h3>Notebook e Portáteis</h3>
-            </div>
+            </Link>
 
-            <div className='gridItem item3'>
+            <Link to="/productFilter/Kits" className='gridItem item3'>
               <img src={kits} alt="imagem filtro kits" />
               <h3>Kits</h3>
-            </div>
+            </Link>
 
-            <div className='gridItem item4'>
+            <Link to="/productFilter/Periféricos" className='gridItem item4'>
               <img src={perifericos} alt="imagem filtro periféricos" />
               <h3>Periféricos</h3>
-            </div>
+            </Link>
             
-            <div className='gridItem item5'>
+            <Link to="/productFilter/Monitores" className='gridItem item5'>
               <img src={monitor} alt="imagem filtro monitores" />
               <h3>Monitores</h3>
-            </div>
+            </Link>
 
-            <div className='gridItem item6'>
+            <Link to="/productFilter/Video Games" className='gridItem item6'>
               <img src={videoGame} alt="imagem filtro video games" />
               <h3>Video Games</h3>
-            </div>
+            </Link>
         
           </div>
         </section>

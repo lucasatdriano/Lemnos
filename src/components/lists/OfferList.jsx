@@ -1,9 +1,9 @@
 import React from 'react';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import CardOffer from '../../../components/cardOffer/CardOffer';
-import '../home.scss';
-import logoHorizontal from '../../../assets/imgLemnos/logoHorizontal.svg'
+import CardOffer from '../cardOffer/CardOffer';
+import './offerList.scss';
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
 
 export default function OfferList() {
   

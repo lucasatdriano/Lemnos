@@ -1,20 +1,19 @@
 import React from 'react';
 import CardBrands from '../../../components/cardBrand/CardBrand';
-import imgAMD from '../../../assets/brands/AMD.svg';
-import imgDell from '../../../assets/brands/Dell.svg';
-import imgIntel from '../../../assets/brands/Intel.svg';
-import imgIphone from '../../../assets/brands/Iphone.svg';
-import imgLG from '../../../assets/brands/LG.svg';
-import imgNvidia from '../../../assets/brands/Nvidia.svg';
-import imgPhilips from '../../../assets/brands/Philips.svg';
-import imgPositivo from '../../../assets/brands/Positivo.svg';
-import imgSamsung from '../../../assets/brands/Samsung.svg';
-import imgSony from '../../../assets/brands/Sony.svg';
+import imgAMD from '../../../assets/brands/amd.svg';
+import imgApple from '../../../assets/brands/apple.svg';
+import imgDell from '../../../assets/brands/dell.svg';
+import imgIntel from '../../../assets/brands/intel.svg';
+import imgLG from '../../../assets/brands/lg.svg';
+import imgNvidia from '../../../assets/brands/nvidia.svg';
+import imgPhilips from '../../../assets/brands/philips.svg';
+import imgPositivo from '../../../assets/brands/positivo.svg';
+import imgSamsung from '../../../assets/brands/samsung.svg';
+import imgSony from '../../../assets/brands/sony.svg';
 import '../home.scss';
 
 export default function BrandsList() {
 
-    //chamada da API
   const brands = [
     {
       id: 1,
@@ -23,18 +22,18 @@ export default function BrandsList() {
     },
     {
       id: 2,
+      name: 'Apple',
+      image: imgApple
+    },    
+    {
+      id: 3,
       name: 'Dell',
       image: imgDell
     },
     {
-      id: 3,
+      id: 4,
       name: 'Intel',
       image: imgIntel
-    },    
-    {
-      id: 4,
-      name: 'Iphone',
-      image: imgIphone
     },    
     {
       id: 5,

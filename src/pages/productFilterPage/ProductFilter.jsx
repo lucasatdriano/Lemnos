@@ -1,46 +1,98 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
+import './productFilter.scss';
 
 export default function ProductFilter() {
   const { category } = useParams();
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const brands = [
+    'AMD',
+    'Dell',
+    'Intel',
+    'Apple',
+    'LG',
+    'Nvidia',
+    'Philips',
+    'Positivo',
+    'Samsung',
+    'Sony',
+  ];
+  
+  const categorias = [
+    'Periféricos',
+    'Hardware',
+    'Computadores',
+    'Kits',
+    'Eletrônicos',
+    'Notebooks e Portáteis',
+    'Video Games',
+    'Redes e wireless',
+    'Realidade Virtual',
+    'Casa Inteligente',
+    'Monitores'
+  ];
 
+  const subcategoriasPorCategoria = {
+    'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
+    'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
+    'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
+    'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
+    'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
+    'Notebooks e Portáteis': ['Notebooks', 'Tablets', 'Smartphones'],
+    'Video Games': ['Portátil', 'Console de Mesa'],
+    'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
+    'Realidade Virtual': ['Óculos'],
+    'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
+    'Monitores': ['Monitores Gamers', 'Monitores Workstation']
+  };
+  
   const products = [
     {
       id: 1,
       name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
       price: 19.99,
       image: logoHorizontal,
-      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}` 
+      brand: `Apple`,
+      category: 'Computadores',
+      subcategory: 'Computadores Workstation'
     },
   ];
-  for (let i = 2; i <= 40; i++) {
+  for (let i = 2; i <= 100; i++) {
+    const category = categorias[Math.floor(Math.random() * categorias.length)];
+    const brand = brands[Math.floor(Math.random() * brands.length)];
+    const subcategories = subcategoriasPorCategoria[category];
+    const subcategory = subcategories ? subcategories[Math.floor(Math.random() * subcategories.length)] : '';
     products.push({
       id: i,
       name: `Product ${i}`,
-      price: Math.random() * 1000,
-      image: 'product2.jpg',
-      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`
+      price: parseFloat((Math.random() * 1000).toFixed(2)),
+      image: logoHorizontal,
+      brand: brand,
+      category: category,
+      subcategory: subcategory,
     });
   }
 
-  // Função para aplicar os filtros aos dados
   const applyFilters = (products) => {
     return products.filter(item => {
-      // Aplicar filtros conforme necessário
       if (selectedBrand && item.brand !== selectedBrand) {
         return false;
       }
-      if (selectedPrice && item.price > parseInt(selectedPrice)) {
+      if (minPrice && item.price < parseFloat(minPrice)) {
+        return false;
+      }
+      if (selectedPrice && item.price > parseFloat(selectedPrice)) {
         return false;
       }
       if (selectedSubCategory && item.subcategory !== selectedSubCategory) {
+        return false;
+      }
+      if (selectedCategory && item.category !== selectedCategory) {
         return false;
       }
       return true;
@@ -50,40 +102,61 @@ export default function ProductFilter() {
   const filteredData = applyFilters(products);
 
   useEffect(() => {
-    // Simula a seleção da categoria ao acessar a tela de filtros
-    setSelectedBrand(category); // Ou setSelectedPrice(category), dependendo do que você deseja usar como categoria inicial
+    setSelectedCategory(category);
   }, [category]);
 
   return (
-    <div>
-      {/* Componentes de filtro */}
+    <div className="product-filter-container">
       <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
         <option value="">Todas as marcas</option>
-        <option value="Brand A">Brand A</option>
-        <option value="Brand B">Brand B</option>
-        {/* Adicione mais opções de marca conforme necessário */}
+        {brands.map((brands, index) => (
+            <option key={index} value={brands}>{brands}</option>
+        ))}
+      </select>
+      
+       <select value={minPrice} onChange={(e) => setMinPrice(e.target.value)}>
+        <option value="">Qualquer preço</option>
+        <option value="10">De R$ 10,00</option>
+        <option value="20">De R$ 20,00</option>
+        <option value="50">De R$ 50,00</option>
+        <option value="100">De R$ 100,00</option>
+        <option value="250">De R$ 250,00</option>
+        <option value="500">De R$ 500,00</option>
+        <option value="1000">De R$ 1.000,00</option>
+        <option value="5000">De R$ 5.000,00</option>
+        <option value="10000">De R$ 10.000,00</option>
       </select>
 
       <select value={selectedPrice} onChange={(e) => setSelectedPrice(e.target.value)}>
         <option value="">Qualquer preço</option>
         <option value="10">Até R$ 10,00</option>
         <option value="20">Até R$ 20,00</option>
-        {/* Adicione mais opções de preço conforme necessário */}
+        <option value="50">Até R$ 50,00</option>
+        <option value="100">Até R$ 100,00</option>
+        <option value="250">Até R$ 250,00</option>
+        <option value="500">Até R$ 500,00</option>
+        <option value="1000">Até R$ 1.000,00</option>
+        <option value="5000">Até R$ 5.000,00</option>
+        <option value="10000">Até R$ 10.000,00</option>
       </select>
 
       <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
         <option value="">Todas as subcategorias</option>
-        <option value="Subcategory 1">Subcategoria 1</option>
-        <option value="Subcategory 2">Subcategoria 2</option>
-        {/* Adicione mais opções de subcategoria conforme necessário */}
+        {categorias.map((categoria, index) => (
+          selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
+            <option key={index} value={subcategoria}>{subcategoria}</option>
+          ))
+        ))}
       </select>
 
       {/* Dados filtrados */}
-      <ul>
-        {filteredData.map(item => (
-          <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, Subcategoria: {item.subcategory}</li>
-        ))}
-      </ul>
+      <div className="filtered-data-container">
+        <ul>
+          {filteredData.map(item => (
+            <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

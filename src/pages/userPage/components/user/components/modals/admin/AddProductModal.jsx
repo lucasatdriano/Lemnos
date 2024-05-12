@@ -4,17 +4,31 @@ import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 const categorias = [
-  'Periféricos', 'Hardware', 'Computadores', 'Kits', 'Eletrônicos',
-	'Notebooks e Portáteis', 'Video Games', 'Redes e wireless', 
+  'Periféricos', 'Hardware', 'Computadores', 'Kits', 'Eletronicos',
+	'Notebooks e Portateis', 'Video Games', 'Redes e wireless', 
   'Realidade Virtual', 'Casa Inteligente', 'Monitores', ''
 ];
+
+const subcategoriasPorCategoria = {
+  'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
+  'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
+  'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
+  'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
+  'Eletronicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
+  'Notebooks e Portateis': ['Notebooks', 'Tablets', 'Smartphones'],
+  'Video Games': ['Portátil', 'Console de Mesa'],
+  'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
+  'Realidade Virtual': ['Óculos'],
+  'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
+  'Monitores': ['Monitores Gamers', 'Monitores Workstation']
+};
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
 
   return (
     <div className={`dropdown ${isOpen ? 'open' : ''}`}>
-      {isOpen &&
+     {isOpen &&
         filteredOptions.map((option, index) => (
           <div key={index} className="dropdown-categoria" onClick={() => onSelect(option)}>
             {option}
@@ -46,7 +60,9 @@ export default function ProdutoModal({ onSave, onClose }) {
   });
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [subcategorias, setSubcategorias] = useState([]);
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -64,6 +80,10 @@ export default function ProdutoModal({ onSave, onClose }) {
   
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleSubDropdownToggle = () => {
+    setIsSubDropdownOpen(!isSubDropdownOpen);
   };
 
   const handleSearch = (value) => {
@@ -123,6 +143,18 @@ export default function ProdutoModal({ onSave, onClose }) {
     }
   };
 
+  const handleCategoriaChange = (option) => {
+    handleChange('categoria', option);
+    setIsSubDropdownOpen(true);
+    setSubcategorias(subcategoriasPorCategoria[option] || []);
+    handleSearch(option);
+    handleChange('subCategoria', ''); 
+  };
+  
+  const handleSubCategoriaChange = (option) => {
+    handleChange('subCategoria', option);
+    handleSearch(option); 
+  };
   return (
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
@@ -147,7 +179,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               label="Descrição:"
               id="descricao"
               name="descricao"
-              maxLength={200}
+              maxLength={255}
               value={form.descricao}
               onChange={(e) => handleChange('descricao', e.target.value)}
             />
@@ -242,11 +274,13 @@ export default function ProdutoModal({ onSave, onClose }) {
               value={form.categoria}
               onFocus={handleDropdownToggle}
               onChange={(e) => {
-                const upperCaseValue = e.target.value.toUpperCase();
-                handleSearch(upperCaseValue);
+                const option = e.target.value;
+                handleChange('categoria', option);
+                setIsDropdownOpen(false);
+                setSubcategorias(subcategoriasPorCategoria[option] || []);
+                handleSearch(option);
               }}
             />
-            {errors.categoria && <span className='invalid'>{errors.categoria}</span>}
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
             : 
@@ -256,12 +290,15 @@ export default function ProdutoModal({ onSave, onClose }) {
               isOpen={isDropdownOpen}
               options={categorias}
               onSelect={(option) => {
-                handleChange('categoria', option);
+                handleCategoriaChange(option);
                 setIsDropdownOpen(false);
+                setIsSubDropdownOpen(true);
+                handleSearch(option);
               }}
               filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
             />
-          </p>
+            {errors.categoria && <span className='invalid'>{errors.categoria}</span>}
+            </p>
 
           <p>
             <CustomInput
@@ -271,7 +308,26 @@ export default function ProdutoModal({ onSave, onClose }) {
               name="subCategoria"
               maxLength={30}
               value={form.subCategoria}
-              onChange={(e) => handleChange('subCategoria', e.target.value)}
+              onFocus={handleSubDropdownToggle}
+              onChange={(e) => {
+                const option = e.target.value;
+                handleChange('subCategoria', option);
+                setIsSubDropdownOpen(false);
+              }}
+            />
+            {isSubDropdownOpen ? 
+              <RiArrowDropUpLine className='iconDrop' onClick={handleSubDropdownToggle}/> 
+            : 
+              <RiArrowDropDownLine className='iconDrop' onClick={handleSubDropdownToggle}/>
+            }
+            <Dropdown
+              isOpen={isSubDropdownOpen}
+              options={subcategorias}
+              onSelect={(option) => {
+                handleSubCategoriaChange(option);
+                setIsSubDropdownOpen(false);
+              }}
+              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
             />
             {errors.subCategoria && <span className='invalid'>{errors.subCategoria}</span>}
           </p>
@@ -353,7 +409,6 @@ export default function ProdutoModal({ onSave, onClose }) {
             />
             {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
           </p>
-
         </div>
         <button type='button' onClick={handleSave}>Adicionar</button>
         <IoClose onClick={onClose} className='iconClose' />

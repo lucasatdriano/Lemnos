@@ -4,6 +4,7 @@ import './product.scss';
 import img from '../../assets/imgLemnos/logoHorizontal.svg'
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite  } from "react-icons/md";
+import OfferList from '../../components/lists/OfferList'
 
 export default function Product() {
     const { id } = useParams();
@@ -139,6 +140,10 @@ export default function Product() {
                         </p>
                     </div>
                 </section>
+            </section>
+            <section className='offers'>
+                <h2>Produtos Similares</h2>
+                <OfferList  />
             </section>
         </main>
     );
