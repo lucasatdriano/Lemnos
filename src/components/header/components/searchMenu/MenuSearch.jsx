@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import logoHorizontal from '../../../../assets/imgLemnos/logoHorizontal.svg'
 
 export default function MenuSearch({ onSearchResultClick }) {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-  
+
     const handleSearchChange = (event) => {
       const value = event.target.value;
       setSearchTerm(value);
@@ -90,6 +92,7 @@ export default function MenuSearch({ onSearchResultClick }) {
   
     const handleSearch = (event) => {
       event.preventDefault();
+      navigate(`/productFilter?search=${searchTerm}`);
     };
   
     const handleSearchResultClick = (productId) => {

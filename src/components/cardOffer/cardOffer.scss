@@ -164,3 +164,37 @@ $font-items: 'Poppins', Helvetica;
     }
   }
 }
+
+@media only screen and (max-width: 500px) {
+  .offerCard {    
+    .offerImage {
+      height: 8.5em;
+    }
+  
+    
+    .offerDetails { 
+      height: 17em;
+      .offerName {
+        margin-bottom: 0em;
+      }
+
+      .btnAdd {
+        bottom: 0;
+      }
+    }
+  
+    &:hover {
+      .offerDetails {
+        padding-bottom: 0;
+  
+        .offerPrice {
+          opacity: 1;
+        }
+  
+        .offerPriceDescont {
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}

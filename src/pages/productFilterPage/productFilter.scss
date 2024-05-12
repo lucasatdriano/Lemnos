@@ -1,10 +1,32 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgLight: #F9FBFB;
+$color-bgDark: #2D2D2D;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
 .product-filter-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 20px;
 
-    select, input {
+    select {
         margin-top: 8em;
         margin-bottom: 10px;
         padding: 8px;
@@ -24,9 +46,54 @@
           border-color: #555;
         }
     }
+
+   
 }
   
 .filtered-data-container {
+    .emptyFilterMessage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: clamp(50em, 60vw, 75em);
+        gap: 1em;
+        padding: 2em 0;
+        border-radius: 15px;
+        box-shadow: 0 0 8px $color-shadow;
+
+        .textEmpty {
+            font-family: $font-title;
+            font-size: 3.6rem;
+            font-size: clamp(2.6rem, 1rem + 1vw, 3.6rem);
+        }
+
+        .btnBackFilter {
+            border: none;
+            padding: .75em 1.5em;
+            border-radius: 10px;
+            background: $color-primaryLight;
+            box-shadow: 0 0 8px $color-shadow;
+            font-size: 2.4rem;
+            cursor: pointer;
+            position: relative;
+            transition: .2s ease;
+
+            &:hover {
+                filter: brightness(.9);
+                box-shadow: 5px 10px 5px $color-shadow;
+                transform: rotateX(25deg);
+                top: 0px;
+            }
+
+            &:active {
+                transform: rotateX(25deg);
+                top: 5px;
+                box-shadow: 2px 5px 5px $color-shadow;
+            }
+        }
+    }
+
     ul {
         list-style-type: none;
         padding: 0;

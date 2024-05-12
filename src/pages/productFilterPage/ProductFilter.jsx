@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
 import './productFilter.scss';
 
 export default function ProductFilter() {
-  const { category } = useParams();
+  const { category, search } = useParams();
+  const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
   const brands = [
     'AMD',
     'Dell',
@@ -86,13 +92,16 @@ export default function ProductFilter() {
       if (minPrice && item.price < parseFloat(minPrice)) {
         return false;
       }
-      if (selectedPrice && item.price > parseFloat(selectedPrice)) {
+      if (maxPrice && item.price > parseFloat(maxPrice)) {
         return false;
       }
       if (selectedSubCategory && item.subcategory !== selectedSubCategory) {
         return false;
       }
       if (selectedCategory && item.category !== selectedCategory) {
+        return false;
+      }
+      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase())) { // Alterado de 'search' para 'searchTerm'
         return false;
       }
       return true;
@@ -105,8 +114,38 @@ export default function ProductFilter() {
     setSelectedCategory(category);
   }, [category]);
 
+  useEffect(() => {
+    setSearchTerm(search || '');
+  }, [search]);
+
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
+    if (maxPrice && parseFloat(e.target.value) > parseFloat(maxPrice)) {
+      toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
+      setMaxPrice(e.target.value);
+    }
+  };
+
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+    if (minPrice && parseFloat(e.target.value) < parseFloat(minPrice)) {
+      toast.warning('O valor máximo não pode ser menor que o valor mínimo.');
+      setMinPrice(e.target.value);
+    }
+  };
+
+  const handleClearFilters = () => {
+    setSelectedBrand('');
+    // setSelectedCategory('');
+    setSelectedSubCategory('');
+    setMinPrice('');
+    setMaxPrice('');
+    setSearchTerm('');
+  };
+
   return (
     <div className="product-filter-container">
+ 
       <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
         <option value="">Todas as marcas</option>
         {brands.map((brands, index) => (
@@ -114,7 +153,7 @@ export default function ProductFilter() {
         ))}
       </select>
       
-       <select value={minPrice} onChange={(e) => setMinPrice(e.target.value)}>
+       <select value={minPrice} onChange={handleMinPriceChange}>
         <option value="">Qualquer preço</option>
         <option value="10">De R$ 10,00</option>
         <option value="20">De R$ 20,00</option>
@@ -127,7 +166,7 @@ export default function ProductFilter() {
         <option value="10000">De R$ 10.000,00</option>
       </select>
 
-      <select value={selectedPrice} onChange={(e) => setSelectedPrice(e.target.value)}>
+      <select value={maxPrice} onChange={handleMaxPriceChange}>
         <option value="">Qualquer preço</option>
         <option value="10">Até R$ 10,00</option>
         <option value="20">Até R$ 20,00</option>
@@ -141,7 +180,7 @@ export default function ProductFilter() {
       </select>
 
       <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
-        <option value="">Todas as subcategorias</option>
+        <option value="">Todas as subCategorias</option>
         {categorias.map((categoria, index) => (
           selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
             <option key={index} value={subcategoria}>{subcategoria}</option>
@@ -149,13 +188,23 @@ export default function ProductFilter() {
         ))}
       </select>
 
-      {/* Dados filtrados */}
       <div className="filtered-data-container">
-        <ul>
-          {filteredData.map(item => (
-            <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
-          ))}
-        </ul>
+        {filteredData.length === 0 && (
+          <div className="emptyFilterMessage">
+            <h2 className='textEmpty'>Parece que não há resultados para os filtros escolhidos. Por favor, revise suas opções e tente novamente.</h2>
+            <button type='button' className='btnBackFilter' onClick={handleClearFilters}>Limpar Filtros</button>
+         </div>
+        )}
+
+        {filteredData.length > 0 && (
+          <>
+            <ul>
+              {filteredData.map(item => (
+                <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );
