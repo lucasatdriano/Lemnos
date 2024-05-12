@@ -157,8 +157,8 @@ $font-items: 'Poppins', Helvetica;
 
             p {
                 position: relative;
-             
-                #categoria, #estado {
+                  
+                #categoria, #estado, #situacao {
                     z-index: 50;
                 }
 
@@ -208,20 +208,34 @@ $font-items: 'Poppins', Helvetica;
                         font-size: 1.8rem;
                     }
 
-                    .dropdown-item {
+                    .dropdown-estado {
                         padding: 5px 0;
                         font-size: 1.6rem;
+                    }
+
+                    .dropdown-situacao {
+                        padding: 10px 0;
+                        font-size: 1.8rem;
+
+                        &:last-child {
+                            cursor: pointer;
+
+                            &:hover {
+                                filter: brightness(.9);
+                            }
+                        }
                     }
                 }
 
                 .iconDrop {
                     position: absolute;
-                    right: 15px;
+                    right: 1vw;
                     top: 25px;
                     z-index: 50;
                     transform: translateY(-50%);
                     width: 24px;
                     height: 24px;
+                    cursor: pointer;
                 }
             }
         }

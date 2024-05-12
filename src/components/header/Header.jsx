@@ -11,7 +11,7 @@ export function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
 
     const [favorites, setFavorites] = useState([
-        { id: 1, name: "Produto 1", image: 'img', price: 10.99 },
+        { id: 1, name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)', image: 'img', price: 10.99 },
         { id: 2, name: "Produto 2", image: "caminho/para/imagem2.jpg", price: 19.99 }
     ]);
 

@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
 import { CustomInput } from '../../../../../../../components/inputs/Inputs';
 import { IoClose } from "react-icons/io5";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+
+const situacao = ['Ativo', 'Inativo'];
+
+const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
+  const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
+
+  return (
+    <div className={`dropdown ${isOpen ? 'open' : ''}`}>
+      {isOpen &&
+        filteredOptions.map((option, index) => (
+          <div key={index} className="dropdown-situacao" onClick={() => onSelect(option)}>
+            {option}
+          </div>
+        ))
+      }
+    </div>
+  );
+};
 
 export default function FornecedorModal({ onSave, onClose }) {
   const [form, setForm] = useState({
@@ -14,10 +33,19 @@ export default function FornecedorModal({ onSave, onClose }) {
     cep: ''
   });
   const [errors, setErrors] = useState({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const handleSearch = (value) => {
+    setSearchTerm(value);
   };
 
   const handleSave = (e) => {
@@ -122,9 +150,28 @@ export default function FornecedorModal({ onSave, onClose }) {
               label="Situação:"
               id="situacao"
               name="situacao"
-              maxLength={20}
+              maxLength={7}
               value={form.situacao}
-              onChange={handleChange}
+              onFocus={handleDropdownToggle}
+              onChange={(e) => {
+                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1); // Capitalize a primeira letra
+                handleChange('situacao', upperCaseValue);
+                handleSearch(upperCaseValue);
+              }}
+            />
+            {isDropdownOpen ? 
+              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
+            : 
+              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
+            }
+            <Dropdown
+              isOpen={isDropdownOpen}
+              options={situacao}
+              onSelect={(option) => {
+                handleChange('situacao', option);
+                setIsDropdownOpen(false);
+              }}
+              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
             />
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>

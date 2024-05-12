@@ -18,28 +18,122 @@ $color-shadow: #12171740;
 $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
+nav {
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #12171780;
+    z-index: 99;
+    opacity: 0;
+    display: none;
 
-.menuFavorite {
-  opacity: 0;
-  background-color: $color-bgLight;
-  width: 50%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  right: 0;
+    &.active {
+      animation: modal 0.2s ease-in forwards;
+      display: block;
+    }
+  }
 
+  .menuFavorite {
+    opacity: 0;
+    display: none;
+    background-color: $color-bgLight;
+    width: 50%;
+    height: 100vh;
+    position: absolute;
+    z-index: 900;
+    border-radius: 10px 10px 0 0;
+    top: 0;
+    right: -3%;
 
-  .listaFavoritos {
-    .productFav {
-      .containerInfosFav {
-        .iconFav {
-          cursor: pointer;
-          color: $color-primaryLight;
+    &.active {
+      opacity: 1;
+      display: block;
+    }
+
+    .iconClose {
+      display: none;
+      right: 10%;
+      position: absolute;
+      width: 48px;
+      height: 48px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1em;
+
+      h2 {
+        font-family: $font-title;
+        white-space: nowrap;
+        font-size: 4rem;
+        padding: 0 10px;
+      }
+
+      hr {
+        width: 50%;
+        height: 0;
+        border: 2px solid $color-primaryLight;
+      }
+    }
+
+    .listaFavoritos {
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1em;
+
+      .productFav {
+        background: $color-secundaryLight;
+        width: 100%;
+        height: 7.5em;
+        padding: .5em;
+        border-radius: 10px;
+        display: flex;
+        gap: 1em;
+
+        img {
+          width: 25%;
+          border: 2px solid white;
+        }
+
+        .containerInfosFav {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-family: $font-items;
+          color: $color-fontDark;
+          width: 70%;
+          height: 100%;
+          font-size: 2rem;
+          position: relative;
+
+          .iconFav {
+            cursor: pointer;
+            position: absolute;
+            right: -1em;
+            color: $color-primaryLight;
+            float: right;
+            width: 42px;
+            height: 42px;
+          }
+
+          p {
+            font-size: 3rem;
+            font-weight: bold;
+          }
         }
       }
     }
   }
 }
+
 @media only screen and (max-width: 768px) {
   .menuFav {
     width: 100%;

@@ -17,14 +17,29 @@ $color-shadow: #12171740;
 $color-card: #f6fefd4d;
 
 .container {
-    display: grid;
-    place-content: center;
-    min-height: calc( 100vh - 4em - 20em);
+  display: grid;
+  place-content: center;
+  min-height: calc( 100vh - 4em - 20em);
     
-    .invalid {
-        padding-bottom: 1em;
-        color: $color-detailsLight;
-        position: relative;
-        left: 15px;
-      }
+  .invalid {
+    padding-bottom: 1em;
+    color: $color-detailsLight;
+    position: relative;
+    left: 15px;
+  }
+  
+  p { 
+    position: relative;
+    
+    .iconPwd {
+      position: absolute;
+      right: 2vw;
+      top: 25px;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      color: $color-fontLight;
+    }
+  }
 }

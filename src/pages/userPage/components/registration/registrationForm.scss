@@ -104,12 +104,13 @@ $font-items: 'Poppins', Helvetica;
       
         .iconPwd {
           position: absolute;
-          right: 15px;
+          right: 2vw;
           top: 25px;
           transform: translateY(-50%);
           width: 24px;
           height: 24px;
           cursor: pointer;
+          color: $color-fontLight;
         }
       }
     }

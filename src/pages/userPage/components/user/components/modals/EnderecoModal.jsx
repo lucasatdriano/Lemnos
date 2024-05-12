@@ -17,7 +17,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
     <div className={`dropdown ${isOpen ? 'open' : ''}`}>
       {isOpen &&
         filteredOptions.map((option, index) => (
-          <div key={index} className="dropdown-item" onClick={() => onSelect(option)}>
+          <div key={index} className="dropdown-estado" onClick={() => onSelect(option)}>
             {option}
           </div>
         ))
