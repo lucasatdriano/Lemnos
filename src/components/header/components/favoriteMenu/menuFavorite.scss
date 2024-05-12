@@ -19,6 +19,10 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 nav {
+  .favoriteIcon {
+    color: $color-fontDark;
+  }
+
   .modal {
     position: fixed;
     top: 0;
@@ -43,7 +47,7 @@ nav {
     width: 75%;
     height: 100vh;
     position: absolute;
-    z-index: 900;
+    z-index: 999; 
     border-radius: 10px 10px 0 0;
     top: 0;
     right: -3%;

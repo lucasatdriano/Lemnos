@@ -158,10 +158,6 @@ $font-items: 'Poppins', Helvetica;
             p {
                 position: relative;
                   
-                #categoria, #estado, #situacao {
-                    z-index: 50;
-                }
-
                 .dropdown {
                     position: absolute;  
                     display: grid;
@@ -170,15 +166,16 @@ $font-items: 'Poppins', Helvetica;
                     height: 0;
                     padding: 1em 10px 10px;
                     z-index: 25;
-                    border-radius: 0 0 10px 10px;
+                    border-radius: 10px;
                     overflow: hidden;
                     opacity: 0;
+                    cursor: pointer;
                     box-shadow: 2px 2px 4px $color-shadow;
                     transition: .2s ease;
                 
                     &.open {
                         background-color: $color-bgLight;
-                        top: 35px;
+                        top: 40px;
                         height: auto;   
                         opacity: 1;
                     }
@@ -306,9 +303,42 @@ $font-items: 'Poppins', Helvetica;
             border: 1.5px solid $color-primaryDark;
         }
     
-        .modal {        
+        .modal {
             .containerModal {
-                color: $color-fontLight;
+                background: #383737;
+            }
+    
+            .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {    
+                p {    
+                    .dropdown {
+                        box-shadow: 2px 2px 4px $color-shadow;
+                    
+                        &.open {
+                            background: #383737;
+                        }
+    
+                        [class^=dropdown] {
+                            border-bottom: 2px solid $color-primaryDark;
+                            background: #383737;
+    
+                            &:hover {
+                                filter: brightness(1.1);
+                            }
+                        }
+
+                        .dropdown-situacao {    
+                            &:last-child {
+                                &:hover {
+                                    filter: brightness(1.1);
+                                }
+                            }
+                        }
+                    }
+    
+                    .iconDrop {
+                        color: $color-fontLight;
+                    }
+                }
             }
         }
 

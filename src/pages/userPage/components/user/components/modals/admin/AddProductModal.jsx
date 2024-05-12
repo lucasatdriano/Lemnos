@@ -63,6 +63,7 @@ export default function ProdutoModal({ onSave, onClose }) {
   const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [subcategorias, setSubcategorias] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -86,10 +87,6 @@ export default function ProdutoModal({ onSave, onClose }) {
     setIsSubDropdownOpen(!isSubDropdownOpen);
   };
 
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
-
   const handleSave = (e) => {
     e.preventDefault();
 
@@ -99,9 +96,6 @@ export default function ProdutoModal({ onSave, onClose }) {
     }
     if (!form.descricao) {
       newErrors.descricao = 'A Descrição do produto é obrigatória';
-    }
-    if (!form.imagemPrinc) {
-      newErrors.imagemPrinc = 'A Imagem do produto é obrigatória';
     }
     if (!form.cor) {
       newErrors.cor = 'A Cor do produto é obrigatório';
@@ -127,9 +121,6 @@ export default function ProdutoModal({ onSave, onClose }) {
     if (!form.fabricante) {
       newErrors.fabricante = 'O Fabricante do produto é obrigatório';
     }
-    if (!form.categoria) {
-      newErrors.categoria = 'A Categoria do produto é obrigatória';
-    }
     if (!form.subCategoria) {
       newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
     }
@@ -143,18 +134,20 @@ export default function ProdutoModal({ onSave, onClose }) {
     }
   };
 
-  const handleCategoriaChange = (option) => {
-    handleChange('categoria', option);
-    setIsSubDropdownOpen(true);
-    setSubcategorias(subcategoriasPorCategoria[option] || []);
-    handleSearch(option);
-    handleChange('subCategoria', ''); 
-  };
-  
   const handleSubCategoriaChange = (option) => {
     handleChange('subCategoria', option);
-    handleSearch(option); 
+    setIsSubDropdownOpen(false);
   };
+  
+  const handleCategoriaChange = (option) => {
+    setSelectedCategory(option);
+    handleChange('categoria', option);
+    setIsDropdownOpen(false);
+    setIsSubDropdownOpen(true);
+    setSubcategorias(subcategoriasPorCategoria[option] || []);
+    handleChange('subCategoria', ''); 
+  };
+
   return (
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
@@ -271,15 +264,8 @@ export default function ProdutoModal({ onSave, onClose }) {
               id="categoria"
               name="categoria"
               maxLength={30}
-              value={form.categoria}
-              onFocus={handleDropdownToggle}
-              onChange={(e) => {
-                const option = e.target.value;
-                handleChange('categoria', option);
-                setIsDropdownOpen(false);
-                setSubcategorias(subcategoriasPorCategoria[option] || []);
-                handleSearch(option);
-              }}
+              value={selectedCategory}
+              onChange={(e) => handleChange('categoria', e.target.value)}
             />
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
@@ -293,12 +279,11 @@ export default function ProdutoModal({ onSave, onClose }) {
                 handleCategoriaChange(option);
                 setIsDropdownOpen(false);
                 setIsSubDropdownOpen(true);
-                handleSearch(option);
               }}
               filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
             />
             {errors.categoria && <span className='invalid'>{errors.categoria}</span>}
-            </p>
+          </p>
 
           <p>
             <CustomInput
@@ -310,8 +295,6 @@ export default function ProdutoModal({ onSave, onClose }) {
               value={form.subCategoria}
               onFocus={handleSubDropdownToggle}
               onChange={(e) => {
-                const option = e.target.value;
-                handleChange('subCategoria', option);
                 setIsSubDropdownOpen(false);
               }}
             />

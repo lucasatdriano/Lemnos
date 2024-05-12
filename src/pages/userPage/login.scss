@@ -43,3 +43,11 @@ $color-card: #f6fefd4d;
     }
   }
 }
+
+.dark {
+  .container {
+    .invalid {
+      color: $color-detailsDark;
+    }
+  }
+}

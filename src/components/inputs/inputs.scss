@@ -87,6 +87,7 @@ $font-items: 'Poppins', Helvetica;
   input[type="file"] + label,
   input[type="date"] + label {
     top: -10px;
+    color: $color-fontLight;
   }
 
   label {
@@ -121,6 +122,10 @@ $font-items: 'Poppins', Helvetica;
       &:valid + label {
         color: $color-fontDark;
       }
+    }
+    input[type="file"] + label,
+    input[type="date"] + label {
+      color: $color-fontDark;
     }
 
     label {

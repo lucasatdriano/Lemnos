@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
 import './productFilter.scss';
 
 export default function ProductFilter() {
   const { category, search } = useParams();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const brands = [
     'AMD',
@@ -84,8 +85,9 @@ export default function ProductFilter() {
     });
   }
 
-  const applyFilters = (products) => {
-    return products.filter(item => {
+  const applyFilters = () => {
+    setLoading(true);
+    const filtered = products.filter(item => {
       if (selectedBrand && item.brand !== selectedBrand) {
         return false;
       }
@@ -101,14 +103,16 @@ export default function ProductFilter() {
       if (selectedCategory && item.category !== selectedCategory) {
         return false;
       }
-      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase())) { // Alterado de 'search' para 'searchTerm'
+      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
         return false;
       }
       return true;
     });
+    setTimeout(() => {
+      setFilteredData(filtered);
+      setLoading(false);
+    }, 1000);
   };
-
-  const filteredData = applyFilters(products);
 
   useEffect(() => {
     setSelectedCategory(category);
@@ -117,6 +121,10 @@ export default function ProductFilter() {
   useEffect(() => {
     setSearchTerm(search || '');
   }, [search]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
 
   const handleMinPriceChange = (e) => {
     setMinPrice(e.target.value);
@@ -136,7 +144,6 @@ export default function ProductFilter() {
 
   const handleClearFilters = () => {
     setSelectedBrand('');
-    // setSelectedCategory('');
     setSelectedSubCategory('');
     setMinPrice('');
     setMaxPrice('');
@@ -144,68 +151,90 @@ export default function ProductFilter() {
   };
 
   return (
-    <div className="product-filter-container">
- 
-      <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
-        <option value="">Todas as marcas</option>
-        {brands.map((brands, index) => (
-            <option key={index} value={brands}>{brands}</option>
-        ))}
-      </select>
-      
-       <select value={minPrice} onChange={handleMinPriceChange}>
-        <option value="">Qualquer preço</option>
-        <option value="10">De R$ 10,00</option>
-        <option value="20">De R$ 20,00</option>
-        <option value="50">De R$ 50,00</option>
-        <option value="100">De R$ 100,00</option>
-        <option value="250">De R$ 250,00</option>
-        <option value="500">De R$ 500,00</option>
-        <option value="1000">De R$ 1.000,00</option>
-        <option value="5000">De R$ 5.000,00</option>
-        <option value="10000">De R$ 10.000,00</option>
-      </select>
+    <main className='mainFilters'>
+      <section className="product-filter-container">
+        <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
+          <option value="">Todas as subCategorias</option>
+          {categorias.map((categoria, index) => (
+            selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
+              <option key={index} value={subcategoria}>{subcategoria}</option>
+            ))
+          ))}
+        </select>
 
-      <select value={maxPrice} onChange={handleMaxPriceChange}>
-        <option value="">Qualquer preço</option>
-        <option value="10">Até R$ 10,00</option>
-        <option value="20">Até R$ 20,00</option>
-        <option value="50">Até R$ 50,00</option>
-        <option value="100">Até R$ 100,00</option>
-        <option value="250">Até R$ 250,00</option>
-        <option value="500">Até R$ 500,00</option>
-        <option value="1000">Até R$ 1.000,00</option>
-        <option value="5000">Até R$ 5.000,00</option>
-        <option value="10000">Até R$ 10.000,00</option>
-      </select>
+        <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
+          <option value="">Todas as marcas</option>
+          {brands.map((brands, index) => (
+              <option key={index} value={brands}>{brands}</option>
+          ))}
+        </select>
+        
+        <select value={minPrice} onChange={handleMinPriceChange}>
+          <option value="">Qualquer preço</option>
+          <option value="10">De {BRL.format(10)}</option>
+          <option value="20">De {BRL.format(20)}</option>
+          <option value="50">De {BRL.format(50)}</option>
+          <option value="100">De {BRL.format(100)}</option>
+          <option value="250">De {BRL.format(250)}</option>
+          <option value="500">De {BRL.format(500)}</option>
+          <option value="1000">De {BRL.format(1000)}</option>
+          <option value="5000">De {BRL.format(5000)}</option>
+          <option value="10000">De {BRL.format(10000)}</option>
+        </select>
 
-      <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
-        <option value="">Todas as subCategorias</option>
-        {categorias.map((categoria, index) => (
-          selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
-            <option key={index} value={subcategoria}>{subcategoria}</option>
-          ))
-        ))}
-      </select>
+        <select value={maxPrice} onChange={handleMaxPriceChange}>
+          <option value="">Qualquer preço</option>
+          <option value="10">Até {BRL.format(10)}</option>
+          <option value="20">Até {BRL.format(20)}</option>
+          <option value="50">Até {BRL.format(50)}</option>
+          <option value="100">Até {BRL.format(100)}</option>
+          <option value="250">Até {BRL.format(250)}</option>
+          <option value="500">Até {BRL.format(500)}</option>
+          <option value="1000">Até {BRL.format(1000)}</option>
+          <option value="5000">Até {BRL.format(5000)}</option>
+          <option value="10000">Até {BRL.format(10000)}</option>
+        </select>
 
-      <div className="filtered-data-container">
-        {filteredData.length === 0 && (
-          <div className="emptyFilterMessage">
-            <h2 className='textEmpty'>Parece que não há resultados para os filtros escolhidos. Por favor, revise suas opções e tente novamente.</h2>
-            <button type='button' className='btnBackFilter' onClick={handleClearFilters}>Limpar Filtros</button>
-         </div>
-        )}
+      </section>
 
-        {filteredData.length > 0 && (
+      <hr className='hrFilter' />
+
+      <section className="filtered-data-container">
+        {loading ? (
+          <div className="loadingIndicator">
+            <h2 className='textEmpty'>Carregando...</h2>
+            <div class="dot-spinner">
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+            </div>
+          </div>
+        ) : (
           <>
-            <ul>
-              {filteredData.map(item => (
-                <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {item.price}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
-              ))}
-            </ul>
+            {filteredData.length === 0 && (
+              <div className="emptyFilterMessage">
+                <h2 className='textEmpty'>Parece que não há resultados para os filtros escolhidos. Por favor, revise suas opções e tente novamente.</h2>
+                <button type='button' className='btnBackFilter' onClick={handleClearFilters}>Limpar Filtros</button>
+              </div>
+            )}
+
+            {filteredData.length > 0 && (
+              <>
+                <ul>
+                  {filteredData.map(item => (
+                    <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {BRL.format(item.price)}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
+                  ))}
+                </ul>
+              </>
+            )}
           </>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

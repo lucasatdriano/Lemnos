@@ -65,7 +65,8 @@ export default function MenuDep({ toggleTheme }) {
                             Sobre
                         </Link>
                         <Link to="#" className='link' onClick={toggleMenu}>
-                            <MenuFavorite /> Favoritos
+                            <MenuFavorite className='favotiteIcon' /> 
+                            Favoritos
                         </Link>
                         <Link to="/login" className='link' onClick={toggleMenu}>
                             <RiUser3Line className='userIcon' />
