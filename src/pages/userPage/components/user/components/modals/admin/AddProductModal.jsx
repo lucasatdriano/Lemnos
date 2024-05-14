@@ -1,7 +1,49 @@
 import React, { useState } from 'react';
 import CustomInput from '../../../../../../../components/inputs/Inputs';
+import UpdateProductModal from './UpdateProductModal';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+
+const produtos = [
+  {
+    id: 1,
+    nome: 'Teclado Gamer RGB',
+    descricao: 'Teclado mecânico com iluminação RGB',
+    imagemPrinc: 'caminho/para/imagem1.jpg',
+    imagemDois: 'caminho/para/imagem2.jpg',
+    imagemTres: 'caminho/para/imagem3.jpg',
+    imagemQuatro: 'caminho/para/imagem4.jpg',
+    cor: 'Preto',
+    preco: '250.00',
+    modelo: 'Gamer123',
+    peso: '1.2',
+    altura: '3',
+    comprimento: '45',
+    largura: '15',
+    fabricante: 'Marca A',
+    categoria: 'Periféricos',
+    subCategoria: 'Teclado',
+  },
+  {
+    id: 2,
+    nome: 'Mouse Sem Fio',
+    descricao: 'Mouse ergonômico com conexão sem fio',
+    imagemPrinc: 'caminho/para/imagem5.jpg',
+    imagemDois: 'caminho/para/imagem6.jpg',
+    imagemTres: 'caminho/para/imagem7.jpg',
+    imagemQuatro: 'caminho/para/imagem8.jpg',
+    cor: 'Branco',
+    preco: '80.00',
+    modelo: 'Wireless789',
+    peso: '0.8',
+    altura: '4',
+    comprimento: '10',
+    largura: '6',
+    fabricante: 'Marca B',
+    categoria: 'Periféricos',
+    subCategoria: 'Mouse',
+  },
+];
 
 const categorias = [
   'Periféricos', 'Hardware', 'Computadores', 'Kits', 'Eletronicos',
@@ -39,7 +81,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
-export default function ProdutoModal({ onSave, onClose }) {
+export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const [form, setForm] = useState({
     nome: '',
     descricao: '',
@@ -59,6 +101,7 @@ export default function ProdutoModal({ onSave, onClose }) {
     subCategoria: '',
   });
   const [errors, setErrors] = useState({});
+  const [isProdutoListOpen, setIsProdutoListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -77,6 +120,10 @@ export default function ProdutoModal({ onSave, onClose }) {
     if (file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleProdutoListToggle = () => {
+    setIsProdutoListOpen(!isProdutoListOpen);
   };
   
   const handleDropdownToggle = () => {
@@ -134,6 +181,53 @@ export default function ProdutoModal({ onSave, onClose }) {
     }
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    if (!form.nome) {
+      newErrors.nome = 'O Nome do produto é obrigatório';
+    }
+    if (!form.descricao) {
+      newErrors.descricao = 'A Descrição do produto é obrigatória';
+    }
+    if (!form.cor) {
+      newErrors.cor = 'A Cor do produto é obrigatório';
+    }
+    if (!form.preco) {
+      newErrors.preco = 'O Preço do produto é obrigatório';
+    }
+    if (!form.modelo) {
+      newErrors.modelo = 'O Modelo do produto é obrigatório';
+    }
+    if (!form.peso) {
+      newErrors.peso = 'O Peso do produto é obrigatório';
+    }
+    if (!form.altura) {
+      newErrors.altura = 'A Altura do produto é obrigatória';
+    }
+    if (!form.comprimento) {
+      newErrors.comprimento = 'O Comprimento do produto é obrigatório';
+    }
+    if (!form.largura) {
+      newErrors.largura = 'A Largura do produto é obrigatória';
+    }
+    if (!form.fabricante) {
+      newErrors.fabricante = 'O Fabricante do produto é obrigatório';
+    }
+    if (!form.subCategoria) {
+      newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log('Dados do Produto atualizados:', form);
+      onUpdate(form);
+      onClose();
+    }
+  };
+
   const handleSubCategoriaChange = (option) => {
     handleChange('subCategoria', option);
     setIsSubDropdownOpen(false);
@@ -147,6 +241,12 @@ export default function ProdutoModal({ onSave, onClose }) {
     setSubcategorias(subcategoriasPorCategoria[option] || []);
     handleChange('subCategoria', ''); 
   };
+
+  const selectProduto = (produto) => {
+    setForm(produto);
+    setIsProdutoListOpen(false);
+  };
+
 
   return (
     <div className="modal" onClick={onClose}>
@@ -393,9 +493,16 @@ export default function ProdutoModal({ onSave, onClose }) {
             {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
           </p>
         </div>
-        <button type='button' onClick={handleSave}>Adicionar</button>
+        <div className="containerButtons">
+          <button type='button' onClick={handleSave}>Adicionar</button>
+          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleProdutoListToggle}>Mostrar Lista</button>
+        </div>
         <IoClose onClick={onClose} className='iconClose' />
       </div>
+      {isProdutoListOpen && (
+        <UpdateProductModal produtos={produtos} onSelect={selectProduto} />
+      )}
     </div>
   );
 }

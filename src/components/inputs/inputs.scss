@@ -90,6 +90,11 @@ $font-items: 'Poppins', Helvetica;
     color: $color-fontLight;
   }
 
+  input[type="file"]:valid + label,
+  input[type="date"]:valid + label {
+    color: $color-primaryDark;
+  }
+
   label {
     background: transparent;
     position: absolute;

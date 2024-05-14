@@ -28,6 +28,7 @@ export default function User({ onLogout }) {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showEnderecoModal, setShowEnderecoModal] = useState(false);
@@ -35,6 +36,16 @@ export default function User({ onLogout }) {
   const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
   const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
   const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
+
+  const toggleModal = () => {
+    const htmlTag = document.querySelector('html');
+    const modalOpen = isActive;
+    if (modalOpen) {
+        htmlTag.classList.remove('modalOpen');
+    } else {
+        htmlTag.classList.add('modalOpen');
+    }
+  }
 
   const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -71,6 +82,56 @@ export default function User({ onLogout }) {
       email: newEmail
     }));
     console.log("Novo email:", newEmail);
+  };
+
+  const handleShowModal = (modalName) => {
+    switch (modalName) {
+      case 'email':
+        setShowEmailModal(true);
+        break;
+      case 'password':
+        setShowPasswordModal(true);
+        break;
+      case 'endereco':
+        setShowEnderecoModal(true);
+        break;
+      case 'addProduto':
+        setShowAddProdutoModal(true);
+        break;
+      case 'addFuncionario':
+        setShowAddFuncionarioModal(true);
+        break;
+      case 'addFornecedor':
+        setShowAddFornecedorModal(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleCloseModal = (modalName) => {
+    switch (modalName) {
+      case 'email':
+        setShowEmailModal(false);
+        break;
+      case 'password':
+        setShowPasswordModal(false);
+        break;
+      case 'endereco':
+        setShowEnderecoModal(false);
+        break;
+      case 'addProduto':
+        setShowAddProdutoModal(false);
+        break;
+      case 'addFuncionario':
+        setShowAddFuncionarioModal(false);
+        break;
+      case 'addFornecedor':
+        setShowAddFornecedorModal(false);
+        break;
+      default:
+        break;
+    }
   };
 
   const handlePasswordSave = (newPassword) => {
@@ -144,9 +205,9 @@ export default function User({ onLogout }) {
               <button type="button" onClick={handleSaveChanges} disabled={!isEditing}>Salvar Alterações</button>
             </div>
             <div className='updateButtons'>
-              <button type="button" onClick={() => setShowEmailModal(true)} disabled={!isEditing}>Alterar Email</button>
-              <button type="button" onClick={() => setShowPasswordModal(true)} disabled={!isEditing}>Alterar Senha</button>
-              <button type="button" onClick={() => setShowEnderecoModal(true)} disabled={!isEditing}>Adicionar Endereço</button>
+              <button type="button" onClick={() => handleShowModal('email')} disabled={!isEditing}>Alterar Email</button>
+              <button type="button" onClick={() => handleShowModal('password')} disabled={!isEditing}>Alterar Senha</button>
+              <button type="button" onClick={() => handleShowModal('endereco')} disabled={!isEditing}>Adicionar Endereço</button>
             </div>
           </div>
         </div>
@@ -155,14 +216,11 @@ export default function User({ onLogout }) {
         {admin ? (
           <HistoricoCompras compras={historicoExemplo}/>
         ) : (
-          <>
-            <div className='adminPage'>
-              <button type="button" onClick={() => setShowAddProdutoModal(true)} >Adicionar Produto</button>
-              <button type="button" onClick={() => setShowAddFuncionarioModal(true)} >Adicionar Funcionário</button>
-              <button type="button" onClick={() => setShowAddFornecedorModal(true)} >Adicionar Fornecedor</button>
-              {/* <button type="button">Atualizar Funcionário</button> */}
-            </div>
-          </>
+          <div className='adminPage'>
+            <button type="button" onClick={() => handleShowModal('addProduto')}>Adicionar Produto</button>
+            <button type="button" onClick={() => handleShowModal('addFuncionario')}>Adicionar Funcionário</button>
+            <button type="button" onClick={() => handleShowModal('addFornecedor')}>Adicionar Fornecedor</button>
+          </div>
         )}
 
         <div className="typeUser">
@@ -172,27 +230,27 @@ export default function User({ onLogout }) {
         </div>
 
         {showEmailModal && (
-          <EmailModal onSave={handleEmailSave} onClose={() => setShowEmailModal(false)} />
+          <EmailModal onSave={handleEmailSave} onClose={() => handleCloseModal('email')} />
         )}
 
         {showPasswordModal && (
-          <PasswordModal onSave={handlePasswordSave} onClose={() => setShowPasswordModal(false)} />
+          <PasswordModal onSave={handlePasswordSave} onClose={() => handleCloseModal('password')} />
         )}
 
         {showEnderecoModal && (
-          <EnderecoModal onSave={handleEnderecoSave} onClose={() => setShowEnderecoModal(false)} />
+          <EnderecoModal onSave={handleEnderecoSave} onClose={() => handleCloseModal('endereco')} />
         )}
 
         {showAddProdutoModal && (
-          <AddProdutoModal onSave={handleAddProdutoSave} onClose={() => setShowAddProdutoModal(false)} />
+          <AddProdutoModal onSave={handleAddProdutoSave} onClose={() => handleCloseModal('addProduto')} />
         )}
 
         {showAddFuncionarioModal && (
-          <AddFuncionarioModal onSave={handleAddFuncionarioSave} onClose={() => setShowAddFuncionarioModal(false)} />
+          <AddFuncionarioModal onSave={handleAddFuncionarioSave} onClose={() => handleCloseModal('addFuncionario')} />
         )}
 
         {showAddFornecedorModal && (
-          <AddFornecedorModal onSave={handleAddFornecedorSave} onClose={() => setShowAddFornecedorModal(false)} />
+          <AddFornecedorModal onSave={handleAddFornecedorSave} onClose={() => handleCloseModal('addFornecedor')} />
         )}
     </section>
   );

@@ -81,6 +81,7 @@ $font-items: 'Poppins', Helvetica;
             box-shadow: 0 0 8px $color-shadow;
 
             .textEmpty {
+                text-align: center;
                 font-family: $font-title;
                 font-size: 3.6rem;
                 font-size: clamp(2.6rem, 1rem + 1vw, 3.6rem);
@@ -183,6 +184,7 @@ $font-items: 'Poppins', Helvetica;
                 border: none;
                 padding: .75em 1.5em;
                 border-radius: 10px;
+                font-family: $font-title;
                 background: $color-primaryLight;
                 box-shadow: 0 0 8px $color-shadow;
                 font-size: 2.4rem;

@@ -1,9 +1,33 @@
 import React, { useState } from 'react';
 import CustomInput from '../../../../../../../components/inputs/Inputs';
+import UpdateFornModal from './UpdateFornModal';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 const situacao = ['Ativo', 'Inativo'];
+
+const fornecedores = [
+  {
+    nome: 'Fornecedor 1',
+    email: 'fornecedor1@example.com',
+    telefone: '123456789',
+    cnpj: '12345678901234',
+    situacao: 'Ativo',
+    nLogradouro: '123',
+    complemento: 'Apto 1',
+    cep: '12345-678'
+  },
+  {
+    nome: 'Fornecedor 2',
+    email: 'fornecedor2@example.com',
+    telefone: '987654321',
+    cnpj: '98765432109876',
+    situacao: 'Inativo',
+    nLogradouro: '456',
+    complemento: 'Apto 2',
+    cep: '98765-432'
+  },
+];
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
@@ -21,7 +45,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
-export default function FornecedorModal({ onSave, onClose }) {
+export default function FornecedorModal({ onSave, onUpdate, onClose }) {
   const [form, setForm] = useState({
     nome: '',
     email: '',
@@ -34,16 +58,21 @@ export default function FornecedorModal({ onSave, onClose }) {
   });
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
   };
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const handleFornecedorListToggle = () => {
+    setIsFornecedorListOpen(!isFornecedorListOpen);
+  };
+
   const handleSearch = (value) => {
     setSearchTerm(value);
   };
@@ -87,10 +116,57 @@ export default function FornecedorModal({ onSave, onClose }) {
     }
   };
 
+  const handleUpdate = () => {
+    e.preventDefault();
+    
+    const newErrors = {};
+    if (!form.nome) {
+      newErrors.nome = 'O Campo Nome do fornecedor é obrigatório';
+    }
+    if (!form.email) {
+      newErrors.email = 'O Campo Email do fornecedor é obrigatório';
+    }
+    if (!form.telefone) {
+      newErrors.telefone = 'O Campo Telefone é obrigatório';
+    }
+    if (!form.cnpj) {
+      newErrors.cnpj = 'O Campo CNPJ é obrigatório';
+    }
+    if (!form.situacao) {
+      newErrors.situacao = 'A Campo Situação é obrigatória';
+    }
+    if (!form.nLogradouro) {
+      newErrors.nLogradouro = 'O Campo Número do logradouro é obrigatório';
+    }
+    if (!form.complemento) {
+      newErrors.complemento = 'O Campo Complemento é obrigatório';
+    }
+    if (!form.cep) {
+      newErrors.cep = 'O Campo CEP é obrigatório';
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      // Lógica de envio do formulário aqui
+      console.log('Dados do fornecedor atualizados:', form);
+      onSave(form);
+      onClose();
+    }
+    // Lógica de atualização do fornecedor
+    // Aqui você pode implementar a lógica para atualizar os dados do fornecedor
+    // Isso pode envolver a chamada de uma API, atualização de estado, etc.
+  };
+
+  const selectFornecedor = (fornecedor) => {
+    setForm(fornecedor);
+    setIsFornecedorListOpen(false);
+  };
+
   return (
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
-        <h2>Adicionar Fornecedor</h2>
+        <h2>Adicionar/Atualizar Fornecedor</h2>
         <div className="modalFornecedor">
           <p>
             <CustomInput
@@ -100,7 +176,7 @@ export default function FornecedorModal({ onSave, onClose }) {
               name="nome"
               maxLength={50}
               value={form.nome}
-              onChange={handleChange}
+              onChange={(e) => handleChange('nome', e.target.value)}
             />
             {errors.nome && <span className='invalid'>{errors.nome}</span>}
           </p>
@@ -112,7 +188,7 @@ export default function FornecedorModal({ onSave, onClose }) {
               name="email"
               maxLength={50}
               value={form.email}
-              onChange={handleChange}
+              onChange={(e) => handleChange('email', e.target.value)}
             />
             {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
@@ -126,7 +202,7 @@ export default function FornecedorModal({ onSave, onClose }) {
               minLength={15}
               maxLength={15}
               value={form.telefone}
-              onChange={handleChange}
+              onChange={(e) => handleChange('telefone', e.target.value)}
             />
             {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
           </p>
@@ -140,10 +216,11 @@ export default function FornecedorModal({ onSave, onClose }) {
               minLength={18}
               maxLength={18}
               value={form.cnpj}
-              onChange={handleChange}
+              onChange={(e) => handleChange('cnpj', e.target.value)}
             />
             {errors.cnpj && <span className='invalid'>{errors.cnpj}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
@@ -175,6 +252,7 @@ export default function FornecedorModal({ onSave, onClose }) {
             />
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
@@ -183,7 +261,7 @@ export default function FornecedorModal({ onSave, onClose }) {
               name="nLogradouro"
               maxLength={10}
               value={form.nLogradouro}
-              onChange={handleChange}
+              onChange={(e) => handleChange('nLogradouro', e.target.value)}
             />
             {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
           </p>
@@ -195,7 +273,7 @@ export default function FornecedorModal({ onSave, onClose }) {
               name="complemento"
               maxLength={40}
               value={form.complemento}
-              onChange={handleChange}
+              onChange={(e) => handleChange('complemento', e.target.value)}
             />
             {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
           </p>
@@ -209,14 +287,21 @@ export default function FornecedorModal({ onSave, onClose }) {
               minLength={9}
               maxLength={9}
               value={form.cep}
-              onChange={handleChange}
+              onChange={(e) => handleChange('cep', e.target.value)}
             />
             {errors.cep && <span className='invalid'>{errors.cep}</span>}
           </p>
         </div>
-        <button type='button' onClick={handleSave}>Adicionar</button>
+        <div className="containerButtons">
+          <button type='button' onClick={handleSave}>Adicionar</button>
+          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleFornecedorListToggle}>Mostrar Lista</button>
+        </div>
         <IoClose onClick={onClose} className='iconClose' />
       </div>
+      {isFornecedorListOpen && (
+        <UpdateFornModal fornecedores={fornecedores} onSelect={selectFornecedor} />
+      )}
     </div>
   );
 }

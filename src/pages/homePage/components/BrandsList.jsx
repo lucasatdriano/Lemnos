@@ -64,7 +64,7 @@ export default function BrandsList() {
       id: 10,
       name: 'Sony',
       image: imgSony
-    },    
+    },
   ];
 
   return (

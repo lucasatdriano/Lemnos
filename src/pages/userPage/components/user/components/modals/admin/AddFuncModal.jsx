@@ -1,9 +1,37 @@
 import React, { useState } from 'react';
 import CustomInput from '../../../../../../../components/inputs/Inputs';
+import UpdateFuncModal from './UpdateFuncModal';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 const situacao = ['Ativo', 'Inativo'];
+
+const funcionarios = [
+  {
+    id: 1,
+    nome: 'João Silva',
+    cpf: '123.456.789-00',
+    dataNasc: '1990-01-01',
+    dataAdmissao: '2020-01-01',
+    telefone: '(11) 91234-5678',
+    cep: '12345-678',
+    nLogradouro: '123',
+    complemento: 'Apto 101',
+    situacao: 'Ativo',
+  },
+  {
+    id: 2,
+    nome: 'Maria Souza',
+    cpf: '987.654.321-00',
+    dataNasc: '1985-05-15',
+    dataAdmissao: '2018-03-10',
+    telefone: '(11) 98765-4321',
+    cep: '54321-876',
+    nLogradouro: '456',
+    complemento: 'Casa',
+    situacao: 'Inativo',
+  },
+];
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
@@ -21,7 +49,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
-export default function FuncionarioModal({ onSave, onClose }) {
+export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
   const [form, setForm] = useState({
     nome: '',
     cpf: '',
@@ -34,14 +62,18 @@ export default function FuncionarioModal({ onSave, onClose }) {
     situacao: '',
   });
   const [errors, setErrors] = useState({});
+  const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+  const handleFuncionarioListToggle = () => {
+    setIsFuncionarioListOpen(!isFuncionarioListOpen);
   };
 
+  const handleChange = (name, value) => {
+    setForm({ ...form, [name]: value });
+  };
+  
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -90,10 +122,56 @@ export default function FuncionarioModal({ onSave, onClose }) {
     }
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    if (!form.nome) {
+      newErrors.nome = 'Nome do funcionário é obrigatório';
+    }
+    if (!form.cpf) {
+      newErrors.cpf = 'CPF do funcionário é obrigatório';
+    }
+    if (!form.dataNasc) {
+      newErrors.dataNasc = 'Data de nascimento é obrigatória';
+    }
+    if (!form.dataAdmissao) {
+      newErrors.dataAdmissao = 'Data de admissão é obrigatória';
+    }
+    if (!form.telefone) {
+      newErrors.telefone = 'Telefone do funcionário é obrigatório';
+    }
+    if (!form.cep) {
+      newErrors.cep = 'CEP do funcionário é obrigatório';
+    }
+    if (!form.nLogradouro) {
+      newErrors.nLogradouro = 'Número do logradouro é obrigatório';
+    }
+    if (!form.complemento) {
+      newErrors.complemento = 'Complemento é obrigatório';
+    }
+    if (!form.situacao) {
+      newErrors.situacao = 'Situação do funcionário é obrigatória';
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log('Dados do funcionário atualizados:', form);
+      onUpdate(form);
+      onClose();
+    }
+  };
+
+  const selectFuncionario = (funcionario) => {
+    setForm(funcionario);
+    setIsFuncionarioListOpen(false);
+  };
+
   return (
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
-        <h2>Adicionar Funcionário</h2>
+        <h2>Adicionar/Atualizar Funcionário</h2>
         <div className="modalFuncionario">
           <p>
             <CustomInput
@@ -103,7 +181,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               name="nome"
               maxLength={50}
               value={form.nome}
-              onChange={handleChange}
+              onChange={(e) => handleChange('nome', e.target.value)}
             />
             {errors.nome && <span className='invalid'>{errors.nome}</span>}
           </p>
@@ -118,7 +196,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               minLength={14}
               maxLength={14}
               value={form.cpf}
-              onChange={handleChange}
+              onChange={(e) => handleChange('cpf', e.target.value)}
             />
             {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
           </p>
@@ -130,7 +208,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               id="dataNasc"
               name="dataNasc"
               value={form.dataNasc}
-              onChange={handleChange}
+              onChange={(e) => handleChange('dataNasc', e.target.value)}
             />
             {errors.dataNasc && <span className='invalid'>{errors.dataNasc}</span>}
           </p>
@@ -142,7 +220,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               id="dataAdmissao"
               name="dataAdmissao"
               value={form.dataAdmissao}
-              onChange={handleChange}
+              onChange={(e) => handleChange('dataAdmissao', e.target.value)}
             />
             {errors.dataAdmissao && <span className='invalid'>{errors.dataAdmissao}</span>}
           </p>
@@ -157,7 +235,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               minLength={15}
               maxLength={15}
               value={form.telefone}
-              onChange={handleChange}
+              onChange={(e) => handleChange('telefone', e.target.value)}
             />
             {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
           </p>
@@ -172,7 +250,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               minLength={9}
               maxLength={9}
               value={form.cep}
-              onChange={handleChange}
+              onChange={(e) => handleChange('cep', e.target.value)}
             />
             {errors.cep && <span className='invalid'>{errors.cep}</span>}
           </p>
@@ -185,7 +263,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               name="nLogradouro"
               maxLength={10}
               value={form.nLogradouro}
-              onChange={handleChange}
+              onChange={(e) => handleChange('nLogradouro', e.target.value)}
             />
             {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
           </p>
@@ -198,7 +276,7 @@ export default function FuncionarioModal({ onSave, onClose }) {
               name="complemento"
               maxLength={50}
               value={form.complemento}
-              onChange={handleChange}
+              onChange={(e) => handleChange('complemento', e.target.value)}
             />
             {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
           </p>
@@ -235,9 +313,16 @@ export default function FuncionarioModal({ onSave, onClose }) {
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
         </div>
-        <button type='button' onClick={handleSave}>Adicionar</button>
+        <div className="containerButtons">
+          <button type='button' onClick={handleSave}>Adicionar</button>
+          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleFuncionarioListToggle}>Mostrar Lista</button>
+        </div>
         <IoClose onClick={onClose} className='iconClose' />
       </div>
+      {isFuncionarioListOpen && (
+        <UpdateFuncModal funcionarios={funcionarios} onSelect={selectFuncionario} />
+      )}
     </div>
   );
 }
