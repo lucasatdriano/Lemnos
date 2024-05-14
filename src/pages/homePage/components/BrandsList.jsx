@@ -1,15 +1,15 @@
 import React from 'react';
 import CardBrands from '../../../components/cardBrand/CardBrand';
-import imgAMD from '../../../assets/brands/amd.svg';
-import imgApple from '../../../assets/brands/apple.svg';
-import imgDell from '../../../assets/brands/dell.svg';
-import imgIntel from '../../../assets/brands/intel.svg';
-import imgLG from '../../../assets/brands/lg.svg';
-import imgNvidia from '../../../assets/brands/nvidia.svg';
-import imgPhilips from '../../../assets/brands/philips.svg';
-import imgPositivo from '../../../assets/brands/positivo.svg';
-import imgSamsung from '../../../assets/brands/samsung.svg';
-import imgSony from '../../../assets/brands/sony.svg';
+import imgAMD from '../../../assets/brands/amd2.svg';
+import imgApple from '../../../assets/brands/apple2.svg';
+import imgDell from '../../../assets/brands/dell2.svg';
+import imgIntel from '../../../assets/brands/intel2.svg';
+import imgLG from '../../../assets/brands/lg2.svg';
+import imgNvidia from '../../../assets/brands/nvidia2.svg';
+import imgPhilips from '../../../assets/brands/philips2.svg';
+import imgPositivo from '../../../assets/brands/positivo2.svg';
+import imgSamsung from '../../../assets/brands/samsung2.svg';
+import imgSony from '../../../assets/brands/sony2.svg';
 import '../home.scss';
 
 export default function BrandsList() {
