@@ -60,6 +60,18 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isFornecedorLoaded, setIsFornecedorLoaded] = useState(false);
+
+  const handleFornecedorListToggle = () => {
+    setIsFornecedorListOpen(!isFornecedorListOpen);
+    setIsFornecedorLoaded(false);
+  };
+
+  const selectFornecedor = (fornecedor) => {
+    setForm(fornecedor);
+    setIsFornecedorListOpen(false);
+    setIsFornecedorLoaded(true);
+  };
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -67,10 +79,6 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleFornecedorListToggle = () => {
-    setIsFornecedorListOpen(!isFornecedorListOpen);
   };
 
   const handleSearch = (value) => {
@@ -93,9 +101,6 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
     if (!form.cnpj) {
       newErrors.cnpj = 'O Campo CNPJ é obrigatório';
     }
-    if (!form.situacao) {
-      newErrors.situacao = 'A Campo Situação é obrigatória';
-    }
     if (!form.nLogradouro) {
       newErrors.nLogradouro = 'O Campo Número do logradouro é obrigatório';
     }
@@ -116,7 +121,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
     }
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     
     const newErrors = {};
@@ -156,11 +161,6 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
     // Lógica de atualização do fornecedor
     // Aqui você pode implementar a lógica para atualizar os dados do fornecedor
     // Isso pode envolver a chamada de uma API, atualização de estado, etc.
-  };
-
-  const selectFornecedor = (fornecedor) => {
-    setForm(fornecedor);
-    setIsFornecedorListOpen(false);
   };
 
   return (
@@ -235,21 +235,26 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
                 handleChange('situacao', upperCaseValue);
                 handleSearch(upperCaseValue);
               }}
+              disabled={!isFornecedorLoaded}
             />
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
             : 
               <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
             }
-            <Dropdown
-              isOpen={isDropdownOpen}
-              options={situacao}
-              onSelect={(option) => {
-                handleChange('situacao', option);
-                setIsDropdownOpen(false);
-              }}
-              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-            />
+             {isFornecedorLoaded && (
+              <>
+                <Dropdown
+                  isOpen={isDropdownOpen}
+                  options={situacao}
+                  onSelect={(option) => {
+                    handleChange('situacao', option);
+                    setIsDropdownOpen(false);
+                  }}
+                  filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+                />
+              </>
+            )}
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
 

@@ -134,6 +134,7 @@ $font-items: 'Poppins', Helvetica;
             flex-direction: column;
             align-items: center;
             position: relative;
+            max-height: 90vh;
             gap: 1.5em;
             background: $color-bgLight;
             padding: 1.5em;
@@ -161,6 +162,7 @@ $font-items: 'Poppins', Helvetica;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5em;
+            padding: 1em 2em;
 
             p {
                 position: relative;
@@ -251,7 +253,7 @@ $font-items: 'Poppins', Helvetica;
         justify-content: center;
         gap: .5em;
         font-size: 2.2rem;
-        width: clamp(7em, 7em + 10vw, 12em);
+        width: clamp(8em, 8em + 10vw, 15em);
         padding: .5em 1em;
         border: none;
         border-radius: 5px;
@@ -367,7 +369,7 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 1024px) {
     .userContainer {
-        .modal {        
+        .modal {     
             .containerModal {
                 .containerButtons {        
                     flex-direction: column;
@@ -376,7 +378,7 @@ $font-items: 'Poppins', Helvetica;
     
             .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {
                 grid-template-columns: 1fr;
-                max-height: 70vh;
+                max-height: 60vh;
                 overflow-y: auto;
 
                 &::-webkit-scrollbar {

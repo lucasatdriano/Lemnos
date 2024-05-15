@@ -65,9 +65,18 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
   const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
+
 
   const handleFuncionarioListToggle = () => {
     setIsFuncionarioListOpen(!isFuncionarioListOpen);
+    setIsFuncionarioLoaded(false);
+  };
+
+  const selectFuncionario = (funcionario) => {
+    setForm(funcionario);
+    setIsFuncionarioListOpen(false);
+    setIsFuncionarioLoaded(true);
   };
 
   const handleChange = (name, value) => {
@@ -161,11 +170,6 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
       onUpdate(form);
       onClose();
     }
-  };
-
-  const selectFuncionario = (funcionario) => {
-    setForm(funcionario);
-    setIsFuncionarioListOpen(false);
   };
 
   return (
@@ -295,21 +299,26 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
                 handleChange('situacao', upperCaseValue);
                 handleSearch(upperCaseValue);
               }}
+              disabled={!isFuncionarioLoaded}
             />
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
             : 
               <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
             }
-            <Dropdown
-              isOpen={isDropdownOpen}
-              options={situacao}
-              onSelect={(option) => {
-                handleChange('situacao', option);
-                setIsDropdownOpen(false);
-              }}
-              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-            />
+            {isFuncionarioLoaded && (
+              <>
+                <Dropdown
+                  isOpen={isDropdownOpen}
+                  options={situacao}
+                  onSelect={(option) => {
+                    handleChange('situacao', option);
+                    setIsDropdownOpen(false);
+                  }}
+                  filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+                />
+              </>
+            )}
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
         </div>

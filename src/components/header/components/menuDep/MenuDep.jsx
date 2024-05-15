@@ -34,7 +34,9 @@ export default function MenuDep({ toggleTheme }) {
             <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
                         
             <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-                <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
+                <Link to="/" className='link' onClick={toggleMenu}>
+                    <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
+                </Link>
                 <hr className='hrMenu'/>
 
                 <h3>Departamentos</h3>

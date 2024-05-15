@@ -28,6 +28,7 @@
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
+    "scrollreveal": "^4.0.9",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
