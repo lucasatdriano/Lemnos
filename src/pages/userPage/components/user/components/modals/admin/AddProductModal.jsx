@@ -251,7 +251,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   return (
     <div className="modal" onClick={onClose}>
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
-        <h2>Adicionar Produto</h2>
+        <h2>Adicionar/Atualizar Produto</h2>
         <div className="modalProduto">
           <p>
             <CustomInput

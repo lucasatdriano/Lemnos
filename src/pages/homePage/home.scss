@@ -142,16 +142,38 @@ main {
         width: 90%;
         margin: 0 auto;
         height: auto;
-        padding-top: 1em;
-
+        padding-top: 1em;     
+        
         .brandsList {
-            display: grid;
-            place-items: center;
-            grid-template-columns: repeat(5, minmax(100px, 1fr));
-            gap: 2em;
-            height: auto;
-            padding-top: .5em;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden; 
+
+            &[data-animated=true] {
+                overflow: hidden;
+                -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
+                mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
+
+                .brandCard {
+                    animation: scroll 5s linear infinite;
+                }
+            }
+
+          .brandCard {
+            padding-block: 1em;
+            margin: 1em;
+            display: inline-block;
+          }
         }
+    }
+}
+
+@keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
     }
 }
 

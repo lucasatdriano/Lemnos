@@ -26,9 +26,8 @@ $font-items: 'Poppins', Helvetica;
     flex-direction: column;
     align-items: center;
     border-radius: 20px;
-    padding: .5em 1em;
+    padding: 1em 0;
     box-shadow: 4px 4px 4px $color-shadow;
-    overflow-x: hidden;
   
     .userData {
         width: 100%;
@@ -53,15 +52,22 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     
-        .editUser {
-            font-size: 2.2rem;
-            color: $color-primaryLight;
-            cursor: pointer;
+        .configUser {
+            display: flex;
+            align-items: center;
+            gap: 2em;
+            
+            .icon {
+                height: 38px;
+                width: 38px;
+                color: $color-primaryLight;
+                cursor: pointer;
+            }
         }
     }
 
     .lineUser {
-        width: 110%;
+        width: 100%;
         height: 0;
         border: 1.5px solid $color-primaryLight;
     }
@@ -86,7 +92,7 @@ $font-items: 'Poppins', Helvetica;
             flex-direction: column-reverse;
             gap: 1em;
             width: 100%;
-            justify-content: space-evenly;  
+            justify-content: space-evenly;
     
             .updateButtons {
                 display: flex;
@@ -106,7 +112,7 @@ $font-items: 'Poppins', Helvetica;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         place-items: center;
-        padding: 1em 0;
+        padding: 1em;
         gap: 1em;
     }
 
@@ -163,7 +169,7 @@ $font-items: 'Poppins', Helvetica;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5em;
-            padding: 1em 2em;
+            padding: 1.5em 2em;
 
             p {
                 position: relative;

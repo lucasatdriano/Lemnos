@@ -97,21 +97,6 @@ $font-items: 'Poppins', Helvetica;
       display: flex;
       flex-direction: column;
       gap: 1.5em;
-
-      p {
-        position: relative;
-      
-        .iconPwd {
-          position: absolute;
-          right: 2vw;
-          top: 25px;
-          transform: translateY(-50%);
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-          color: $color-fontLight;
-        }
-      }
     }
 
     .btnLoginForm {

@@ -1,0 +1,46 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #0d977e;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  
+    .tooltip-text {
+        opacity: 0;
+        background-color: $color-primaryLight;
+        color: $color-fontDark;
+        text-align: center;
+        border-radius: 5px;
+        white-space: nowrap;
+        padding: 5px 10px;
+        position: absolute;
+        z-index: 10;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: .3s ease-in-out;
+    }
+  
+    &:hover .tooltip-text {
+        opacity: 1;
+    }
+}

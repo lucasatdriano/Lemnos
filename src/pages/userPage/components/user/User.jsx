@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ToolTip from '../../../../components/tooltip/ToolTip';
 import CustomInput from '../../../../components/inputs/Inputs';
 import EmailModal from './components/modals/EmailModal';
 import PasswordModal from './components/modals/PasswordModal';
@@ -11,6 +12,7 @@ import AddProdutoModal from './components/modals/admin/AddProductModal';
 import HistoricoCompras from './components/history/History';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import { MdLogout } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 import './user.scss';
 
 export default function User({ onLogout }) {
@@ -161,7 +163,14 @@ export default function User({ onLogout }) {
             <img src={UserImg} alt="user" />
             <h3>{username}</h3>
             </div>
-            <h3 className='editUser' onClick={handleEditProfile}>Editar Perfil</h3>
+            <div className='configUser'>
+              <ToolTip message="Editar Perfil">
+                <FaRegEdit className='icon' onClick={handleEditProfile}/>
+              </ToolTip>
+              <ToolTip message="Fazer Logout">
+                <MdLogout className='icon' onClick={onLogout} />
+              </ToolTip>
+            </div>
         </div>
 
         <hr className='lineUser' />
@@ -222,12 +231,6 @@ export default function User({ onLogout }) {
             <button type="button" onClick={() => handleShowModal('addFornecedor')}>Adicionar Fornecedor</button>
           </div>
         )}
-
-        <div className="typeUser">
-          <div className="logout">
-            <button type='button' onClick={onLogout}>Logout<MdLogout className='icon'/></button>
-          </div>
-        </div>
 
         {showEmailModal && (
           <EmailModal onSave={handleEmailSave} onClose={() => handleCloseModal('email')} />

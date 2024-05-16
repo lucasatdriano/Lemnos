@@ -34,7 +34,7 @@ $font-items: 'Poppins', Helvetica;
     font-size: 2.4rem;
     padding: .5em 1em .3em;
     max-width: 16em;
-    min-width: 13em;
+    min-width: 100%;
     border-radius: 15px;
     transition: border-color 0.3s ease;
     cursor: text;
@@ -58,23 +58,23 @@ $font-items: 'Poppins', Helvetica;
     }
 
     &:disabled + label {
-      top: -8px;
+      top: -10px;
       opacity: 1;
     }
 
     &:focus + label {
-      top: -8px;
+      top: -10px;
       opacity: 1;
     }
 
     &:valid + label {
-      top: -8px;
+      top: -10px;
       opacity: 1;
       color: $color-primaryDark;
     }
 
     &:not(:placeholder-shown) + label {
-      top: -8px;
+      top: -10px;
       opacity: 1;
     }
 
