@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomInput from '../../../../../../components/inputs/Inputs';
+import CustomInput from '../../../../../../components/inputs/customInput/Inputs';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
 import './productFilter.scss';
+import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInputRange';
 
 export default function ProductFilter() {
   const { category, search } = useParams();
@@ -168,7 +169,9 @@ export default function ProductFilter() {
               <option key={index} value={brands}>{brands}</option>
           ))}
         </select>
-        
+
+        <DoubleInputRange />
+
         <select value={minPrice} onChange={handleMinPriceChange}>
           <option value="">Qualquer preço</option>
           <option value="10">De {BRL.format(10)}</option>

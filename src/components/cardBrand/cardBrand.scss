@@ -28,7 +28,7 @@ $font-items: 'Poppins', Helvetica;
     margin: 0 auto;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 2px 2px 4px $color-shadow;
+    box-shadow: 2px 2px 15px $color-shadow;
     transition: .5s ease;
 
     .brandImage {
@@ -44,18 +44,11 @@ $font-items: 'Poppins', Helvetica;
         text-transform: uppercase;
         transition: .3s ease;
     }
-
-    p { 
-        position: relative;
-        font-family: $font-items;
-        color: $color-primaryLight;
-
-        &::after {
-            position: absolute;
-            right: 28%;
-            top: 1px;
-            transform: translate(-50%);
-            content: " >";
-        }
-    }
 } 
+
+.dark {
+    .brandCard {
+        background-color: $color-secundaryLight;
+        box-shadow: 0 0 10px $color-card;
+    }
+}

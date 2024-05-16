@@ -75,52 +75,6 @@ main {
         }
     }
 
-    .offers {
-        width: 90%;
-        margin: 0 auto;
-        padding-top: .5em;
-
-        .offersList {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-
-            .splide__list {
-                margin: auto;
-                width: 85vw;
-            }
-            
-            .splide__slide {
-                margin-right: -5em;
-            }
-
-            .splide__pagination__page {
-                display: none;
-            }
-            
-            .splide__arrow {
-                &.splide__arrow--prev,
-                &.splide__arrow--next {
-                    font-size: 2.2rem;
-                    transition: 0.3s ease;
-                    background-color: $color-primaryLight;
-                    box-shadow: 2px 2px 4px $color-shadow;
-                
-                    &:hover {
-                        opacity: .8;
-                    }
-                }
-
-                &.splide__arrow--prev {
-                    left: -3em;
-                }
-                &.splide__arrow--next {
-                    right: -3em;
-                }
-            }
-        }
-    }
-
     .mainProds {
         width: 90%;
         margin: 0 auto;
@@ -155,7 +109,7 @@ main {
                 mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
 
                 .brandCard {
-                    animation: scroll 5s linear infinite;
+                    animation: scroll 50s linear infinite;
                 }
             }
 
@@ -173,7 +127,21 @@ main {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(calc(-2000% - 100vw));
+    }
+}
+
+.dark {
+    main {    
+        .mainDep {    
+            .containerDeps {
+                .gridItem {
+                    background-color: $color-secundaryLight;
+                    box-shadow: 0 0 15px $color-card;
+                    color: $color-fontDark;
+                }
+            }
+        }
     }
 }
 
@@ -194,16 +162,6 @@ main {
 
 @media only screen and (max-width: 1340px) {
     main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 82vw;
-                }
-                .splide__slide {
-                    margin-right: -2em;
-                }
-            }
-        }
         .mainProds {    
             .productsList {
                 grid-template-columns: repeat(3, minmax(100px, 1fr));
@@ -239,13 +197,6 @@ main {
                     img {
                         object-fit: contain;
                     }
-                }
-            }
-        }
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 77vw;
                 }
             }
         }
@@ -290,20 +241,6 @@ main {
                 }
             }
         }
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 75vw;
-                }
-                .splide__slide {
-                    margin-right: 0;
-                    padding-left: 2em;
-                }
-                .splide__arrow {   
-                   display: none;
-                }
-            }
-        }
         .mainProds {    
             .productsList {
                 grid-template-columns: repeat(1, minmax(100px, 1fr));
@@ -312,33 +249,6 @@ main {
         .brands {
             .brandsList {
                 grid-template-columns: repeat(1, minmax(100px, 1fr));
-            }
-        }
-    }
-}
-
-@media only screen and (max-width: 425px) {
-    main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 77vw;
-                }
-                .splide__slide {
-                    margin-right: 1em;
-                    padding-left: .5em;
-                }
-            }
-        }
-    }
-}
-@media only screen and (max-width: 375px) {
-    main {
-        .offers {
-            .offersList {
-                .splide__slide {
-                    padding-left: .3em;
-                }
             }
         }
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ToolTip from '../../../../components/tooltip/ToolTip';
-import CustomInput from '../../../../components/inputs/Inputs';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import EmailModal from './components/modals/EmailModal';
 import PasswordModal from './components/modals/PasswordModal';
 import EnderecoModal from './components/modals/EnderecoModal';

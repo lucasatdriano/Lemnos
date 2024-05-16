@@ -103,6 +103,8 @@ $font-items: 'Poppins', Helvetica;
 .dark {
   .productCard {
     .productDetails {
+      color: $color-fontDark;
+      
       .productPrice {
         span {
           color: $color-primaryDark;

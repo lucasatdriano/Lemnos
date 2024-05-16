@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import CardBrands from '../../../components/cardBrand/CardBrand';
 import imgAMD from '../../../assets/brands/amd.svg';
 import imgApple from '../../../assets/brands/apple.svg';
@@ -66,7 +66,6 @@ const brands = [
 ];
 
 export default function BrandsList() {
-  const brandsListRef = useRef(null);
   const scrollers = document.querySelectorAll(".brandsList");
 
   const addAnimation = () => {
@@ -84,12 +83,12 @@ export default function BrandsList() {
     });
   }
 
-  if(!window.matchMedia("(prefers-reduced-motion: rediuce)").matches) {
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     addAnimation(); 
   }
 
   return (
-    <div className="brandsList" data-animated='true' >
+    <div className="brandsList" data-animated='true'>
         {brands.map(brand => (
           <CardBrands key={brand.id} brand={brand} />
         ))}

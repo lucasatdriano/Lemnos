@@ -30,6 +30,7 @@ main {
             display: flex;
             justify-content: center;
             flex-direction: row;
+            cursor: grab;
 
             .splide__list {
                 margin: auto;
@@ -63,6 +64,10 @@ main {
                 &.splide__arrow--next {
                     right: -3em;
                 }
+            }
+   
+            &:active {
+                cursor: grabbing;
             }
         }
     }
