@@ -330,7 +330,7 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isFuncionarioListOpen && (
-        <UpdateFuncModal funcionarios={funcionarios} onSelect={selectFuncionario} />
+        <UpdateFuncModal funcionarios={funcionarios} onSelect={selectFuncionario} onClose={onClose} />
       )}
     </div>
   );

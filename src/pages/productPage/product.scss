@@ -279,6 +279,7 @@ $font-items: 'Poppins', Helvetica;
           flex-direction: row;
           flex-direction: row-reverse;
           width: clamp(90%, 90vw, 100%);
+          margin-bottom: -15em;
   
           .imageMain {
             width: 100%;
@@ -305,7 +306,7 @@ $font-items: 'Poppins', Helvetica;
         align-items: center;
         width: 95vw;
   
-        .containerDescription {
+        .containerDescription, .containerSpecifications {
           padding: 2em 1em;
           width: 100%;
 
@@ -326,6 +327,7 @@ $font-items: 'Poppins', Helvetica;
         .containerImages {
           flex-direction: column;
           flex-direction: column;
+          margin-bottom: -10em;
   
           .imageMain {
             height: 25em;

@@ -19,7 +19,7 @@ export default function historicoCompras({ compras }) {
     <div className='containerHistory'>
         <h2>Histórico de Compras</h2>
         {compras && compras.slice(0, mostrarMais ? compras.length : 3).map((compra, index) => (
-          <ul key={index}>
+          <ul className='listItens' key={index}>
             <li onClick={() => handleAbrirModal(compra)} className='itensCompra'>
               <h3 className='namesProducts'>Produtos: {compra.produto}...</h3>
               <h3>Valor Total: {BRL.format(compra.preco)}</h3>

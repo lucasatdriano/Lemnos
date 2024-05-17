@@ -501,7 +501,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isProdutoListOpen && (
-        <UpdateProductModal produtos={produtos} onSelect={selectProduto} />
+        <UpdateProductModal produtos={produtos} onSelect={selectProduto} onClose={onClose} />
       )}
     </div>
   );

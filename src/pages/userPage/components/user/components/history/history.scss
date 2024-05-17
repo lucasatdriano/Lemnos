@@ -31,13 +31,29 @@ $font-items: 'Poppins', Helvetica;
             margin: .5em 0;
             font-family: $font-items;
             cursor: pointer;
+            border-bottom: 2px solid $color-primaryLight;
         }
     }
 
     .btnMost {
+        font-weight: bold;
         color: $color-primaryLight;
         cursor: pointer;
         text-decoration: underline;
         font-size: 1.8rem;
+    }
+}
+
+.dark {
+    .containerHistory {    
+        ul {            
+            .itensCompra {
+                border-bottom: 2px solid $color-primaryDark;
+            }
+        }
+    
+        .btnMost {
+            color: $color-secundaryLight;
+        }
     }
 }

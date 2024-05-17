@@ -140,12 +140,24 @@ $font-items: 'Poppins', Helvetica;
             flex-direction: column;
             align-items: center;
             position: relative;
-            max-height: 90vh;
+            max-height: 95vh;
             max-width: 95vw;
             gap: 1.5em;
             background: $color-bgLight;
-            padding: 1.5em;
+            padding: 2em 1.5em;
             border-radius: 15px;
+
+            ul {
+                text-align: left;
+                
+                .itemUpdate {
+                    margin: .5em 0;
+                    font-size: 1.8rem;
+                    font-family: $font-items;
+                    cursor: pointer;
+                    border-bottom: 2px solid $color-primaryLight;
+                }
+            }
     
             .iconClose {
                 width: 32px;
@@ -322,6 +334,12 @@ $font-items: 'Poppins', Helvetica;
         .modal {
             .containerModal {
                 background: #383737;
+
+                ul {
+                    .itemUpdate {
+                        border-bottom: 2px solid $color-primaryDark;
+                    }
+                }
             }
     
             .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {    
