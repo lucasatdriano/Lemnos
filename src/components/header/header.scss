@@ -53,6 +53,11 @@ header {
         color: $color-fontDark;
         text-shadow: 4px 4px 8px #121217b8;
         text-transform: uppercase;
+        transition: .2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     .navegation {
