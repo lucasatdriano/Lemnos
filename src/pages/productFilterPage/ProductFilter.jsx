@@ -1,14 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate  } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
-import './productFilter.scss';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInputRange';
+import './productFilter.scss';
+
+const brands = [
+  'AMD',
+  'Dell',
+  'Intel',
+  'Apple',
+  'LG',
+  'Nvidia',
+  'Philips',
+  'Positivo',
+  'Samsung',
+  'Sony',
+];
+
+const categorias = [
+  'Periféricos',
+  'Hardware',
+  'Computadores',
+  'Kits',
+  'Eletrônicos',
+  'Notebooks e Portáteis',
+  'Video Games',
+  'Redes e wireless',
+  'Realidade Virtual',
+  'Casa Inteligente',
+  'Monitores'
+];
+
+const subcategoriasPorCategoria = {
+  'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
+  'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
+  'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
+  'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
+  'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
+  'Notebooks e Portáteis': ['Notebooks', 'Tablets', 'Smartphones'],
+  'Video Games': ['Portátil', 'Console de Mesa'],
+  'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
+  'Realidade Virtual': ['Óculos'],
+  'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
+  'Monitores': ['Monitores Gamers', 'Monitores Workstation']
+};
+
+const products = [
+  {
+    id: 1,
+    name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
+    price: 19.99,
+    image: logoHorizontal,
+    brand: `Apple`,
+    category: 'Computadores',
+    subcategory: 'Computadores Workstation'
+  },
+];
+for (let i = 2; i <= 100; i++) {
+  const category = categorias[Math.floor(Math.random() * categorias.length)];
+  const brand = brands[Math.floor(Math.random() * brands.length)];
+  const subcategories = subcategoriasPorCategoria[category];
+  const subcategory = subcategories ? subcategories[Math.floor(Math.random() * subcategories.length)] : '';
+  products.push({
+    id: i,
+    name: `Product ${i}`,
+    price: parseFloat((Math.random() * 1000).toFixed(2)),
+    image: logoHorizontal,
+    brand: brand,
+    category: category,
+    subcategory: subcategory,
+  });
+}
 
 export default function ProductFilter() {
-  const { category, search } = useParams();
+  const { category } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const search = searchParams.get('search') || '';
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -18,74 +89,6 @@ export default function ProductFilter() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const brands = [
-    'AMD',
-    'Dell',
-    'Intel',
-    'Apple',
-    'LG',
-    'Nvidia',
-    'Philips',
-    'Positivo',
-    'Samsung',
-    'Sony',
-  ];
-  
-  const categorias = [
-    'Periféricos',
-    'Hardware',
-    'Computadores',
-    'Kits',
-    'Eletrônicos',
-    'Notebooks e Portáteis',
-    'Video Games',
-    'Redes e wireless',
-    'Realidade Virtual',
-    'Casa Inteligente',
-    'Monitores'
-  ];
-
-  const subcategoriasPorCategoria = {
-    'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
-    'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
-    'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
-    'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
-    'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
-    'Notebooks e Portáteis': ['Notebooks', 'Tablets', 'Smartphones'],
-    'Video Games': ['Portátil', 'Console de Mesa'],
-    'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
-    'Realidade Virtual': ['Óculos'],
-    'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
-    'Monitores': ['Monitores Gamers', 'Monitores Workstation']
-  };
-  
-  const products = [
-    {
-      id: 1,
-      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
-      price: 19.99,
-      image: logoHorizontal,
-      brand: `Apple`,
-      category: 'Computadores',
-      subcategory: 'Computadores Workstation'
-    },
-  ];
-  for (let i = 2; i <= 100; i++) {
-    const category = categorias[Math.floor(Math.random() * categorias.length)];
-    const brand = brands[Math.floor(Math.random() * brands.length)];
-    const subcategories = subcategoriasPorCategoria[category];
-    const subcategory = subcategories ? subcategories[Math.floor(Math.random() * subcategories.length)] : '';
-    products.push({
-      id: i,
-      name: `Product ${i}`,
-      price: parseFloat((Math.random() * 1000).toFixed(2)),
-      image: logoHorizontal,
-      brand: brand,
-      category: category,
-      subcategory: subcategory,
-    });
-  }
 
   const applyFilters = () => {
     setLoading(true);
@@ -121,7 +124,7 @@ export default function ProductFilter() {
   }, [category]);
 
   useEffect(() => {
-    setSearchTerm(search || '');
+    setSearchTerm(search);
   }, [search]);
 
   useEffect(() => {
@@ -228,15 +231,15 @@ export default function ProductFilter() {
         {loading ? (
           <div className="loadingIndicator">
             <h2 className='textLoading'>Carregando...</h2>
-            <div class="dot-spinner">
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
-              <div class="dot-spinner__dot"></div>
+            <div className="dot-spinner">
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
+              <div className="dot-spinner__dot"></div>
             </div>
           </div>
         ) : (
