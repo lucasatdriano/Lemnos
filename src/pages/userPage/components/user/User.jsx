@@ -131,6 +131,15 @@ export default function User({ onLogout }) {
       case 'addFornecedor':
         setShowAddFornecedorModal(false);
         break;
+      case 'updateProduto':
+        setShowAddFornecedorModal(false);
+        break;
+      case 'updateFornecedor':
+        setShowAddFornecedorModal(false);
+        break;
+      case 'updateFuncionario':
+        setShowAddFornecedorModal(false);
+        break;
       default:
         break;
     }

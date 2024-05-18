@@ -34,7 +34,7 @@ $font-items: 'Poppins', Helvetica;
         padding: 5px 10px;
         position: absolute;
         z-index: 10;
-        bottom: 50px;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
         transition: .3s ease-in-out;
@@ -42,5 +42,6 @@ $font-items: 'Poppins', Helvetica;
   
     &:hover .tooltip-text {
         opacity: 1;
+        bottom: 50px;
     }
 }

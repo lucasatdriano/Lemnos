@@ -101,6 +101,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     subCategoria: '',
   });
   const [errors, setErrors] = useState({});
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [isProdutoListOpen, setIsProdutoListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
@@ -109,13 +110,33 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleChange = (name, value) => {
-    setForm({ ...form, [name]: value });
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }));
+
+    if (errors[name]) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: '',
+      }));
+    }
   };
 
   const handleImageChange = (name, file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      setForm({ ...form, [name]: reader.result });
+      setForm(prevForm => ({
+        ...prevForm,
+        [name]: reader.result,
+      }));
+
+      if (name === 'imagemPrinc' && errors.imagemPrinc) {
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          imagemPrinc: '',
+        }));
+      }
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -134,9 +155,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     setIsSubDropdownOpen(!isSubDropdownOpen);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-
+  const validateForm = () => {
     const newErrors = {};
     if (!form.nome) {
       newErrors.nome = 'O Nome do produto é obrigatório';
@@ -145,7 +164,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
       newErrors.descricao = 'A Descrição do produto é obrigatória';
     }
     if (!form.cor) {
-      newErrors.cor = 'A Cor do produto é obrigatório';
+      newErrors.cor = 'A Cor do produto é obrigatória';
     }
     if (!form.preco) {
       newErrors.preco = 'O Preço do produto é obrigatório';
@@ -168,13 +187,24 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     if (!form.fabricante) {
       newErrors.fabricante = 'O Fabricante do produto é obrigatório';
     }
+    if (!form.categoria) {
+      newErrors.categoria = 'A Categoria do produto é obrigatória';
+    }
     if (!form.subCategoria) {
       newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
+    }
+    if (!form.imagemPrinc) {
+      newErrors.imagemPrinc = 'A Imagem principal do produto é obrigatória';
     }
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
       console.log('Dados do produto:', form);
       onSave(form);
       onClose();
@@ -183,45 +213,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-
-    const newErrors = {};
-    if (!form.nome) {
-      newErrors.nome = 'O Nome do produto é obrigatório';
-    }
-    if (!form.descricao) {
-      newErrors.descricao = 'A Descrição do produto é obrigatória';
-    }
-    if (!form.cor) {
-      newErrors.cor = 'A Cor do produto é obrigatório';
-    }
-    if (!form.preco) {
-      newErrors.preco = 'O Preço do produto é obrigatório';
-    }
-    if (!form.modelo) {
-      newErrors.modelo = 'O Modelo do produto é obrigatório';
-    }
-    if (!form.peso) {
-      newErrors.peso = 'O Peso do produto é obrigatório';
-    }
-    if (!form.altura) {
-      newErrors.altura = 'A Altura do produto é obrigatória';
-    }
-    if (!form.comprimento) {
-      newErrors.comprimento = 'O Comprimento do produto é obrigatório';
-    }
-    if (!form.largura) {
-      newErrors.largura = 'A Largura do produto é obrigatória';
-    }
-    if (!form.fabricante) {
-      newErrors.fabricante = 'O Fabricante do produto é obrigatório';
-    }
-    if (!form.subCategoria) {
-      newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
+    if (validateForm()) {
       console.log('Dados do Produto atualizados:', form);
       onUpdate(form);
       onClose();
@@ -247,6 +239,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     setIsProdutoListOpen(false);
   };
 
+  const handleShowUpdateModal = () => {
+    setShowUpdateModal(true);
+  };
 
   return (
     <div className="modal" onClick={onClose}>
@@ -312,6 +307,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               name="imagemPrinc"
               onChange={(e) => handleImageChange('imagemPrinc', e.target.files[0])}
             />
+            {form.imagemPrinc && (
+              <span>Arquivo selecionado: {form.imagemPrinc}</span>
+            )}
             {errors.imagemPrinc && <span className='invalid'>{errors.imagemPrinc}</span>}
           </p>
 
@@ -364,7 +362,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               id="categoria"
               name="categoria"
               maxLength={30}
-              value={selectedCategory}
+              value={form.categoria}
               onChange={(e) => handleChange('categoria', e.target.value)}
             />
             {isDropdownOpen ? 
@@ -501,7 +499,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isProdutoListOpen && (
-        <UpdateProductModal produtos={produtos} onSelect={selectProduto} onClose={onClose} />
+        <UpdateProductModal produtos={produtos} onSelect={selectProduto} onClose={handleProdutoListToggle}/>
       )}
     </div>
   );

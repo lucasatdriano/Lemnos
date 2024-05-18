@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 
 export default function UpdateProductModal({ produtos, onSelect, onClose }) {
   return (
-    <div className="modal produto-list-modal" onClick={(e) => e.stopPropagation()}>
+    <div className="modal produto-list-modal" onClick={(e) => { onClose(); e.stopPropagation(); }} >
       <div className="containerModal">
         <h2>Lista de Produtos</h2>
         <ul className='listItens'>

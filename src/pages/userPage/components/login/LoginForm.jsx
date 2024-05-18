@@ -3,7 +3,8 @@ import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.scss';
-import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
@@ -60,7 +61,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
       <div className="loginCredencial">
         <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
-          <button></button>
+          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
         </div>
       </div>
 

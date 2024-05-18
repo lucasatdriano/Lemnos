@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const [form, setForm] = useState({
@@ -93,7 +94,7 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
       <div className="loginCredencial">
         <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
-          <button></button>
+          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
         </div>
       </div>
 

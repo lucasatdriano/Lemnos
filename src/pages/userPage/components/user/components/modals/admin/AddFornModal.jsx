@@ -305,7 +305,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isFornecedorListOpen && (
-        <UpdateFornModal fornecedores={fornecedores} onSelect={selectFornecedor} onClose={onClose} />
+        <UpdateFornModal fornecedores={fornecedores} onSelect={selectFornecedor} onClose={handleFornecedorListToggle} />
       )}
     </div>
   );
