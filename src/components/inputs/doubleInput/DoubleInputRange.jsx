@@ -1,73 +1,104 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './doubleInput.scss';
 
 export default function DoubleInputRange() {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-  const [minValue, setMinValue] = useState(100);
-  const [maxValue, setMaxValue] = useState(1000);
 
-  const setLeftValue = (event) => {
-    let value = event.target.value;
-    let min = parseInt(event.target.min);
-    let max = parseInt(event.target.max);
+  const [minValue, setMinValue] = useState(1000);
+  const [maxValue, setMaxValue] = useState(8000);
+  const [minInputValue, setMinInputValue] = useState(1000);
+  const [maxInputValue, setMaxInputValue] = useState(8000);
 
-    value = Math.min(parseInt(value), parseInt(maxValue) - 1);
-
-    let percent = ((value - min) / (max - min)) * 100;
-
-    document.getElementById('sliderRange').style.left = percent + '%';
-    document.getElementById('dotLeft').style.left = percent + '%';
-    document.getElementById('titleMin').innerText = value;
+  const handleMinRangeChange = (event) => {
+    const value = parseInt(event.target.value);
     setMinValue(value);
+    setMinInputValue(value);
   };
 
-  const setRightValue = (event) => {
-    let value = event.target.value;
-    let min = parseInt(event.target.min);
-    let max = parseInt(event.target.max);
-
-    value = Math.max(parseInt(value), parseInt(minValue) + 1);
-
-    let percent = ((value - min) / (max - min)) * 100;
-
-    document.getElementById('sliderRange').style.right = (100 - percent) + '%';
-    document.getElementById('dotRight').style.right = (100 - percent) + '%';
-    document.getElementById('titleMax').innerText = value;
+  const handleMaxRangeChange = (event) => {
+    const value = parseInt(event.target.value);
     setMaxValue(value);
+    setMaxInputValue(value);
   };
+
+  const handleMinInputChange = (event) => {
+    const value = parseInt(event.target.value.replace(/[^\d]/g, ''));
+    if (!isNaN(value)) {
+      setMinValue(value);
+      setMinInputValue(value);
+    }
+  };
+
+  const handleMaxInputChange = (event) => {
+    const value = parseInt(event.target.value.replace(/[^\d]/g, ''));
+    if (!isNaN(value)) {
+      setMaxValue(value);
+      setMaxInputValue(value);
+    }
+  };
+
+  useEffect(() => {
+    setArea();
+  }, [minValue, maxValue]);
+
+  function setArea() {
+    const sliderMaxValue = 10000;
+    const range = document.querySelector(".sliderTrack");
+    if (range) {
+      range.style.left = `${(minValue / sliderMaxValue) * 100}%`;
+      range.style.right = `${100 - (maxValue / sliderMaxValue) * 100}%`;
+    }
+  }
 
   return (
     <div className='doubleRangeInput'>
-      <div className='sliderValue'>
-        <label id='titleMin' className='sliderValueTitle' htmlFor="min">{BRL.format(minValue)}</label>
-        <label id='titleMax' className='sliderValueTitle' htmlFor="max">{BRL.format(maxValue)}</label>
-      </div>
-      <div className="doubleSlider">
-        <div className="doubleSliderBody">
-          <div className="doubleSliderTrack">
-              <div id='sliderRange' className="doubleSliderRange"></div>
-              <div id="dotLeft" className="doubleSliderDot left"></div>
-              <div id="dotRight" className="doubleSliderDot right"></div>
+      <div className="rangeSlider">
+        <div className="sliderTrack"></div>
+        <input 
+          type="range"
+          name='minValue'
+          className='minValue' 
+          min={0}
+          max={10000}
+          value={minValue}
+          onChange={handleMinRangeChange}
+        />
+        <input 
+          type="range"
+          name='maxValue'
+          className='maxValue' 
+          min={0}
+          max={10000}
+          value={maxValue}
+          onChange={handleMaxRangeChange}
+        />
+        <div className="inputBox">
+          <div className="minBox">
+            <div className="inputWrap">
+              <span className="inputAddon">R$</span>
+              <input 
+                type="text" 
+                name="minInput" 
+                className='inputField minInput' 
+                maxLength={5} 
+                value={minInputValue}
+                onChange={handleMinInputChange}
+              />
+            </div>
           </div>
-
-          <input
-            type="range"
-            id="min"
-            className='doubleSliderInput'
-            min={0}
-            max={10000}
-            value={minValue}
-            onChange={setLeftValue}
-          />
-          <input
-            type="range"
-            id="max"
-            className='doubleSliderInput'
-            min={0}
-            max={10000}
-            value={maxValue}
-            onChange={setRightValue}
-          />
+          <div className="maxBox">
+            <div className="inputWrap">
+              <span className="inputAddon">R$</span>
+              <input 
+                type="text" 
+                name="maxInput" 
+                className='inputField maxInput' 
+                maxLength={5} 
+                value={maxInputValue}
+                onChange={handleMaxInputChange}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
