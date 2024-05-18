@@ -91,7 +91,7 @@ $font-items: 'Poppins', Helvetica;
   &:hover {
     .productDetails {
       .productName {
-        margin-bottom: 8px;
+        margin-bottom: 3px;
       }
     }
     .btnAdd {
@@ -120,15 +120,6 @@ $font-items: 'Poppins', Helvetica;
         box-shadow: 0 0 40px $color-primaryDark;
       }
     }
-  }
-}
-
-@keyframes gradient {
-  from {
-      background-position: 0 50%;
-  }
-  to {
-      background-position: 100% 50%;
   }
 }
 

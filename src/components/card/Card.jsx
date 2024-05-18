@@ -6,10 +6,6 @@ import iconAddCart from '../../assets/icons/iconAddCart.svg';
 export default function Card({ product }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-  // function handleClickCard() {
-  //   navigate(`/product/${product.id}`);
-  // }
-
   function handleAddToCart() {
     // Adicione sua lógica para adicionar o produto ao carrinho aqui
     console.log('Produto adicionado ao carrinho:', product);

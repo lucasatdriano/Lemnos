@@ -26,10 +26,6 @@ export default function Header({ toggleTheme }) {
         };
     }, []);
 
-    const handleSearchResultClick = (productId) => {
-    
-    };
-    
     return (
         <header className={`header ${shrinkHeader ? 'shrink' : ''}`}>
             <div id='headerContent'></div>
@@ -44,7 +40,7 @@ export default function Header({ toggleTheme }) {
                 </ul>
             </nav>
             
-            <MenuSearch onSearchResultClick={handleSearchResultClick} />
+            <MenuSearch />
             
             <nav className='menuDesktop'>
                 <MenuFavorite />

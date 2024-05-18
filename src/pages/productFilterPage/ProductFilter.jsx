@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate  } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
@@ -8,6 +8,7 @@ import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInputRan
 
 export default function ProductFilter() {
   const { category, search } = useParams();
+  const navigate = useNavigate();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -149,13 +150,34 @@ export default function ProductFilter() {
     setMinPrice('');
     setMaxPrice('');
     setSearchTerm('');
+    setSelectedCategory('');
+    navigate(`/productFilter`);
+  };
+
+  const handleCategoryChange = (e) => {
+    const newCategory = e.target.value;
+    setSelectedCategory(newCategory);
+    navigate(`/productFilter/${newCategory}`);
+  };
+
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
+    setSearchTerm(searchValue);
+    navigate(`/product-filter/${selectedCategory || ''}?search=${searchValue}`);
   };
 
   return (
     <main className='mainFilters'>
       <section className="product-filter-container">
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">Todas as Categorias</option>
+          {categorias.map((categoria, index) => (
+              <option key={index} value={categoria}>{categoria}</option>
+          ))}
+        </select>
+
         <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
-          <option value="">Todas as subCategorias</option>
+          <option value="">Todas as SubCategorias</option>
           {categorias.map((categoria, index) => (
             selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
               <option key={index} value={subcategoria}>{subcategoria}</option>
@@ -200,12 +222,12 @@ export default function ProductFilter() {
 
       </section>
 
-      <hr className='hrFilter' />
-
       <section className="filtered-data-container">
+        <hr className='hrFilter' />
+        
         {loading ? (
           <div className="loadingIndicator">
-            <h2 className='textEmpty'>Carregando...</h2>
+            <h2 className='textLoading'>Carregando...</h2>
             <div class="dot-spinner">
               <div class="dot-spinner__dot"></div>
               <div class="dot-spinner__dot"></div>
