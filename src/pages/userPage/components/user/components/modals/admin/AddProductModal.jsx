@@ -82,7 +82,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 };
 
 export default function ProdutoModal({ onSave, onUpdate, onClose }) {
-  const [form, setForm] = useState({
+  const initialFormState = {
     nome: '',
     descricao: '',
     imagemPrinc: '',
@@ -99,9 +99,10 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     fabricante: '',
     categoria: '',
     subCategoria: '',
-  });
+  };
+  const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [isProdutoListOpen, setIsProdutoListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
@@ -123,28 +124,17 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     }
   };
 
-  const handleImageChange = (name, file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setForm(prevForm => ({
-        ...prevForm,
-        [name]: reader.result,
-      }));
-
-      if (name === 'imagemPrinc' && errors.imagemPrinc) {
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          imagemPrinc: '',
-        }));
-      }
-    };
-    if (file) {
-      reader.readAsDataURL(file);
+  const handleNumberChange = (name, value) => {
+    if (/^\d*\.?\d*$/.test(value)) {
+      handleChange(name, value);
     }
   };
 
   const handleProdutoListToggle = () => {
     setIsProdutoListOpen(!isProdutoListOpen);
+    if (!isProdutoListOpen) {
+      setSelectedProduct(null);
+    }
   };
   
   const handleDropdownToggle = () => {
@@ -207,7 +197,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     if (validateForm()) {
       console.log('Dados do produto:', form);
       onSave(form);
-      onClose();
+      setForm(initialFormState);
     }
   };
 
@@ -215,8 +205,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     e.preventDefault();
     if (validateForm()) {
       console.log('Dados do Produto atualizados:', form);
-      onUpdate(form);
-      onClose();
+      // onUpdate(form); no futuro
+      setForm(initialFormState);
+      setSelectedProduct(null);
     }
   };
 
@@ -237,10 +228,11 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const selectProduto = (produto) => {
     setForm(produto);
     setIsProdutoListOpen(false);
+    setSelectedProduct(produto);
   };
 
-  const handleShowUpdateModal = () => {
-    setShowUpdateModal(true);
+  const isProductSelected = () => {
+    return selectedProduct !== null;
   };
 
   return (
@@ -293,65 +285,55 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               label="Preço:"
               id="preco"
               name="preco"
+              mask="NUMBERS"
               value={form.preco}
-              onChange={(e) => handleChange('preco', e.target.value)}
+              onChange={(e) => handleNumberChange('preco', e.target.value)}
             />
             {errors.preco && <span className='invalid'>{errors.preco}</span>}
           </p>
 
           <p>
             <CustomInput
-              type="file"
+              type="text"
               label="Imagem Principal:"
               id="imagemPrinc"
               name="imagemPrinc"
-              onChange={(e) => handleImageChange('imagemPrinc', e.target.files[0])}
+              value={form.imagemPrinc}
+              onChange={(e) => handleChange('imagemPrinc', e.target.value)}
             />
-            {form.imagemPrinc && (
-              <span>Arquivo selecionado: {form.imagemPrinc}</span>
-            )}
             {errors.imagemPrinc && <span className='invalid'>{errors.imagemPrinc}</span>}
           </p>
 
           <p>
             <CustomInput
-              type="file"
+              type="text"
               label="Imagem Dois:"
               id="imagemDois"
               name="imagemDois"
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  handleImageChange('imagemDois', e.target.files[0]);
-                }
-              }}
+              value={form.imagemDois}
+              onChange={(e) => handleChange('imagemDois', e.target.value)}
             />
           </p>
 
           <p>
             <CustomInput
-              type="file"
+              type="text"
               label="Imagem Três:"
               id="imagemTres"
               name="imagemTres"
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  handleImageChange('imagemTres', e.target.files[0]);
-                }
-              }}
+              value={form.imagemTres}
+              onChange={(e) => handleChange('imagemTres', e.target.value)}
             />
           </p>
 
           <p>
             <CustomInput
-              type="file"
+              type="text"
               label="Imagem Quatro:"
               id="imagemQuatro"
               name="imagemQuatro"
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  handleImageChange('imagemQuatro', e.target.files[0]);
-                }
-              }}
+              value={form.imagemQuatro}
+              onChange={(e) => handleChange('imagemQuatro', e.target.value)}
             />
           </p>
 
@@ -433,8 +415,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               id="peso"
               name="peso"
               maxLength={6}
+              mask="NUMBERS"
               value={form.peso}
-              onChange={(e) => handleChange('peso', e.target.value)}
+              onChange={(e) => handleNumberChange('peso', e.target.value)}
             />
             {errors.peso && <span className='invalid'>{errors.peso}</span>}
           </p>
@@ -446,8 +429,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               id="altura"
               name="altura"
               maxLength={6}
+              mask="NUMBERS"
               value={form.altura}
-              onChange={(e) => handleChange('altura', e.target.value)}
+              onChange={(e) => handleNumberChange('altura', e.target.value)}
             />
             {errors.altura && <span className='invalid'>{errors.altura}</span>}
           </p>
@@ -459,8 +443,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               id="comprimento"
               name="comprimento"
               maxLength={6}
+              mask="NUMBERS"
               value={form.comprimento}
-              onChange={(e) => handleChange('comprimento', e.target.value)}
+              onChange={(e) => handleNumberChange('comprimento', e.target.value)}
             />
             {errors.comprimento && <span className='invalid'>{errors.comprimento}</span>}
           </p>
@@ -472,8 +457,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               id="largura"
               name="largura"
               maxLength={6}
+              mask="NUMBERS"
               value={form.largura}
-              onChange={(e) => handleChange('largura', e.target.value)}
+              onChange={(e) => handleNumberChange('largura', e.target.value)}
             />
             {errors.largura && <span className='invalid'>{errors.largura}</span>}
           </p>
@@ -492,8 +478,8 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           </p>
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleSave}>Adicionar</button>
-          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleSave}  disabled={isProductSelected()}>Adicionar</button>
+          <button type='button' onClick={handleUpdate}  disabled={!isProductSelected()}>Atualizar</button>
           <button type='button' onClick={handleProdutoListToggle}>Mostrar Lista</button>
         </div>
         <IoClose onClick={onClose} className='iconClose' />

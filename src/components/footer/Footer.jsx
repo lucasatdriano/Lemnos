@@ -1,6 +1,7 @@
 import React from 'react';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontalClaro.svg'; 
 import Infos from './components/infos/Infos';
+import ToolTip from '../tooltip/ToolTip';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 
 export default function Footer() {
@@ -34,10 +35,26 @@ export default function Footer() {
                 </nav>
                 <div className='iconsNav'>
                     <div className="icons">
-                        <RiLinkedinFill className='icon'/>
-                        <RiInstagramFill className='icon'/>
-                        <RiTwitterFill className='icon'/>
-                        <RiFacebookFill className='icon'/>
+                        <ToolTip message="Linkedin">
+                            <a href="">
+                                <RiLinkedinFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Instagram">
+                            <a href="">
+                                <RiInstagramFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Twitter">
+                            <a href="">
+                                <RiTwitterFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Facebook">
+                            <a href="">
+                                <RiFacebookFill className='icon'/>
+                            </a>
+                        </ToolTip>
                     </div>
                     <hr />
                 </div>

@@ -109,7 +109,7 @@ main {
                 mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
 
                 .brandCard {
-                    animation: scroll 50s linear infinite;
+                    animation: scroll 60s linear infinite;
                 }
             }
 
@@ -127,7 +127,7 @@ main {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-2000% - 100vw));
+      transform: translateX(calc(-3500% - 100vw));
     }
 }
 

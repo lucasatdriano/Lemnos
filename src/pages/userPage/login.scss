@@ -21,6 +21,11 @@ $color-card: #f6fefd4d;
   place-content: center;
   min-height: calc( 100vh - 4em - 20em);
     
+  [class*='container'] {
+ 
+    max-width: 98vw;
+  }
+
   .invalid {
     padding-bottom: 1em;
     color: $color-detailsLight;
@@ -28,7 +33,7 @@ $color-card: #f6fefd4d;
     left: 15px;
   }
 
-  
+
   
   p { 
     position: relative;

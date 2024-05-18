@@ -45,3 +45,11 @@ $font-items: 'Poppins', Helvetica;
         bottom: 50px;
     }
 }
+
+.dark {
+    .tooltip {      
+        .tooltip-text {
+            background-color: $color-primaryDark;
+        }
+    }
+}

@@ -46,31 +46,36 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 };
 
 export default function FornecedorModal({ onSave, onUpdate, onClose }) {
-  const [form, setForm] = useState({
+  const initialFormState = {
     nome: '',
     email: '',
     telefone: '',
     cnpj: '',
-    situacao: '',
+    situacao: 'Ativo',
     nLogradouro: '',
     complemento: '',
     cep: ''
-  });
+  };
+  const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isFornecedorLoaded, setIsFornecedorLoaded] = useState(false);
+  const [selectedForn, setSelectedForn] = useState(null);
 
   const handleFornecedorListToggle = () => {
     setIsFornecedorListOpen(!isFornecedorListOpen);
     setIsFornecedorLoaded(false);
+    if (!isFornecedorListOpen) {
+      setSelectedForn(null);
+    }
   };
 
   const selectFornecedor = (fornecedor) => {
     setForm(fornecedor);
     setIsFornecedorListOpen(false);
-    setIsFornecedorLoaded(true);
+    setSelectedForn(fornecedor);
   };
 
   const handleChange = (name, value) => {
@@ -85,9 +90,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
     setSearchTerm(value);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-
+  const validateForm = () => {
     const newErrors = {};
     if (!form.nome) {
       newErrors.nome = 'O Campo Nome do fornecedor é obrigatório';
@@ -113,54 +116,30 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      // Lógica de envio do formulário aqui
-      console.log('Dados do fornecedor:', form);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Dados do Funcionário:', form);
       onSave(form);
-      onClose();
+      setForm(initialFormState);
     }
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    
-    const newErrors = {};
-    if (!form.nome) {
-      newErrors.nome = 'O Campo Nome do fornecedor é obrigatório';
+    if (validateForm()) {
+      console.log('Dados do Funcionário atualizados:', form);
+      // onUpdate(form); no futuro
+      setForm(initialFormState);
+      setSelectedForn(null);
     }
-    if (!form.email) {
-      newErrors.email = 'O Campo Email do fornecedor é obrigatório';
-    }
-    if (!form.telefone) {
-      newErrors.telefone = 'O Campo Telefone é obrigatório';
-    }
-    if (!form.cnpj) {
-      newErrors.cnpj = 'O Campo CNPJ é obrigatório';
-    }
-    if (!form.situacao) {
-      newErrors.situacao = 'A Campo Situação é obrigatória';
-    }
-    if (!form.nLogradouro) {
-      newErrors.nLogradouro = 'O Campo Número do logradouro é obrigatório';
-    }
-    if (!form.complemento) {
-      newErrors.complemento = 'O Campo Complemento é obrigatório';
-    }
-    if (!form.cep) {
-      newErrors.cep = 'O Campo CEP é obrigatório';
-    }
+  };
 
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      // Lógica de envio do formulário aqui
-      console.log('Dados do fornecedor atualizados:', form);
-      onSave(form);
-      onClose();
-    }
-    // Lógica de atualização do fornecedor
-    // Aqui você pode implementar a lógica para atualizar os dados do fornecedor
-    // Isso pode envolver a chamada de uma API, atualização de estado, etc.
+  const isFornSelected = () => {
+    return selectedForn !== null;
   };
 
   return (
@@ -298,8 +277,8 @@ export default function FornecedorModal({ onSave, onUpdate, onClose }) {
           </p>
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleSave}>Adicionar</button>
-          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleSave} disabled={isFornSelected()} >Adicionar</button>
+          <button type='button' onClick={handleUpdate} disabled={!isFornSelected()} >Atualizar</button>
           <button type='button' onClick={handleFornecedorListToggle}>Mostrar Lista</button>
         </div>
         <IoClose onClick={onClose} className='iconClose' />

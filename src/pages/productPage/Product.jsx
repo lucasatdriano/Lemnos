@@ -29,7 +29,7 @@ export default function Product() {
     };
 
     useEffect(() => {
-        setMainImage("https://via.placeholder.com/150");
+        setMainImage("https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihY6LznIH8bNO22AtLfdPIVfbe6_YRe5-aqCns9AGL7_VjFPXrgcatkHl7gKW6RI6Ass8kpVo8oM-aI5Hb4DrVBpccYuNReaxPI=w1920-h937");
     }, []);
 
     const handleImageClick = (image) => {
@@ -64,8 +64,8 @@ export default function Product() {
                     <img src={mainImage} alt="Main" className='imageMain'/>
                         <div className="optionsImages">
                             {[
-                                "https://via.placeholder.com/150",
-                                "https://via.placeholder.com/150/0000FF/808080",
+                                "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihY6LznIH8bNO22AtLfdPIVfbe6_YRe5-aqCns9AGL7_VjFPXrgcatkHl7gKW6RI6Ass8kpVo8oM-aI5Hb4DrVBpccYuNReaxPI=w1920-h937",
+                                "https://live.staticflickr.com/65535/53727647692_62d7c55862_n.jpg",
                                 "https://via.placeholder.com/150/FF0000/FFFFFF",
                                 "https://via.placeholder.com/150/00FF00/000000"
                             ].map((image, index) => (

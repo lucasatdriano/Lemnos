@@ -60,7 +60,7 @@ export default function CustomInput({ type, reference, label, id, maxLength, min
   };
 
   let inputMode;
-  if (mask === "CPF" || mask === "CEP" || mask === "CNPJ" || mask === "TEL") {
+  if (mask === "CPF" || mask === "CEP" || mask === "CNPJ" || mask === "TEL" || mask === "NUMBERS") {
     inputMode = "numeric";
   }
   

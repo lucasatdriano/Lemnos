@@ -50,7 +50,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 };
 
 export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
-  const [form, setForm] = useState({
+  const initialFormState = {
     nome: '',
     cpf: '',
     dataNasc: '',
@@ -59,24 +59,28 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
     cep: '',
     nLogradouro: '',
     complemento: '',
-    situacao: '',
-  });
+    situacao: 'Ativo',
+  };
+  const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
-
+  const [selectedFunc, setSelectedFunc] = useState(null);
 
   const handleFuncionarioListToggle = () => {
     setIsFuncionarioListOpen(!isFuncionarioListOpen);
     setIsFuncionarioLoaded(false);
+    if (!isFuncionarioListOpen) {
+      setSelectedFunc(null);
+    }
   };
 
   const selectFuncionario = (funcionario) => {
     setForm(funcionario);
     setIsFuncionarioListOpen(false);
-    setIsFuncionarioLoaded(true);
+    setSelectedFunc(funcionario);
   };
 
   const handleChange = (name, value) => {
@@ -90,9 +94,7 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
     setSearchTerm(value);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-
+  const validateForm = () => {
     const newErrors = {};
     if (!form.nome) {
       newErrors.nome = 'Nome do funcionário é obrigatório';
@@ -124,52 +126,30 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log('Dados do funcionário:', form);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Dados do Funcionário:', form);
       onSave(form);
-      onClose();
+      setForm(initialFormState);
     }
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    if (validateForm()) {
+      console.log('Dados do Funcionário atualizados:', form);
+      // onUpdate(form); no futuro
+      setForm(initialFormState);
+      setSelectedFunc(null);
+    }
+  };
 
-    const newErrors = {};
-    if (!form.nome) {
-      newErrors.nome = 'Nome do funcionário é obrigatório';
-    }
-    if (!form.cpf) {
-      newErrors.cpf = 'CPF do funcionário é obrigatório';
-    }
-    if (!form.dataNasc) {
-      newErrors.dataNasc = 'Data de nascimento é obrigatória';
-    }
-    if (!form.dataAdmissao) {
-      newErrors.dataAdmissao = 'Data de admissão é obrigatória';
-    }
-    if (!form.telefone) {
-      newErrors.telefone = 'Telefone do funcionário é obrigatório';
-    }
-    if (!form.cep) {
-      newErrors.cep = 'CEP do funcionário é obrigatório';
-    }
-    if (!form.nLogradouro) {
-      newErrors.nLogradouro = 'Número do logradouro é obrigatório';
-    }
-    if (!form.complemento) {
-      newErrors.complemento = 'Complemento é obrigatório';
-    }
-    if (!form.situacao) {
-      newErrors.situacao = 'Situação do funcionário é obrigatória';
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      console.log('Dados do funcionário atualizados:', form);
-      onUpdate(form);
-      onClose();
-    }
+  const isFuncSelected = () => {
+    return selectedFunc !== null;
   };
 
   return (
@@ -323,8 +303,8 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
           </p>
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleSave}>Adicionar</button>
-          <button type='button' onClick={handleUpdate}>Atualizar</button>
+          <button type='button' onClick={handleSave} disabled={isFuncSelected()}>Adicionar</button>
+          <button type='button' onClick={handleUpdate} disabled={!isFuncSelected()}>Atualizar</button>
           <button type='button' onClick={handleFuncionarioListToggle}>Mostrar Lista</button>
         </div>
         <IoClose onClick={onClose} className='iconClose' />

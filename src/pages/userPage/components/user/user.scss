@@ -27,7 +27,7 @@ $font-items: 'Poppins', Helvetica;
     align-items: center;
     border-radius: 20px;
     padding: 1em 0;
-    box-shadow: 4px 4px 4px $color-shadow;
+    box-shadow: 2px 2px 15px $color-shadow;
   
     .userData {
         width: 100%;
@@ -318,8 +318,10 @@ $font-items: 'Poppins', Helvetica;
                 }
             }
         
-            .editUser {
-                color: $color-fontDark;
+            .configUser {                
+                .icon {
+                    color: $color-fontDark;
+                }
             }
         }
     
@@ -498,12 +500,16 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 720px) {
     .userContainer {
         .userData {
-            padding: 0 .5em;
+            padding: 0 2em;
 
             .user {
                 max-width: 10em;
                 flex-direction: column;
                 gap: .25em;
+            }
+
+            .configUser {
+                gap: 1em;
             }
         }
 
