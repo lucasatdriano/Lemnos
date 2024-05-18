@@ -8,6 +8,7 @@ export default function MenuSearch() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [showResults, setShowResults] = useState(false);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
     const handleSearchChange = (event) => {
@@ -16,10 +17,10 @@ export default function MenuSearch() {
 
         if (value.trim() === '') {
             setSearchResults([]);
+            setShowResults(false);
             return;
         }
 
-        // Chamada da API (exemplo com produtos estáticos)
         const products = [
             {
                 id: 1,
@@ -88,6 +89,7 @@ export default function MenuSearch() {
         );
 
         setSearchResults(filteredResults);
+        setShowResults(true); 
     };
 
     const handleSearch = (event) => {
@@ -99,6 +101,13 @@ export default function MenuSearch() {
         navigate(`/product/${productId}`);
         setSearchTerm('');
         setSearchResults([]);
+        setShowResults(false);
+    };
+
+    const handleCategoryChange = (e) => {
+        const newCategory = e.target.value;
+        setSelectedCategory(newCategory);
+        onCategoryChange(newCategory);
     };
 
     return (
@@ -111,12 +120,13 @@ export default function MenuSearch() {
                     id="inputSearch"
                     value={searchTerm}
                     onChange={handleSearchChange}
+                    onBlur={() => setShowResults(false)}
                 />
                 <button type="submit">
                     <RiSearch2Line className="searchIcon" />
                 </button>
             </form>
-            {searchResults.length > 0 && (
+            {showResults && searchResults.length > 0 && (
                 <ul className="searchResults">
                     {searchResults.map(product => (
                         <li

@@ -45,6 +45,7 @@ $font-items: 'Poppins', Helvetica;
             top: 50%;
             transform: translateY(-50%);
             appearance: none;
+            z-index: 20;
 
             &::-webkit-slider-thumb {
                 height: 22px;
@@ -100,6 +101,9 @@ $font-items: 'Poppins', Helvetica;
             display: flex;
 
             .minBox, .maxBox {
+                display: flex;
+                align-items: center;
+                gap: 1em;
                 width: 50%;
                 margin-top: 35px;
 

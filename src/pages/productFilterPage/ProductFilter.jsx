@@ -20,31 +20,31 @@ const brands = [
 ];
 
 const categorias = [
-  'Periféricos',
-  'Hardware',
-  'Computadores',
-  'Kits',
+  'Casa Inteligente', 
+  'Computadores', 
   'Eletrônicos',
-  'Notebooks e Portáteis',
-  'Video Games',
-  'Redes e wireless',
-  'Realidade Virtual',
-  'Casa Inteligente',
-  'Monitores'
+  'Hardware', 
+  'Kits', 
+  'Monitores',
+	'Notebooks e Portateis', 
+  'Periféricos',
+  'Realidade Virtual', 
+  'Redes e wireless', 
+  'Video Games', 
 ];
 
 const subcategoriasPorCategoria = {
-  'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
-  'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
+  'Casa Inteligente': ['Assistente Virtual', 'Controles Smarts', 'Lâmpadas Inteligentes', 'Sensores'],
   'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
-  'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
-  'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
-  'Notebooks e Portáteis': ['Notebooks', 'Tablets', 'Smartphones'],
-  'Video Games': ['Portátil', 'Console de Mesa'],
-  'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
-  'Realidade Virtual': ['Óculos'],
-  'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
-  'Monitores': ['Monitores Gamers', 'Monitores Workstation']
+  'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Refrigeração', 'Smart Box'],
+  'Hardware': ['Armazenamento', 'Coolers', 'Fonte', 'Memória RAM', 'Placa de vídeo', 'Placa Mãe', 'Processadores'],
+  'Kits': ['Gamer', 'Periféricos', 'Upgrade'],
+  'Monitores': ['Monitores Gamers', 'Monitores Workstation'],
+  'Notebooks e Portáteis': ['Notebooks', 'Smartphones', 'Tablets'],
+  'Periféricos': ['Caixa de Som', 'Fone de Ouvido', 'Microfone', 'Mouse', 'Mousepad', 'Teclado'],
+  'Realidade Virtual': ['Óculos de VR', 'Periféricos de VR'],
+  'Redes e wireless': ['Access Point', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Roteadores', 'Switches'],
+  'Video Games': ['Console de Mesa', 'Portátil']
 };
 
 const products = [
@@ -66,7 +66,7 @@ for (let i = 2; i <= 100; i++) {
   products.push({
     id: i,
     name: `Product ${i}`,
-    price: parseFloat((Math.random() * 1000).toFixed(2)),
+    price: parseFloat((Math.random() * 10000).toFixed(2)),
     image: logoHorizontal,
     brand: brand,
     category: category,
@@ -84,12 +84,12 @@ export default function ProductFilter() {
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(10000);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
   const applyFilters = () => {
     setLoading(true);
     const filtered = products.filter(item => {
@@ -130,7 +130,7 @@ export default function ProductFilter() {
   useEffect(() => {
     applyFilters();
   }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
-
+  
   const handleMinPriceChange = (e) => {
     setMinPrice(e.target.value);
     if (maxPrice && parseFloat(e.target.value) > parseFloat(maxPrice)) {
@@ -150,8 +150,8 @@ export default function ProductFilter() {
   const handleClearFilters = () => {
     setSelectedBrand('');
     setSelectedSubCategory('');
-    setMinPrice('');
-    setMaxPrice('');
+    setMinPrice(0);
+    setMaxPrice(10000);
     setSearchTerm('');
     setSelectedCategory('');
     navigate(`/productFilter`);
@@ -160,15 +160,11 @@ export default function ProductFilter() {
   const handleCategoryChange = (e) => {
     const newCategory = e.target.value;
     setSelectedCategory(newCategory);
-    navigate(`/productFilter/${newCategory}`);
+    const searchParams = new URLSearchParams(location.search);
+    const searchTerm = searchParams.get('search') || '';
+    navigate(`/productFilter/${newCategory}${searchTerm ? `?search=${searchTerm}` : ''}`);
   };
-
-  const handleSearchChange = (e) => {
-    const searchValue = e.target.value;
-    setSearchTerm(searchValue);
-    navigate(`/product-filter/${selectedCategory || ''}?search=${searchValue}`);
-  };
-
+  
   return (
     <main className='mainFilters'>
       <section className="product-filter-container">
@@ -181,23 +177,27 @@ export default function ProductFilter() {
 
         <select value={selectedSubCategory} onChange={(e) => setSelectedSubCategory(e.target.value)}>
           <option value="">Todas as SubCategorias</option>
-          {categorias.map((categoria, index) => (
-            selectedCategory === categoria && subcategoriasPorCategoria[categoria].map((subcategoria, index) => (
-              <option key={index} value={subcategoria}>{subcategoria}</option>
-            ))
+          {(subcategoriasPorCategoria[selectedCategory] || []).map((subcategoria, index) => (
+            <option key={index} value={subcategoria}>{subcategoria}</option>
           ))}
         </select>
 
         <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
-          <option value="">Todas as marcas</option>
+          <option value="">Todas as Marcas</option>
           {brands.map((brands, index) => (
               <option key={index} value={brands}>{brands}</option>
           ))}
         </select>
 
-        <DoubleInputRange />
+    
+        <DoubleInputRange 
+          minValue={minPrice}
+          maxValue={maxPrice}
+          setMinValue={setMinPrice}
+          setMaxValue={setMaxPrice}
+        />
 
-        <select value={minPrice} onChange={handleMinPriceChange}>
+        {/* <select value={minPrice} onChange={handleMinPriceChange}>
           <option value="">Qualquer preço</option>
           <option value="10">De {BRL.format(10)}</option>
           <option value="20">De {BRL.format(20)}</option>
@@ -221,7 +221,7 @@ export default function ProductFilter() {
           <option value="1000">Até {BRL.format(1000)}</option>
           <option value="5000">Até {BRL.format(5000)}</option>
           <option value="10000">Até {BRL.format(10000)}</option>
-        </select>
+        </select> */}
 
       </section>
 

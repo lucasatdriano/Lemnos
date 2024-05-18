@@ -1,40 +1,76 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './doubleInput.scss';
 
-export default function DoubleInputRange() {
+export default function DoubleInputRange({ minValue, maxValue, setMinValue, setMaxValue }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-  const [minValue, setMinValue] = useState(1000);
-  const [maxValue, setMaxValue] = useState(8000);
-  const [minInputValue, setMinInputValue] = useState(1000);
-  const [maxInputValue, setMaxInputValue] = useState(8000);
+  const [minInputValue, setMinInputValue] = useState(minValue.toString());
+  const [maxInputValue, setMaxInputValue] = useState(maxValue.toString());
 
   const handleMinRangeChange = (event) => {
-    const value = parseInt(event.target.value);
+    let value = parseInt(event.target.value);
+    if (value > maxValue) {
+      value = maxValue;
+      toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
+    }
     setMinValue(value);
-    setMinInputValue(value);
+    setMinInputValue(value.toString());
   };
 
   const handleMaxRangeChange = (event) => {
-    const value = parseInt(event.target.value);
+    let value = parseInt(event.target.value);
+    if (value > 10000) {
+      value = 10000;
+      toast.warning('O valor máximo não pode ser maior que 10000.');
+    }
+    if (value < minValue) {
+      value = minValue;
+      toast.warning('O valor máximo não pode ser menor que o valor mínimo.');
+    }
     setMaxValue(value);
-    setMaxInputValue(value);
+    setMaxInputValue(value.toString());
   };
 
   const handleMinInputChange = (event) => {
-    const value = parseInt(event.target.value.replace(/[^\d]/g, ''));
-    if (!isNaN(value)) {
-      setMinValue(value);
-      setMinInputValue(value);
+    let value = event.target.value.replace(/[^\d]/g, '');
+    setMinInputValue(value);
+  };
+
+  const handleMinInputBlur = () => {
+    let value = parseInt(minInputValue);
+    if (isNaN(value)) {
+      value = 0;
     }
+    if (value > maxValue) {
+      value = maxValue;
+      toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
+    }
+    setMinValue(value);
+    setMinInputValue(value.toString());
   };
 
   const handleMaxInputChange = (event) => {
-    const value = parseInt(event.target.value.replace(/[^\d]/g, ''));
-    if (!isNaN(value)) {
-      setMaxValue(value);
-      setMaxInputValue(value);
+    let value = event.target.value.replace(/[^\d]/g, '');
+    setMaxInputValue(value);
+  };
+
+  const handleMaxInputBlur = () => {
+    let value = parseInt(maxInputValue);
+    if (isNaN(value)) {
+      value = 0;
     }
+    if (value > 10000) {
+      value = 10000;
+      toast.warning('O valor máximo não pode ser maior que 10000.');
+    }
+    if (value < minValue) {
+      value = minValue;
+      toast.warning('O valor máximo não pode ser menor que o valor mínimo.');
+    }
+    setMaxValue(value);
+    setMaxInputValue(value.toString());
   };
 
   useEffect(() => {
@@ -74,6 +110,7 @@ export default function DoubleInputRange() {
         />
         <div className="inputBox">
           <div className="minBox">
+            <p>DE</p>
             <div className="inputWrap">
               <span className="inputAddon">R$</span>
               <input 
@@ -83,10 +120,13 @@ export default function DoubleInputRange() {
                 maxLength={5} 
                 value={minInputValue}
                 onChange={handleMinInputChange}
+                onBlur={handleMinInputBlur}
+                inputMode='numeric'
               />
             </div>
           </div>
           <div className="maxBox">
+            <p>ATÉ</p>
             <div className="inputWrap">
               <span className="inputAddon">R$</span>
               <input 
@@ -96,6 +136,8 @@ export default function DoubleInputRange() {
                 maxLength={5} 
                 value={maxInputValue}
                 onChange={handleMaxInputChange}
+                onBlur={handleMaxInputBlur}
+                inputMode='numeric'
               />
             </div>
           </div>
@@ -103,4 +145,4 @@ export default function DoubleInputRange() {
       </div>
     </div>
   );
-};
+}

@@ -46,23 +46,32 @@ const produtos = [
 ];
 
 const categorias = [
-  'Periféricos', 'Hardware', 'Computadores', 'Kits', 'Eletronicos',
-	'Notebooks e Portateis', 'Video Games', 'Redes e wireless', 
-  'Realidade Virtual', 'Casa Inteligente', 'Monitores', ''
+  'Casa Inteligente', 
+  'Computadores', 
+  'Eletronicos',
+  'Hardware', 
+  'Kits', 
+  'Monitores',
+	'Notebooks e Portateis', 
+  'Periféricos',
+  'Realidade Virtual', 
+  'Redes e wireless', 
+  'Video Games', 
+  ''
 ];
 
 const subcategoriasPorCategoria = {
-  'Periféricos': ['Teclado', 'Mouse', 'Microfone', 'Fone de Ouvido', 'Caixa de Som', 'Mousepad'],
-  'Hardware': ['Processadores', 'Placa Mãe', 'Memórias', 'Armazenamento', 'Fonte', 'Coolers', 'Placa de vídeo'],
+  'Casa Inteligente': ['Assistente Virtual', 'Controles Smarts', 'Lâmpadas Inteligentes', 'Sensores'],
   'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
-  'Kits': ['Upgrade', 'Gamer', 'Periféricos'],
-  'Eletronicos': ['Acessórios de Console', 'Carregadores', 'Smart Box', 'Refrigeração'],
-  'Notebooks e Portateis': ['Notebooks', 'Tablets', 'Smartphones'],
-  'Video Games': ['Portátil', 'Console de Mesa'],
-  'Redes e wireless': ['Roteadores', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Switches', 'Access Point'],
-  'Realidade Virtual': ['Óculos'],
-  'Casa Inteligente': ['Assistente Virtual', 'Sensores', 'Lâmpadas Inteligentes', 'Controles Smarts'],
-  'Monitores': ['Monitores Gamers', 'Monitores Workstation']
+  'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Refrigeração', 'Smart Box'],
+  'Hardware': ['Armazenamento', 'Coolers', 'Fonte', 'Memória RAM', 'Placa de vídeo', 'Placa Mãe', 'Processadores'],
+  'Kits': ['Gamer', 'Periféricos', 'Upgrade'],
+  'Monitores': ['Monitores Gamers', 'Monitores Workstation'],
+  'Notebooks e Portáteis': ['Notebooks', 'Smartphones', 'Tablets'],
+  'Periféricos': ['Caixa de Som', 'Fone de Ouvido', 'Microfone', 'Mouse', 'Mousepad', 'Teclado'],
+  'Realidade Virtual': ['Óculos de VR', 'Periféricos de VR'],
+  'Redes e wireless': ['Access Point', 'Adaptadores', 'Cabos', 'Cabos de Redes', 'Roteadores', 'Switches'],
+  'Video Games': ['Console de Mesa', 'Portátil']
 };
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {

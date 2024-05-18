@@ -29,9 +29,10 @@ $font-items: 'Poppins', Helvetica;
         flex-direction: column;
         padding: 0 3em;
         flex-wrap: wrap;
-        margin-bottom: 20px;
+        margin-bottom: 25em;
 
         select {
+            font-family: $font-items;
             cursor: pointer;
             margin: 1em 0;
             padding: .5em;
