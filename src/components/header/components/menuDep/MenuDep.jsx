@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import LogoVertical from '../../../../assets/imgLemnos/logoVerticalClaro.svg';
 import './menuDep.scss';
-import MenuFavorite from '../favoriteMenu/MenuFavorite';
 import { AiOutlineTeam } from "react-icons/ai";
 import { RiMenuUnfoldLine, RiHome4Line , RiShoppingCartLine, RiHeartLine, RiUser3Line, RiSunLine, RiMoonLine } from "react-icons/ri";
 
