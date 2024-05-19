@@ -4,13 +4,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import './doubleInput.scss';
 
 export default function DoubleInputRange({ minValue, maxValue, setMinValue, setMaxValue }) {
-  const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-
   const [minInputValue, setMinInputValue] = useState(minValue.toString());
   const [maxInputValue, setMaxInputValue] = useState(maxValue.toString());
 
   const handleMinRangeChange = (event) => {
-    let value = parseInt(event.target.value);
+    let value = parseInt(event.target.value, 10);
     if (value > maxValue) {
       value = maxValue;
       toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
@@ -20,7 +18,7 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
   };
 
   const handleMaxRangeChange = (event) => {
-    let value = parseInt(event.target.value);
+    let value = parseInt(event.target.value, 10);
     if (value > 10000) {
       value = 10000;
       toast.warning('O valor máximo não pode ser maior que 10000.');
@@ -39,7 +37,7 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
   };
 
   const handleMinInputBlur = () => {
-    let value = parseInt(minInputValue);
+    let value = parseInt(minInputValue, 10);
     if (isNaN(value)) {
       value = 0;
     }
@@ -57,9 +55,9 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
   };
 
   const handleMaxInputBlur = () => {
-    let value = parseInt(maxInputValue);
+    let value = parseInt(maxInputValue, 10);
     if (isNaN(value)) {
-      value = 0;
+      value = 10000;
     }
     if (value > 10000) {
       value = 10000;
@@ -74,6 +72,8 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
   };
 
   useEffect(() => {
+    setMinInputValue(minValue.toString());
+    setMaxInputValue(maxValue.toString());
     setArea();
   }, [minValue, maxValue]);
 

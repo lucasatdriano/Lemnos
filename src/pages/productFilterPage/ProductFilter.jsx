@@ -26,7 +26,7 @@ const categorias = [
   'Hardware', 
   'Kits', 
   'Monitores',
-	'Notebooks e Portateis', 
+  'Notebooks e Portateis', 
   'Periféricos',
   'Realidade Virtual', 
   'Redes e wireless', 
@@ -132,18 +132,20 @@ export default function ProductFilter() {
   }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
   
   const handleMinPriceChange = (e) => {
-    setMinPrice(e.target.value);
-    if (maxPrice && parseFloat(e.target.value) > parseFloat(maxPrice)) {
+    const value = e.target.value;
+    setMinPrice(value);
+    if (maxPrice && parseFloat(value) > parseFloat(maxPrice)) {
       toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
-      setMaxPrice(e.target.value);
+      setMaxPrice(value);
     }
   };
 
   const handleMaxPriceChange = (e) => {
-    setMaxPrice(e.target.value);
-    if (minPrice && parseFloat(e.target.value) < parseFloat(minPrice)) {
+    const value = e.target.value;
+    setMaxPrice(value);
+    if (minPrice && parseFloat(value) < parseFloat(minPrice)) {
       toast.warning('O valor máximo não pode ser menor que o valor mínimo.');
-      setMinPrice(e.target.value);
+      setMinPrice(value);
     }
   };
 
@@ -184,44 +186,17 @@ export default function ProductFilter() {
 
         <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
           <option value="">Todas as Marcas</option>
-          {brands.map((brands, index) => (
-              <option key={index} value={brands}>{brands}</option>
+          {brands.map((brand, index) => (
+              <option key={index} value={brand}>{brand}</option>
           ))}
         </select>
 
-    
         <DoubleInputRange 
           minValue={minPrice}
           maxValue={maxPrice}
           setMinValue={setMinPrice}
           setMaxValue={setMaxPrice}
         />
-
-        {/* <select value={minPrice} onChange={handleMinPriceChange}>
-          <option value="">Qualquer preço</option>
-          <option value="10">De {BRL.format(10)}</option>
-          <option value="20">De {BRL.format(20)}</option>
-          <option value="50">De {BRL.format(50)}</option>
-          <option value="100">De {BRL.format(100)}</option>
-          <option value="250">De {BRL.format(250)}</option>
-          <option value="500">De {BRL.format(500)}</option>
-          <option value="1000">De {BRL.format(1000)}</option>
-          <option value="5000">De {BRL.format(5000)}</option>
-          <option value="10000">De {BRL.format(10000)}</option>
-        </select>
-
-        <select value={maxPrice} onChange={handleMaxPriceChange}>
-          <option value="">Qualquer preço</option>
-          <option value="10">Até {BRL.format(10)}</option>
-          <option value="20">Até {BRL.format(20)}</option>
-          <option value="50">Até {BRL.format(50)}</option>
-          <option value="100">Até {BRL.format(100)}</option>
-          <option value="250">Até {BRL.format(250)}</option>
-          <option value="500">Até {BRL.format(500)}</option>
-          <option value="1000">Até {BRL.format(1000)}</option>
-          <option value="5000">Até {BRL.format(5000)}</option>
-          <option value="10000">Até {BRL.format(10000)}</option>
-        </select> */}
 
       </section>
 
@@ -253,9 +228,17 @@ export default function ProductFilter() {
 
             {filteredData.length > 0 && (
               <>
-                <ul>
+                <ul className='listResults'>
                   {filteredData.map(item => (
-                    <li key={item.id}>{item.name} - Marca: {item.brand}, Preço: {BRL.format(item.price)}, categoria: {item.category},  Subcategoria: {item.subcategory}</li>
+                    <li key={item.id} className='listItemResults'>
+                      {/* <img className='imgProduct' src={item.image} alt={item.name} /> */}
+                      <div>
+                        <h3 className='titleProduct'>{item.name}</h3>
+                        <p className='priceProduct'>{BRL.format(item.price)}</p>
+                        <p>categoria: {item.category}</p>
+                        <p>Subcategoria: {item.subcategory}</p>
+                      </div>
+                    </li>
                   ))}
                 </ul>
               </>

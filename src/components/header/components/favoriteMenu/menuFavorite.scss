@@ -19,7 +19,6 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-
 .modal {
   display: grid;
   place-items: right;
@@ -137,6 +136,32 @@ $font-items: 'Poppins', Helvetica;
   }
 }
 
+.dark {
+  .modal {
+    .menuFavorite {
+      background-color: $color-bgDark;
+  
+      .title {
+        hr {
+          border: 2px solid $color-primaryDark;
+        }
+      }
+  
+      .listaFavoritos {
+        .productFav {
+          background: $color-secundaryDark;
+  
+          .containerInfosFav {  
+            .iconFav {
+              color: $color-primaryDark;
+            }
+          }
+        }
+      }
+    }
+  }  
+}
+
 @media only screen and (max-width: 1024px) {
   .modal {  
     .menuFavorite {
@@ -149,6 +174,17 @@ $font-items: 'Poppins', Helvetica;
   .modal {  
     .menuFavorite {
       width: 105%;
+
+      .iconClose {
+        display: block;
+        width: 42px;
+        height: 42px;
+        cursor: pointer;
+      }  
+
+      .title {
+        margin-top: 1.5em;
+      }
 
       .listaFavoritos {
         .productFav {

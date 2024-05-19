@@ -63,8 +63,8 @@ $font-items: 'Poppins', Helvetica;
                 height: 25px;
                 width: 25px;
                 border-radius: 50%;
-                border: 3px solid $color-fontDark;
-                background: $color-fontDark;
+                border: 2px solid #50817e;
+                background: #50817e;
                 pointer-events: none;
                 -moz-appearance: none;
                 cursor: pointer;
@@ -162,6 +162,52 @@ $font-items: 'Poppins', Helvetica;
             .minBox {
                 padding-right: .5em;
                 margin-right: .5em;
+            }
+        }
+    }
+}
+
+.dark {
+    .doubleRangeInput {
+        .rangeSlider {
+            background: $color-secundaryDark;
+
+            .sliderTrack {
+                background: $color-primaryDark;
+            }
+
+            .minValue, .maxValue {
+                &::-webkit-slider-thumb {
+                    border: 2px solid #7dccc7;
+                    background: #7dccc7;
+                    box-shadow: 0 0 5px $color-card;
+                }
+
+                &::-moz-range-thumb {
+                    border: 2px solid #7dccc7;
+                    background: #7dccc7;
+                    box-shadow: 0 0 5px $color-card;
+                }
+            }
+            
+            .inputBox {
+                .minBox, .maxBox {
+                    .inputWrap {                    
+                        .inputAddon {
+                            border: 1px solid #9d9d9e;
+                            box-shadow: 1px 1px 8px $color-card;
+                        }
+
+                        .inputField {
+                            border: 1px solid #9d9d9e;
+                            box-shadow: 1px 1px 8px $color-card;
+
+                            &:focus {
+                                border-left: 1px solid #2a2a2b;
+                            }
+                        } 
+                    }
+                }
             }
         }
     }

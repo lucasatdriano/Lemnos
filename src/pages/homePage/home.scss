@@ -109,8 +109,12 @@ main {
                 mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
 
                 .brandCard {
-                    animation: scroll 60s linear infinite;
+                    animation: scroll 80s linear infinite;
                 }
+            }
+
+            &:hover .brandCard {
+                animation-play-state: paused;
             }
 
           .brandCard {
