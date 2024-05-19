@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import './header.scss'
 import { MenuDep } from './components/menuDep/MenuDep';
 import { MenuNav } from './components/menuMobile/MenuNavMob';
 import { MenuSearch } from './components/searchMenu/MenuSearch';
 import { Link } from 'react-router-dom';
-import { RiShoppingCartLine, RiSearch2Line, RiHeartLine, RiUser3Line } from "react-icons/ri";
+import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
+// eslint-disable-next-line react/prop-types
 export function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
 
@@ -26,7 +27,7 @@ export function Header({ toggleTheme }) {
         };
     }, []);
 
-    const handleSearchResultClick = (productId) => {
+    const handleSearchResultClick = () => {
         // Lógica para manipular o clique no resultado de pesquisa
     };
     
