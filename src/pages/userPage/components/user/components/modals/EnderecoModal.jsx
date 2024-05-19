@@ -148,6 +148,7 @@ export default function EnderecoModal({ onSave, onClose }) {
                 handleSearch(upperCaseValue);
               }}
             />
+            {errors.estado && <span className='invalid'>{errors.estado}</span>}
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
             : 

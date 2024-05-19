@@ -17,14 +17,15 @@ export default function EmailModal({ onSave, onClose }) {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
     e.preventDefault();
 
     const errors = {};
     
-    if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email || !form.email.match(emailRegex)) {
       errors.email = 'Digite um Email válido';
-    } 
+    }
     if (form.email !== form.confEmail) {
       errors.confEmail = 'Os Emails devem ser iguais';
     }

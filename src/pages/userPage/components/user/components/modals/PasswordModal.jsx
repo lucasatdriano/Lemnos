@@ -20,7 +20,7 @@ export default function PasswordModal({ onSave, onClose }) {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
     e.preventDefault();
 
     const errors = {};

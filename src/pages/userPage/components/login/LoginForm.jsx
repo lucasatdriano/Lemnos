@@ -27,8 +27,9 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
   
     let newErrors = {};
   
-    if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
-      newErrors.email = 'Digite um Email válido';
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email || !form.email.match(emailRegex)) {
+      errors.email = 'Digite um Email válido';
     } 
   
     if (!form.password || form.password.length < 8) {

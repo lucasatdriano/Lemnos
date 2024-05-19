@@ -50,7 +50,8 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
       errors.cpf = 'Digite um CPF válido';
     }
 
-    if (!form.email || !form.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email || !form.email.match(emailRegex)) {
       errors.email = 'Digite um Email válido';
     } 
 
