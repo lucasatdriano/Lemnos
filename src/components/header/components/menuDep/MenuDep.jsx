@@ -6,7 +6,7 @@ import MenuFavorite from '../favoriteMenu/MenuFavorite';
 import { AiOutlineTeam } from "react-icons/ai";
 import { RiMenuUnfoldLine, RiHome4Line , RiShoppingCartLine, RiHeartLine, RiUser3Line, RiSunLine, RiMoonLine } from "react-icons/ri";
 
-export default function MenuDep({ toggleTheme }) {
+export default function MenuDep({ toggleTheme, showMenuFav }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
 
@@ -65,8 +65,8 @@ export default function MenuDep({ toggleTheme }) {
                             <AiOutlineTeam className='aboutIcon'/>
                             Sobre
                         </Link>
-                        <Link to="#" className='link' onClick={toggleMenu}>
-                            <MenuFavorite className='favotiteIcon' /> 
+                        <Link to="#" className='link' onClick={() => { showMenuFav(); toggleMenu(); }}>
+                            <RiHeartLine className='favIcon' /> 
                             Favoritos
                         </Link>
                         <Link to="/login" className='link' onClick={toggleMenu}>

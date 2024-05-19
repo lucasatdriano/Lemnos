@@ -39,16 +39,6 @@ export default function User({ onLogout }) {
   const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
   const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
 
-  const toggleModal = () => {
-    const htmlTag = document.querySelector('html');
-    const modalOpen = isActive;
-    if (modalOpen) {
-        htmlTag.classList.remove('modalOpen');
-    } else {
-        htmlTag.classList.add('modalOpen');
-    }
-  }
-
   const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
     { id: 2, produto: 'Monitor', produto2: 'Laptop', preco: 39.99 },
@@ -109,6 +99,8 @@ export default function User({ onLogout }) {
       default:
         break;
     }
+    const htmlTag = document.querySelector('html');
+    htmlTag.classList.add('modalOpen');
   };
 
   const handleCloseModal = (modalName) => {
@@ -143,6 +135,8 @@ export default function User({ onLogout }) {
       default:
         break;
     }
+    const htmlTag = document.querySelector('html');
+    htmlTag.classList.remove('modalOpen');
   };
 
   const handlePasswordSave = (newPassword) => {
