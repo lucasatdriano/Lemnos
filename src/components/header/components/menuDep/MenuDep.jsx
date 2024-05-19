@@ -6,6 +6,7 @@ import MenuFavorite from '../favoriteMenu/MenuFavorite';
 import { AiOutlineTeam } from "react-icons/ai";
 import { RiMenuUnfoldLine, RiHome4Line , RiShoppingCartLine, RiHeartLine, RiUser3Line, RiSunLine, RiMoonLine } from "react-icons/ri";
 
+// eslint-disable-next-line react/prop-types
 export default function MenuDep({ toggleTheme, showMenuFav }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);

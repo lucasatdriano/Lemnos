@@ -21,6 +21,7 @@ $font-items: 'Poppins', Helvetica;
 
 .menuCat {
     color: $color-fontDark;
+    height: 100vh;
 
     .menuButton {
         background: transparent;
@@ -56,7 +57,7 @@ $font-items: 'Poppins', Helvetica;
         position: fixed;
         top: 0;
         left: -7em;
-        height: 100vh;
+        height: 100%;
         background-color: $color-secundaryLight;
         z-index: 900;
         border-radius: 0 20px 20px 0;
@@ -65,6 +66,7 @@ $font-items: 'Poppins', Helvetica;
         display: none;
         overflow-y: auto;
         animation: menuDep 0.5s ease-in-out forwards;
+        width: 25%;
         
         &.active {
             display: flex;
@@ -74,10 +76,9 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .logoMenu {
-            margin: 2em 0 .25em;
-            width: clamp(4em, 4em + 10vw, 5em);
-            height: clamp(4em, 4em + 10vh, 5em);
-            object-fit: contain;
+            width: 100%;
+            max-width: 5em;
+            height: 100%;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
 
@@ -99,10 +100,16 @@ $font-items: 'Poppins', Helvetica;
         .categorias {
             display: flex;
             flex-direction: column;
-            padding: 5px 0 10px 0;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
 
             .filterDeps {
-                padding: 8px 3em 8px 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 8px;
                 color: $color-fontDark;
                 font-size: 2rem;
                 transition: .3s ease-in;
@@ -116,24 +123,28 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .menuNav {
-            text-align: left;
+            text-align: center;
             width: 100%;
 
             .navegacoes {
                 width: 100%;
                 padding: 5px 0 10px 0;
                 display: flex;
+                justify-content: center;
+                align-items: center;
                 flex-direction: column;
                 text-align: left;
                 
                 .link {
                     display: flex;
+                    justify-content: center;
                     gap: .5em;
                     align-items: center;
                     padding: 10px 10px 5px;
                     transition: .3s ease-in;
                     color: $color-fontDark;
                     font-size: 2rem;
+                    width: 100%;
 
                     &:hover {
                         background-color: $color-secundaryDark;
@@ -258,7 +269,7 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1000px) {
     .menuCat {    
        
         .menuButton {
@@ -272,7 +283,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .menu {
-            padding: 10em 0 5em 1.25em;
+            width: 65%;
 
             .logoMenu {
                 width: clamp(4em, 4em + 10vw, 4.5em);
