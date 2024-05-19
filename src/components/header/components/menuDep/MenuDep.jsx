@@ -41,7 +41,7 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                 <hr className='hrMenu'/>
 
                 <h3>Departamentos</h3>
-                <ul className='categorias'>    
+                <ul className='categorias'>
                     <Link to="/productFilter/Periféricos" className='filterDeps' onClick={toggleMenu}>Periféricos</Link>
                     <Link to="/productFilter/Hardware" className='filterDeps' onClick={toggleMenu}>Hardware</Link>
                     <Link to="/productFilter/Computadores" className='filterDeps' onClick={toggleMenu}>Computadores</Link>

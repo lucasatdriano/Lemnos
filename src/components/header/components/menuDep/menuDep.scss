@@ -21,7 +21,6 @@ $font-items: 'Poppins', Helvetica;
 
 .menuCat {
     color: $color-fontDark;
-    height: 100vh;
 
     .menuButton {
         background: transparent;
@@ -61,7 +60,6 @@ $font-items: 'Poppins', Helvetica;
         background-color: $color-secundaryLight;
         z-index: 900;
         border-radius: 0 20px 20px 0;
-        padding: 5em 0 2em 1.25em;
         opacity: 0;
         display: none;
         overflow-y: auto;
@@ -71,8 +69,8 @@ $font-items: 'Poppins', Helvetica;
         &.active {
             display: flex;
             align-items: center;
-            justify-content: center;
             flex-direction: column;
+            padding-left: 30px;
         }
 
         .logoMenu {
@@ -109,7 +107,7 @@ $font-items: 'Poppins', Helvetica;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
-                padding: 8px;
+                padding: 8px 0px;
                 color: $color-fontDark;
                 font-size: 2rem;
                 transition: .3s ease-in;
