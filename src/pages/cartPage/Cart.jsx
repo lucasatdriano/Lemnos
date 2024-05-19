@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './cart.scss';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
+import OfferList from '../../components/lists/OfferList'
+import './cart.scss';
 
-export function Cart() {
+export default function Cart() {
     const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
     const [cep, setCep] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const [deliveryOption, setDeliveryOption] = useState('');
+    const cepInputRef = useRef(null);
+    const cartRef = useRef(null);
+    const [isResumoFixo, setIsResumoFixo] = useState(false);
+
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const resumoElement = document.querySelector('.resumeBuy');
+    //         const resumoTopOffset = resumoElement.offsetTop;
+
+    //         if (window.pageYOffset >= resumoTopOffset) {
+    //             setIsResumoFixo(true);
+    //         } else {
+    //             setIsResumoFixo(false);
+    //         }
+    //     };
+
+    //     window.addEventListener('scroll', handleScroll);
+
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //     };
+    // }, []);
 
     let priceDelivery = 0;
-
-    switch (deliveryOption) {        
+    switch (deliveryOption) {
         case 'sedex':
             priceDelivery = 26.99;
             break;
@@ -53,7 +77,13 @@ export function Cart() {
     const handleCalculateDelivery = () => {
         if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
             setShowOptions(true);
-        } else {
+        } else if (cep.length === 0) {
+            toast.warning('Por favor, adicione o seu CEP para calcularmos.');
+            cepInputRef.current.focus();
+            setShowOptions(false);
+        } else if (cep.length !== 9) {
+            toast.warning('Por favor, adicione o seu CEP completo para calcularmos.');
+            cepInputRef.current.focus();
             setShowOptions(false);
         }
     }
@@ -93,23 +123,31 @@ export function Cart() {
 
     const finalizarPedido = () => {
         if (carrinho.length === 0) {
-            alert("Por favor, adicione algum item no carrinho.");
+            toast.warning('Por favor, adicione algum item no carrinho.');
+            cartRef.current.scrollIntoView({ behavior: 'smooth' });
         } else if(cep.length !== 9) {
-            alert("Por favor, adicione o seu CEP.")
+            toast.warning('Por favor, adicione o seu CEP para prosseguir.');
+            cepInputRef.current.focus();
+        } else if (deliveryOption === '') {
+            toast.warning('Por favor, selecione uma opção de entrega.');
+            cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
             limparCarrinho();
-            alert("Compra finalizada com sucesso!");
+            setShowOptions(false);
+            setDeliveryOption('');
+            setCep('');
+            toast.success('Compra finalizada com sucesso!');
         }
-    }
+    }    
 
     return (
-        <section>
-            <div className="title">
-                <hr />
+        <main>
+            <div className="title" ref={cartRef}>
+                <hr className='hrTitle'/>
                     <h2>Meu Carrinho</h2>
-                <hr />
+                <hr className='hrTitle'/>
             </div>
-            <div className='containerMain'>
+            <section className='containerMain'>
                 <div className='containerCart'>
                 {carrinho.length === 0 ? (
                     <div className="emptyCartMessage">
@@ -127,7 +165,7 @@ export function Cart() {
                                         <p>Valor</p>
                                     </div>
                                 </div>
-                                <hr />
+                                <hr className='hrLabels'/>
                                 <div className="productDesc">
                                     <img src="" alt="" />
                                     <h4 className='nameProduct'>{item.nome}</h4>
@@ -140,12 +178,12 @@ export function Cart() {
                                         >
                                             <FaMinus />
                                         </button>
-                                        <h4 id='qtdNumber'>{item.quantidade}</h4>
+                                        <span id='qtdNumber'>{item.quantidade}</span>
                                         <button 
-                                        type='button' 
-                                        className='buttonQtd' 
-                                        id='plusQtd' 
-                                        onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
+                                            type='button' 
+                                            className='buttonQtd' 
+                                            id='plusQtd' 
+                                            onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
                                         >
                                             <FaPlus />
                                         </button>
@@ -167,7 +205,7 @@ export function Cart() {
                     </button>
                     <div className='delivery'>
                         <h4>Calcular Entrega</h4>
-                        <hr />
+                        <hr className='hrDelivery'/>
                         <div className="inputCep">
                             <input
                                 type="text"
@@ -175,7 +213,9 @@ export function Cart() {
                                 value={cep}
                                 onChange={handleCepChange}
                                 maxLength={9}
+                                inputMode='numeric'
                                 pattern="\d{5}-?\d{3}"
+                                ref={cepInputRef}
                             />
                             <button type="button" className='calcDelivery' onClick={handleCalculateDelivery}>
                                 Calcular
@@ -185,13 +225,13 @@ export function Cart() {
                         </div>
                         {showOptions && (
                             <div>
-                                <div className='optionsDelivery'>
-                                    <label class="radio-container">
+                                <div className='optionsDelivery' >
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('sedex')} 
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbSedex' className='labelOp'>
                                         <strong>Sedex:</strong>
@@ -200,12 +240,12 @@ export function Cart() {
                                     <strong>{BRL.format(26.99)}</strong>
                                 </div>
                                 <div className='optionsDelivery'>
-                                    <label class="radio-container">
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbJadLog" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('jadlog')}
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbJadLog' className='labelOp'>
                                         <strong>JadLog:</strong>
@@ -214,12 +254,12 @@ export function Cart() {
                                     <strong>{BRL.format(32.99)}</strong>
                                 </div>
                                 <div className='optionsDelivery'>
-                                    <label class="radio-container">
+                                    <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbExpress" className='rbDelivery'
                                             onClick={() => handleDeliveryOptionChange('express')}
                                         />
-                                        <span class="checkmark"></span>
+                                        <span className="checkmark"></span>
                                     </label>
                                     <label htmlFor='rbExpress' className='labelOp'>
                                         <strong>Express:</strong>
@@ -231,7 +271,7 @@ export function Cart() {
                         )}
                     </div>
                 </div>
-                <div className='resumeBuy'>
+                <div className={`resumeBuy ${isResumoFixo ? 'fixed' : ''}`}>
                     <h3>Resumo</h3>
                     <hr className='hrResume'/>
                     <div className='values'>
@@ -267,7 +307,11 @@ export function Cart() {
                     </div>
                     <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
                 </div>
-            </div>
-        </section>
+            </section>
+            <section className='offers'>
+                <h2>Continue Comprando</h2>
+                <OfferList  />
+            </section>
+        </main>
     );
 }

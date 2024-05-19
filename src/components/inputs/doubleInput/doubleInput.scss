@@ -1,0 +1,214 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDarkAlt: #415352;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.doubleRangeInput {
+    .rangeSlider {
+        font-family: $font-items;
+        position: relative;
+        width: 100%;
+        height: 6px;
+        border-radius: 5px;
+        margin: 25px 0 75px;
+        background: $color-secundaryLight;
+
+        .sliderTrack {
+            height: 100%;
+            position: absolute;
+            background: $color-primaryLight;
+        }
+
+        .minValue, .maxValue {
+            position: absolute;
+            width: 100%;
+            background: none;
+            pointer-events: none;
+            top: 50%;
+            transform: translateY(-50%);
+            appearance: none;
+            z-index: 20;
+
+            &::-webkit-slider-thumb {
+                height: 22px;
+                width: 22px;
+                border-radius: 50%;
+                border: 2px solid #50817e;
+                background: #50817e;
+                pointer-events: none;
+                -webkit-appearance: none;
+                cursor: pointer;
+                box-shadow: 0 0 5px $color-shadow;
+            }
+
+            &::-moz-range-thumb {
+                height: 25px;
+                width: 25px;
+                border-radius: 50%;
+                border: 2px solid #50817e;
+                background: #50817e;
+                pointer-events: none;
+                -moz-appearance: none;
+                cursor: pointer;
+                box-shadow: 0 0 5px $color-shadow;
+            }
+        }
+        
+        .toolTip {
+            padding: .25em .5em;
+            border: 0;
+            background: $color-primaryLight;
+            color: $color-fontDark;
+            font-size: 1.6rem;
+            line-height: 1.2;
+            border-radius: 5px;
+            bottom: 120%;
+            display: block;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            
+            &.minToolTip {
+               left: 50%;
+               transform: translateX(-50%) translateY(-100%); 
+            }
+            
+            &.maxToolTip {
+                right: 50%;
+                transform: translateX(50%) translateY(-100%); 
+            }
+        }   
+        
+        .inputBox {
+            display: flex;
+
+            .minBox, .maxBox {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                width: 50%;
+                margin-top: 35px;
+
+                .inputWrap {
+                    position: relative;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    width: 100%;
+                    
+                    .inputAddon {
+                        display: flex;
+                        align-items: center;
+                        padding: .5em 1em;
+                        height: 2em;
+                        font-size: 1.8rem;
+                        font-weight: 400;
+                        line-height: 1.2;
+                        text-align: center;
+                        white-space: nowrap;
+                        background: $color-fontDark;
+                        border: 1px solid #d4d7e5;
+                        box-shadow: 1px 1px 4px $color-shadow;
+                        color: $color-fontLight;
+                        border-radius: 5px;
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+
+                    .inputField {
+                        margin-left: -1px;
+                        height: 2em;
+                        padding: .5em .75em;
+                        font-size: 1.8rem;
+                        border-radius: 5px;
+                        position: relative;
+                        flex: 1 1 auto;
+                        width: 1%;
+                        min-width: 0;
+                        color: $color-fontLight;
+                        background: $color-fontDark;
+                        background-clip: padding-box;
+                        border: 1px solid #d4d7e5;
+                        box-shadow: 1px 1px 4px $color-shadow;
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+
+                        &:focus {
+                            outline: none;
+                            border: 1px solid #c1c2c5;
+                        }
+                    } 
+                }
+            }
+
+            .minBox {
+                padding-right: .5em;
+                margin-right: .5em;
+            }
+        }
+    }
+}
+
+.dark {
+    .doubleRangeInput {
+        .rangeSlider {
+            background: $color-secundaryDark;
+
+            .sliderTrack {
+                background: $color-primaryDark;
+            }
+
+            .minValue, .maxValue {
+                &::-webkit-slider-thumb {
+                    border: 2px solid #7dccc7;
+                    background: #7dccc7;
+                    box-shadow: 0 0 5px $color-card;
+                }
+
+                &::-moz-range-thumb {
+                    border: 2px solid #7dccc7;
+                    background: #7dccc7;
+                    box-shadow: 0 0 5px $color-card;
+                }
+            }
+            
+            .inputBox {
+                .minBox, .maxBox {
+                    .inputWrap {                    
+                        .inputAddon {
+                            border: 1px solid #9d9d9e;
+                            box-shadow: 1px 1px 8px $color-card;
+                        }
+
+                        .inputField {
+                            border: 1px solid #9d9d9e;
+                            box-shadow: 1px 1px 8px $color-card;
+
+                            &:focus {
+                                border-left: 1px solid #2a2a2b;
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+    }
+}

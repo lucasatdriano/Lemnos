@@ -103,6 +103,7 @@ $font-items: 'Poppins', Helvetica;
       left: 0;
       border-radius: 10px;
       background-color: $color-primaryLight;
+      color: $color-fontDark;
       box-shadow: 0 0 10px $color-primaryDark;
       border: none;
       width: 100%;
@@ -158,6 +159,40 @@ $font-items: 'Poppins', Helvetica;
         &:hover {
           filter: brightness(1.1);
           box-shadow: 0 0 40px $color-primaryDark;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .offerCard {    
+    .offerImage {
+      height: 8.5em;
+    }
+  
+    
+    .offerDetails { 
+      height: 17em;
+      .offerName {
+        margin-bottom: 0em;
+      }
+
+      .btnAdd {
+        bottom: 0;
+      }
+    }
+  
+    &:hover {
+      .offerDetails {
+        padding-bottom: 0;
+  
+        .offerPrice {
+          opacity: 1;
+        }
+  
+        .offerPriceDescont {
+          margin-top: 0px;
         }
       }
     }

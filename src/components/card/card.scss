@@ -12,7 +12,6 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-
 .productCard {
   width: 18em;
   height: 25em;
@@ -68,11 +67,12 @@ $font-items: 'Poppins', Helvetica;
     left: 0;
     border-radius: 10px;
     background-color: $color-primaryLight;
+    color: $color-fontDark;
+    font-family: $font-items;
     box-shadow: 0 0 10px $color-primaryDark;
     border: none;
     width: 100%;
     font-size: 2rem;
-    font-family: $font-title;
     padding: .8em 0;
     transition: .5s ease-out;
     cursor: pointer;
@@ -91,7 +91,7 @@ $font-items: 'Poppins', Helvetica;
   &:hover {
     .productDetails {
       .productName {
-        margin-bottom: 8px;
+        margin-bottom: 3px;
       }
     }
     .btnAdd {
@@ -103,6 +103,8 @@ $font-items: 'Poppins', Helvetica;
 .dark {
   .productCard {
     .productDetails {
+      color: $color-fontDark;
+      
       .productPrice {
         span {
           color: $color-primaryDark;
@@ -121,11 +123,28 @@ $font-items: 'Poppins', Helvetica;
   }
 }
 
-@keyframes gradient {
-  from {
-      background-position: 0 50%;
-  }
-  to {
-      background-position: 100% 50%;
+@media only screen and (max-width: 500px) {
+  .productCard {    
+    .productImage {
+      height: 9em;
+    }
+  
+    .productDetails {  
+      .productName {
+        margin-bottom: 1em;
+      }
+    }
+  
+    .btnAdd {
+      bottom: 0;
+    }
+
+    &:hover {
+      .productDetails {
+        .productName {
+          margin-bottom: 1em;
+        }
+      }
+    }
   }
 }

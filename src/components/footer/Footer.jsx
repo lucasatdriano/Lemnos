@@ -1,9 +1,10 @@
 import React from 'react';
-import logoHorizontal from '../../assets/logoHorizontalClaro.svg'; 
-import { Infos } from './components/infos/Infos';
+import logoHorizontal from '../../assets/imgLemnos/logoHorizontalClaro.svg'; 
+import Infos from './components/infos/Infos';
+import ToolTip from '../tooltip/ToolTip';
 import { RiLinkedinFill, RiInstagramFill, RiTwitterFill, RiFacebookFill } from "react-icons/ri";
 
-export function Footer() {
+export default function Footer() {
     return (
         <footer>
             <Infos />
@@ -12,40 +13,55 @@ export function Footer() {
                 <nav className='navLinks'>
                     <ul>
                         <h3>Institucional</h3>
-                        <li>Quem Somos</li>
-                        <li>Localização</li>
-                        <li>Nossas Lojas</li>
-                        <li>Blog</li>
+                        <li><a href="#">Quem Somos</a></li>
+                        <li><a href="#">Nossas Lojas</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
                     <ul>
                         <h3>Ajuda</h3>
-                        <li>SAC</li>
-                        <li>Fale Conosco</li>
-                        <li>Termos de Aceite</li>
-                        <li>Politicas de Privacidade</li>
+                        <li><a href="#">SAC</a></li>
+                        <li><a href="#">Fale Conosco</a></li>
+                        <li><a href="#">Termos de Aceite</a></li>
+                        <li><a href="#">Politicas de Privacidade</a></li>
                     </ul>
                     <ul>
                         <h3>Dúvidas</h3>
-                        <li>Entrega</li>
-                        <li>Garantia</li>
-                        <li>Como Comprar</li>
-                        <li>Formas de Pagamento</li>
-                        <li>Sobre Boletos</li>
+                        <li><a href="#">Entrega</a></li>
+                        <li><a href="#">Garantia</a></li>
+                        <li><a href="#">Como Comprar</a></li>
+                        <li><a href="#">Formas de Pagamento</a></li>
+                        <li><a href="#">Sobre Boletos</a></li>
                     </ul>
                 </nav>
                 <div className='iconsNav'>
                     <div className="icons">
-                        <RiLinkedinFill className='icon'/>
-                        <RiInstagramFill className='icon'/>
-                        <RiTwitterFill className='icon'/>
-                        <RiFacebookFill className='icon'/>
+                        <ToolTip message="Linkedin">
+                            <a href="">
+                                <RiLinkedinFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Instagram">
+                            <a href="">
+                                <RiInstagramFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Twitter">
+                            <a href="">
+                                <RiTwitterFill className='icon'/>
+                            </a>
+                        </ToolTip>
+                        <ToolTip message="Facebook">
+                            <a href="">
+                                <RiFacebookFill className='icon'/>
+                            </a>
+                        </ToolTip>
                     </div>
                     <hr />
                 </div>
             </section>
-            <hr />
+            <hr className='hrAuthorship'/>
             <div className='authorship'>
-                <small>© 2024 Lemnos - All rights reserved. - By <a href="https://tech-verse-sooty.vercel.app" target='_blank'>TechVerse</a></small>
+                <small>© 2024 Lemnos - All rights reserved. - By <a href="https://techverse-co.vercel.app" target='_blank'>TechVerse</a></small>
                 <small><a href="#">Term And Conditions</a> | <a href="#">Privacy Policy</a></small>
             </div>
         </footer>

@@ -20,12 +20,12 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-section {
+main {   
     .title {
-        padding-top: 1.5em;
         display: flex;
         align-items: center;
         justify-content: center;
+        margin: -1em auto 0;
 
         h2 {
             font-family: $font-title;
@@ -123,7 +123,8 @@ section {
                         }
                     }
 
-                    hr {
+                    .hrLabels {
+                        width: 100%;
                         border: 1px solid $color-primaryLight;
                     }
 
@@ -151,13 +152,14 @@ section {
                             gap: 1em;
 
                             .buttonQtd {
+                                color: $color-fontDark;
                                 background: none;
                                 border: none;
                                 font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
                                 cursor: pointer;
                             }
 
-                            h4 {
+                            span {
                                 font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
                             }
                         }
@@ -168,6 +170,7 @@ section {
                         }
 
                         .btnRemove {
+                            color: $color-fontDark;
                             background: none;
                             border: none;
                             font-size: 4rem;
@@ -187,6 +190,7 @@ section {
                 cursor: pointer;
                 font-size: 2rem;
                 border-radius: 5px;
+                color: $color-fontDark;
                 background: $color-secundaryDark;
                 box-shadow: 0 0 10px $color-shadow;
                 font-family: $font-items;
@@ -217,7 +221,8 @@ section {
                     padding: 0 1em .5em ;
                 }
 
-                hr {
+                .hrDelivery {
+                    width: 100%;
                     border: 1px solid $color-primaryLight;
                 }
 
@@ -253,6 +258,7 @@ section {
                         border: 1px solid $color-primaryLight;
                         background-color: $color-primaryLight;
                         color: $color-fontLight;
+                        font-family: $font-items;
                         font-weight: 600;
                         border-radius: 0 10px 10px 0;
                         cursor: pointer;
@@ -335,6 +341,12 @@ section {
             position: relative;
             box-shadow: 4px 4px 10px $color-shadow;
 
+            // &.fixed {
+            //     position: fixed;
+            //     top: 0;
+            //     z-index: 1000; 
+            // }
+
             h3 {
                 font-family: $font-title;
                 text-align: center;
@@ -342,6 +354,7 @@ section {
             }
             
             .hrResume {
+                width: 100%;
                 border: 2px solid $color-primaryLight;
             }
             .hrValues {
@@ -390,11 +403,12 @@ section {
             .endOrder {
                 width: 100%;
                 font-size: 2.4rem;
-                padding: .75em 1.5em;
+                padding: .75em 1em;
                 border-radius: 0 0 10px 10px;
                 border: none;
                 position: absolute;
                 bottom: 0;
+                font-family: $font-title;
                 background: $color-primaryLight;
                 cursor: pointer;
                 transition: .5s ease;
@@ -409,7 +423,7 @@ section {
 }
 
 .dark {
-    section {
+    main {
         .title {    
             hr {
                 border: 2px solid $color-primaryDark
@@ -572,7 +586,7 @@ section {
                                     font-size: 2.4rem;
                                 }
     
-                                h4 {
+                                span {
                                     font-size: 2.4rem;
                                 }
                             }

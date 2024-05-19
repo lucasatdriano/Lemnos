@@ -96,10 +96,6 @@ $font-items: 'Poppins', Helvetica;
         .containerService,
         .containerPhone,
         .containerMail {
-            p {
-                font-size: 2rem;
-            }
-
             .containerIcon {
                 min-width: 46px;
                 min-height: 46px;
@@ -120,14 +116,7 @@ $font-items: 'Poppins', Helvetica;
         flex-direction: column;
         align-items: flex-start;
         gap: 2em;
-    
-        .containerService,
-        .containerPhone,
-        .containerMail {     
-            p {
-                font-size: 2.2rem;
-            }
-        }
+        padding: 1em;
 
         .containerService p {
             max-width: 30em;

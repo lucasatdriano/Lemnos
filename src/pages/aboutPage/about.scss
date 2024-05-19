@@ -7,13 +7,12 @@ $color-secundaryDark: #2D3A3A;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
-$color-shadow: #12171740;
+$color-shadow: #1217176c;
+$color-card: #f6fefd4d;
 
 $font-title: 'Merriweather Sans', sans-serif;
 
-main {
-    padding: 2em 0 0;
-  
+main {    
     .contentAbout, 
     .contentMascot {
         width: auto;
@@ -23,6 +22,7 @@ main {
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: -1em auto 0;
 
             h2 {
                 font-family: $font-title;
@@ -46,16 +46,20 @@ main {
             text-align: justify;
 
             p {
-                width: 75%;
+                width: 50%;
                 text-wrap: balance;
                 font-size: 2rem;
             }
 
-            img {
+            .logoDark, .logoLight,.imgMascot {
                 width: 50%;
                 height: 30em;
                 object-fit: contain;
                 filter: drop-shadow( 4px 4px 6px $color-shadow);
+            }
+
+            .logoLight {
+                display: none;
             }
         }
     }
@@ -64,21 +68,23 @@ main {
         .content {
             width: 95%;
             margin: 5em auto;
-            gap: 1.5em;
+            gap: 1em;
             display: flex;
             align-items: baseline;
             justify-content: space-around;
+            flex-wrap: wrap;
 
             .item {
                 background-color: $color-secundaryLight;
                 color: $color-fontDark;
-                width: 30%;
+                width: 30vw;
                 height: 20em;
                 padding: 10px;
-                border-radius: 20px;
                 text-align: justify;
+                border-radius: 20px;
                 letter-spacing: 1.5px;
-                overflow: hidden;      
+                overflow: hidden;
+                box-shadow: 4px 4px 8px $color-shadow;
 
                 h3 {
                     font-family: $font-title;
@@ -108,6 +114,17 @@ main {
                 border: 2px solid $color-primaryLight;
             }
         }
+
+        .content {
+            .logoLight {
+                display: block;
+                filter: drop-shadow( 2px 2px 4px $color-card);
+            }
+
+            .logoDark {
+                display: none;
+            }
+        }
     }
 
     .contentValues {
@@ -122,11 +139,12 @@ main {
 @media only screen and (max-width: 1024px) {
     main {
         margin: 0 0 6em;
-    
+
         .contentValues {
             .content {
                 .item {
-                    border-radius: 15px;
+                    width: 45vw;
+                    text-align: left;
     
                     h3 {
                         font-size: 2.4rem;
@@ -164,7 +182,7 @@ main {
                     font-size: 1.8rem;
                 }
 
-                img {
+                .logoDark, .logoLight, .imgMascot {
                     width: 100%;
                     height: 15em;
                 }
@@ -182,6 +200,7 @@ main {
                     min-height: 5em;
                     height: auto;
                     margin: auto;
+                    text-align: justify;
 
                     h3 {
                         font-size: 2.2rem;

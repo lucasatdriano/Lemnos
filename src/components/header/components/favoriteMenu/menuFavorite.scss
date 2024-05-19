@@ -1,0 +1,217 @@
+$color-primaryLight: #36CEC4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4ADED6;
+$color-detailsLight: #850E5D;
+
+$color-primaryDark: #10A88D;
+$color-secundaryDark: #2D3A3A;
+$color-terciaryDark: #f6FEFDCC;
+$color-detailsDark: #C75EA3;
+
+$color-bgDark: #2D2D2D;
+$color-bgLight: #F9FBFB;
+$color-fontDark: #F6FEFD;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+.modal {
+  display: grid;
+  place-items: right;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #12171780;
+  z-index: 99;
+  animation: modal 0.2s ease-in forwards;
+    
+
+  .menuFavorite {
+    background-color: $color-bgLight;
+    width: 55%;
+    height: 100vh;
+    position: absolute;
+    z-index: 999; 
+    border-radius: 10px 0 0 10px;
+    top: 0;
+    right: -30em;
+    animation: menuFav 0.5s ease-in-out forwards;
+    overflow-y: auto;
+    opacity: 1;
+    display: block;
+
+    .iconClose {
+      display: none;
+      right: 10%;
+      position: absolute;
+      width: 48px;
+      height: 48px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1em;
+
+      h2 {
+        font-family: $font-title;
+        white-space: nowrap;
+        font-size: clamp(3rem, .2rem + 3vw, 4rem);
+        padding: 0 10px;
+      }
+
+      hr {
+        width: 50%;
+        height: 0;
+        border: 2px solid $color-primaryLight;
+      }
+    }
+
+    .listaFavoritos {
+      padding: 1em;
+      padding-right: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1em;
+
+      .productFav {
+        background: $color-secundaryLight;
+        width: 100%;
+        height: 10em;
+        max-height: 12em;
+        padding: .5em;
+        border-radius: 10px;
+        display: flex;
+        gap: 1em;
+        position: relative;
+
+        img {
+          width: 25%;
+          border: 2px solid white;
+        }
+
+        .containerInfosFav {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-family: $font-items;
+          color: $color-fontDark;
+          width: 65%;
+          height: 100%;
+          font-size: clamp(1.6rem, .2rem + 1vw, 2rem);
+
+          .iconFav {
+            cursor: pointer;
+            position: absolute;
+            right: 1em;
+            color: $color-primaryLight;
+            float: right;
+            width: 42px;
+            height: 42px;
+          }
+
+          p {
+            font-size: clamp(2.4rem, .2rem + 2vw, 3rem);
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes menuFav {
+  to {
+    transform: translateX(-28em);
+    opacity: 1;
+  }
+}
+
+.dark {
+  .modal {
+    .menuFavorite {
+      background-color: $color-bgDark;
+  
+      .title {
+        hr {
+          border: 2px solid $color-primaryDark;
+        }
+      }
+  
+      .listaFavoritos {
+        .productFav {
+          background: $color-secundaryDark;
+  
+          .containerInfosFav {  
+            .iconFav {
+              color: $color-primaryDark;
+            }
+          }
+        }
+      }
+    }
+  }  
+}
+
+@media only screen and (max-width: 1024px) {
+  .modal {  
+    .menuFavorite {
+      width: 75%;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .modal {  
+    .menuFavorite {
+      width: 105%;
+
+      .iconClose {
+        display: block;
+        width: 42px;
+        height: 42px;
+        cursor: pointer;
+      }  
+
+      .title {
+        margin-top: 1.5em;
+      }
+
+      .listaFavoritos {
+        .productFav {
+          .containerInfosFav {
+            width: 55%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .modal {  
+    .menuFavorite {
+      width: 110%;
+
+      .listaFavoritos {
+        padding-right: 2.5em;
+
+        .productFav {
+          .containerInfosFav {
+            width: 50%;
+            font-size: clamp(1.4rem, .2rem + 1vw, 2rem);
+          }
+        }
+      }
+    }
+  }
+}

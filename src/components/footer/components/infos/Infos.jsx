@@ -3,7 +3,7 @@ import './infos.scss'
 import { RiTimeLine, RiPhoneFill } from "react-icons/ri";
 import { TbMailFilled } from "react-icons/tb";
 
-export function Infos() {
+export default function Infos() {
     return (
         <>
         <section className='infosContent'>

@@ -33,6 +33,7 @@ $font-items: 'Poppins', Helvetica;
             border-radius: 20px;
             background-color: $color-bgLight;
             color: $color-fontLight;
+            font-family: $font-items;
             text-indent: 20px;
             font-size: 2.0rem;
             position: relative;
@@ -60,6 +61,7 @@ $font-items: 'Poppins', Helvetica;
     .searchResults {
         position: absolute;
         background-color: $color-bgLight;
+        font-family: $font-items;
         display: flex;
         flex-direction: column;
         gap: .1em;
@@ -80,16 +82,23 @@ $font-items: 'Poppins', Helvetica;
             border-radius: 5px;
             padding: 10px 15px;
 
-            img {
-                padding: 20px;
-                height: 100%;
-                width: 40%;
-            }
-            h4 {
-                font-size: 2rem;
-                width: 45%;
+            .containerVisual {
+                display: flex;
+                align-items: center;
+
+                img {
+                    padding: 20px;
+                    height: 100%;
+                    width: 30%;
+                }
+                h4 {
+                    font-size: 2rem;
+                    color: $color-fontLight;
+                    width: 75%;
+                }
             }
             p {
+                font-size: 2.2rem;
                 font-weight: 600;
                 color: $color-primaryLight;
             }
@@ -105,18 +114,17 @@ $font-items: 'Poppins', Helvetica;
             min-width: 32em;
             padding-top: 1.5em;
 
-
             .itemSearch {
                 background-color: $color-bgLight;
                 padding: 10px 15px;
 
                 img {
                     padding: 15px;
-                    width: 35%;
+                    width: 15%;
                 }
                 h4 {
-                    font-size: 1.8rem;
-                    width: 40%;
+                    font-size: 2rem;
+                    width: 0%;
                 }
             }
         }
@@ -125,8 +133,8 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 1024px) {
     .searchContainer {
-        .searchContainer {
-            width: 70%;
+        .inputSearch {
+            width: 100%;
         }
 
         .searchResults {
@@ -137,36 +145,62 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 800px) {
     .searchContainer {
-        .searchContainer {
-            width: 85%;
+        .inputSearch {
+            width: 100%;
         }
 
         .searchResults {
-            left: 25%;
+            left: 10%;
             min-width: 80vw;
 
             .itemSearch {
                 img {
-                    width: 30%;
+                    width: 20%;
                 }
                 h4 {
-                    font-size: 1.6rem;
+                    font-size: 1.8rem;
                     width: 35%;
+                }
+                p {
+                    font-size: 1.8rem;
                 }
             }
         }
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     .searchContainer {
-        .searchContainer {
-            width: 95%;
+        .inputSearch {
+            width: 250%;
         }
 
         .searchResults {
-            left: 40%;
+            left: 50%;
             min-width: 90vw;
+
+            .itemSearch {
+                flex-direction: column;
+                
+                .containerVisual {
+                    display: flex;
+
+                    img {
+                        width: 35%;
+                    }
+                    h4 {
+                        font-size: 1.6rem;
+                        width: 70%;
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 500px) {
+    .searchContainer {
+        .inputSearch {
+            width: 150%;
         }
     }
 }

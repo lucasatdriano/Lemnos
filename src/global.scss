@@ -1,18 +1,7 @@
 @import './components/backToTop/backToTop.scss';
 @import './components/card/card.scss';
 @import './components/cardOffer/cardOffer.scss';
-@import './components/carousel/carousel.scss';
 @import './components/footer/footer.scss';
-@import './components/inputs/inputs.scss';
-
-@import './pages/aboutPage/about.scss';
-@import './pages/brandsPage/brands.scss';
-@import './pages/cartPage/cart.scss';
-@import './pages/homePage/home.scss';
-@import './pages/notFoundPage/notFound.scss';
-@import './pages/productFilterPage/productFilter.scss';
-@import './pages/productPage/product.scss';
-@import './pages/userPage/user.scss';
 
 $color-primaryLight: #36CEC4;
 $color-secundaryLight: #415352;
@@ -20,7 +9,7 @@ $color-secundaryLight: #415352;
 $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
 
-$color-bgDark: #2D2D2D;
+$color-bgDark: #252525;
 $color-bgLight: #F9FBFB;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
@@ -30,19 +19,19 @@ $font-web: 'Roboto Flex', Arial;
 @mixin lightMode {
     background-color: $color-bgLight;
     color: $color-fontLight;
+    transition: .25s ease-in;
 }
 
 @mixin darkMode {
     background-color: $color-bgDark;
     color: $color-fontDark;
+    transition: .25s ease-in;
 }
 
 :root {
     font-family: $font-web;
     line-height: 1.5;
     font-weight: 400;
-  
-    color-scheme: light dark;
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -73,7 +62,6 @@ $font-web: 'Roboto Flex', Arial;
 }
 
 html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
     font-size: 62.5%;
 
@@ -85,14 +73,13 @@ html {
         background-color: $color-bgLight;
         color: $color-fontLight;
         position: relative;
-        transition: .5s ease-in;
-        
+     
         &::-webkit-scrollbar {
             width: 0.7em;
         }
 
         main {
-            padding-top: 2em;
+            padding-top: 8em;
         }
 
         input {
@@ -108,15 +95,18 @@ html {
         ul {
             list-style: none;
         }
-        @include lightMode; 
-    }
+        
+        .light {
+            @include lightMode; 
+        }
 
-    .dark {
-        @include darkMode;
+        .dark {
+            @include darkMode;
+        }
     }
     
     &.modalOpen {
-        overflow-y: hidden !important;
+        overflow-y: hidden;
         margin: 0 2.5px 0 0;
     }
 }

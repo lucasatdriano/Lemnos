@@ -39,8 +39,8 @@ $font-items: 'Poppins', Helvetica;
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        min-height: 100vh;
+        width: 100%;
+        height: 100vh;
         background-color: #12171780;
         z-index: 99;
         opacity: 0;
@@ -54,91 +54,96 @@ $font-items: 'Poppins', Helvetica;
 
     .menu {
         position: fixed;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
         top: 0;
         left: -7em;
         height: 100vh;
         background-color: $color-secundaryLight;
-        z-index: 999;
+        z-index: 900;
         border-radius: 0 20px 20px 0;
-        padding: 0 0 0 1.2em;
-        animation: menuDep 0.5s ease-in-out forwards;
+        padding: 5em 0 2em 1.25em;
         opacity: 0;
         display: none;
-
+        overflow-y: auto;
+        animation: menuDep 0.5s ease-in-out forwards;
+        
         &.active {
-            display: block;
-        }
-
-        .btnFecharMenu {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            left: 25em;
-
-            .menuIcon {
-                color: $color-fontDark;
-                margin: 20px;
-                height: 50px;
-                width: 50px;
-            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .logoMenu {
-            width: 5em;
-            height: 5em;
-            margin: 0 20%;
+            margin: 2em 0 .25em;
+            width: clamp(4em, 4em + 10vw, 5em);
+            height: clamp(4em, 4em + 10vh, 5em);
             object-fit: contain;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
+        }
+
+        .hrMenu {
+            width: 100%;
+            border: 1.5px solid $color-primaryLight;
         }
 
         h3 {
             font-family: $font-title;
             font-size: 2rem;
-            padding: 10px 0 10px 0;
+            padding: 8px 0;
+            width: 100%;
             text-align: center;
             box-shadow: 0 1px 10px $color-shadow;
             animation: modal 0.8s ease-in;
         }
 
         .categorias {
+            display: flex;
+            flex-direction: column;
             padding: 5px 0 10px 0;
 
-            li {
-                padding: 5px 10px;
-                transition: .2s ease-in;
+            .filterDeps {
+                padding: 8px 3em 8px 10px;
+                color: $color-fontDark;
+                font-size: 2rem;
+                transition: .3s ease-in;
                 cursor: pointer;
                 
                 &:hover {
                     background-color: $color-secundaryDark;
                     text-decoration: underline;
                 }
-
-                a {
-                    color: $color-fontDark;
-                    font-size: 1.8rem;
-                }
             }
         }
 
         .menuNav {
-            padding: 5px 0 10px 0;
-            display: flex;
-            flex-direction: column;
-            
-            .link {
-                padding: 15px 10px 0;
-                transition: .2s ease-in;
-                color: $color-fontDark;
-                font-size: 1.8rem;
+            text-align: left;
+            width: 100%;
 
-                &:hover {
-                    background-color: $color-secundaryDark;
-                    text-decoration: underline; 
+            .navegacoes {
+                width: 100%;
+                padding: 5px 0 10px 0;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                
+                .link {
+                    display: flex;
+                    gap: .5em;
+                    align-items: center;
+                    padding: 10px 10px 5px;
+                    transition: .3s ease-in;
+                    color: $color-fontDark;
+                    font-size: 2rem;
+
+                    &:hover {
+                        background-color: $color-secundaryDark;
+                        text-decoration: underline; 
+                    }
+
+                    [class*=Icon] {
+                        width: 28px;
+                        height: 28px;
+                    }
                 }
             }
         }
@@ -153,10 +158,9 @@ $font-items: 'Poppins', Helvetica;
                 cursor: pointer;
                 position: absolute;
                 top: 0;
-                left: 60px;
-                z-index: 1;
+                z-index: 99;
                 width: 8em;
-                height: 8em;
+                height: 3em;
                 opacity: 0;
 
                 &:checked + .label .ball {
@@ -234,7 +238,6 @@ $font-items: 'Poppins', Helvetica;
     to {
         transform: translateX(9.75em);
         opacity: 1;
-
     }
 }
 
@@ -247,11 +250,34 @@ $font-items: 'Poppins', Helvetica;
 .shrink {
     .modal {
         left: -5em;
-        width: 120vw;
     }
 
     .menu {
         left: -10em;
         padding: 0 0 0 2em;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .menuCat {    
+       
+        .menuButton {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+
+            .menuIcon {
+                margin: .5em 0 0 -2em;
+            }
+        }
+
+        .menu {
+            padding: 10em 0 5em 1.25em;
+
+            .logoMenu {
+                width: clamp(4em, 4em + 10vw, 4.5em);
+                height: clamp(4em, 4em + 10vh, 4.5em);
+            }
+        }
     }
 }

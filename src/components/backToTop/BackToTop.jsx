@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RiArrowUpLine } from "react-icons/ri";
-import imgBtnScroll from '../../assets/btnScrollToTop.svg'
+import imgBtnScroll from '../../assets/icons/btnScrollToTop.svg'
 
-export function BackToTopButton() {
+export default function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,10 @@ export function BackToTopButton() {
   }, []);
 
   const scrollToTop = () => {
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     window.removeEventListener('scroll', cvlScroll);
   };
 

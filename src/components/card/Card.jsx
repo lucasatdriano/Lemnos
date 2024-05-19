@@ -1,15 +1,10 @@
 import React from 'react';
 import './card.scss';
-import { useNavigate } from 'react-router-dom';
-import iconAddCart from '../../assets/iconAddCart.svg';
+import { Link } from 'react-router-dom';
+import iconAddCart from '../../assets/icons/iconAddCart.svg';
 
-export function Card({ product }) {
-  const navigate = useNavigate();
+export default function Card({ product }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-
-  function handleClickCard() {
-    navigate(`/product/${product.id}`);
-  }
 
   function handleAddToCart() {
     // Adicione sua lógica para adicionar o produto ao carrinho aqui
@@ -17,7 +12,7 @@ export function Card({ product }) {
   }
 
   return (
-    <div className="productCard" onClick={handleClickCard}>
+    <Link to='/product/${product.id}' className="productCard">
       <img src={product.image} alt={product.name} className="productImage" />
       <div className="productDetails">
         <h2 className="productName">{product.name}</h2>
@@ -30,6 +25,6 @@ export function Card({ product }) {
         Adicionar ao Carrinho
         <img src={iconAddCart} alt="icon add Cart" className='iconAdd' />
       </button>
-    </div>
+    </Link>
   );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import './cardOffer.scss';
-import iconAddCart from '../../assets/iconAddCart.svg';
+import iconAddCart from '../../assets/icons/iconAddCart.svg';
 
-export function CardOffer({ offer }) {
+export default function CardOffer({ offer }) {
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
   return (

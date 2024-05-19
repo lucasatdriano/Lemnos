@@ -1,86 +1,81 @@
-import React, { useState, useRef } from 'react';
-import { CustomInput } from '../../../../components/inputs/Inputs';
+import React, { useState } from 'react';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';
-import { validateEmail, validatePwd, validateCpf, formatCPF } from '../../../../utils/regex';
+import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
-export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
+export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
   const [form, setForm] = useState({
-    name: "",
-    cpf: "",
-    email: "",
-    confEmail: "",
-    password: "",
-    confPassword: ""
+    name: '',
+    cpf: '',
+    email: '',
+    confEmail: '',
+    password: '',
+    confPassword: '',
   });
-  
-  const [errors, setErrors] = useState({
-    cpf: false,
-    email: false,
-    confEmail: false,
-    password: false,
-    confPassword: false
-  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfPassword, setShowConfPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const nameRef = useRef();
-  const cpfRef = useRef();
-  const emailRef = useRef();
-  const confEmailRef = useRef();
-  const pwdRef = useRef();
-  const confPwdRef = useRef();
+  const formatCPFToNumbers = (cpf) => {
+    return cpf.replace(/\D/g, '');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let newValue = value;
-    if (name === 'cpf') {
-      let formattedCpf = value.replace(/\D/g, '');
-      if (formattedCpf.length > 9) {
-        formattedCpf = formattedCpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      }
-      setForm(prevState => ({ ...prevState, cpf: formattedCpf }));
-      newValue = formatCPF(value);
-    }
-  
-    setForm(prevState => ({ ...prevState, [name]: newValue }));
-  
-    const isValid = name === 'cpf' ? validateCpf.test(newValue) : validateEmail.test(form.email);
-  
-    setErrors(prevErrors => ({
-      ...prevErrors,
-      [name]: !isValid,
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    const newErrors = {
-      cpf: !validateCpf.test(form.cpf),
-      email: !validateEmail.test(form.email),
-      confEmail: form.email !== form.confEmail,
-      password: !validatePwd.test(form.password),
-      confPassword: form.password !== form.confPassword
+
+    const formattedForm = {
+      ...form,
+      cpf: formatCPFToNumbers(form.cpf),
     };
-  
-    setErrors(newErrors);
-  
-    const hasEmptyValues = Object.values(form).some(obj => obj === "");
-    const hasErrors = Object.values(newErrors).some(error => error);
-  
-    if (!hasEmptyValues && !hasErrors) {
-      try {
-        await fetch('url-da-api', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        });
-  
-        onCadastroSuccess();
-        handleBackToLogin();
-      } catch (error) {
-        console.error('Erro ao enviar dados:', error);
-      }
+
+    const errors = {};
+    
+    if (!form.name) {
+      errors.name = 'O campo Senha é obrigatório';
+    }
+
+   const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
+    if (!formattedForm.cpf.match(cpfRegex)) {
+      errors.cpf = 'Digite um CPF válido';
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email || !form.email.match(emailRegex)) {
+      errors.email = 'Digite um Email válido';
+    } 
+
+    if (form.email !== form.confEmail) {
+      errors.confEmail = 'Os Emails devem ser iguais';
+    }
+
+    if (!form.password || form.password.length < 8) {
+      errors.password = 'A Senha deve ter no mínimo 8 caracteres';
+    }
+
+    if (form.password !== form.confPassword) {
+      errors.confPassword = 'As Senhas devem ser iguais';
+    }
+
+    setErrors(errors);
+
+    console.log('Erros:', errors);
+
+    if (Object.keys(errors).length === 0) {
+      // Lógica de envio do formulário aqui
+      console.log('Dados do formulário:', form);
+      toast.success('Cadastrado realizado!!');
+      handleBackToLogin();
     }
   };
 
@@ -88,12 +83,19 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
     handleBackToLogin();
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfPasswordVisibility = () => {
+    setShowConfPassword(!showConfPassword);
+  };
+
   return (    
     <section className="registration-form-container">
       <div className="loginCredencial">
         <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
-          <button></button>
+          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
         </div>
       </div>
 
@@ -103,80 +105,100 @@ export function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
         <hr />
       </div>
 
-      <form onSubmit={handleSubmit} className="registration">
+      <form className="registration" onSubmit={handleSubmit}>
         <h2>Crie sua Conta Lemnos</h2>
         <div className="inputsRegistration">
           <p>
             <CustomInput
               type="text"
-              reference={nameRef}
               label="Nome Completo:"
-              maxLength="40"
               id="name"
               name="name"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              minLength={5}
+              value={form.name}
+              onChange={handleChange}
             />
+            {errors.name && <span className='invalid'>{errors.name}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              reference={cpfRef}
               label="CPF:"
-              maxLength="14"
               id="cpf"
               name="cpf"
+              maxLength={14}
+              minLength={14}
               value={form.cpf}
-              onChange={(e) => handleChange(e)}
+              mask="CPF"
+              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+              onChange={handleChange}
             />
-            {errors.cpf && <span className='invalid'>Digite um CPF válido!</span>}
+            {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              reference={emailRef}
               label="Email:"
-              maxLength="40"
               id="email"
               name="email"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              value={form.email}
+              onChange={handleChange}
             />
-            {errors.email && <span className='invalid'>Digite um Email válido!</span>}
+            {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
+
           <p>
             <CustomInput
               type="text"
-              reference={confEmailRef}
               label="Confirme seu Email:"
-              maxLength="40"
               id="confEmail"
               name="confEmail"
-              onChange={(e) => handleChange(e)}
+              maxLength={40}
+              value={form.confEmail}
+              onChange={handleChange}
             />
-            {errors.confEmail && <span className='invalid'>O Email precisa ser verificado</span>}
+            {errors.confEmail && <span className='invalid'>{errors.confEmail}</span>}
           </p>
+
           <p>
             <CustomInput
-              type="password"
-              reference={pwdRef}
+              type={showPassword ? "text" : "password"}
               label="Senha:"
-              maxLength="16"
               id="password"
               name="password"
-              onChange={(e) => handleChange(e)}
+              minLength={8}
+              maxLength={16}
+              value={form.password}
+              onChange={handleChange}
             />
-            {errors.password && <span className='invalid'>Digite uma Senha válida! (Com no mínimo 8 caracteres)</span>}
+            {showPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={togglePasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={togglePasswordVisibility} />
+            }
+            {errors.password && <span className='invalid'>{errors.password}</span>}
           </p>
+
           <p>
             <CustomInput
-              type="password"
-              reference={confPwdRef}
+              type={showConfPassword ? "text" : "password"}
               label="Confirme sua Senha:"
-              maxLength="16"
               id="confPassword"
               name="confPassword"
-              onChange={(e) => handleChange(e)}
+              maxLength={16}
+              value={form.confPassword}
+              onChange={handleChange}
             />
-            {errors.confPassword && <span className='invalid'>A Senha precisa ser verificada</span>}
+            {showConfPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={toggleConfPasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={toggleConfPasswordVisibility} />
+            }
+            {errors.confPassword && <span className='invalid'>{errors.confPassword}</span>}
           </p>
         </div>
         

@@ -1,85 +1,118 @@
-import React, { useState, useRef } from 'react';
-import { Flipper, Flipped } from 'react-flip-toolkit';
-import { CustomInput } from '../../../../components/inputs/Inputs';
+import React, { useState } from 'react';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.scss';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
-export function LoginForm({ onLogin, onCadastroClick }) {
+export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-
-  const [flipKey, setFlipKey] = useState(0);
-
-  const emailRef = useRef();
-  const pwdRef = useRef();
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Evitar que o formulário seja submetido
-    onLogin(form.email, form.password); // Acesso aos valores do estado form
+    e.preventDefault();
+  
+    let newErrors = {};
+  
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email || !form.email.match(emailRegex)) {
+      errors.email = 'Digite um Email válido';
+    } 
+  
+    if (!form.password || form.password.length < 8) {
+      newErrors.password = 'A Senha deve ter no mínimo 8 caracteres';
+    }
+  
+    setErrors(newErrors);
+  
+    console.log('Erros:', newErrors);
+  
+    if (Object.keys(newErrors).length === 0) {
+      // Lógica de envio do formulário aqui
+      console.log('Dados do formulário:', form);
+      toast.success(`Bem Vindo de volta!`);
+
+      onLogin(form.email, form.password);
+    }
   };
 
   const handleCadastroClick = () => {
     onCadastroClick();
-    setFlipKey(prevKey => prevKey + 1);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
-    <Flipper flipKey={flipKey}>
-      <Flipped flipId="login-container">
-        <div className="login-form-container">
-          <div className="loginCredencial">
-            <h2>Entre com sua Conta do Google</h2>
-            <div className="btnCredencials">  
-              <button></button>
-            </div>
-          </div>
-
-          <div className='containerSeparate'>
-            <hr />
-            <h3>OU</h3>
-            <hr />
-          </div>
-
-          <form onSubmit={handleLogin} className="login">
-            <h2>Digite seu Email e sua Senha</h2>
-            <div className="inputsLogin">
-
-              <CustomInput 
-                type="text" 
-                reference={emailRef} 
-                label="Email:"
-                id="email"
-                name="email"
-                value={form.email}
-                onBlur={(e) => handleChange(e)}
-              />
-              <CustomInput 
-                type="password" 
-                reference={pwdRef} 
-                label="Senha:"
-                id="password"
-                name="password"
-                value={form.password}
-                onBlur={(e) => handleChange(e)}
-              />
-            </div>
-
-            <div className="btnLoginForm">
-              <button type='submit'>Entrar</button>
-              <button type='button' onClick={onCadastroClick}>Cadastre-se</button>
-            </div>
-          </form>
+    <section className="login-form-container">
+      <div className="loginCredencial">
+        <h2>Entre com sua Conta do Google</h2>
+        <div className="btnCredencials">  
+          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
         </div>
-      </Flipped>
-    </Flipper>
+      </div>
+
+      <div className='containerSeparate'>
+        <hr />
+        <h3>OU</h3>
+        <hr />
+      </div>
+
+      <form onSubmit={handleLogin} className="login">
+        <h2>Digite seu Email e sua Senha</h2>
+        <div className="inputsLogin">
+          <p>
+            <CustomInput
+              type="text"
+              label="Email:"
+              id="email"
+              name="email"
+              maxLength={40}
+              value={form.email}
+              onChange={handleChange}
+            />
+            {errors.email && <span className='invalid'>{errors.email}</span>}
+          </p>
+
+          <p>
+            <CustomInput
+              type={showPassword ? "text" : "password"}
+              label="Senha:"
+              id="password"
+              name="password"
+              minLength={8}
+              maxLength={16}
+              value={form.password}
+              onChange={handleChange}
+            />
+            {showPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={togglePasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={togglePasswordVisibility} />
+            }
+            {errors.password && <span className='invalid'>{errors.password}</span>}
+          </p>
+        </div>
+
+        <div className="btnLoginForm">
+          <button type='submit'>Entrar</button>
+          <button type='button' onClick={onCadastroClick}>Cadastre-se</button>
+        </div>
+      </form>
+    </section>
   );
 };
