@@ -40,7 +40,7 @@ export default function MenuFavorite({ onClose }) {
                         <li key={index} className='productFav' onClick={() => handleFavorites(favorite.id)}>
                             <img src={favorite.image} alt={favorite.name} />
                             <div className='containerInfosFav'>
-                                <MdFavorite className='iconFav' onClick={() => removeFromFavorites(index)} />
+                                <MdFavorite className='iconFav' onClick={(e) => {removeFromFavorites(index); e.stopPropagation();}} />
                                 <h3>{favorite.name}</h3>
                                 <p>{BRL.format(favorite.price)}</p>
                             </div>
