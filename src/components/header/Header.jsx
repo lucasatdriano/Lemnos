@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import './header.scss'
 import MenuDep from './components/menuDep/MenuDep';
 import MenuSearch from './components/searchMenu/MenuSearch';
@@ -6,6 +6,7 @@ import MenuFavorite from './components/favoriteMenu/MenuFavorite';
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from "react-icons/ri";
 
+// eslint-disable-next-line react/prop-types
 export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
     const [showFavoriteMenu, setShowFavoriteMenu] = useState(false);

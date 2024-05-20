@@ -93,13 +93,13 @@ $font-items: 'Poppins', Helvetica;
         .categorias {
             display: flex;
             flex-direction: column;
-            // justify-content: center;
+            justify-content: center;
             // align-items: center;
             width: 100%;
 
             .filterDeps {
                 display: flex;
-                // justify-content: center;
+                justify-content: center;
                 // align-items: center;
                 width: 100%;
                 padding: 8px 10px;
@@ -117,14 +117,14 @@ $font-items: 'Poppins', Helvetica;
                 width: 100%;
                 padding: 5px 0 10px 0;
                 display: flex;
-                // justify-content: center;
+                justify-content: center;
                 // align-items: center;
                 flex-direction: column;
                 text-align: left;
 
                 .link {
                     display: flex;
-                    // justify-content: center;
+                    justify-content: center;
                     gap: .5em;
                     align-items: center;
                     padding: 10px 10px 5px;
