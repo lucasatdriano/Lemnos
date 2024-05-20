@@ -65,7 +65,8 @@ $font-items: 'Poppins', Helvetica;
         overflow-x: hidden;
         overflow-y: auto;
         animation: menuDep 0.5s ease-in-out forwards;
-        
+        width: 20%;
+
         &.active {
             display: flex;
             align-items: center;
@@ -80,11 +81,6 @@ $font-items: 'Poppins', Helvetica;
             filter: drop-shadow( 4px 4px 4px $color-shadow);
         }
 
-        .hrMenu {
-            width: 100%;
-            border: 1.5px solid $color-primaryLight;
-        }
-
         h3 {
             font-family: $font-title;
             font-size: 2.4rem;
@@ -92,25 +88,24 @@ $font-items: 'Poppins', Helvetica;
             width: 100%;
             text-align: center;
             box-shadow: 0 1px 10px $color-shadow;
-            animation: modal 0.8s ease-in;
         }
 
         .categorias {
             display: flex;
             flex-direction: column;
-            padding: 5px 0 10px 0;
+            // justify-content: center;
+            // align-items: center;
+            width: 100%;
 
             .filterDeps {
-                padding: 8px 3em 8px 10px;
+                display: flex;
+                // justify-content: center;
+                // align-items: center;
+                width: 100%;
+                padding: 8px 10px;
                 color: $color-fontDark;
                 font-size: 2rem;
                 transition: .3s ease-in;
-                cursor: pointer;
-                
-                &:hover {
-                    background-color: $color-secundaryDark;
-                    text-decoration: underline;
-                }
             }
         }
 
@@ -122,11 +117,14 @@ $font-items: 'Poppins', Helvetica;
                 width: 100%;
                 padding: 5px 0 10px 0;
                 display: flex;
+                // justify-content: center;
+                // align-items: center;
                 flex-direction: column;
                 text-align: left;
-                
+
                 .link {
                     display: flex;
+                    // justify-content: center;
                     gap: .5em;
                     align-items: center;
                     padding: 10px 10px 5px;
@@ -137,128 +135,22 @@ $font-items: 'Poppins', Helvetica;
 
                     &:hover {
                         background-color: $color-secundaryDark;
-                        text-decoration: underline; 
-                    }
-
-                    [class*=Icon] {
-                        width: 28px;
-                        height: 28px;
                     }
                 }
             }
         }
+    }
+}
 
-        .toggleTheme {
-            display: flex;
-            padding: 0 0 10px;
-            justify-content: center;
-            position: relative;
-        
-            .checkbox {
-                cursor: pointer;
-                position: absolute;
-                top: 0;
-                z-index: 99;
-                width: 8em;
-                height: 3em;
-                opacity: 0;
-
-                &:checked + .label .ball {
-                    transform: translateX(63px);
-                }
-
-                &:checked + .label .iconMoon {
-                    transform: translateY(88%);
-                    color: $color-fontLight;
-                }
-
-                &:checked + .label .iconSun {
-                    transform: translateY(-175%);
-                    color: $color-fontDark;
-                }
-            }
-            
-            .label {
-                cursor: pointer;
-                display: block;
-                width: 100px;
-                height: 36px;
-                background-color: $color-secundaryDark;
-                border-radius: 20px;
-                position: relative;
-                box-shadow: 2px 2px 4px $color-shadow;
-                overflow: hidden;
-        
-                .ball {
-                    width: 28px;
-                    height: 28px;
-                    background-color: $color-primaryLight;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 4px;
-                    left: 4px;
-                    transition: transform 0.5s ease;
-                }
-
-                .iconSun {
-                    position: absolute;
-                    z-index: 10;
-                    color: $color-fontLight;
-                    width: 26px;
-                    height: 26px;
-                    left: 5px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
-                }
-                
-                .iconMoon {
-                    position: absolute;
-                    z-index: 10;
-                    color:$color-fontDark;
-                    width: 26px;
-                    height: 26px;
-                    right: 5px;
-                    top: -50%;
-                    transform: translateY(-50%);
-                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
-                }
-            }
+@media only screen and (max-width: 1400px) {
+    .menuCat {
+        .menu {
+            width: 30%;
         }
     }
 }
 
-@keyframes menuDep {
-    to {
-        transform: translateX(5.75em);
-        opacity: 1;
-    }
-}
-@keyframes menuDepFixed {
-    to {
-        transform: translateX(9.75em);
-        opacity: 1;
-    }
-}
-
-@keyframes modal {
-    to {
-        opacity: 1;
-    }
-}
-
-.shrink {
-    .modal {
-        left: -5em;
-    }
-
-    .menu {
-        left: -10em;
-        padding: 0 0 0 2em;
-    }
-}
-
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1000px) {
     .menuCat {    
         .menuButton {
             .menuIcon {
@@ -267,11 +159,10 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .menu {
-            padding: 10em 0 5em 1.25em;
+            width: 45%;
 
             .logoMenu {
                 width: clamp(4em, 4em + 10vw, 4.5em);
-                height: clamp(4em, 4em + 10vh, 4.5em);
             }
         }
     }
