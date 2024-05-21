@@ -41,36 +41,40 @@ $font-items: 'Poppins', Helvetica;
       width: 90%;
       display: flex;
       justify-content: center;
-      padding: 1em 0;
-      gap: 15em;
+      // margin-top: -2em;
+      gap: 2em;
 
       .containerImages {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 0em;
-        width: clamp(25vw, 25vw + 100em, 30vw);
+        gap: .5em;
+        width: 50%;
         padding: 2em 0;
 
         .imageMain {
           border-radius: 15px;
-          width: clamp(35em, 35em + 2vw, 45em);
-          height: clamp(35em, 35em + 2vw, 45em);
+          width: 100%;
+          max-width: 40em;
+          height: 75%;
+          max-height: 40em;
+          min-height: 40em;
           cursor: pointer;
           box-shadow: 2px 2px 10px $color-shadow;
         }
 
         .optionsImages {
           display: flex;
+          width: 100%;
+          max-width: 40em;
           gap: 1em;
-          padding: .25em;
 
           img {
             border-radius: 10px;
-            // object-fit: contain;
-            width: clamp(3em, 30vw, 7.5em);
-            height: clamp(3em, 30vh, 7.5em);
+            object-fit: contain;
+            width: 25%;
+            height: clamp(3em, 30vh, 9em);
             cursor: pointer;
             box-shadow: 2px 2px 10px $color-shadow;
           }
@@ -78,7 +82,7 @@ $font-items: 'Poppins', Helvetica;
       }
 
       .containerInfos {
-        width: clamp(30vw, 20vw + 100em, 40vw);
+        width: 50%;
         display: flex;
         flex-direction: column;
         align-self: center;

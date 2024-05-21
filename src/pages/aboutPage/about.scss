@@ -43,11 +43,10 @@ main {
             gap: 2em;
             display: flex;
             align-items: center;
-            text-align: justify;
 
             p {
-                width: 50%;
-                text-wrap: balance;
+                width: 75%;
+                word-spacing: 5px;
                 font-size: 2rem;
             }
 
@@ -80,8 +79,10 @@ main {
                 width: 30vw;
                 height: 20em;
                 padding: 10px;
-                text-align: justify;
+                // text-align: justify;
+                text-align: center;
                 border-radius: 20px;
+                word-spacing: 5px;
                 letter-spacing: 1.5px;
                 overflow: hidden;
                 box-shadow: 4px 4px 8px $color-shadow;
