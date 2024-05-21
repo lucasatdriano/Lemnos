@@ -40,7 +40,7 @@ export default function MenuFavorite({ onClose }) {
                 {favorites.length === 0 ? (
                     <div className="emptyFavMessage">
                         <h2 className='textEmpty'>Você não tem nenhum item adicionado aos Favoritos.</h2>
-                        <button className='btnBack' onClick={() => navigate('/productFilter')}>Adicione itens aos Favoritos</button>
+                        <button className='btnBack' onClick={(e) => {navigate('/productFilter'); onClose();}}>Adicione itens aos Favoritos</button>
                     </div>
                 ) : (
                     <ul className='listaFavoritos'>
