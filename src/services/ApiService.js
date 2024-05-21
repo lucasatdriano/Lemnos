@@ -1,27 +1,16 @@
 import axios from 'axios';
+import { tratarDados } from '../utils';
 
-const ApiService = {
-  fetchData: async (endpoint) => {
-    try {
-      const response = await axios.get(endpoint);
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao buscar dados da API:', error);
-      throw error;
-    }
-  },
+const baseUri = "http://localhost:8080/api";
 
-  submitData: async (endpoint, data) => {
-    try {
-      const response = await axios.post(endpoint, data);
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao enviar dados para a API:', error);
-      throw error;
-    }
-  },
-
-  // Outras funções aqui
-};
-
-export default ApiService;
+export default function cadastrarCliente(cliente) {
+    cliente = tratarDados(cliente);
+    
+    return axios.post(baseUri + "/cadastro/cliente", {
+        nome: cliente.nome,
+        telefone: cliente.telefone,
+        cpf: cliente.cpf,
+        email: cliente.email,
+        senha: cliente.senha
+    });
+}

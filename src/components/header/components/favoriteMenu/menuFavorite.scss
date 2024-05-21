@@ -14,6 +14,7 @@ $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
+$color-card: #f6fefd4d;
 
 $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
@@ -71,6 +72,52 @@ $font-items: 'Poppins', Helvetica;
         width: 50%;
         height: 0;
         border: 2px solid $color-primaryLight;
+      }
+    }
+
+    .emptyFavMessage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: $color-card;
+      margin: 3em auto;
+      width: 90%;
+      gap: 1em;
+      padding: 2em 0;
+      border-radius: 15px;
+      box-shadow: 0 0 8px $color-shadow;
+
+      .textEmpty {
+        font-family: $font-title;
+        font-size: 3.6rem;
+        font-size: clamp(2.6rem, 1rem + 1vw, 3.6rem);
+      }
+
+      .btnBack {
+        font-family: $font-items;
+        border: none;
+        padding: .75em 1.5em;
+        border-radius: 10px;
+        background: $color-primaryLight;
+        box-shadow: 0 0 8px $color-shadow;
+        font-size: 2.4rem;
+        cursor: pointer;
+        position: relative;
+        transition: .2s ease;
+
+        &:hover {
+          filter: brightness(.9);
+          box-shadow: 5px 10px 5px $color-shadow;
+          transform: rotateX(15deg);
+          top: 0px;
+        }
+
+        &:active {
+          transform: rotateX(15deg);
+          top: 5px;
+          box-shadow: 2px 5px 5px $color-shadow;
+        }
       }
     }
 

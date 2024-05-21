@@ -152,7 +152,7 @@ export default function Cart() {
                 {carrinho.length === 0 ? (
                     <div className="emptyCartMessage">
                         <h2 className='textEmpty'>O seu carrinho está vazio.</h2>
-                        <button className='btnBackBuy' onClick={() => navigate('/')}>Voltar para às compras</button>
+                        <button className='btnBackBuy' onClick={() => navigate('/productFilter')}>Voltar para às compras</button>
                     </div>
                 ) : (
                     <ul className='listCart'>

@@ -2,29 +2,31 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menuFavorite.scss';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import { RiHeartLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
     const dropDownRef = useRef(null);
-    const [isActive, setIsActive] = useState(false);
-    const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-
     const [favorites, setFavorites] = useState([
         { id: 1, name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)', image: 'img', price: 10.99 },
         { id: 2, name: "Produto 2", image: "caminho/para/imagem2.jpg", price: 19.99 }
     ]);
+    const [removingIndex, setRemovingIndex] = useState(null);
 
     const removeFromFavorites = (index) => {
-        const updatedFavorites = [...favorites];
-        updatedFavorites.splice(index, 1);
-        setFavorites(updatedFavorites);
+        setRemovingIndex(index);
+        setTimeout(() => {
+            const updatedFavorites = [...favorites];
+            updatedFavorites.splice(index, 1);
+            setFavorites(updatedFavorites);
+            setRemovingIndex(null);
+        }, 250);
     };
 
-    const handleFavorites = (id) => {
-        navigate(`/product/${id}`);
-    }
+    const handleFavorites = (index) => {
+        removeFromFavorites(index);
+        onClose();
+    };
 
     return (
         <div onClick={onClose} className='modal'>
@@ -35,18 +37,29 @@ export default function MenuFavorite({ onClose }) {
                     <h2>Meus Favoritos</h2>
                     <hr />
                 </div>
-                <ul className='listaFavoritos'>
-                    {favorites.map((favorite, index) => (
-                        <li key={index} className='productFav' onClick={() => handleFavorites(favorite.id)}>
-                            <img src={favorite.image} alt={favorite.name} />
-                            <div className='containerInfosFav'>
-                                <MdFavorite className='iconFav' onClick={(e) => {removeFromFavorites(index); e.stopPropagation();}} />
-                                <h3>{favorite.name}</h3>
-                                <p>{BRL.format(favorite.price)}</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {favorites.length === 0 ? (
+                    <div className="emptyFavMessage">
+                        <h2 className='textEmpty'>Você não tem nenhum item adicionado aos Favoritos.</h2>
+                        <button className='btnBack' onClick={() => navigate('/productFilter')}>Adicione itens aos Favoritos</button>
+                    </div>
+                ) : (
+                    <ul className='listaFavoritos'>
+                        {favorites.map((favorite, index) => (
+                            <li key={index} className='productFav' onClick={() => handleFavorites(index)}>
+                                <img src={favorite.image} alt={favorite.name} />
+                                <div className='containerInfosFav'>
+                                    {removingIndex === index ? (
+                                        <MdFavoriteBorder className='iconFav' />
+                                    ) : (
+                                        <MdFavorite className='iconFav' onClick={(e) => {removeFromFavorites(index); e.stopPropagation();}} />
+                                    )}
+                                    <h3>{favorite.name}</h3>
+                                    <p>{favorite.price}</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     )

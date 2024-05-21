@@ -40,9 +40,11 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     };
 
     const errors = {};
-    
+
     if (!form.name) {
-      errors.name = 'O campo Senha é obrigatório';
+      errors.name = 'O campo Nome é obrigatório';   
+    } else if (/\d/.test(form.name)) {
+      errors.name = 'O campo Nome não pode conter números';
     }
 
    const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
@@ -72,15 +74,11 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     console.log('Erros:', errors);
 
     if (Object.keys(errors).length === 0) {
-      // Lógica de envio do formulário aqui
       console.log('Dados do formulário:', form);
-      toast.success('Cadastrado realizado!!');
-      handleBackToLogin();
+      delete formattedForm.confPassword;
+      delete formattedForm.confEmail;
+      onCadastroSuccess(formattedForm);
     }
-  };
-
-  const handleBackToLoginClick = () => {
-    handleBackToLogin();
   };
 
   const togglePasswordVisibility = () => {
