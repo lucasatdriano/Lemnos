@@ -19,10 +19,6 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const formatCPFToNumbers = (cpf) => {
-    return cpf.replace(/\D/g, '');
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prevForm => ({
@@ -36,7 +32,6 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
     const formattedForm = {
       ...form,
-      cpf: formatCPFToNumbers(form.cpf),
     };
 
     const errors = {};
@@ -48,7 +43,7 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     }
 
    const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
-    if (!formattedForm.cpf.match(cpfRegex)) {
+    if (!form.cpf.match(cpfRegex)) {
       errors.cpf = 'Digite um CPF válido';
     }
 
@@ -74,10 +69,10 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     console.log('Erros:', errors);
 
     if (Object.keys(errors).length === 0) {
-      console.log('Dados do formulário:', form);
       delete formattedForm.confPassword;
       delete formattedForm.confEmail;
       onCadastroSuccess(formattedForm);
+      console.log('Dados do formulário:', formattedForm);
     }
   };
 

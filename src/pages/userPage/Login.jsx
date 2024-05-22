@@ -11,25 +11,25 @@ export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLoginForm , setShowLoginForm] = useState(true);
   
-  const handleRegistrationSuccess = (form) => {
+  const handleRegistrationSuccess = async (form) => {
     const firstName = form.name.split(" ")[0];
+
+    form.cpf = form.cpf.substring(0, 3) + form.cpf.substring(4, 7) + form.cpf.substring(8, 11) + form.cpf.substring(12);
+
     const formattedForm = {
-      name: form.name,
-      cpf: form.cpf,
-      email: form.email,
-      password: form.password,
+        name: form.name,
+        cpf: form.cpf,
+        email: form.email,
+        password: form.password,
     };
 
-    cadastrarCliente(formattedForm)
-      .then(() => {
-        toast.success('Cadastrado realizado!!', firstName);
-        handleBackToLogin();
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar:", error);
-        toast.error('Erro ao cadastrar. Por favor, tente novamente.');
-      });
-  };
+    try {
+        await cadastrarCliente(formattedForm);
+        toast.success(`Cadastro realizado, ${firstName}!!`);
+    } catch (error) {
+        toast.error(`${error.message}`);
+    }
+};
   
   const handleLogin = () => {
     // api
