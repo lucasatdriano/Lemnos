@@ -41,11 +41,8 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     console.log('Erros:', newErrors);
   
     if (Object.keys(newErrors).length === 0) {
-      // Lógica de envio do formulário aqui
       console.log('Dados do formulário:', form);
-      toast.success(`Bem Vindo de volta!`);
-
-      onLogin(form.email, form.password);
+      onLogin({ email: form.email, password: form.password });
     }
   };
 

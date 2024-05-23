@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import ToolTip from '../../../../components/tooltip/ToolTip';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import EmailModal from './components/modals/EmailModal';
@@ -14,6 +17,7 @@ import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import './user.scss';
+import { cadastrarFuncionario } from '../../../../services/ApiService';
 
 export default function User({ onLogout }) {
   const [admin, setAdmin] = useState(false);
@@ -147,15 +151,20 @@ export default function User({ onLogout }) {
     console.log("Endereço salvo:", enderecoData);
   };
 
-  const handleAddProdutoSave = (produtoData) => {
+  const handleAddProduto = (produtoData) => {
     console.log("Produto adicionado:", produtoData);
   };
 
-  const handleAddFuncionarioSave = (funcionarioData) => {
-    console.log("Funcionário adicionado:", funcionarioData);
+  const handleAddFuncionario = async (funcionario) => {
+    try {
+      await cadastrarFuncionario(funcionario);
+      toast.success(`Funcionário Cadastrado Com Sucesso!!`);
+    } catch (error) {
+      toast.error(`${error.message}`);
+    }
   };
-
-  const handleAddFornecedorSave = (fornecedorData) => {
+  
+  const handleAddFornecedor = (fornecedorData) => {
     console.log("Fornecedor adicionado:", fornecedorData);
   };
 
@@ -248,15 +257,15 @@ export default function User({ onLogout }) {
         )}
 
         {showAddProdutoModal && (
-          <AddProdutoModal onSave={handleAddProdutoSave} onClose={() => handleCloseModal('addProduto')} />
+          <AddProdutoModal onSave={handleAddProduto} onClose={() => handleCloseModal('addProduto')} />
         )}
 
         {showAddFuncionarioModal && (
-          <AddFuncionarioModal onSave={handleAddFuncionarioSave} onClose={() => handleCloseModal('addFuncionario')} />
+          <AddFuncionarioModal onAddFunc={handleAddFuncionario} onClose={() => handleCloseModal('addFuncionario')} />
         )}
 
         {showAddFornecedorModal && (
-          <AddFornecedorModal onSave={handleAddFornecedorSave} onClose={() => handleCloseModal('addFornecedor')} />
+          <AddFornecedorModal onSave={handleAddFornecedor} onClose={() => handleCloseModal('addFornecedor')} />
         )}
     </section>
   );

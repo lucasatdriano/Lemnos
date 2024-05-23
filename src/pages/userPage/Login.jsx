@@ -5,7 +5,7 @@ import './login.scss';
 import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
-import cadastrarCliente from '../../services/ApiService'; 
+import { cadastrarCliente, logarUsuario } from '../../services/ApiService'; 
 
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -17,22 +17,29 @@ export default function Login() {
     form.cpf = form.cpf.substring(0, 3) + form.cpf.substring(4, 7) + form.cpf.substring(8, 11) + form.cpf.substring(12);
 
     const formattedForm = {
-        name: form.name,
-        cpf: form.cpf,
-        email: form.email,
-        password: form.password,
+      name: form.name,
+      cpf: form.cpf,
+      email: form.email,
+      password: form.password,
     };
 
     try {
-        await cadastrarCliente(formattedForm);
-        toast.success(`Cadastro realizado, ${firstName}!!`);
+      await cadastrarCliente(formattedForm);
+      toast.success(`Cadastro realizado, ${firstName}!!`);
+      handleBackToLogin();
     } catch (error) {
-        toast.error(`${error.message}`);
+      toast.error(`${error.message}`);
     }
-};
+  };
   
-  const handleLogin = () => {
-    // api
+    
+  const handleLogin = async (email, senha, id) => {
+    try {
+      const userData = await logarUsuario(email, senha, id);
+      toast.success(`Bem-vindo de volta, ${userData.nome}!`);
+    } catch (error) {
+      toast.error(`${error.message}`);
+    }
     setLoggedIn(true);
   };
 

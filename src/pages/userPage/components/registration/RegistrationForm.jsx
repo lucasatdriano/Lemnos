@@ -66,13 +66,10 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
 
     setErrors(errors);
 
-    console.log('Erros:', errors);
-
     if (Object.keys(errors).length === 0) {
       delete formattedForm.confPassword;
       delete formattedForm.confEmail;
       onCadastroSuccess(formattedForm);
-      console.log('Dados do formulário:', formattedForm);
     }
   };
 

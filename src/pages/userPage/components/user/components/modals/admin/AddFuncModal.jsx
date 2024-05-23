@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const situacao = ['Ativo', 'Inativo'];
 
@@ -49,20 +52,22 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
-export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
+export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
   const initialFormState = {
     nome: '',
     cpf: '',
     dataNasc: '',
     dataAdmissao: '',
     telefone: '',
-    cep: '',
-    nLogradouro: '',
-    complemento: '',
     situacao: 'Ativo',
+    email: '',
+    senha: '',
+    confSenha: '',
   };
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfPassword, setShowConfPassword] = useState(false);
   const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -111,17 +116,17 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
     if (!form.telefone) {
       newErrors.telefone = 'Telefone do funcionário é obrigatório';
     }
-    if (!form.cep) {
-      newErrors.cep = 'CEP do funcionário é obrigatório';
-    }
-    if (!form.nLogradouro) {
-      newErrors.nLogradouro = 'Número do logradouro é obrigatório';
-    }
-    if (!form.complemento) {
-      newErrors.complemento = 'Complemento é obrigatório';
-    }
     if (!form.situacao) {
       newErrors.situacao = 'Situação do funcionário é obrigatória';
+    }
+    if (!form.email) {
+      newErrors.email = 'Email é obrigatório';
+    }
+    if (!form.senha) {
+      newErrors.senha = 'Senha é obrigatória';
+    }
+    if (form.senha !== form.confSenha) {
+      newErrors.confSenha = 'As Senhas devem ser iguais';
     }
 
     setErrors(newErrors);
@@ -129,13 +134,31 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSave = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Dados do Funcionário:', form);
-      onSave(form);
-      setForm(initialFormState);
+        const formattedForm = {
+            ...form,
+            cpf: form.cpf.replace(/\D/g, ''),
+            telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+            dataNasc: formatarData(form.dataNasc),
+            dataAdmissao: formatarData(form.dataAdmissao)
+        };
+        delete formattedForm.situacao;
+        delete formattedForm.confSenha;
+
+        try {
+            await onAddFunc(formattedForm);
+            toast.success('Funcionário adicionado com sucesso!');
+            setForm(initialFormState);
+        } catch (error) {
+            toast.error('Erro ao adicionar funcionário.');
+        }
     }
+  };
+
+  const formatarData = (data) => {
+    return `${data.substring(8, 10)}/${data.substring(5, 7)}/${data.substring(0, 4)}`;
   };
 
   const handleUpdate = (e) => {
@@ -150,6 +173,13 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
 
   const isFuncSelected = () => {
     return selectedFunc !== null;
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfPasswordVisibility = () => {
+    setShowConfPassword(!showConfPassword);
   };
 
   return (
@@ -227,42 +257,51 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="CEP:"
-              id="cep"
-              name="cep"
-              mask='CEP'
-              minLength={9}
-              maxLength={9}
-              value={form.cep}
-              onChange={(e) => handleChange('cep', e.target.value)}
+              label="Email:"
+              id="email"
+              name="email"
+              maxLength={40}
+              value={form.email}
+              onChange={(e) => handleChange('email', e.target.value)}
             />
-            {errors.cep && <span className='invalid'>{errors.cep}</span>}
+            {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
 
           <p>
             <CustomInput
-              type="text"
-              label="Número do Logradouro:"
-              id="nLogradouro"
-              name="nLogradouro"
-              maxLength={10}
-              value={form.nLogradouro}
-              onChange={(e) => handleChange('nLogradouro', e.target.value)}
+              type={showPassword ? "text" : "password"}
+              label="Senha:"
+              id="password"
+              name="password"
+              minLength={8}
+              maxLength={16}
+              value={form.senha}
+              onChange={(e) => handleChange('senha', e.target.value)}
             />
-            {errors.nLogradouro && <span className='invalid'>{errors.nLogradouro}</span>}
+            {showPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={togglePasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={togglePasswordVisibility} />
+            }
+            {errors.senha && <span className='invalid'>{errors.senha}</span>}
           </p>
 
           <p>
             <CustomInput
-              type="text"
-              label="Complemento:"
-              id="complemento"
-              name="complemento"
-              maxLength={50}
-              value={form.complemento}
-              onChange={(e) => handleChange('complemento', e.target.value)}
+              type={showConfPassword ? "text" : "password"}
+              label="Confirme sua Senha:"
+              id="confPassword"
+              name="confPassword"
+              maxLength={16}
+              value={form.confSenha}
+              onChange={(e) => handleChange('confSenha', e.target.value)}
             />
-            {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
+            {showConfPassword ? 
+              <FaRegEyeSlash className='iconPwd' onClick={toggleConfPasswordVisibility} /> 
+            : 
+              <FaRegEye className='iconPwd' onClick={toggleConfPasswordVisibility} />
+            }
+            {errors.confSenha && <span className='invalid'>{errors.confSenha}</span>}
           </p>
 
           <p>
@@ -275,7 +314,7 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
               value={form.situacao}
               onFocus={handleDropdownToggle}
               onChange={(e) => {
-                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1); // Capitalize a primeira letra
+                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
                 handleChange('situacao', upperCaseValue);
                 handleSearch(upperCaseValue);
               }}
@@ -301,9 +340,10 @@ export default function FuncionarioModal({ onSave, onUpdate, onClose }) {
             )}
             {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
+
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleSave} disabled={isFuncSelected()}>Adicionar</button>
+          <button type='button' onClick={handleAdd} disabled={isFuncSelected()}>Adicionar</button>
           <button type='button' onClick={handleUpdate} disabled={!isFuncSelected()}>Atualizar</button>
           <button type='button' onClick={handleFuncionarioListToggle}>Mostrar Lista</button>
         </div>
