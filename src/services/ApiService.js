@@ -137,3 +137,19 @@ export async function cadastrarFornecedor(fornecedor) {
         }
     }
 }
+export async function listarFuncionarios() {
+    return axios.get(baseUri + "/funcionario")
+      .then(response => response)
+      .catch(error => {
+        throw error;
+      });
+}
+
+export async function selecionarFuncionario(id) {
+    try {
+      const response = await axios.get(`${baseUri}/funcionario/${id}`);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }

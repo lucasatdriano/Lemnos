@@ -40,6 +40,15 @@ export default function CustomInput({ type, reference, label, id, maxLength, min
     return '';
   };
 
+  const formatData = (value) => {
+    const cleanedValue = value.replace(/\D/g, '');
+    const match = cleanedValue.match(/^(\d{0,2})(\d{0,2})(\d{0,4})$/);
+    if (match) {
+      return !match[2] ? match[1] : `${match[1]}/${match[2]}${match[3] ? `/${match[3]}` : ''}`;
+    }
+    return '';
+  };
+
   const handleChange = (e) => {
     let formattedValue = e.target.value;
 
@@ -55,12 +64,15 @@ export default function CustomInput({ type, reference, label, id, maxLength, min
     else if (mask === "TEL") {
       formattedValue = formatTelefone(formattedValue);
     }
+    else if (mask === "DATA") {
+      formattedValue = formatData(formattedValue);
+    } 
 
     onChange({ target: { name, value: formattedValue }});
   };
 
   let inputMode;
-  if (mask === "CPF" || mask === "CEP" || mask === "CNPJ" || mask === "TEL" || mask === "NUMBERS") {
+  if (mask === "CPF" || mask === "CEP" || mask === "CNPJ" || mask === "TEL" || mask === "NUMBERS" || mask === "DATA") {
     inputMode = "numeric";
   }
   

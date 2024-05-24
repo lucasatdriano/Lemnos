@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
@@ -6,35 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { listarFuncionarios, selecionarFuncionario } from '../../../../../../../services/ApiService';
 
 const situacao = ['Ativo', 'Inativo'];
-
-const funcionarios = [
-  {
-    id: 1,
-    nome: 'João Silva',
-    cpf: '123.456.789-00',
-    dataNasc: '1990-01-01',
-    dataAdmissao: '2020-01-01',
-    telefone: '(11) 91234-5678',
-    cep: '12345-678',
-    nLogradouro: '123',
-    complemento: 'Apto 101',
-    situacao: 'Ativo',
-  },
-  {
-    id: 2,
-    nome: 'Maria Souza',
-    cpf: '987.654.321-00',
-    dataNasc: '1985-05-15',
-    dataAdmissao: '2018-03-10',
-    telefone: '(11) 98765-4321',
-    cep: '54321-876',
-    nLogradouro: '456',
-    complemento: 'Casa',
-    situacao: 'Inativo',
-  },
-];
 
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
@@ -73,28 +47,60 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
+  const [funcionarios, setFuncionarios] = useState([]);
 
-  const handleFuncionarioListToggle = () => {
-    setIsFuncionarioListOpen(!isFuncionarioListOpen);
-    setIsFuncionarioLoaded(false);
+  const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {
-      setSelectedFunc(null);
+      try {
+        console.log('Tentando listar funcionários...');
+        const response = await listarFuncionarios();
+        console.log('Resposta recebida:', response.data);
+        setFuncionarios(response.data);
+        setSelectedFunc(null);
+        setIsFuncionarioListOpen(true);
+      } catch (error) {
+        console.error('Erro ao carregar lista de funcionários:', error);
+        toast.error('Erro ao carregar lista de funcionários.');
+      }
+    } else {
+      setIsFuncionarioListOpen(false);
     }
   };
 
-  const selectFuncionario = (funcionario) => {
-    setForm(funcionario);
-    setIsFuncionarioListOpen(false);
-    setSelectedFunc(funcionario);
+  const selectFuncionario = async (id) => {
+    try {
+      console.log('Selecionando funcionário com ID:', id);
+      const response = await selecionarFuncionario(id);
+      const funcionario = response.data;
+
+      if (!funcionario) {
+        throw new Error('Dados do funcionário não encontrados na resposta da API.');
+      }
+
+      setForm({
+        ...form,
+        nome: funcionario.nome || '',
+        cpf: funcionario.cpf || '',
+        dataNasc: funcionario.dataNascimento || '',
+        dataAdmissao: funcionario.dataAdmissao || '',
+        telefone: funcionario.telefone || '',
+        situacao: funcionario.situacao || '',
+        email: funcionario.email || '',
+      });
+      setSelectedFunc(funcionario);
+    } catch (error) {
+      toast.error('Erro ao carregar dados do funcionário.');
+    }
   };
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
   };
-  
+
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  
   const handleSearch = (value) => {
     setSearchTerm(value);
   };
@@ -103,6 +109,8 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
     const newErrors = {};
     if (!form.nome) {
       newErrors.nome = 'Nome do funcionário é obrigatório';
+    } else if (/\d/.test(form.nome)) {
+      newErrors.nome = 'O campo Nome não pode conter números';
     }
     if (!form.cpf) {
       newErrors.cpf = 'CPF do funcionário é obrigatório';
@@ -125,7 +133,9 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
     if (!form.senha) {
       newErrors.senha = 'Senha é obrigatória';
     }
-    if (form.senha !== form.confSenha) {
+    if (!form.confSenha) {
+      newErrors.confSenha = 'Confirmar Senha é obrigatório';
+    } else if (form.senha !== form.confSenha) {
       newErrors.confSenha = 'As Senhas devem ser iguais';
     }
 
@@ -137,23 +147,21 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
   const handleAdd = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-        const formattedForm = {
-            ...form,
-            cpf: form.cpf.replace(/\D/g, ''),
-            telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
-            dataNasc: formatarData(form.dataNasc),
-            dataAdmissao: formatarData(form.dataAdmissao)
-        };
-        delete formattedForm.situacao;
-        delete formattedForm.confSenha;
+      const formattedForm = {
+        ...form,
+        cpf: form.cpf.replace(/\D/g, ''),
+        telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+        dataNasc: formatarData(form.dataNasc),
+        dataAdmissao: formatarData(form.dataAdmissao)
+      };
+      delete formattedForm.confSenha;
 
-        try {
-            await onAddFunc(formattedForm);
-            toast.success('Funcionário adicionado com sucesso!');
-            setForm(initialFormState);
-        } catch (error) {
-            toast.error('Erro ao adicionar funcionário.');
-        }
+      try {
+        await onAddFunc(formattedForm);
+        setForm(initialFormState);
+      } catch (error) {
+        toast.error('Erro ao adicionar funcionário.');
+      }
     }
   };
 
@@ -164,6 +172,15 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
   const handleUpdate = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      const formattedForm = {
+        ...form,
+        cpf: form.cpf.replace(/\D/g, ''),
+        telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+        dataNasc: formatarData(form.dataNasc),
+        dataAdmissao: formatarData(form.dataAdmissao)
+      };
+      delete formattedForm.confSenha;
+      
       console.log('Dados do Funcionário atualizados:', form);
       // onUpdate(form); no futuro
       setForm(initialFormState);
@@ -178,6 +195,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose }) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   const toggleConfPasswordVisibility = () => {
     setShowConfPassword(!showConfPassword);
   };

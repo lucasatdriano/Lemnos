@@ -147,8 +147,9 @@ $font-items: 'Poppins', Helvetica;
             padding: 2em 1.5em;
             border-radius: 15px;
 
-            ul {
+            .listItens {
                 text-align: left;
+                overflow-y: auto;
                 
                 .itemUpdate {
                     margin: .5em 0;

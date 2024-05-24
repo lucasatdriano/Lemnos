@@ -60,7 +60,9 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
       errors.password = 'A Senha deve ter no mínimo 8 caracteres';
     }
 
-    if (form.password !== form.confPassword) {
+    if (!form.confPassword) {
+      errors.confPassword = 'Confirmar Senha é obrigatório';
+    } else if (form.password !== form.confPassword) {
       errors.confPassword = 'As Senhas devem ser iguais';
     }
 
