@@ -178,7 +178,7 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
-        .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {
+        .modalProduto, .modalFuncionario, .modalFornecedor {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5em;
@@ -186,6 +186,10 @@ $font-items: 'Poppins', Helvetica;
 
             p {
                 position: relative;
+
+                #email {
+                    grid-row: span 2;
+                }
                   
                 .dropdown {
                     position: absolute;  

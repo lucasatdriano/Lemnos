@@ -28,11 +28,79 @@ export async function cadastrarCliente(cliente) {
         return response.data;
 
     } catch (error) {
-        if (error.response) {
-            const errorMsg = error.response.data.error || 'Erro desconhecido.';
-            throw new Error(errorMsg);
-        } else {
-            throw new Error('Erro desconhecido ao cadastrar cliente.');
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
+export async function cadastrarFuncionario(funcionario, tipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: `/cadastro/${tipoEntidade}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                nome: funcionario.nome,
+                cpf: funcionario.cpf,
+                telefone: funcionario.telefone,
+                dataNascimento: funcionario.dataNasc,
+                dataAdmissao: funcionario.dataAdmissao,
+                email: funcionario.email,
+                senha: funcionario.senha
+            }
+        });
+
+        if (response.status !== 201) {
+            throw new Error(`Erro ao cadastrar ${tipoEntidade}.`);
+        }
+        const funcionarioData = response.data;
+        toast.success('Funcionário cadastrado com sucesso')
+    
+        await cadastrarEndereco(funcionarioData.id, tipoEntidade, funcionario.endereco);
+
+        return funcionarioData;
+    
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+};
+
+export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: `/cadastro/${tipoEntidade}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                nome: fornecedor.nome,
+                cnpj: fornecedor.cnpj,
+                telefone: fornecedor.telefone,
+                email: fornecedor.email
+            }
+        });
+
+        if (response.status !== 201) {
+            throw new Error(`Erro ao cadastrar ${tipoEntidade}.`);
+        }
+        const fornecedorData = response.data;
+        toast.success('Fornecedor cadastrado com sucesso')
+
+        await cadastrarEndereco(fornecedorData.id, tipoEntidade, fornecedor.endereco);
+
+        return fornecedorData;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
         }
     }
 }
@@ -68,88 +136,81 @@ export async function logarUsuario(email, senha) {
     }
 }
 
-export async function cadastrarFuncionario(funcionario) {
+export async function selecionarCliente(id) {
     try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: "/cadastro/funcionario",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            data: {
-                nome: funcionario.nome,
-                cpf: funcionario.cpf,
-                telefone: funcionario.telefone,
-                dataNascimento: funcionario.dataNasc,
-                dataAdmissao: funcionario.dataAdmissao,
-                email: funcionario.email,
-                senha: funcionario.senha
-            }
-        });
-
-        if (response.status !== 201) {
-            throw new Error('Erro ao cadastrar funcionário.');
-        }
-
+        const response = await axios.get(`${baseUri}/cliente/${id}`);
         return response.data;
-
     } catch (error) {
-        if (error.response) {
-            const errorMsg = error.response.data.error || 'Erro desconhecido.';
-            throw new Error(errorMsg);
-        } else {
-            throw new Error('Erro desconhecido ao cadastrar funcionário.');
-        }
+        console.log(error)
     }
 }
 
-export async function cadastrarFornecedor(fornecedor) {
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: "/cadastro/fornecedor",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            data: {
-                nome: fornecedor.nome,
-                cnpj: fornecedor.cnpj,
-                telefone: fornecedor.telefone,
-                numeroLogradouro: fornecedor.numeroLogradouro,
-                email: fornecedor.email
-            }
-        });
-
-        if (response.status !== 201) {
-            throw new Error('Erro ao cadastrar fornecedor.');
-        }
-
-        return response.data;
-
-    } catch (error) {
-        if (error.response) {
-            const errorMsg = error.response.data.error || 'Erro desconhecido.';
-            throw new Error(errorMsg);
-        } else {
-            throw new Error('Erro desconhecido ao cadastrar fornecedor.');
-        }
-    }
-}
 export async function listarFuncionarios() {
-    return axios.get(baseUri + "/funcionario")
-      .then(response => response)
-      .catch(error => {
+    try {
+        const response = await axios.get(`${baseUri}/funcionario`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao listar funcionários:', error);
         throw error;
-      });
+    }
 }
 
 export async function selecionarFuncionario(id) {
     try {
-      const response = await axios.get(`${baseUri}/funcionario/${id}`);
-      return response;
+        const response = await axios.get(`${baseUri}/funcionario/${id}`);
+        return response.data;
     } catch (error) {
-      throw error;
+        throw new Error('Erro ao selecionar funcionário.');
     }
-  }
+}
+
+export async function listarFornecedores() {
+    try {
+        const response = await axios.get(`${baseUri}/fornecedor`);
+        return response.data;
+    } catch (error) {
+       toast.error(error.response.data.error)
+    }
+}
+
+export async function selecionarFornecedor(id) {
+    try {
+        const response = await axios.get(`${baseUri}/fornecedor/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: `/${tipoEntidade}/endereco`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                cep: endereco.cep,
+                numeroLogradouro: endereco.numLogradouro,
+                complemento: endereco.complemento
+            },
+            params: {
+                id: idEntidade
+            }
+        });
+
+        if (response.status !== 201) {
+            throw new Error('Erro ao cadastrar endereço.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        console.log(error)
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}

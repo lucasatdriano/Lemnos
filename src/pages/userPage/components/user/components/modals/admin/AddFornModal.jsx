@@ -45,7 +45,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
-export default function FornecedorModal({ onSave, onUpdate, onClose }) {
+export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
     email: '',

@@ -261,11 +261,11 @@ export default function User({ onLogout }) {
         )}
 
         {showAddFuncionarioModal && (
-          <AddFuncionarioModal onAddFunc={handleAddFuncionario} onClose={() => handleCloseModal('addFuncionario')} />
+          <AddFuncionarioModal tipoEntidade="funcionario" onAddFunc={handleAddFuncionario} onClose={() => handleCloseModal('addFuncionario')} />
         )}
 
         {showAddFornecedorModal && (
-          <AddFornecedorModal onSave={handleAddFornecedor} onClose={() => handleCloseModal('addFornecedor')} />
+          <AddFornecedorModal tipoEntidade="fornecedor" onSave={handleAddFornecedor} onClose={() => handleCloseModal('addFornecedor')} />
         )}
     </section>
   );
