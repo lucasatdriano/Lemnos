@@ -59,8 +59,6 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
         }
         const funcionarioData = response.data;
         toast.success('Funcionário cadastrado com sucesso')
-    
-        await cadastrarEndereco(funcionarioData.id, tipoEntidade, funcionario.endereco);
 
         return funcionarioData;
     
@@ -105,62 +103,12 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
     }
 }
 
-export async function logarUsuario(email, senha) {
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: `/cliente/${id}`,
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            data: {
-                email,
-                senha
-            }
-        });
-
-        if (response.status !== 200) {
-            throw new Error('Erro ao fazer login.');
-        }
-
-        return response.data;
-
-    } catch (error) {
-        if (error.response) {
-            const errorMsg = error.response.data.error || 'Erro desconhecido.';
-            throw new Error(errorMsg);
-        } else {
-            throw new Error('Erro desconhecido ao fazer login.');
-        }
-    }
-}
-
 export async function selecionarCliente(id) {
     try {
         const response = await axios.get(`${baseUri}/cliente/${id}`);
         return response.data;
     } catch (error) {
         console.log(error)
-    }
-}
-
-export async function listarFuncionarios() {
-    try {
-        const response = await axios.get(`${baseUri}/funcionario`);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao listar funcionários:', error);
-        throw error;
-    }
-}
-
-export async function selecionarFuncionario(id) {
-    try {
-        const response = await axios.get(`${baseUri}/funcionario/${id}`);
-        return response.data;
-    } catch (error) {
-        throw new Error('Erro ao selecionar funcionário.');
     }
 }
 
@@ -182,7 +130,7 @@ export async function selecionarFornecedor(id) {
     }
 }
 
-async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
+export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -204,7 +152,7 @@ async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
         if (response.status !== 201) {
             throw new Error('Erro ao cadastrar endereço.');
         }
-
+        
         return response.data;
 
     } catch (error) {

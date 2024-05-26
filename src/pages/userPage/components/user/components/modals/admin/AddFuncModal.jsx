@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
@@ -6,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { listarFuncionarios, selecionarFuncionario, cadastrarFuncionario } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco } from '../../../../../../../services/ApiService';
 
 const situacao = ['Ativo', 'Inativo'];
 
@@ -54,24 +55,25 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
+  const [nextId, setNextId] = useState(31); // mudar Aqui para 1
+  const baseUri = "http://localhost:8080/api";
 
   const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {
       try {
-        const response = await listarFuncionarios();
-        if (response) {
-          if (response.data) {
-            setFuncionarios(response.data);
-            setSelectedFunc(null);
-            setIsFuncionarioListOpen(true);
-          } else {
-            toast.error('Erro ao carregar lista de funcionários A.');
-          }
-        } else {
-          toast.error('Erro ao carregar lista de funcionários B.');
-        }
+        const response = await axios.get(`${baseUri}/funcionario`);
+        
+        const funcionariosComId = response.data.map((funcionario, index) => ({
+          ...funcionario,
+          id: index
+        }));
+      
+        setFuncionarios(funcionariosComId);
+        setSelectedFunc(null);
+        setIsFuncionarioListOpen(true);
       } catch (error) {
-        toast.error('Erro ao carregar lista de funcionários C.');
+        console.error('Erro ao listar funcionários:', error);
+        throw error;
       }
     } else {
       setIsFuncionarioListOpen(false);
@@ -80,22 +82,26 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
   const selectFuncionario = async (id) => {
     try {
-      const response = await selecionarFuncionario(id);
+      const response = await axios.get(`${baseUri}/funcionario/${id}`);
       const funcionario = response.data;
-
+  
       if (!funcionario) {
-        throw new Error('Dados do funcionário não encontrados na resposta da API.');
+        throw new Error('Dados do funcionário não encontrados.');
       }
-
+  
+      const formatDate = (dateString) => {
+        return new Date(dateString).toISOString().split('T')[0];
+      };
+  
       setForm({
         nome: funcionario.nome || '',
         cpf: funcionario.cpf || '',
-        dataNasc: funcionario.dataNasc || '',
-        dataAdmissao: funcionario.dataAdmissao || '',
+        dataNasc: formatDate(funcionario.dataNascimento) || '',
+        dataAdmissao: formatDate(funcionario.dataAdmissao) || '',
         telefone: funcionario.telefone || '',
         situacao: funcionario.situacao || '',
         email: funcionario.email || '',
-        senha: '',
+        senha: funcionario.senha || '',
         confSenha: '',
         endereco: funcionario.endereco || {
           cep: '',
@@ -104,8 +110,12 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         }
       });
       setSelectedFunc(funcionario);
+      setIsFuncionarioLoaded(true);
+      setIsFuncionarioListOpen(false);
     } catch (error) {
-      toast.error('Erro ao carregar dados do funcionário.', error.message);
+      console.error('Erro ao carregar dados do funcionário:', error);
+      toast.error('Erro ao carregar dados do funcionário.');
+      throw error;
     }
   };
 
@@ -122,33 +132,48 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   };
 
   const validateForm = () => {
+    const today = new Date();
+    const minBirthDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+  
     const newErrors = {};
 
     if (!form.nome) {
-      newErrors.nome = 'Nome do funcionário é obrigatório';
+      newErrors.nome = 'O Nome do funcionário é obrigatório';
     } else if (/\d/.test(form.nome)) {
-      newErrors.nome = 'O campo Nome não pode conter números';
+      newErrors.nome = 'O Nome não pode conter números';
     }
     if (!form.cpf) {
-      newErrors.cpf = 'CPF do funcionário é obrigatório';
+      newErrors.cpf = 'O CPF do funcionário é obrigatório';
     }
     if (!form.dataNasc) {
-      newErrors.dataNasc = 'Data de nascimento é obrigatória';
+      newErrors.dataNasc = 'A Data de nascimento é obrigatória';
+    } else {
+      const birthDate = new Date(form.dataNasc);
+      if (birthDate >= today) {
+        newErrors.dataNasc = 'A Data de nascimento não pode ser posterior a hoje';
+      } else if (birthDate > minBirthDate) {
+        newErrors.dataNasc = 'O funcionário deve ter pelo menos 16 anos de idade';
+      }
     }
     if (!form.dataAdmissao) {
-      newErrors.dataAdmissao = 'Data de admissão é obrigatória';
+      newErrors.dataAdmissao = 'A Data de admissão é obrigatória';
+    } else {
+      const admissionDate = new Date(form.dataAdmissao);
+      if (admissionDate > today) {
+        newErrors.dataAdmissao = 'A Data de admissão não pode ser posterior a hoje';
+      }
     }
     if (!form.telefone) {
-      newErrors.telefone = 'Telefone do funcionário é obrigatório';
+      newErrors.telefone = 'O Telefone do funcionário é obrigatório';
     }
     if (!form.situacao) {
-      newErrors.situacao = 'Situação do funcionário é obrigatória';
+      newErrors.situacao = 'A Situação do funcionário é obrigatória';
     }
     if (!form.email) {
-      newErrors.email = 'Email é obrigatório';
+      newErrors.email = 'O Email é obrigatório';
     }
     if (!form.senha) {
-      newErrors.senha = 'Senha é obrigatória';
+      newErrors.senha = 'A Senha é obrigatória';
     }
     if (!form.confSenha) {
       newErrors.confSenha = 'Confirmar Senha é obrigatório';
@@ -156,13 +181,10 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
       newErrors.confSenha = 'As Senhas devem ser iguais';
     }
     if (!form.endereco.cep) {
-      newErrors.cep = 'Cep é obrigatória';
+      newErrors.cep = 'O Cep é obrigatório';
     }
     if (!form.endereco.numLogradouro) {
-      newErrors.numLogradouro = 'Número de Logradouro é obrigatória';
-    }
-    if (!form.endereco.complemento) {
-      newErrors.complemento = 'Complemento é obrigatória';
+      newErrors.numLogradouro = 'O Número de Logradouro é obrigatório';
     }
 
     setErrors(newErrors);
@@ -172,7 +194,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    
+  
     if (validateForm()) {
       const formattedForm = {
         ...form,
@@ -183,19 +205,26 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         endereco: {
           ...form.endereco,
           cep: form.endereco.cep.replace(/\D/g, '')
-        }
+        },
+        id: nextId
       };
       delete formattedForm.confSenha;
   
       console.log(formattedForm);
-      
+  
       try {
-        await cadastrarFuncionario(formattedForm, tipoEntidade);
-        // setForm(initialFormState);
+        const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+
+        if (enderecoResponse && enderecoResponse.success) {
+          await cadastrarFuncionario(formattedForm, tipoEntidade);
+          
+          setNextId(prevId => prevId + 1);
+          setForm(initialFormState);
+        }
       } catch (error) {
-        toast.error('Erro ao adicionar funcionário.', error.message);
+        throw error;
       }
-    }
+    }  
   };
 
   const formatarData = (data) => {
@@ -228,7 +257,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const toggleConfPasswordVisibility = () => {
     setShowConfPassword(!showConfPassword);
   };
@@ -238,7 +266,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
         <h2>Adicionar/Atualizar Funcionário</h2>
         <div className="modalFuncionario">
-          <p>
+          <p className='inputNome'>
             <CustomInput
               type="text"
               label="Nome do Funcionário:"
@@ -268,6 +296,21 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
           <p>
             <CustomInput
+              type="text"
+              label="Telefone:"
+              id="telefone"
+              name="telefone"
+              mask="TEL"
+              minLength={15}
+              maxLength={15}
+              value={form.telefone}
+              onChange={(e) => handleChange('telefone', e.target.value)}
+            />
+            {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
+          </p>
+
+          <p>
+            <CustomInput
               type="date"
               label="Data de Nascimento:"
               id="dataNasc"
@@ -288,58 +331,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
               onChange={(e) => handleChange('dataAdmissao', e.target.value)}
             />
             {errors.dataAdmissao && <span className='invalid'>{errors.dataAdmissao}</span>}
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Telefone:"
-              id="telefone"
-              name="telefone"
-              mask="TEL"
-              minLength={15}
-              maxLength={15}
-              value={form.telefone}
-              onChange={(e) => handleChange('telefone', e.target.value)}
-            />
-            {errors.telefone && <span className='invalid'>{errors.telefone}</span>}
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Situação:"
-              id="situacao"
-              name="situacao"
-              maxLength={7}
-              value={form.situacao}
-              onFocus={handleDropdownToggle}
-              onChange={(e) => {
-                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
-                handleChange('situacao', upperCaseValue);
-                handleSearch(upperCaseValue);
-              }}
-              disabled={!isFuncionarioLoaded}
-            />
-            {isDropdownOpen ? 
-              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
-            : 
-              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
-            }
-            {isFuncionarioLoaded && (
-              <>
-                <Dropdown
-                  isOpen={isDropdownOpen}
-                  options={situacao}
-                  onSelect={(option) => {
-                    handleChange('situacao', option);
-                    setIsDropdownOpen(false);
-                  }}
-                  filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-                />
-              </>
-            )}
-            {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
           </p>
 
           <p>
@@ -383,6 +374,43 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
           </p>
 
           <p>
+            <CustomInput
+              type="text"
+              label="Situação:"
+              id="situacao"
+              name="situacao"
+              maxLength={7}
+              value={form.situacao}
+              onFocus={handleDropdownToggle}
+              onChange={(e) => {
+                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+                handleChange('situacao', upperCaseValue);
+                handleSearch(upperCaseValue);
+              }}
+              disabled={!isFuncionarioLoaded}
+            />
+            {isDropdownOpen ? 
+              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
+            : 
+              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
+            }
+            {isFuncionarioLoaded && (
+              <>
+                <Dropdown
+                  isOpen={isDropdownOpen}
+                  options={situacao}
+                  onSelect={(option) => {
+                    handleChange('situacao', option);
+                    setIsDropdownOpen(false);
+                  }}
+                  filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+                />
+              </>
+            )}
+            {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
+          </p>
+
+          <p className='inputEmail'>
             <CustomInput
               type="text"
               label="Email:"

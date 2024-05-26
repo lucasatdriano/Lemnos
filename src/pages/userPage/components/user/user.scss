@@ -157,6 +157,7 @@ $font-items: 'Poppins', Helvetica;
                     font-family: $font-items;
                     cursor: pointer;
                     border-bottom: 2px solid $color-primaryLight;
+                    width: 100%;
                 }
             }
     
@@ -182,14 +183,15 @@ $font-items: 'Poppins', Helvetica;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5em;
-            padding: 1.5em 2em;
+            padding: .5em 2em 1em;
+            width: 100%;
+
+            .inputNome, .inputEmail {
+                grid-column: span 2;
+            }
 
             p {
-                position: relative;
-
-                #email {
-                    grid-row: span 2;
-                }
+                position: relative; 
                   
                 .dropdown {
                     position: absolute;  

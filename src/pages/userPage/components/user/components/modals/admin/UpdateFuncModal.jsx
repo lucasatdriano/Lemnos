@@ -11,6 +11,7 @@ export default function UpdateFuncModal({ funcionarios, onSelect, onClose }) {
             <li className='itemUpdate' key={index} onClick={() => onSelect(funcionario.id)}>
               <p><span>Nome: </span>{funcionario.nome}</p> 
               <p><span>Email: </span>{funcionario.email}</p>
+              <p><span>Situação: </span>{funcionario.situacao}</p>
             </li>
           ))}
         </ul>

@@ -5,7 +5,7 @@ import './login.scss';
 import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
-import { cadastrarCliente, logarUsuario } from '../../services/ApiService'; 
+import { cadastrarCliente } from '../../services/ApiService'; 
 
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -33,18 +33,11 @@ export default function Login() {
   };
   
     
-  const handleLogin = async (email, senha, id) => {
-    try {
-      const userData = await logarUsuario(email, senha, id);
-      toast.success(`Bem-vindo de volta, ${userData.nome}!`);
-    } catch (error) {
-      toast.error(`${error.message}`);
-    }
+  const handleLogin = () => {
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
-    // api
     setLoggedIn(false);
   };
 

@@ -7,9 +7,10 @@ export default function UpdateFornModal({ fornecedores, onSelect, onClose }) {
       <div className="containerModal">
         <h2>Lista de Fornecedores</h2>
         <ul className='listItens'>
-          {fornecedores.map((fornecedor, index) => (
+          {fornecedores && fornecedores.map((fornecedor, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(fornecedor)}>
-              {fornecedor.nome}
+              <p><span>Fornecedor: </span>{fornecedor.nome}</p> 
+              <p><span>Email: </span>{fornecedor.email}</p>
             </li>
           ))}
         </ul>
