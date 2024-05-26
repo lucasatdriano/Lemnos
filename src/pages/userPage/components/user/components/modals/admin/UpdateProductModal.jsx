@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoClose } from "react-icons/io5";
 
 export default function UpdateProductModal({ produtos, onSelect, onClose }) {
@@ -7,9 +6,13 @@ export default function UpdateProductModal({ produtos, onSelect, onClose }) {
       <div className="containerModal">
         <h2>Lista de Produtos</h2>
         <ul className='listItens'>
-          {produtos.map((produto, index) => (
+          {produtos && produtos.map((produto, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(produto)}>
-              {produto.nome}
+              <p><span>Produto: </span>{produto.nome}</p> 
+              <p><span>Preço: </span>{produto.preco}</p>
+              <p><span>Categoria: </span>{produto.categoria}</p> 
+              <p><span>Marca: </span>{produto.marca}</p>
+              <img src={produto.marca} alt={produto.nome} />
             </li>
           ))}
         </ul>
@@ -17,4 +20,4 @@ export default function UpdateProductModal({ produtos, onSelect, onClose }) {
       </div>
     </div>
   );
-};
+}

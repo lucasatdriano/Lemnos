@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,7 +34,6 @@ export default function User({ onLogout }) {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isActive, setIsActive] = useState(true);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showEnderecoModal, setShowEnderecoModal] = useState(false);

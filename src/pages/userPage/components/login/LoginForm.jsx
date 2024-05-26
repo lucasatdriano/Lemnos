@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.scss';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -107,9 +105,9 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
 
         <div className="btnLoginForm">
           <button type='submit'>Entrar</button>
-          <button type='button' onClick={onCadastroClick}>Cadastre-se</button>
+          <button type='button' onClick={handleCadastroClick}>Cadastre-se</button>
         </div>
       </form>
     </section>
   );
-};
+}

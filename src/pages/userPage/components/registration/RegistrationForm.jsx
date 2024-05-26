@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './registrationForm.scss';
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -201,4 +199,4 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
       </form>
     </section>
   );
-};
+}

@@ -67,7 +67,7 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
             toast.error(error.response.data.error);
         }
     }
-};
+}
 
 export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
     try {
@@ -103,6 +103,41 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
     }
 }
 
+export async function cadastrarProduto(produto){
+    try {
+        const response = await axios.post(`${baseUri}/produto`, {
+            nome: produto.nome,
+            descricao: produto.descricao,
+            cor: produto.cor,
+            valor: produto.preco,
+            modelo: produto.modelo,
+            peso: produto.peso,
+            altura: produto.altura,
+            comprimento: produto.comprimento,
+            largura: produto.largura,
+            fabricante: produto.fabricante,
+            fornecedor: produto.fornecedor,
+            subCategoria: produto.subCategoria,
+            ImagemPrincipal: produto.imagemPrinc,
+            imagens: produto.imagens
+        });
+
+        if (response.status !== 201) {
+            throw new Error('Erro ao cadastrar o produto.');
+        }
+        console.log(response.data);
+        toast.success('Produto cadastrado com sucesso');
+        
+        return response.data;
+
+    } catch (error) {
+        console.log(error);
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
 export async function selecionarCliente(id) {
     try {
         const response = await axios.get(`${baseUri}/cliente/${id}`);
@@ -112,22 +147,13 @@ export async function selecionarCliente(id) {
     }
 }
 
-export async function listarFornecedores() {
-    try {
-        const response = await axios.get(`${baseUri}/fornecedor`);
-        return response.data;
-    } catch (error) {
-       toast.error(error.response.data.error)
-    }
-}
-
-export async function selecionarFornecedor(id) {
-    try {
-        const response = await axios.get(`${baseUri}/fornecedor/${id}`);
-        return response.data;
-    } catch (error) {
-        console.log(error)
-    }
+export async function alterarCliente(cliente) {
+    axios.put(baseUri + "/cliente/${cliente.id}", {
+        nome: cliente.nome,
+        cpf: cliente.cpf,
+    })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
 }
 
 export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {

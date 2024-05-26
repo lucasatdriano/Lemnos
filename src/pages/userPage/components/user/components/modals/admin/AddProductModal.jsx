@@ -1,58 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateProductModal from './UpdateProductModal';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
-
-const produtos = [
-  {
-    id: 1,
-    nome: 'Teclado Gamer RGB',
-    descricao: 'Teclado mecânico com iluminação RGB',
-    imagemPrinc: 'caminho/para/imagem1.jpg',
-    imagemDois: 'caminho/para/imagem2.jpg',
-    imagemTres: 'caminho/para/imagem3.jpg',
-    imagemQuatro: 'caminho/para/imagem4.jpg',
-    cor: 'Preto',
-    preco: '250.00',
-    modelo: 'Gamer123',
-    peso: '1.2',
-    altura: '3',
-    comprimento: '45',
-    largura: '15',
-    fabricante: 'Marca A',
-    categoria: 'Periféricos',
-    subCategoria: 'Teclado',
-  },
-  {
-    id: 2,
-    nome: 'Mouse Sem Fio',
-    descricao: 'Mouse ergonômico com conexão sem fio',
-    imagemPrinc: 'caminho/para/imagem5.jpg',
-    imagemDois: 'caminho/para/imagem6.jpg',
-    imagemTres: 'caminho/para/imagem7.jpg',
-    imagemQuatro: 'caminho/para/imagem8.jpg',
-    cor: 'Branco',
-    preco: '80.00',
-    modelo: 'Wireless789',
-    peso: '0.8',
-    altura: '4',
-    comprimento: '10',
-    largura: '6',
-    fabricante: 'Marca B',
-    categoria: 'Periféricos',
-    subCategoria: 'Mouse',
-  },
-];
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { cadastrarProduto } from '../../../../../../../services/ApiService';
 
 const categorias = [
   'Casa Inteligente', 
   'Computadores', 
-  'Eletronicos',
+  'Eletrônicos',
   'Hardware', 
   'Kits', 
   'Monitores',
-	'Notebooks e Portateis', 
+	'Notebooks e Portáteis', 
   'Periféricos',
   'Realidade Virtual', 
   'Redes e wireless', 
@@ -94,10 +57,6 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const initialFormState = {
     nome: '',
     descricao: '',
-    imagemPrinc: '',
-    imagemDois: '',
-    imagemTres: '',
-    imagemQuatro: '',
     cor: '',
     preco: '',
     modelo: '',
@@ -108,6 +67,12 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     fabricante: '',
     categoria: '',
     subCategoria: '',
+    imagemPrinc: '',
+    imagens: {
+      imagemDois: '',
+      imagemTres: '',
+      imagemQuatro: ''  
+    },
   };
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
@@ -116,21 +81,17 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubDropdownOpen, setIsSubDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isProdutoLoaded, setIsProdutoLoaded] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [produtos, setProdutos] = useState([]);
+  const baseUri = "http://localhost:8080/api";
 
   const handleChange = (name, value) => {
     setForm(prevForm => ({
       ...prevForm,
       [name]: value,
     }));
-
-    if (errors[name]) {
-      setErrors(prevErrors => ({
-        ...prevErrors,
-        [name]: '',
-      }));
-    }
   };
 
   const handleNumberChange = (name, value) => {
@@ -139,12 +100,66 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     }
   };
 
-  const handleProdutoListToggle = () => {
-    setIsProdutoListOpen(!isProdutoListOpen);
+  const handleProdutoListToggle = async () => {
     if (!isProdutoListOpen) {
+      try {
+        const response = await axios.get(`${baseUri}/produto`);
+
+        const produtosComId = response.data.map((produto, index) => ({
+          ...produto,
+          id: index
+        }));
+      
+        setProdutos(produtosComId);
+        setSelectedProduct(null);
+        setIsProdutoListOpen(true);
+      } catch (error) {
+        console.error('Erro ao listar Produtos:', error);
+        throw error;
+      }
       setSelectedProduct(null);
     }
+    else {
+      setIsProdutoListOpen(false);
+    }
   };
+
+  const selectProduto = async (id) => {
+    try {
+      const response = await axios.get(`${baseUri}/produto/${id}`);
+      const produto = response.data;
+  
+      if (!produto) {
+        throw new Error('Dados do produto não encontrados.');
+      }
+  
+      setForm({
+        nome: produto.nome || '',
+        descricao: produto.descricao || '',
+        imagemPrinc: produto.imagemPrinc || '',
+        imagemDois: produto.imagemDois || '',
+        imagemTres: produto.imagemTres || '',
+        imagemQuatro: produto.imagemQuatro || '',
+        cor: produto.cor || '',
+        preco: produto.preco || '',
+        modelo: produto.modelo || '',
+        peso: produto.peso || '',
+        altura: produto.altura || '',
+        comprimento: produto.comprimento || '',
+        largura: produto.largura || '',
+        fabricante: produto.fabricante || '',
+        categoria: produto.categoria || '',
+        subCategoria: produto.subCategoria || '',
+      });
+      setSelectedProduct(produto);
+      setIsProdutoLoaded(true);
+      setIsProdutoListOpen(false);
+    } catch (error) {
+      console.error('Erro ao carregar dados do produto:', error);
+      toast.error('Erro ao carregar dados do produto.');
+      throw error;
+    }
+  }
   
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -201,13 +216,20 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSave = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
+    
     if (validateForm()) {
-      console.log('Dados do produto:', form);
-      onSave(form);
-      setForm(initialFormState);
-    }
+      const formattedForm = {
+        ...form,
+      };
+
+      console.log(formattedForm);
+      
+      await cadastrarProduto(formattedForm);
+
+      // setForm(initialFormState);
+    }  
   };
 
   const handleUpdate = (e) => {
@@ -232,12 +254,6 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     setIsSubDropdownOpen(true);
     setSubcategorias(subcategoriasPorCategoria[option] || []);
     handleChange('subCategoria', ''); 
-  };
-
-  const selectProduto = (produto) => {
-    setForm(produto);
-    setIsProdutoListOpen(false);
-    setSelectedProduct(produto);
   };
 
   const isProductSelected = () => {
@@ -268,7 +284,8 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               label="Descrição:"
               id="descricao"
               name="descricao"
-              maxLength={255}
+              minLength={5}
+              maxLength={200}
               value={form.descricao}
               onChange={(e) => handleChange('descricao', e.target.value)}
             />
@@ -383,7 +400,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               maxLength={30}
               value={form.subCategoria}
               onFocus={handleSubDropdownToggle}
-              onChange={(e) => {
+              onChange={() => {
                 setIsSubDropdownOpen(false);
               }}
             />
@@ -420,7 +437,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="Peso (kg):"
+              label="Peso (g):"
               id="peso"
               name="peso"
               maxLength={6}
@@ -487,7 +504,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           </p>
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleSave}  disabled={isProductSelected()}>Adicionar</button>
+          <button type='button' onClick={handleAdd}  disabled={isProductSelected()}>Adicionar</button>
           <button type='button' onClick={handleUpdate}  disabled={!isProductSelected()}>Atualizar</button>
           <button type='button' onClick={handleProdutoListToggle}>Mostrar Lista</button>
         </div>

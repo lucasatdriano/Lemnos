@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import './global.scss';
 import Header from './components/header/Header';
@@ -12,7 +12,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [pathname]);
 
   const toggleTheme = () => {
