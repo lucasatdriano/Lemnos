@@ -1,4 +1,3 @@
-import React from 'react';
 import './inputs.scss';
 
 export default function CustomInput({ type, reference, label, id, maxLength, minLength, 

@@ -65,14 +65,11 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     comprimento: '',
     largura: '',
     fabricante: '',
+    fornecedor: '',
     categoria: '',
     subCategoria: '',
     imagemPrinc: '',
-    imagens: {
-      imagemDois: '',
-      imagemTres: '',
-      imagemQuatro: ''  
-    },
+    imagens: ['', '', ''], 
   };
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
@@ -91,6 +88,15 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     setForm(prevForm => ({
       ...prevForm,
       [name]: value,
+    }));
+  };
+  
+  const handleImageChange = (index, value) => {
+    const updatedImages = [...form.imagens];
+    updatedImages[index] = value;
+    setForm(prevForm => ({
+      ...prevForm,
+      imagens: updatedImages,
     }));
   };
 
@@ -137,9 +143,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         nome: produto.nome || '',
         descricao: produto.descricao || '',
         imagemPrinc: produto.imagemPrinc || '',
-        imagemDois: produto.imagemDois || '',
-        imagemTres: produto.imagemTres || '',
-        imagemQuatro: produto.imagemQuatro || '',
+        imagens: produto.imagens || ['', '', ''],
         cor: produto.cor || '',
         preco: produto.preco || '',
         modelo: produto.modelo || '',
@@ -148,6 +152,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         comprimento: produto.comprimento || '',
         largura: produto.largura || '',
         fabricante: produto.fabricante || '',
+        fornecedor: produto.fornecedor || '',
         categoria: produto.categoria || '',
         subCategoria: produto.subCategoria || '',
       });
@@ -210,6 +215,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     if (!form.imagemPrinc) {
       newErrors.imagemPrinc = 'A Imagem principal do produto é obrigatória';
     }
+    if (!form.fornecedor) {
+      newErrors.fornecedor = 'O Fornecedor do produto é obrigatório';
+    }
 
     setErrors(newErrors);
 
@@ -222,8 +230,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     if (validateForm()) {
       const formattedForm = {
         ...form,
+        preco: parseFloat(form.preco),
+        imagens: form.imagens.filter(Boolean)
       };
-
       console.log(formattedForm);
       
       await cadastrarProduto(formattedForm);
@@ -277,8 +286,22 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
             />
             {errors.nome && <span className='invalid'>{errors.nome}</span>}
           </p>
-
+          
           <p>
+            <CustomInput
+              type="text"
+              label="Preço:"
+              id="preco"
+              name="preco"
+              maxLength={10}
+              mask="NUMBERS"
+              value={form.preco}
+              onChange={(e) => handleNumberChange('preco', e.target.value)}
+            />
+            {errors.preco && <span className='invalid'>{errors.preco}</span>}
+          </p>
+
+          <p className='inputDesc'>
             <CustomInput
               type="text"
               label="Descrição:"
@@ -308,14 +331,14 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="Preço:"
-              id="preco"
-              name="preco"
-              mask="NUMBERS"
-              value={form.preco}
-              onChange={(e) => handleNumberChange('preco', e.target.value)}
+              label="Modelo:"
+              id="modelo"
+              name="modelo"
+              maxLength={30}
+              value={form.modelo}
+              onChange={(e) => handleChange('modelo', e.target.value)}
             />
-            {errors.preco && <span className='invalid'>{errors.preco}</span>}
+            {errors.modelo && <span className='invalid'>{errors.modelo}</span>}
           </p>
 
           <p>
@@ -330,38 +353,18 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
             {errors.imagemPrinc && <span className='invalid'>{errors.imagemPrinc}</span>}
           </p>
 
-          <p>
-            <CustomInput
-              type="text"
-              label="Imagem Dois:"
-              id="imagemDois"
-              name="imagemDois"
-              value={form.imagemDois}
-              onChange={(e) => handleChange('imagemDois', e.target.value)}
-            />
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Imagem Três:"
-              id="imagemTres"
-              name="imagemTres"
-              value={form.imagemTres}
-              onChange={(e) => handleChange('imagemTres', e.target.value)}
-            />
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Imagem Quatro:"
-              id="imagemQuatro"
-              name="imagemQuatro"
-              value={form.imagemQuatro}
-              onChange={(e) => handleChange('imagemQuatro', e.target.value)}
-            />
-          </p>
+          {form.imagens.map((imagem, index) => (
+            <p key={index}>
+              <CustomInput
+                type="text"
+                label={`Imagem ${index + 2}:`}
+                id={`imagem${index + 2}`}
+                name={`imagem${index + 2}`}
+                value={imagem}
+                onChange={(e) => handleImageChange(index, e.target.value)}
+              />
+            </p>
+          ))}
 
           <p>
             <CustomInput
@@ -424,20 +427,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="Modelo:"
-              id="modelo"
-              name="modelo"
-              maxLength={30}
-              value={form.modelo}
-              onChange={(e) => handleChange('modelo', e.target.value)}
-            />
-            {errors.modelo && <span className='invalid'>{errors.modelo}</span>}
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Peso (g):"
+              label="Peso (kg):"
               id="peso"
               name="peso"
               maxLength={6}
@@ -501,6 +491,19 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               onChange={(e) => handleChange('fabricante', e.target.value)}
             />
             {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
+          </p>
+
+          <p>
+            <CustomInput
+              type="text"
+              label="Fornecedor:"
+              id="fornecedor"
+              name="fornecedor"
+              maxLength={50}
+              value={form.fornecedor}
+              onChange={(e) => handleChange('fornecedor', e.target.value)}
+            />
+            {errors.fornecedor && <span className='invalid'>{errors.fornecedor}</span>}
           </p>
         </div>
         <div className="containerButtons">

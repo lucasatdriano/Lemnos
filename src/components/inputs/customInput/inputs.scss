@@ -66,7 +66,12 @@ $font-items: 'Poppins', Helvetica;
       top: -10px;
       opacity: 1;
     }
-
+    
+    // &#preco label::after, &#peso label::after, &#altura label::after, &#comprimento label::after, &#largura label::after{
+    //   content: ' (Coloque "." para adicionar as vírgulas)';
+    //   opacity: 1;
+    // }
+    
     &:valid + label {
       top: -10px;
       opacity: 1;

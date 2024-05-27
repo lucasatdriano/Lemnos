@@ -146,6 +146,7 @@ $font-items: 'Poppins', Helvetica;
             background: $color-bgLight;
             padding: 2em 1.5em;
             border-radius: 15px;
+            overflow-y: auto;
 
             .listItens {
                 text-align: left;
@@ -186,7 +187,7 @@ $font-items: 'Poppins', Helvetica;
             padding: .5em 2em 1em;
             width: 100%;
 
-            .inputNome, .inputEmail {
+            .inputNome, .inputEmail, .inputDesc {
                 grid-column: span 2;
             }
 
@@ -414,6 +415,10 @@ $font-items: 'Poppins', Helvetica;
                 grid-template-columns: 1fr;
                 max-height: 60vh;
                 overflow-y: auto;
+
+                .inputNome, .inputEmail, .inputDesc {
+                    grid-column: span 1;
+                }
 
                 &::-webkit-scrollbar {
                     display: none;

@@ -158,21 +158,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
       // }
     }  
   };
-  const handleAdd2 = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        const response = await axios.post(`${baseUri}/fornecedor`, form);
-        console.log('Fornecedor adicionado:', response.data);
-        onSave(form);
-        setForm(initialFormState);
-      } catch (error) {
-        console.error('Erro ao adicionar fornecedor:', error);
-        throw error;
-      }
-    }
-  };
-
+ 
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (validateForm()) {
