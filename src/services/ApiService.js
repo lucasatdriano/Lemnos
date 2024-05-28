@@ -19,6 +19,8 @@ export async function cadastrarCliente(cliente) {
                 email: cliente.email,
                 senha: cliente.password
             }
+        }, {
+            timeout: 10000,
         });
 
         if (response.status !== 201) {
@@ -52,6 +54,8 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
                 email: funcionario.email,
                 senha: funcionario.senha
             }
+        }, {
+            timeout: 10000,
         });
 
         if (response.status !== 201) {
@@ -84,6 +88,8 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
                 telefone: fornecedor.telefone,
                 email: fornecedor.email
             }
+        }, {
+            timeout: 10000,
         });
 
         if (response.status !== 201) {
@@ -118,8 +124,10 @@ export async function cadastrarProduto(produto){
             fabricante: produto.fabricante,
             fornecedor: produto.fornecedor,
             subCategoria: produto.subCategoria,
-            ImagemPrincipal: produto.imagemPrinc,
+            imagemPrincipal: produto.imagemPrinc,
             imagens: produto.imagens
+        }, {
+            timeout: 10000,
         });
 
         if (response.status !== 201) {
@@ -148,7 +156,7 @@ export async function selecionarCliente(id) {
 }
 
 export async function alterarCliente(cliente) {
-    axios.put(baseUri + "/cliente/${cliente.id}", {
+    axios.put(baseUri + `/cliente/${cliente.id}`, {
         nome: cliente.nome,
         cpf: cliente.cpf,
     })
@@ -173,6 +181,8 @@ export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
             params: {
                 id: idEntidade
             }
+        }, {
+            timeout: 10000,
         });
 
         if (response.status !== 201) {

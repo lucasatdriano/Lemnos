@@ -1,43 +1,38 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Slide from './components/carousel/Carousel';
-import ProductList from './components/ProductList';
+import Card from '../../components/card/Card';
 import BrandsList from './components/BrandsList';
 import OfferList from '../../components/lists/OfferList';
-import './home.scss'
+import './home.scss';
 import kits from '../../assets/deps/imgKitUpgrade.svg';
 import videoGame from '../../assets/deps/imgVideoGame.svg';
 import monitor from '../../assets/deps/imgMonitor.svg';
 import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
-import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
 
 export default function Home() {
-  const products = [
-    {
-      id: 1,
-      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
-      price: 19.99,
-      image: logoHorizontal,
-      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}` 
-    },
-  ];
-  for (let i = 2; i <= 40; i++) {
-    products.push({
-      id: i,
-      name: `Product ${i}`,
-      price: Math.random() * 1000,
-      image: 'product2.jpg',
-      brand: `Brand ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      category: `Categoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
-      subcategory: `Subcategoria ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`
-    });
-  }
+  const [produtos, setProdutos] = useState([]);
+  const baseUri = "http://localhost:8080/api";
 
-  const mainProducts = products.slice(0, 10);
+  useEffect(() => { 
+    const fetchProdutos = async () => {
+      try {
+        const response = await axios.get(`${baseUri}/produto`, {
+          timeout: 10000,
+        });
+        setProdutos(response.data);
+      } catch (error) {
+        console.error('Erro ao listar Produtos:', error);
+      }
+    };
+  
+    fetchProdutos();
+  }, []);
+
+  const mainProducts = produtos.slice(0, 20);
 
   return (
     <>
@@ -88,7 +83,11 @@ export default function Home() {
 
         <section className='mainProds'>
           <h2>Principais Produtos</h2>
-          <ProductList products={mainProducts}/>
+          <div className='productsList'>
+            {mainProducts.map(produto => (
+              <Card key={produto.id} produto={produto} />
+            ))}
+          </div>
         </section>
 
         <section className='brands'>

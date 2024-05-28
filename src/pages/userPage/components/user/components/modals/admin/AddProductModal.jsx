@@ -109,14 +109,11 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const handleProdutoListToggle = async () => {
     if (!isProdutoListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/produto`);
+        const response = await axios.get(`${baseUri}/produto`, {
+          timeout: 10000,
+        });
 
-        const produtosComId = response.data.map((produto, index) => ({
-          ...produto,
-          id: index
-        }));
-      
-        setProdutos(produtosComId);
+        setProdutos(response.data);
         setSelectedProduct(null);
         setIsProdutoListOpen(true);
       } catch (error) {
@@ -130,11 +127,13 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     }
   };
 
-  const selectProduto = async (id) => {
+  const selectProduto = async (produtos) => {
     try {
-      const response = await axios.get(`${baseUri}/produto/${id}`);
+      const response = await axios.get(`${baseUri}/produto/${produtos.id}`, {
+        timeout: 10000,
+      });
       const produto = response.data;
-  
+
       if (!produto) {
         throw new Error('Dados do produto não encontrados.');
       }
@@ -142,10 +141,10 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
       setForm({
         nome: produto.nome || '',
         descricao: produto.descricao || '',
-        imagemPrinc: produto.imagemPrinc || '',
+        imagemPrinc: produto.imagemPrincipal || '',
         imagens: produto.imagens || ['', '', ''],
         cor: produto.cor || '',
-        preco: produto.preco || '',
+        preco: produto.valor || '',
         modelo: produto.modelo || '',
         peso: produto.peso || '',
         altura: produto.altura || '',
@@ -153,7 +152,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         largura: produto.largura || '',
         fabricante: produto.fabricante || '',
         fornecedor: produto.fornecedor || '',
-        categoria: produto.categoria || '',
+        // categoria: produto.categoria || '',
         subCategoria: produto.subCategoria || '',
       });
       setSelectedProduct(produto);
@@ -162,6 +161,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     } catch (error) {
       console.error('Erro ao carregar dados do produto:', error);
       toast.error('Erro ao carregar dados do produto.');
+      console.log(produtos.id);
       throw error;
     }
   }
@@ -169,7 +169,6 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
   const handleSubDropdownToggle = () => {
     setIsSubDropdownOpen(!isSubDropdownOpen);
   };
@@ -231,7 +230,12 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
       const formattedForm = {
         ...form,
         preco: parseFloat(form.preco),
-        imagens: form.imagens.filter(Boolean)
+        peso: parseFloat(form.peso),
+        altura: parseFloat(form.altura),
+        comprimento: parseFloat(form.comprimento),
+        largura: parseFloat(form.largura),
+        imagens: form.imagens.filter(Boolean),
+        fornecedor: form.fornecedor ? form.fornecedor.toLowerCase() : '',
       };
       console.log(formattedForm);
       

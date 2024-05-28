@@ -142,7 +142,7 @@ $font-items: 'Poppins', Helvetica;
             position: relative;
             max-height: 95vh;
             max-width: 95vw;
-            gap: 1.5em;
+            gap: 1em;
             background: $color-bgLight;
             padding: 2em 1.5em;
             border-radius: 15px;
@@ -218,6 +218,7 @@ $font-items: 'Poppins', Helvetica;
 
                     [class^=dropdown] {
                         text-indent: 10px;
+                        text-align: center;
                         border-bottom: 2px solid $color-primaryLight;
                         background-color: $color-bgLight;
                         cursor: pointer;
@@ -402,7 +403,7 @@ $font-items: 'Poppins', Helvetica;
     }    
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 900px) {
     .userContainer {
         .modal {     
             .containerModal {
@@ -415,6 +416,7 @@ $font-items: 'Poppins', Helvetica;
                 grid-template-columns: 1fr;
                 max-height: 60vh;
                 overflow-y: auto;
+                padding-top: 1.5em;
 
                 .inputNome, .inputEmail, .inputDesc {
                     grid-column: span 1;

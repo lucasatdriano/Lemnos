@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import './cardBrand.scss';
 
 export default function CardBrands({ brand }) {
@@ -9,3 +9,10 @@ export default function CardBrands({ brand }) {
     </div>
   );
 }
+
+CardBrands.propTypes = {
+  brand: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};

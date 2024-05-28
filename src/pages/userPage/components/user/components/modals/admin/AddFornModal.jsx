@@ -35,7 +35,9 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
   const handleFornecedorListToggle = async () => {
     if (!isFornecedorListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/fornecedor`);
+        const response = await axios.get(`${baseUri}/fornecedor`, {
+          timeout: 10000,
+        });
         
         const fornecedoresComId = response.data.map((fornecedor, index) => ({
           ...fornecedor,
@@ -56,7 +58,9 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
 
   const selectFornecedor = async (id) => {
     try {
-      const response = await axios.get(`${baseUri}/fornecedor/${id}`);
+      const response = await axios.get(`${baseUri}/fornecedor/${id}`, {
+        timeout: 10000,
+      });
       const fornecedor = response.data;
   
       if (!fornecedor) {
@@ -129,6 +133,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
     if (validateForm()) {
       const formattedForm = {
         ...form,
+        nome: form.nome ? form.nome.toLowerCase() : '',
         cnpj: form.cnpj.replace(/\D/g, ''),
         telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
         endereco: {

@@ -61,7 +61,9 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/funcionario`);
+        const response = await axios.get(`${baseUri}/funcionario`, {
+          timeout: 10000,
+        });
         
         const funcionariosComId = response.data.map((funcionario, index) => ({
           ...funcionario,
@@ -82,7 +84,9 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
   const selectFuncionario = async (id) => {
     try {
-      const response = await axios.get(`${baseUri}/funcionario/${id}`);
+      const response = await axios.get(`${baseUri}/funcionario/${id}`, {
+        timeout: 10000,
+      });
       const funcionario = response.data;
   
       if (!funcionario) {

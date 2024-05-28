@@ -1,4 +1,3 @@
-import React from 'react';
 import './cardOffer.scss';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 

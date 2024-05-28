@@ -9,10 +9,10 @@ export default function UpdateProductModal({ produtos, onSelect, onClose }) {
           {produtos && produtos.map((produto, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(produto)}>
               <p><span>Produto: </span>{produto.nome}</p> 
-              <p><span>Preço: </span>{produto.preco}</p>
-              <p><span>Categoria: </span>{produto.categoria}</p> 
-              <p><span>Marca: </span>{produto.marca}</p>
-              <img src={produto.marca} alt={produto.nome} />
+              <p><span>Preço: </span>{produto.valor}</p>
+              <p><span>SubCategoria: </span>{produto.subCategoria}</p> 
+              <p><span>Marca: </span>{produto.fabricante}</p>
+              <img src={produto.imagemPrincipal} alt={produto.nome} />
             </li>
           ))}
         </ul>
