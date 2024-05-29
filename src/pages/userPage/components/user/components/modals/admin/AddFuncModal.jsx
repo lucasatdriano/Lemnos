@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, idPorEmail, findIdByEmail } from '../../../../../../../services/ApiService';
 
 const situacao = ['Ativo', 'Inativo'];
 
@@ -55,7 +55,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
-  const [nextId, setNextId] = useState(31); // mudar Aqui para 1
+  const [nextId, setNextId] = useState(39); // mudar Aqui para 1
   const baseUri = "http://localhost:8080/api";
 
   const handleFuncionarioListToggle = async () => {
@@ -124,7 +124,18 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   };
 
   const handleChange = (name, value) => {
-    setForm({ ...form, [name]: value });
+    if (name.startsWith('endereco.')) {
+      const enderecoField = name.split('.')[1];
+      setForm(prevForm => ({
+        ...prevForm,
+        endereco: {
+          ...prevForm.endereco,
+          [enderecoField]: value
+        }
+      }));
+    } else {
+      setForm(prevForm => ({ ...prevForm, [name]: value }));
+    }
   };
 
   const handleDropdownToggle = () => {
@@ -208,29 +219,50 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         dataAdmissao: formatarData(form.dataAdmissao),
         endereco: {
           ...form.endereco,
-          cep: form.endereco.cep.replace(/\D/g, '')
+          numLogradouro: form.endereco.numLogradouro ? parseInt(form.endereco.numLogradouro) : null,
+          cep: form.endereco && form.endereco.cep ? form.endereco.cep.replace(/\D/g, '') : ''
         },
         id: nextId
       };
       delete formattedForm.confSenha;
   
-      console.log(formattedForm);
-  
+      console.log('Dados formatados:', formattedForm);
       try {
-        const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+        // await cadastrarFuncionario(formattedForm, tipoEntidade);
+        // const id1 = await idPorEmail(formattedForm.email, tipoEntidade);
+        // await cadastrarEndereco(id1, tipoEntidade, formattedForm.endereco);
 
-        if (enderecoResponse && enderecoResponse.success) {
-          await cadastrarFuncionario(formattedForm, tipoEntidade);
-          
-          setNextId(prevId => prevId + 1);
-          setForm(initialFormState);
-        }
+        await cadastrarFuncionario(formattedForm, tipoEntidade);
+        // const id = await findIdByEmail(formattedForm.email, tipoEntidade);
+        await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+
+
+
+
+        console.log(formattedForm.id)
+      // try {
+      //   await cadastrarFuncionario(formattedForm, tipoEntidade);
+        
+      //   if (formattedForm.endereco && formattedForm.endereco.cep) {
+      //     const enderecoResponse = await cadastrarEndereco(formattedForm.email, formattedForm.id, tipoEntidade, formattedForm.endereco);
+      //     console.log('ENDEREÇO: ' + enderecoResponse)
+      //     if (enderecoResponse && enderecoResponse.success) {
+      //       // setForm(initialFormState);
+      //       // setNextId(prevId => prevId + 1);
+      //       toast.success('Funcionário cadastrado com sucesso!');
+      //     } else {
+      //       toast.error('Erro ao cadastrar endereço.');
+      //     }
+      //   } else {
+      //     toast.error('Endereço não está corretamente definido.');
+      //   }
       } catch (error) {
-        throw error;
+        console.error('Erro ao cadastrar funcionário:', error);
+        toast.error('Erro ao cadastrar funcionário.');
       }
-    }  
+    }
   };
-
+  
   const formatarData = (data) => {
     return `${data.substring(8, 10)}/${data.substring(5, 7)}/${data.substring(0, 4)}`;
   };

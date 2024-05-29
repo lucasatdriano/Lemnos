@@ -22,13 +22,10 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
   };
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [isFornecedorLoaded, setIsFornecedorLoaded] = useState(false);
   const [selectedForn, setSelectedForn] = useState(null);
   const [fornecedores, setFornecedores] = useState([]);
-  const [nextId, setNextId] = useState(0);
 
   const baseUri = "http://localhost:8080/api";
 
@@ -93,14 +90,6 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
     setForm({ ...form, [name]: value });
   };
 
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
-
   const validateForm = () => {
     const newErrors = {};
     if (!form.nome) {
@@ -140,27 +129,15 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
           ...form.endereco,
           cep: form.endereco.cep.replace(/\D/g, '')
         },
-        id: nextId
       };
   
       console.log(formattedForm);
       await cadastrarFornecedor(formattedForm, tipoEntidade);
-      await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
-      setNextId(prevId => prevId + 1);
-      setForm(initialFormState);
-  
-      // try {
-      //   const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+      const enderecoResponse = await cadastrarEndereco(formattedForm.email, tipoEntidade, formattedForm.endereco);
 
-      //   if (enderecoResponse && enderecoResponse.success) {
-      //     await cadastrarFornecedor(formattedForm, tipoEntidade);
-          
-      //     setNextId(prevId => prevId + 1);
-      //     setForm(initialFormState);
-      //   }
-      // } catch (error) {
-      //   throw error;
-      // }
+      if (enderecoResponse && enderecoResponse.success) {
+        setForm(initialFormState);
+      }
     }  
   };
  

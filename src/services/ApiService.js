@@ -146,15 +146,6 @@ export async function cadastrarProduto(produto){
     }
 }
 
-export async function selecionarCliente(id) {
-    try {
-        const response = await axios.get(`${baseUri}/cliente/${id}`);
-        return response.data;
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 export async function alterarCliente(cliente) {
     axios.put(baseUri + `/cliente/${cliente.id}`, {
         nome: cliente.nome,
@@ -190,6 +181,66 @@ export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
         }
         
         return response.data;
+
+    } catch (error) {
+        console.log(error)
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
+export async function idPorEmail(email, tipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/${tipoEntidade}/find`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            params: {
+                email: email
+            }
+        }, {
+            timeout: 10000,
+        });
+
+        if (response.status != 201) {
+            throw new Error('Erro ao cadastrar endereço.');
+        }
+        
+        return response.data["id"]
+
+    } catch (error) {
+        console.log(error)
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
+export async function findIdByEmail(email, tipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/${tipoEntidade}/find`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            params: {
+                email: email
+            }
+        }, {
+            timeout: 10000,
+        });
+
+        if (response.status != 200) {
+            throw new Error(`Erro encontrar ${tipoEntidade}.`);
+        }
+        
+        return response.data["id"];
 
     } catch (error) {
         console.log(error)
