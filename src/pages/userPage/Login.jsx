@@ -58,7 +58,7 @@ export default function Login() {
           {showLoginForm ? (
             <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistration} />
           ) : (
-            <RegistrationForm onCadastroSuccess={handleRegistrationSuccess}  handleBackToLogin={handleBackToLogin} />
+            <RegistrationForm onLogin={handleLogin} onCadastroSuccess={handleRegistrationSuccess}  handleBackToLogin={handleBackToLogin} />
           )}
         </div>
       )}

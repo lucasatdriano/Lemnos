@@ -3,6 +3,9 @@ import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './loginForm.scss';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { auth, googleProvider, facebookProvider } from '../../../../services/firebaseConfig';
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
@@ -20,14 +23,14 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
   
     let newErrors = {};
   
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!form.email || !form.email.match(emailRegex)) {
-      errors.email = 'Digite um Email válido';
+      newErrors.email = 'Digite um Email válido';
     } 
   
     if (!form.password || form.password.length < 8) {
@@ -36,11 +39,37 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
   
     setErrors(newErrors);
   
-    console.log('Erros:', newErrors);
-  
     if (Object.keys(newErrors).length === 0) {
-      console.log('Dados do formulário:', form);
-      onLogin({ email: form.email, password: form.password });
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
+        const user = userCredential.user;
+        console.log('Login successful:', user);
+        onLogin({ email: form.email, password: form.password });
+      } catch (error) {
+        console.error('Error during login:', error.code, error.message);
+      }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log('Google login successful:', user);
+      onLogin({ email: user.email, password: null });
+    } catch (error) {
+      console.error('Error during Google login:', error.code, error.message);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+      console.log('Facebook login successful:', user);
+      onLogin({ email: user.email, password: null });
+    } catch (error) {
+      console.error('Error during Facebook login:', error.code, error.message);
     }
   };
 
@@ -55,9 +84,10 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
   return (
     <section className="login-form-container">
       <div className="loginCredencial">
-        <h2>Entre com sua Conta do Google</h2>
+        <h2>Entre com sua Conta</h2>
         <div className="btnCredencials">  
-          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
+          <button onClick={handleGoogleLogin}><FcGoogle className='iconGoogle'/>Entrar com Google</button>
+          <button className='btnFace' onClick={handleFacebookLogin}><FaFacebook className='iconFacebook'/>Entrar com Facebook</button>
         </div>
       </div>
 

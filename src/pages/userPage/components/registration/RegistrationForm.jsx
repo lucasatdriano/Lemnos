@@ -3,8 +3,11 @@ import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './registrationForm.scss';
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { auth, googleProvider, facebookProvider } from '../../../../services/firebaseConfig';
+import { signInWithPopup } from "firebase/auth";
 
-export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin }) {
+export default function RegistrationForm({ onLogin, onCadastroSuccess, handleBackToLogin }) {
   const [form, setForm] = useState({
     name: '',
     cpf: '',
@@ -73,6 +76,28 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log('Google login successful:', user);
+      onLogin({ email: user.email, password: null });
+    } catch (error) {
+      console.error('Error during Google login:', error.code, error.message);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+      console.log('Facebook login successful:', user);
+      onLogin({ email: user.email, password: null });
+    } catch (error) {
+      console.error('Error during Facebook login:', error.code, error.message);
+    }
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -85,7 +110,8 @@ export default function RegistrationForm({ onCadastroSuccess, handleBackToLogin 
       <div className="loginCredencial">
         <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
-          <button><FcGoogle className='iconGoogle'/>Entrar com Google</button>
+        <button onClick={handleGoogleLogin}><FcGoogle className='iconGoogle'/>Entrar com Google</button>
+          <button className='btnFace' onClick={handleFacebookLogin}><FaFacebook className='iconFacebook'/>Entrar com Facebook</button>
         </div>
       </div>
 

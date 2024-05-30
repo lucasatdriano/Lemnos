@@ -24,7 +24,7 @@ export default function User({ onLogout }) {
   const [form, setForm] = useState({
     name: "Lucas Adriano Tavares Gonçalves",
     cpf: "123.456.789-00",
-    email: '',
+    email: 'lucasatdriano@gmail.com',
     password: '',
   });
   const [username, setUsername] = useState(form.name.split(" ")[0]);
@@ -204,29 +204,24 @@ export default function User({ onLogout }) {
             </p>
 
             <p>
-              <CustomInput
-                type="text"
-                label="CPF:"
-                id="cpf"
-                name="cpf"
-                maxLength={14}
-                minLength={14}
-                value={form.cpf}
-                mask="CPF"
-                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                onChange={handleChange}
-                disabled={!isEditing}
-              />
-              {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
-            </p>
+            <CustomInput
+              type="text"
+              label="Email:"
+              id="email"
+              name="email"
+              maxLength={40}
+              value={form.email}
+              onChange={handleChange}
+              disabled={!isEditing}
+            />
+            {errors.email && <span className='invalid'>{errors.email}</span>}
+          </p>
+
           </div>
           <div className="containerButtons">
-            <div className='saveButton'>
-              <button type="button" onClick={handleSaveChanges} disabled={!isEditing}>Salvar Alterações</button>
-            </div>
             <div className='updateButtons'>
-              <button type="button" onClick={() => handleShowModal('email')} disabled={!isEditing}>Alterar Email</button>
               <button type="button" onClick={() => handleShowModal('password')} disabled={!isEditing}>Alterar Senha</button>
+              <button type="button" onClick={handleSaveChanges} disabled={!isEditing}>Salvar Alterações</button>
               <button type="button" onClick={() => handleShowModal('endereco')} disabled={!isEditing}>Adicionar Endereço</button>
             </div>
           </div>

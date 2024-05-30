@@ -47,7 +47,8 @@ $font-items: 'Poppins', Helvetica;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 1.5em 0;
+      margin: .5em 0;
+      gap: 2em;
 
       button {
         display: flex;
@@ -55,6 +56,7 @@ $font-items: 'Poppins', Helvetica;
         justify-content: center;
         gap: 1em;
         padding: .1em 2em;
+        max-width: 16em;
         font-size: 2.4rem;
         font-family: $font-title;
         font-weight: bold;
@@ -69,9 +71,20 @@ $font-items: 'Poppins', Helvetica;
           filter: brightness(.9);
         }
 
+        &.btnFace {
+          max-width: 18em;
+          font-size: 2.2rem;
+        }
+
         .iconGoogle {
           height: 62px;
           width: 36px;
+        }
+
+        .iconFacebook {
+          height: 62px;
+          width: 36px;
+          color: #0866FF;
         }
       }
     }
