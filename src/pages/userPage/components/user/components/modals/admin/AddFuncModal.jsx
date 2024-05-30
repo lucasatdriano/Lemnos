@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, idPorEmail, findIdByEmail } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail } from '../../../../../../../services/ApiService';
 
 
 export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
@@ -34,7 +34,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
-  const [nextId, setNextId] = useState(39); // mudar Aqui para 1
   const baseUri = "http://localhost:8080/api";
   
   const handleFuncionarioListToggle = async () => {
@@ -120,103 +119,63 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const validateForm = () => {
     const today = new Date();
     const minBirthDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-  
     const newErrors = {};
 
-    if (!form.nome) {
-      newErrors.nome = 'O Nome do funcionário é obrigatório';
-    } else if (/\d/.test(form.nome)) {
-      newErrors.nome = 'O Nome não pode conter números';
+    const birthDate = new Date(form.dataNasc);
+    if (birthDate >= today) {
+      newErrors.dataNasc = 'A Data de nascimento não pode ser posterior a hoje';
+    } else if (birthDate > minBirthDate) {
+      newErrors.dataNasc = 'O funcionário deve ter pelo menos 16 anos de idade';
     }
-    if (!form.cpf) {
-      newErrors.cpf = 'O CPF do funcionário é obrigatório';
+  
+    const admissionDate = new Date(form.dataAdmissao);
+    if (admissionDate > today) {
+      newErrors.dataAdmissao = 'A Data de admissão não pode ser posterior a hoje';
     }
-    if (!form.dataNasc) {
-      newErrors.dataNasc = 'A Data de nascimento é obrigatória';
-    } else {
-      const birthDate = new Date(form.dataNasc);
-      if (birthDate >= today) {
-        newErrors.dataNasc = 'A Data de nascimento não pode ser posterior a hoje';
-      } else if (birthDate > minBirthDate) {
-        newErrors.dataNasc = 'O funcionário deve ter pelo menos 16 anos de idade';
-      }
-    }
-    if (!form.dataAdmissao) {
-      newErrors.dataAdmissao = 'A Data de admissão é obrigatória';
-    } else {
-      const admissionDate = new Date(form.dataAdmissao);
-      if (admissionDate > today) {
-        newErrors.dataAdmissao = 'A Data de admissão não pode ser posterior a hoje';
-      }
-    }
-    if (!form.telefone) {
-      newErrors.telefone = 'O Telefone do funcionário é obrigatório';
-    }
-    if (!form.email) {
-      newErrors.email = 'O Email é obrigatório';
-    }
-    if (!form.senha) {
-      newErrors.senha = 'A Senha é obrigatória';
-    }
+    
     if (!form.confSenha) {
       newErrors.confSenha = 'Confirmar Senha é obrigatório';
-    } else if (form.senha !== form.confSenha) {
+    } else if (form.senha != form.confSenha) {
       newErrors.confSenha = 'As Senhas devem ser iguais';
-    }
-    if (!form.endereco.cep) {
-      newErrors.cep = 'O Cep é obrigatório';
-    }
-    if (!form.endereco.numLogradouro) {
-      newErrors.numLogradouro = 'O Número de Logradouro é obrigatório';
     }
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length == 0;
   };
+
+  const handleForm = form => {
+    return {
+      ...form,
+      nome: form.nome ? form.nome.toLowerCase() : '',
+      cpf: form.cpf.replace(/\D/g, ''),
+      telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+      dataNasc: formatarData(form.dataNasc),
+      dataAdmissao: formatarData(form.dataAdmissao),
+      endereco: {
+        ...form.endereco,
+        numLogradouro: form.endereco.numLogradouro ? parseInt(form.endereco.numLogradouro) : null,
+        cep: form.endereco && form.endereco.cep ? form.endereco.cep.replace(/\D/g, '') : ''
+      }
+    };
+  }
 
   const handleAdd = async (e) => {
     e.preventDefault();
   
     if (validateForm()) {
-      const formattedForm = {
-        ...form,
-        nome: form.nome ? form.nome.toLowerCase() : '',
-        cpf: form.cpf.replace(/\D/g, ''),
-        telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
-        dataNasc: formatarData(form.dataNasc),
-        dataAdmissao: formatarData(form.dataAdmissao),
-        endereco: {
-          ...form.endereco,
-          numLogradouro: form.endereco.numLogradouro ? parseInt(form.endereco.numLogradouro) : null,
-          cep: form.endereco && form.endereco.cep ? form.endereco.cep.replace(/\D/g, '') : ''
-        },
-        id: nextId
-      };
+      const formattedForm = handleForm(form);
       delete formattedForm.confSenha;
   
       console.log('Dados formatados:', formattedForm);
-      // try {
-      //   await cadastrarFuncionario(formattedForm, tipoEntidade);
-      //   toast.success('Funcionário cadastrado com sucesso!');
-      //   // const id = await idPorEmail(formattedForm.email, tipoEntidade);
-      //   await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
-
-      //   console.log(formattedForm.id)
       try {
-        await cadastrarFuncionario(formattedForm, tipoEntidade);
-        if (formattedForm.endereco && formattedForm.endereco.cep) {
-          const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
-          console.log('ENDEREÇO: ' + enderecoResponse)
-          if (enderecoResponse && enderecoResponse.success) {
-            // setForm(initialFormState);
-            // setNextId(prevId => prevId + 1);
-            toast.success('Endereço cadastrado com sucesso!');
-          } else {
-            toast.error('Erro ao cadastrar endereço.');
-          }
-        } else {
-          toast.error('Endereço não está corretamente definido.');
+        let entidadeCadastrada = await cadastrarFuncionario(formattedForm, tipoEntidade);
+
+        if (entidadeCadastrada == true) {
+          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
+          const enderecoResponse = await cadastrarEndereco(id, tipoEntidade, formattedForm.endereco);
+          if(enderecoResponse == true) toast.success('Endereço cadastrado com sucesso!');
+          return;
         }
       } catch (error) {
         console.error('Erro ao cadastrar funcionário:', error);

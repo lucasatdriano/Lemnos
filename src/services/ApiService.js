@@ -59,12 +59,11 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
         });
 
         if (response.status !== 201) {
-            throw new Error(`Erro ao cadastrar ${tipoEntidade}.`);
+            return response.data["error"];
         }
-        const funcionarioData = response.data;
         toast.success('Funcionário cadastrado com sucesso')
 
-        return funcionarioData;
+        return true;
     
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
@@ -173,41 +172,11 @@ export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
             timeout: 10000,
         });
 
-        if (response.status !== 201) {
-            throw new Error('Erro ao cadastrar endereço.');
-        }
-        
-        return response.data;
-
-    } catch (error) {
-        console.log(error)
-        if (error.response && error.response.data && error.response.data.error) {
-            toast.error(error.response.data.error);
-        }
-    }
-}
-
-export async function idPorEmail(email, tipoEntidade) {
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "GET",
-            url: `/${tipoEntidade}/find`,
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            params: {
-                email: email
-            }
-        }, {
-            timeout: 10000,
-        });
-
         if (response.status != 201) {
-            throw new Error('Erro ao cadastrar endereço.');
+            return false;
         }
         
-        return response.data["id"]
+        return true;
 
     } catch (error) {
         console.log(error)
