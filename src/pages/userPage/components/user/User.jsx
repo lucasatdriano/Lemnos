@@ -192,7 +192,7 @@ export default function User({ onLogout }) {
               <CustomInput
                 type="text"
                 label="Nome Completo:"
-                id="name"
+                id="nome"
                 name="name"
                 maxLength={40}
                 minLength={5}

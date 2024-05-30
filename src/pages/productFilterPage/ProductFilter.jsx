@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
-import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInputRange';
+import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
 
 const brands = [

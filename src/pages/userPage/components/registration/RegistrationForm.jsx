@@ -128,7 +128,7 @@ export default function RegistrationForm({ onLogin, onCadastroSuccess, handleBac
             <CustomInput
               type="text"
               label="Nome Completo:"
-              id="name"
+              id="nome"
               name="name"
               maxLength={40}
               minLength={5}

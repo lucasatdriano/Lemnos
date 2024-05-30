@@ -14,14 +14,14 @@ $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
-$color-card: #f6fefd4d;
+$color-card: #f6fefd67;
 
 $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .userContainer {
-    background: #e8f1f078;
+    background: #f3faf9de;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -250,19 +250,6 @@ $font-items: 'Poppins', Helvetica;
                     .dropdown-estado {
                         padding: 5px 0;
                         font-size: 1.6rem;
-                    }
-
-                    .dropdown-situacao {
-                        padding: 10px 0;
-                        font-size: 1.8rem;
-
-                        &:last-child {
-                            cursor: pointer;
-
-                            &:hover {
-                                filter: brightness(.9);
-                            }
-                        }
                     }
                 }
 

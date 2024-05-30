@@ -10,7 +10,7 @@ $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
 
 $color-bgDark: #252525;
-$color-bgLight: #F9FBFB;
+$color-bgLight: #F2F2F2;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
@@ -46,7 +46,7 @@ $font-web: 'Roboto Flex', Arial;
 
     &::-webkit-scrollbar {
         width: 0.5em;
-        background:$color-secundaryLight;
+        background:$color-secundaryDark;
     }
 
     &::-webkit-scrollbar-track {
