@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Range, getTrackBackground } from 'react-range';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -151,3 +152,10 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
     </div>
   );
 }
+
+DoubleInputRange.propTypes = {
+  minValue: PropTypes.number.isRequired,
+  maxValue: PropTypes.number.isRequired,
+  setMinValue: PropTypes.func.isRequired,
+  setMaxValue: PropTypes.func.isRequired,
+};

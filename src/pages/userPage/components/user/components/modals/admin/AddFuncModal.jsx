@@ -5,27 +5,9 @@ import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { cadastrarFuncionario, cadastrarEndereco, idPorEmail, findIdByEmail } from '../../../../../../../services/ApiService';
 
-const situacao = ['Ativo', 'Inativo'];
-
-const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
-  const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
-
-  return (
-    <div className={`dropdown ${isOpen ? 'open' : ''}`}>
-      {isOpen &&
-        filteredOptions.map((option, index) => (
-          <div key={index} className="dropdown-situacao" onClick={() => onSelect(option)}>
-            {option}
-          </div>
-        ))
-      }
-    </div>
-  );
-};
 
 export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
@@ -37,7 +19,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     email: '',
     senha: '',
     confSenha: '',
-    situacao: 'Ativo',
     endereco: {
       cep: '',
       numLogradouro: '',
@@ -50,14 +31,12 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const [showPassword, setShowPassword] = useState(false);
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
   const [nextId, setNextId] = useState(39); // mudar Aqui para 1
   const baseUri = "http://localhost:8080/api";
-
+  
   const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {
       try {
@@ -67,12 +46,13 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         
         const funcionariosComId = response.data.map((funcionario, index) => ({
           ...funcionario,
-          id: index
+          id: index + 1
         }));
       
         setFuncionarios(funcionariosComId);
         setSelectedFunc(null);
         setIsFuncionarioListOpen(true);
+        setForm(initialFormState);
       } catch (error) {
         console.error('Erro ao listar funcionários:', error);
         throw error;
@@ -103,7 +83,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         dataNasc: formatDate(funcionario.dataNascimento) || '',
         dataAdmissao: formatDate(funcionario.dataAdmissao) || '',
         telefone: funcionario.telefone || '',
-        situacao: funcionario.situacao || '',
         email: funcionario.email || '',
         senha: funcionario.senha || '',
         confSenha: '',
@@ -136,14 +115,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     } else {
       setForm(prevForm => ({ ...prevForm, [name]: value }));
     }
-  };
-
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleSearch = (value) => {
-    setSearchTerm(value);
   };
 
   const validateForm = () => {
@@ -181,9 +152,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     if (!form.telefone) {
       newErrors.telefone = 'O Telefone do funcionário é obrigatório';
     }
-    if (!form.situacao) {
-      newErrors.situacao = 'A Situação do funcionário é obrigatória';
-    }
     if (!form.email) {
       newErrors.email = 'O Email é obrigatório';
     }
@@ -213,6 +181,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     if (validateForm()) {
       const formattedForm = {
         ...form,
+        nome: form.nome ? form.nome.toLowerCase() : '',
         cpf: form.cpf.replace(/\D/g, ''),
         telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
         dataNasc: formatarData(form.dataNasc),
@@ -227,35 +196,28 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
       delete formattedForm.confSenha;
   
       console.log('Dados formatados:', formattedForm);
-      try {
-        // await cadastrarFuncionario(formattedForm, tipoEntidade);
-        // const id1 = await idPorEmail(formattedForm.email, tipoEntidade);
-        // await cadastrarEndereco(id1, tipoEntidade, formattedForm.endereco);
-
-        await cadastrarFuncionario(formattedForm, tipoEntidade);
-        // const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-        await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
-
-
-
-
-        console.log(formattedForm.id)
       // try {
       //   await cadastrarFuncionario(formattedForm, tipoEntidade);
-        
-      //   if (formattedForm.endereco && formattedForm.endereco.cep) {
-      //     const enderecoResponse = await cadastrarEndereco(formattedForm.email, formattedForm.id, tipoEntidade, formattedForm.endereco);
-      //     console.log('ENDEREÇO: ' + enderecoResponse)
-      //     if (enderecoResponse && enderecoResponse.success) {
-      //       // setForm(initialFormState);
-      //       // setNextId(prevId => prevId + 1);
-      //       toast.success('Funcionário cadastrado com sucesso!');
-      //     } else {
-      //       toast.error('Erro ao cadastrar endereço.');
-      //     }
-      //   } else {
-      //     toast.error('Endereço não está corretamente definido.');
-      //   }
+      //   toast.success('Funcionário cadastrado com sucesso!');
+      //   // const id = await idPorEmail(formattedForm.email, tipoEntidade);
+      //   await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+
+      //   console.log(formattedForm.id)
+      try {
+        await cadastrarFuncionario(formattedForm, tipoEntidade);
+        if (formattedForm.endereco && formattedForm.endereco.cep) {
+          const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+          console.log('ENDEREÇO: ' + enderecoResponse)
+          if (enderecoResponse && enderecoResponse.success) {
+            // setForm(initialFormState);
+            // setNextId(prevId => prevId + 1);
+            toast.success('Endereço cadastrado com sucesso!');
+          } else {
+            toast.error('Erro ao cadastrar endereço.');
+          }
+        } else {
+          toast.error('Endereço não está corretamente definido.');
+        }
       } catch (error) {
         console.error('Erro ao cadastrar funcionário:', error);
         toast.error('Erro ao cadastrar funcionário.');
@@ -266,6 +228,12 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   const formatarData = (data) => {
     return `${data.substring(8, 10)}/${data.substring(5, 7)}/${data.substring(0, 4)}`;
   };
+
+  const handleDisable = async (id) => {
+      axios.delete(`${baseUri}/funcionario/${id}`)
+        .then((response) => console.log(response.data))
+        .catch((error) => console.log(error));
+  }
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -412,43 +380,6 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
           <p>
             <CustomInput
               type="text"
-              label="Situação:"
-              id="situacao"
-              name="situacao"
-              maxLength={7}
-              value={form.situacao}
-              onFocus={handleDropdownToggle}
-              onChange={(e) => {
-                const upperCaseValue = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
-                handleChange('situacao', upperCaseValue);
-                handleSearch(upperCaseValue);
-              }}
-              disabled={!isFuncionarioLoaded}
-            />
-            {isDropdownOpen ? 
-              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
-            : 
-              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
-            }
-            {isFuncionarioLoaded && (
-              <>
-                <Dropdown
-                  isOpen={isDropdownOpen}
-                  options={situacao}
-                  onSelect={(option) => {
-                    handleChange('situacao', option);
-                    setIsDropdownOpen(false);
-                  }}
-                  filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-                />
-              </>
-            )}
-            {errors.situacao && <span className='invalid'>{errors.situacao}</span>}
-          </p>
-
-          <p className='inputEmail'>
-            <CustomInput
-              type="text"
               label="Email:"
               id="email"
               name="email"
@@ -498,7 +429,11 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
         </div>
         <div className="containerButtons">
-          <button type='button' onClick={handleAdd} disabled={isFuncSelected()}>Adicionar</button>
+          {!isFuncSelected() ? (
+            <button type='button' onClick={handleAdd} disabled={isFuncSelected()}>Adicionar</button>
+          ) : (
+            <button type='button' onClick={handleDisable} disabled={!isFuncSelected()}>Desativar</button>
+          )}
           <button type='button' onClick={handleUpdate} disabled={!isFuncSelected()}>Atualizar</button>
           <button type='button' onClick={handleFuncionarioListToggle}>Mostrar Lista</button>
         </div>

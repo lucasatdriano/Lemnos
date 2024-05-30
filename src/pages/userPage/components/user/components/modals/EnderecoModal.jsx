@@ -94,7 +94,7 @@ export default function EnderecoModal({ onSave, onClose }) {
       <div className="containerModal" onClick={(e) => e.stopPropagation()}>
         <h2>Adicionar Endereço</h2>
         <div className="modalEndereco">
-          <p>
+          <p className='inputCep'>
             <CustomInput
               type="text"
               label="CEP:"
@@ -111,14 +111,33 @@ export default function EnderecoModal({ onSave, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="Bairro:"
-              id="bairro"
-              name="bairro"
-              maxLength={40}
-              value={form.bairro}
-              onChange={(e) => handleChange('bairro', e.target.value)}
-              />
-            {errors.bairro && <span className='invalid'>{errors.bairro}</span>}
+              label="Estado:"
+              id="estado"
+              name="estado"
+              maxLength={2}
+              value={form.estado}
+              onFocus={handleDropdownToggle}
+              onChange={(e) => {
+                const upperCaseValue = e.target.value.toUpperCase();
+                handleSearch(upperCaseValue);
+              }}
+              disabled='disabled'
+            />
+            {errors.estado && <span className='invalid'>{errors.estado}</span>}
+            {isDropdownOpen ? 
+              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
+            : 
+              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
+            }
+            <Dropdown
+              isOpen={isDropdownOpen}
+              options={estados}
+              onSelect={() => {
+                // handleChange('estado', option);
+                setIsDropdownOpen(false);
+              }}
+              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
+            />
           </p>
 
           <p>
@@ -130,6 +149,7 @@ export default function EnderecoModal({ onSave, onClose }) {
               maxLength={40}
               value={form.cidade}
               onChange={(e) => handleChange('cidade', e.target.value)}
+              disabled='disabled'
               />
             {errors.cidade && <span className='invalid'>{errors.cidade}</span>}
           </p>
@@ -137,32 +157,15 @@ export default function EnderecoModal({ onSave, onClose }) {
           <p>
             <CustomInput
               type="text"
-              label="Estado:"
-              id="estado"
-              name="estado"
-              maxLength={2}
-              value={form.estado}
-              onFocus={handleDropdownToggle}
-              onChange={(e) => {
-                const upperCaseValue = e.target.value.toUpperCase();
-                handleSearch(upperCaseValue);
-              }}
-            />
-            {errors.estado && <span className='invalid'>{errors.estado}</span>}
-            {isDropdownOpen ? 
-              <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
-            : 
-              <RiArrowDropDownLine className='iconDrop' onClick={handleDropdownToggle}/>
-            }
-            <Dropdown
-              isOpen={isDropdownOpen}
-              options={estados}
-              onSelect={(option) => {
-                handleChange('estado', option);
-                setIsDropdownOpen(false);
-              }}
-              filterFunction={(option) => option.toLowerCase().includes(searchTerm.toLowerCase())}
-            />
+              label="Bairro:"
+              id="bairro"
+              name="bairro"
+              maxLength={40}
+              value={form.bairro}
+              onChange={(e) => handleChange('bairro', e.target.value)}
+              disabled='disabled'
+              />
+            {errors.bairro && <span className='invalid'>{errors.bairro}</span>}
           </p>
 
           <p>
@@ -174,6 +177,7 @@ export default function EnderecoModal({ onSave, onClose }) {
               maxLength={50}
               value={form.logradouro}
               onChange={(e) => handleChange('logradouro', e.target.value)}
+              disabled='disabled'
               />
             {errors.logradouro && <span className='invalid'>{errors.logradouro}</span>}
           </p>

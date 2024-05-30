@@ -95,12 +95,9 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
         if (response.status !== 201) {
             throw new Error(`Erro ao cadastrar ${tipoEntidade}.`);
         }
-        const fornecedorData = response.data;
         toast.success('Fornecedor cadastrado com sucesso')
 
-        await cadastrarEndereco(fornecedorData.id, tipoEntidade, fornecedor.endereco);
-
-        return fornecedorData;
+        return response.data;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {

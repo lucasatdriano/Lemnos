@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './inputs.scss';
 
 export default function CustomInput({ type, reference, label, id, maxLength, minLength, 
@@ -96,4 +97,33 @@ export default function CustomInput({ type, reference, label, id, maxLength, min
       <label htmlFor={id}>{label}</label>
     </span>
   );
+}
+
+CustomInput.propTypes = {
+  type: PropTypes.string,
+  reference: PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.any })
+  ]),
+  label: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  pattern: PropTypes.string,
+  mask: PropTypes.oneOf(["CPF", "CEP", "CNPJ", "TEL", "DATA"]),
+  value: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+};
+
+CustomInput.defaultProps = {
+  type: "text",
+  reference: null,
+  label: "",
+  maxLength: null,
+  minLength: null,
+  pattern: null,
+  mask: null,
+  disabled: false
 };

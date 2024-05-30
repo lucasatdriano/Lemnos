@@ -207,7 +207,7 @@ export default function User({ onLogout }) {
             <CustomInput
               type="text"
               label="Email:"
-              id="email"
+              id="emailUser"
               name="email"
               maxLength={40}
               value={form.email}

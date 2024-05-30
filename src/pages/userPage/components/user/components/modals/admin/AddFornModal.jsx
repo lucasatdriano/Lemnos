@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { cadastrarFornecedor, cadastrarEndereco } from '../../../../../../../services/ApiService';
 
 export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
@@ -26,6 +25,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
   const [isFornecedorLoaded, setIsFornecedorLoaded] = useState(false);
   const [selectedForn, setSelectedForn] = useState(null);
   const [fornecedores, setFornecedores] = useState([]);
+  const [nextId, setNextId] = useState(6); 
 
   const baseUri = "http://localhost:8080/api";
 
@@ -38,7 +38,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
         
         const fornecedoresComId = response.data.map((fornecedor, index) => ({
           ...fornecedor,
-          id: index
+          id: index + 1
         }));
       
         setFornecedores(fornecedoresComId);
@@ -59,7 +59,8 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
         timeout: 10000,
       });
       const fornecedor = response.data;
-  
+      console.log(id)
+      console.log(fornecedor)
       if (!fornecedor) {
         throw new Error('Dados do fornecedor não encontrados.');
       }
@@ -129,14 +130,22 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
           ...form.endereco,
           cep: form.endereco.cep.replace(/\D/g, '')
         },
+        id: nextId
       };
   
       console.log(formattedForm);
       await cadastrarFornecedor(formattedForm, tipoEntidade);
-      const enderecoResponse = await cadastrarEndereco(formattedForm.email, tipoEntidade, formattedForm.endereco);
+      toast.success('Funcionário cadastrado com sucesso!');
+      const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
+      console.log(formattedForm.id)
 
+      setNextId(prevId => prevId + 1);
       if (enderecoResponse && enderecoResponse.success) {
         setForm(initialFormState);
+        setNextId(prevId => prevId + 1);
+        toast.success('Endereço cadastrado com sucesso!');
+      } else {
+        toast.error('Erro ao cadastrar endereço.');
       }
     }  
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,10 +26,10 @@ const categorias = [
   'Hardware', 
   'Kits', 
   'Monitores',
-  'Notebooks e Portateis', 
+  'Notebooks e Portáteis', 
   'Periféricos',
   'Realidade Virtual', 
-  'Redes e wireless', 
+  'Redes e Wireless', 
   'Video Games', 
 ];
 

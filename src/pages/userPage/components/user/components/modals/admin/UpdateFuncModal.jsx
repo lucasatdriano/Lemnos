@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { IoClose } from "react-icons/io5";
 
 export default function UpdateFuncModal({ funcionarios, onSelect, onClose }) {
@@ -8,9 +9,9 @@ export default function UpdateFuncModal({ funcionarios, onSelect, onClose }) {
         <ul className='listItens'>
           {funcionarios && funcionarios.map((funcionario, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(funcionario.id)}>
-              <p><span>Nome: </span>{funcionario.nome}</p> 
-              <p><span>Email: </span>{funcionario.email}</p>
-              <p><span>Situação: </span>{funcionario.situacao}</p>
+              <p>Nome: <span className='spanNome'>{funcionario.nome}</span></p> 
+              <p>Email: <span>{funcionario.email}</span></p>
+              <p>Situação: <span>{funcionario.situacao}</span></p>
             </li>
           ))}
         </ul>
@@ -19,3 +20,16 @@ export default function UpdateFuncModal({ funcionarios, onSelect, onClose }) {
     </div>
   );
 }
+
+UpdateFuncModal.propTypes = {
+  funcionarios: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      nome: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      situacao: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
