@@ -54,8 +54,13 @@ export default function Product() {
                 <section className='containerMain'>
                     <section className='productMain'>
                         <div className="containerImages">
-                            <img src={mainImage} alt="Main" className='imageMain' />
+                            <img src={mainImage} alt={product.nome} className='imageMain' />
                             <div className="optionsImages">
+                                <img
+                                    src={product.imagemPrincipal}
+                                    alt='Main'
+                                    onClick={() => handleImageClick(product.imagemPrincipal)}
+                                />
                                 {product.imagens && product.imagens.map((image, index) => (
                                     <img
                                         key={index}

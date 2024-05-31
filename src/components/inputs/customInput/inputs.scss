@@ -67,7 +67,7 @@ $font-items: 'Poppins', Helvetica;
       opacity: 1;
     }
     
-    &#nome {
+    &[name=nome] {
       text-transform: capitalize;
     }
     

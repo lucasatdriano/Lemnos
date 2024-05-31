@@ -61,7 +61,9 @@ $font-items: 'Poppins', Helvetica;
           max-height: 40em;
           min-height: 40em;
           cursor: pointer;
+          object-fit: contain;
           box-shadow: 2px 2px 10px $color-shadow;
+          filter: drop-shadow(2px 2px 10px $color-shadow);
         }
 
         .optionsImages {
@@ -220,7 +222,7 @@ $font-items: 'Poppins', Helvetica;
       .productMain {
         .containerImages {
           .imageMain {
-            box-shadow: 4px 4px 6px $color-card;
+            filter: drop-shadow(4px 4px 6px $color-card);
           }
 
           .optionsImages {

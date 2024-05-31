@@ -283,7 +283,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               type="text"
               label="Nome do Produto:"
               id="nome"
-              name="nome"
+              name="name"
               maxLength={100}
               value={form.nome}
               onChange={(e) => handleChange('nome', e.target.value)}

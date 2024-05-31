@@ -23,7 +23,7 @@ export default function User({ onLogout }) {
   const [admin, setAdmin] = useState(false);
   const [form, setForm] = useState({
     name: "Lucas Adriano Tavares Gonçalves",
-    cpf: "123.456.789-00",
+    cpf: "",
     email: 'lucasatdriano@gmail.com',
     password: '',
   });
@@ -192,8 +192,8 @@ export default function User({ onLogout }) {
               <CustomInput
                 type="text"
                 label="Nome Completo:"
-                id="nome"
-                name="name"
+                id="name"
+                name="nome"
                 maxLength={40}
                 minLength={5}
                 value={form.name}

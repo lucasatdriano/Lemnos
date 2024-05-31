@@ -176,10 +176,13 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
           const enderecoResponse = await cadastrarEndereco(id, tipoEntidade, formattedForm.endereco);
           if(enderecoResponse == true) toast.success('Endereço cadastrado com sucesso!');
           return;
+        } else {
+          toast.error('Erro ao cadastrar endereço.');
         }
       } catch (error) {
         console.error('Erro ao cadastrar funcionário:', error);
         toast.error('Erro ao cadastrar funcionário.');
+        toast.error(error.response.data.message)
       }
     }
   };
