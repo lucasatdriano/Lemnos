@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario } from '../../../../../../../services/ApiService';
 
 
 export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
@@ -85,11 +85,11 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         email: funcionario.email || '',
         senha: funcionario.senha || '',
         confSenha: '',
-        endereco: funcionario.endereco || {
-          cep: '',
-          numLogradouro: '',
-          complemento: ''
-        }
+        endereco: funcionario.enderecos.length > 0 ? {
+          cep: funcionario.enderecos[0].cep || '',
+          numLogradouro: funcionario.enderecos[0].numeroLogradouro || '',
+          complemento: funcionario.enderecos[0].complemento || ''
+        } : { cep: '', numLogradouro: '', complemento: '' }
       });
       setSelectedFunc(funcionario);
       setIsFuncionarioLoaded(true);
@@ -144,18 +144,18 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     return Object.keys(newErrors).length == 0;
   };
 
-  const handleForm = form => {
+  const handleForm = (form) => {
     return {
       ...form,
       nome: form.nome ? form.nome.toLowerCase() : '',
-      cpf: form.cpf.replace(/\D/g, ''),
-      telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+      cpf: String(form.cpf).replace(/\D/g, ''),
+      telefone: String(form.telefone).replace(/\D/g, '').substring(0, 11),
       dataNasc: formatarData(form.dataNasc),
       dataAdmissao: formatarData(form.dataAdmissao),
       endereco: {
         ...form.endereco,
         numLogradouro: form.endereco.numLogradouro ? parseInt(form.endereco.numLogradouro) : null,
-        cep: form.endereco && form.endereco.cep ? form.endereco.cep.replace(/\D/g, '') : ''
+        cep: form.endereco && form.endereco.cep ? String(form.endereco.cep).replace(/\D/g, '') : ''
       }
     };
   }
@@ -167,17 +167,22 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
       const formattedForm = handleForm(form);
       delete formattedForm.confSenha;
   
-      console.log('Dados formatados:', formattedForm);
       try {
+        const cepValido = await verificarCep(formattedForm.endereco.cep);
+        if (!cepValido) {
+          toast.error('CEP não existente.');
+          return;
+        }
+
         let entidadeCadastrada = await cadastrarFuncionario(formattedForm, tipoEntidade);
 
         if (entidadeCadastrada == true) {
           const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          const enderecoResponse = await cadastrarEndereco(id, tipoEntidade, formattedForm.endereco);
-          if(enderecoResponse == true) toast.success('Endereço cadastrado com sucesso!');
+          const enderecoResponse = await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
+          if(enderecoResponse == true) {
+            setForm(initialFormState);
+          }
           return;
-        } else {
-          toast.error('Erro ao cadastrar endereço.');
         }
       } catch (error) {
         console.error('Erro ao cadastrar funcionário:', error);
@@ -197,22 +202,32 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         .catch((error) => console.log(error));
   }
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
+  const handleUpdate = async (form) => {
     if (validateForm()) {
-      const formattedForm = {
-        ...form,
-        cpf: form.cpf.replace(/\D/g, ''),
-        telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
-        dataNasc: formatarData(form.dataNasc),
-        dataAdmissao: formatarData(form.dataAdmissao)
-      };
+      const formattedForm = handleForm(form);
       delete formattedForm.confSenha;
 
-      console.log('Dados do Funcionário atualizados:', form);
-      // onUpdate(form); no futuro
-      setForm(initialFormState);
-      setSelectedFunc(null);
+      try {
+        const cepValido = await verificarCep(formattedForm.endereco.cep);
+        if (!cepValido) {
+          toast.error('CEP não existente.');
+          return;
+        }
+
+        let entidadeCadastrada = await updateFuncionario(formattedForm);
+
+        if (entidadeCadastrada == true) {
+          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
+          await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
+          // setForm(initialFormState);
+          return;
+        }
+          setSelectedFunc(null);
+      } catch (error) {
+        console.error('Erro ao atualizar funcionário:', error);
+        toast.error('Erro ao atualizar funcionário.');
+        toast.error(error.response.data.message)
+      }
     }
   };
 

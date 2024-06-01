@@ -56,9 +56,10 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const initialFormState = {
     nome: '',
-    descricao: '',
-    cor: '',
     preco: '',
+    descricao: '',
+    desconto: '0',
+    cor: '',
     modelo: '',
     peso: '',
     altura: '',
@@ -143,6 +144,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         descricao: produto.descricao || '',
         imagemPrinc: produto.imagemPrincipal || '',
         imagens: produto.imagens || ['', '', ''],
+        desconto: produto.desconto || '',
         cor: produto.cor || '',
         preco: produto.valor || '',
         modelo: produto.modelo || '',
@@ -152,7 +154,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         largura: produto.largura || '',
         fabricante: produto.fabricante || '',
         fornecedor: produto.fornecedor || '',
-        // categoria: produto.categoria || '',
+        categoria: produto.categoria || '',
         subCategoria: produto.subCategoria || '',
       });
       setSelectedProduct(produto);
@@ -180,6 +182,9 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     }
     if (!form.descricao) {
       newErrors.descricao = 'A Descrição do produto é obrigatória';
+    }
+    if (!form.desconto) {
+      newErrors.desconto = 'O Desconto do produto é obrigatório';
     }
     if (!form.cor) {
       newErrors.cor = 'A Cor do produto é obrigatória';
@@ -227,22 +232,27 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     e.preventDefault();
     
     if (validateForm()) {
-      const formattedForm = {
-        ...form,
-        preco: parseFloat(form.preco),
-        peso: parseFloat(form.peso),
-        altura: parseFloat(form.altura),
-        comprimento: parseFloat(form.comprimento),
-        largura: parseFloat(form.largura),
-        imagens: form.imagens.filter(Boolean),
-        fornecedor: form.fornecedor ? form.fornecedor.toLowerCase() : '',
-      };
-      console.log(formattedForm);
-      
-      await cadastrarProduto(formattedForm);
+      try {
+        const formattedForm = {
+          ...form,
+          preco: parseFloat(form.preco),
+          desconto: parseFloat(form.desconto),
+          peso: parseFloat(form.peso),
+          altura: parseFloat(form.altura),
+          comprimento: parseFloat(form.comprimento),
+          largura: parseFloat(form.largura),
+          imagens: form.imagens.filter(Boolean),
+          fornecedor: form.fornecedor ? form.fornecedor.toLowerCase() : '',
+        };      
+        await cadastrarProduto(formattedForm);
+  
+        // setForm(initialFormState);
 
-      // setForm(initialFormState);
-    }  
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
   };
 
   const handleUpdate = (e) => {
@@ -305,7 +315,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
             {errors.preco && <span className='invalid'>{errors.preco}</span>}
           </p>
 
-          <p className='inputDesc'>
+          <p>
             <CustomInput
               type="text"
               label="Descrição:"
@@ -317,6 +327,20 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
               onChange={(e) => handleChange('descricao', e.target.value)}
             />
             {errors.descricao && <span className='invalid'>{errors.descricao}</span>}
+          </p>
+
+          <p>
+            <CustomInput
+              type="text"
+              label="Desconto (%):"
+              id="desconto"
+              name="desconto"
+              maxLength={2}
+              mask="NUMBERS"
+              value={form.desconto}
+              onChange={(e) => handleChange('desconto', e.target.value)}
+            />
+            {errors.desconto && <span className='invalid'>{errors.desconto}</span>}
           </p>
 
           <p>

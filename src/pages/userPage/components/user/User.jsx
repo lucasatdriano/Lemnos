@@ -14,10 +14,23 @@ import AddProdutoModal from './components/modals/admin/AddProductModal';
 
 import HistoricoCompras from './components/history/History';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
+import { cadastrarFuncionario } from '../../../../services/ApiService';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import './user.scss';
-import { cadastrarFuncionario } from '../../../../services/ApiService';
+
+
+const historicoExemplo = [
+  { id: 1, produto: 'Laptop', preco: 25.99 },
+  { id: 2, produto: 'Monitor', produto2: 'Laptop', preco: 39.99 },
+  { id: 3, produto: 'Gabinete', preco: 49.99 },
+  { id: 4, produto: 'Celular', preco: 12.99 },
+  { id: 5, produto: 'Teclado', preco: 12.99 },
+  { id: 6, produto: 'SSD Kingstom', preco: 12.99 },
+  { id: 7, produto: 'Laptop', produto2: 'Mouse', preco: 12.99 },    
+  { id: 8, produto: 'Monitor', produto2: 'Teclado', preco: 12.99 },
+  { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
+];
 
 export default function User({ onLogout }) {
   const [admin, setAdmin] = useState(false);
@@ -42,17 +55,6 @@ export default function User({ onLogout }) {
   const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
   const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
 
-  const historicoExemplo = [
-    { id: 1, produto: 'Laptop', preco: 25.99 },
-    { id: 2, produto: 'Monitor', produto2: 'Laptop', preco: 39.99 },
-    { id: 3, produto: 'Gabinete', preco: 49.99 },
-    { id: 4, produto: 'Celular', preco: 12.99 },
-    { id: 5, produto: 'Teclado', preco: 12.99 },
-    { id: 6, produto: 'SSD Kingstom', preco: 12.99 },
-    { id: 7, produto: 'Laptop', produto2: 'Mouse', preco: 12.99 },    
-    { id: 8, produto: 'Monitor', produto2: 'Teclado', preco: 12.99 },
-    { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
-  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;

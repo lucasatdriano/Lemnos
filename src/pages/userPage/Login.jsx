@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './login.scss';
@@ -6,11 +6,18 @@ import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
 import { cadastrarCliente } from '../../services/ApiService'; 
+import AuthService from '../../services/authService';
 
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [showLoginForm , setShowLoginForm] = useState(true);
-  
+  const [showLoginForm, setShowLoginForm] = useState(true);
+
+  useEffect(() => {
+    if (AuthService.isLoggedIn()) {
+      setLoggedIn(true);
+    }
+  }, []);
+
   const handleRegistrationSuccess = async (form) => {
     const firstName = form.name.split(" ")[0];
 
@@ -31,17 +38,18 @@ export default function Login() {
       toast.error(`${error.message}`);
     }
   };
-  
-    
-  const handleLogin = () => {
+
+  const handleLogin = (token) => {
+    AuthService.login(token);
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
+    AuthService.logout();
     setLoggedIn(false);
   };
 
-  const handleRegistration = () => {
+  const handleRegistrationForm = () => {
     setShowLoginForm(false);
   };
 
@@ -52,13 +60,13 @@ export default function Login() {
   return (
     <main className='container'>
       {loggedIn ? (
-        <User onLogout={handleLogout}/>
+        <User onLogout={handleLogout} />
       ) : (
         <div className='loginScreen'>
           {showLoginForm ? (
-            <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistration} />
+            <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistrationForm} />
           ) : (
-            <RegistrationForm onLogin={handleLogin} onCadastroSuccess={handleRegistrationSuccess}  handleBackToLogin={handleBackToLogin} />
+            <RegistrationForm onCadastroSuccess={handleRegistrationSuccess} handleBackToLogin={handleBackToLogin} />
           )}
         </div>
       )}

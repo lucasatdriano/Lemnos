@@ -18,8 +18,7 @@ export async function cadastrarCliente(cliente) {
                 cpf: cliente.cpf,
                 email: cliente.email,
                 senha: cliente.password
-            }
-        }, {
+            },
             timeout: 10000,
         });
 
@@ -53,13 +52,12 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
                 dataAdmissao: funcionario.dataAdmissao,
                 email: funcionario.email,
                 senha: funcionario.senha
-            }
-        }, {
+            },
             timeout: 10000,
         });
 
-        if (response.status !== 201) {
-            return response.data["error"];
+        if (response.status != 201) {
+            return false;
         }
         toast.success('Funcionário cadastrado com sucesso')
 
@@ -69,6 +67,7 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         }
+        return false;
     }
 }
 
@@ -86,43 +85,50 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
                 cnpj: fornecedor.cnpj,
                 telefone: fornecedor.telefone,
                 email: fornecedor.email
-            }
-        }, {
+            },
             timeout: 10000,
         });
 
-        if (response.status !== 201) {
-            throw new Error(`Erro ao cadastrar ${tipoEntidade}.`);
+        if (response.status != 201) {
+            return false;
         }
         toast.success('Fornecedor cadastrado com sucesso')
 
-        return response.data;
+        return true;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         }
+        return false;
     }
 }
 
 export async function cadastrarProduto(produto){
     try {
-        const response = await axios.post(`${baseUri}/produto`, {
-            nome: produto.nome,
-            descricao: produto.descricao,
-            cor: produto.cor,
-            valor: produto.preco,
-            modelo: produto.modelo,
-            peso: produto.peso,
-            altura: produto.altura,
-            comprimento: produto.comprimento,
-            largura: produto.largura,
-            fabricante: produto.fabricante,
-            fornecedor: produto.fornecedor,
-            subCategoria: produto.subCategoria,
-            imagemPrincipal: produto.imagemPrinc,
-            imagens: produto.imagens
-        }, {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: `/produto`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                nome: produto.nome,
+                descricao: produto.descricao,
+                cor: produto.cor,
+                valor: produto.preco,
+                modelo: produto.modelo,
+                peso: produto.peso,
+                altura: produto.altura,
+                comprimento: produto.comprimento,
+                largura: produto.largura,
+                fabricante: produto.fabricante,
+                fornecedor: produto.fornecedor,
+                subCategoria: produto.subCategoria,
+                imagemPrincipal: produto.imagemPrinc,
+                imagens: produto.imagens
+            },
             timeout: 10000,
         });
 
@@ -130,7 +136,6 @@ export async function cadastrarProduto(produto){
             throw new Error('Erro ao cadastrar o produto.');
         }
         console.log(response.data);
-        toast.success('Produto cadastrado com sucesso');
         
         return response.data;
 
@@ -138,6 +143,7 @@ export async function cadastrarProduto(produto){
         console.log(error.response.data.error);
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
+            console.log(error)
         }
     }
 }
@@ -151,24 +157,53 @@ export async function alterarCliente(cliente) {
       .catch((error) => console.log(error));
 }
 
-export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
+export async function updateFuncionario(id, funcionario) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: `/funcionario/${id}`,
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                nome: funcionario.nome,
+                cpf: funcionario.cpf,
+                telefone: funcionario.telefone,
+                dataNascimento: funcionario.dataNasc,
+                dataAdmissao: funcionario.dataAdmissao
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+       if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function cadastrarEndereco(idEntidade, endereco, tipoEntidade) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "POST",
-            url: `/${tipoEntidade}/endereco`,
+            url: `/endereco`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             data: {
                 cep: endereco.cep,
                 numeroLogradouro: endereco.numLogradouro,
-                complemento: endereco.complemento
-            },
-            params: {
+                complemento: endereco.complemento,
+                entidade: tipoEntidade,
                 id: idEntidade
-            }
-        }, {
+            },
             timeout: 10000,
         });
 
@@ -179,10 +214,43 @@ export async function cadastrarEndereco(idEntidade, tipoEntidade, endereco) {
         return true;
 
     } catch (error) {
-        console.log(error)
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         }
+        return false;
+    }
+}
+
+export async function updateEndereco(idEntidade, endereco, entidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: "/endereco",
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                cep: endereco.cep,
+                numeroLogradouro: endereco.numLogradouro,
+                complemento: endereco.complemento,
+                entidade: entidade
+            },
+            params: {
+                id: idEntidade
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+        
+        return true;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
     }
 }
 
@@ -197,8 +265,7 @@ export async function findIdByEmail(email, tipoEntidade) {
             },
             params: {
                 email: email
-            }
-        }, {
+            },
             timeout: 10000,
         });
 
@@ -213,5 +280,18 @@ export async function findIdByEmail(email, tipoEntidade) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         }
+    }
+}
+
+export async function verificarCep(cep) {
+    try {
+        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+        if (response.data.erro) {
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Erro ao verificar o CEP:', error);
+        return false;
     }
 }

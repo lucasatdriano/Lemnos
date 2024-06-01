@@ -5,7 +5,7 @@ import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { cadastrarFornecedor, cadastrarEndereco } from '../../../../../../../services/ApiService';
+import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep } from '../../../../../../../services/ApiService';
 
 export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
@@ -22,11 +22,8 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
-  const [isFornecedorLoaded, setIsFornecedorLoaded] = useState(false);
   const [selectedForn, setSelectedForn] = useState(null);
   const [fornecedores, setFornecedores] = useState([]);
-  const [nextId, setNextId] = useState(6); 
-
   const baseUri = "http://localhost:8080/api";
 
   const handleFornecedorListToggle = async () => {
@@ -43,6 +40,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
       
         setFornecedores(fornecedoresComId);
         setSelectedForn(null);
+        setForm(initialFormState);
         setIsFornecedorListOpen(true);
       } catch (error) {
         console.error('Erro ao listar fornecedor:', error);
@@ -59,8 +57,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
         timeout: 10000,
       });
       const fornecedor = response.data;
-      console.log(id)
-      console.log(fornecedor)
+
       if (!fornecedor) {
         throw new Error('Dados do fornecedor não encontrados.');
       }
@@ -78,7 +75,6 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
       });
   
       setSelectedForn(fornecedor);
-      setIsFornecedorLoaded(true);
       setIsFornecedorListOpen(false);
     } catch (error) {
       console.error('Erro ao carregar dados do fornecedor:', error);
@@ -120,32 +116,39 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
   const handleAdd = async (e) => {
     e.preventDefault();
   
-    if (validateForm()) {
+    if (validateForm()) {  
       const formattedForm = {
         ...form,
         nome: form.nome ? form.nome.toLowerCase() : '',
-        cnpj: form.cnpj.replace(/\D/g, ''),
-        telefone: form.telefone.replace(/\D/g, '').substring(0, 11),
+        cnpj:  String(form.cnpj).replace(/\D/g, ''),
+        telefone: String(form.telefone).replace(/\D/g, '').substring(0, 11),
         endereco: {
           ...form.endereco,
-          cep: form.endereco.cep.replace(/\D/g, '')
-        },
-        id: nextId
-      };
-  
-      console.log(formattedForm);
-      await cadastrarFornecedor(formattedForm, tipoEntidade);
-      toast.success('Funcionário cadastrado com sucesso!');
-      const enderecoResponse = await cadastrarEndereco(formattedForm.id, tipoEntidade, formattedForm.endereco);
-      console.log(formattedForm.id)
+          cep: form.endereco && form.endereco.cep ? String(form.endereco.cep).replace(/\D/g, '') : ''
+        }
+      }
 
-      setNextId(prevId => prevId + 1);
-      if (enderecoResponse && enderecoResponse.success) {
-        setForm(initialFormState);
-        setNextId(prevId => prevId + 1);
-        toast.success('Endereço cadastrado com sucesso!');
-      } else {
-        toast.error('Erro ao cadastrar endereço.');
+      try {
+        const cepValido = await verificarCep(formattedForm.endereco.cep);
+        if (!cepValido) {
+          toast.error('CEP não existente.');
+          return;
+        }
+       
+       const entidadeCadastrada = await cadastrarFornecedor(formattedForm, tipoEntidade);
+
+        if (entidadeCadastrada == true) {
+          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
+          const enderecoResponse = await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
+
+          if (enderecoResponse && enderecoResponse.success) {
+            setForm(initialFormState);
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao cadastrar fornecedor:', error);
+        toast.error('Erro ao cadastrar fornecedor.');
+        throw error;
       }
     }  
   };

@@ -8,7 +8,7 @@ export default function MenuSearch() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [products, setProducts] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
     const baseUri = "http://localhost:8080/api";
@@ -33,7 +33,7 @@ export default function MenuSearch() {
         setSearchTerm(value);
 
         if (value.trim() === '') {
-            setSearchResults([]);
+            setFilteredProducts([]);
             setShowResults(false);
             return;
         }
@@ -42,19 +42,19 @@ export default function MenuSearch() {
             product.nome.toLowerCase().includes(value.toLowerCase())
         );
 
-        setSearchResults(filteredResults);
+        setFilteredProducts(filteredResults);
         setShowResults(true);
     };
 
-    const handleSearch = (event) => {
-        event.preventDefault();
+    const handleSearch = (e) => {
+        e.preventDefault();
         navigate(`/productFilter?search=${searchTerm}`);
     };
 
     const handleSearchResultClick = (productId) => {
         navigate(`/product/${productId}`);
         setSearchTerm('');
-        setSearchResults([]);
+        setFilteredProducts([]);
         setShowResults(false);
     };
 
@@ -68,15 +68,14 @@ export default function MenuSearch() {
                     id="inputSearch"
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    onBlur={() => setShowResults(false)}
                 />
                 <button type="submit">
                     <RiSearch2Line className="searchIcon" />
                 </button>
             </form>
-            {showResults && searchResults.length > 0 && (
+            {showResults && filteredProducts.length > 0 && (
                 <ul className="searchResults">
-                    {searchResults.map(product => (
+                    {filteredProducts.map(product => (
                         <Link
                             to={`/product/${product.id}`}
                             className="itemSearch"
@@ -87,7 +86,7 @@ export default function MenuSearch() {
                                 <img src={product.imagemPrincipal} alt={product.nome} />
                                 <h4>{product.nome}</h4>
                             </div>
-                            <p>{BRL.format(product.valor)}</p>
+                            <p>{BRL.format(product.valorComDesconto)}</p>
                         </Link>
                     ))}
                 </ul>

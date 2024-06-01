@@ -78,16 +78,15 @@ export default function Product() {
                                 <MdFavoriteBorder className='iconFav' onClick={handleAddToFavorites} />
                             )}
                             <h3 className='productName'>{product.nome}</h3>
-                            <p className='priceOrigin'>{BRL.format(product.valor)}</p>
+                            <p className='priceOrigin'>{BRL.format(product.valorTotal)}</p>
                             <p className="productPrice">À vista <br />
-                                <span>{BRL.format(product.valor - (product.valor / 100 * 12 ))}</span> <br />
-                                {/* product.desconto */} {/* colocar isso no lugar do doze na multiplicação */}
+                                <span>{BRL.format(product.valorComDesconto)}</span> <br />
+                                {/*  */} {/* colocar isso no lugar do doze na multiplicação */}
                                 E no PIX com 15% de desconto
                             </p>
                             <p className='priceFees'>
                                 Ou no Cartão <br />
-                               Em até 12x de <span>{BRL.format((product.valor - (product.valor / 100 *  12 )) / 12)}</span> sem juros 
-                               {/* chamar desconto */}
+                               Em até 12x de <span>{BRL.format((product.valorComDesconto)/ 12)}</span> sem juros 
                             </p>
                             <button className='addCart' onClick={handleAddToCart}>
                                 Adicionar ao Carrinho
@@ -111,7 +110,7 @@ export default function Product() {
                             </p>
                             <p className='specification'>
                                 <strong>Categoria:</strong>
-                                <p>{product.categoria}</p>  {/* chamar categoria */}
+                                <p>{product.categoria}</p>
                             </p>
                             <p className='specification'>
                                 <strong>SubCategoria:</strong>

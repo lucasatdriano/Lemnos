@@ -17,7 +17,7 @@ export default function Card({ produto }) {
       <div className="productDetails">
         <h2 className="productName">{produto.nome}</h2>
         <p className="productPrice">À vista <br />
-          <span>{BRL.format(produto.valor)}</span> <br />
+          <span>{BRL.format(produto.valorComDesconto)}</span> <br />
           no PIX com 15% de desconto
         </p>
       </div>
@@ -34,6 +34,6 @@ Card.propTypes = {
     id: PropTypes.string.isRequired,
     nome: PropTypes.string.isRequired,
     imagemPrincipal: PropTypes.string.isRequired,
-    valor: PropTypes.number.isRequired,
+    valorComDesconto: PropTypes.number.isRequired,
   }).isRequired,
 };
