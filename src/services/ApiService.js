@@ -22,7 +22,7 @@ export async function cadastrarCliente(cliente) {
             timeout: 10000,
         });
 
-        if (response.status !== 201) {
+        if (response.status != 201) {
             throw new Error('Erro ao cadastrar cliente.');
         }
 
@@ -132,7 +132,7 @@ export async function cadastrarProduto(produto){
             timeout: 10000,
         });
 
-        if (response.status !== 201) {
+        if (response.status != 201) {
             throw new Error('Erro ao cadastrar o produto.');
         }
         console.log(response.data);
@@ -148,7 +148,7 @@ export async function cadastrarProduto(produto){
     }
 }
 
-export async function alterarCliente(cliente) {
+export async function updateCliente(cliente) {
     axios.put(baseUri + `/cliente/${cliente.id}`, {
         nome: cliente.nome,
         cpf: cliente.cpf,
@@ -157,19 +157,22 @@ export async function alterarCliente(cliente) {
       .catch((error) => console.log(error));
 }
 
-export async function updateFuncionario(id, funcionario) {
+export async function updateFuncionario(funcionario) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "PUT",
-            url: `/funcionario/${id}`,
+            url: `/funcionario`,
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
             data: {
                 nome: funcionario.nome,
-                cpf: funcionario.cpf,
                 telefone: funcionario.telefone,
                 dataNascimento: funcionario.dataNasc,
-                dataAdmissao: funcionario.dataAdmissao
+                dataAdmissao: funcionario.dataAdmissao,
+                senha: funcionario.senha
+            },
+            params: {
+                email: funcionario.email
             },
             timeout: 10000,
         });
@@ -182,6 +185,38 @@ export async function updateFuncionario(id, funcionario) {
 
     } catch (error) {
        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function updateFornecedor(fornecedor) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: `/fornecedor`,
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                nome: fornecedor.nome,
+                cnpj: fornecedor.cnpj,
+                telefone: fornecedor.telefone
+            },
+            params: {
+                email: fornecedor.email
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         }
         return false;

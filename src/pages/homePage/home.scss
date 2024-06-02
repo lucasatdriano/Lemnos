@@ -8,8 +8,6 @@ $color-secundaryDark: #2D3A3A;
 $color-terciaryDark: #f6FEFDCC;
 $color-detailsDark: #C75EA3;
 
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
@@ -26,7 +24,7 @@ main {
 
     .mainDep {
         width: 90%;
-        margin: 2em auto 0;
+        margin: 1em auto;
 
         .containerDeps {
             display: grid;
@@ -94,9 +92,10 @@ main {
 
     .brands {
         width: 90%;
-        margin: 0 auto;
+        margin: 2em auto 0; 
         height: auto;
-        padding-top: 1em;     
+        padding-top: 1em;    
+        
         
         .brandsList {
             width: 100%;

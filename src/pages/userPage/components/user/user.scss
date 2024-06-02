@@ -153,6 +153,10 @@ $font-items: 'Poppins', Helvetica;
                 overflow-y: auto;
                 
                 .itemUpdate {
+                    display: flex;
+                    align-items: center;
+                    gap: 1em;
+                    padding: .5em 1em;
                     margin: .5em 0;
                     font-size: 1.8rem;
                     font-family: $font-items;
@@ -162,6 +166,15 @@ $font-items: 'Poppins', Helvetica;
 
                     .spanNome {
                         text-transform: capitalize;
+                    }
+
+                    img {
+                        height: 175px;
+                        width: 175px;
+                    }
+
+                    &:last-child {
+                        border-bottom: none;
                     }
                 }
             }
@@ -535,6 +548,22 @@ $font-items: 'Poppins', Helvetica;
 
         .adminPage {
             grid-template-columns: 1fr;
+        }
+
+        .modal {        
+            .containerModal {
+                .listItens {                    
+                    .itemUpdate {
+                        flex-direction: column;
+                        align-items: center;
+    
+                        img {
+                            height: 150px;
+                            width: 150px;
+                        }
+                    }
+                }
+            }
         }
     }    
 }

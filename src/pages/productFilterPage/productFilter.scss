@@ -80,7 +80,7 @@ $font-items: 'Poppins', Helvetica;
             justify-content: center;
             flex-direction: column;
             gap: 1em;
-            padding: 2em 0;
+            padding: 2em;
             border-radius: 15px;
             width: 100%;
             min-height: 15em;
@@ -210,7 +210,7 @@ $font-items: 'Poppins', Helvetica;
                 &:active {
                     transform: rotateX(25deg);
                     top: 5px;
-                    box-shadow: 2px 5px 5px $color-shadow;
+                    box-shadow: 2px 2px 5px $color-shadow;
                 }
             }
         }

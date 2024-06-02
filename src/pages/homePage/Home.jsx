@@ -38,6 +38,11 @@ export default function Home() {
     <>
       <main>
         <Slide />
+
+        <section className='brands'>
+          <h2>Principais Marcas</h2>
+          <BrandsList />
+        </section>
         
         <section className='mainDep'>
           <h2>Principais Departamentos</h2>
@@ -88,11 +93,6 @@ export default function Home() {
               <Card key={produto.id} produto={produto} />
             ))}
           </div>
-        </section>
-
-        <section className='brands'>
-          <h2>Principais Marcas</h2>
-          <BrandsList />
         </section>
       </main>
     </>

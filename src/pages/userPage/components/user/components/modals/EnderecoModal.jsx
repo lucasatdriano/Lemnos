@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import CustomInput from '../../../../../../components/inputs/customInput/Inputs';
 import { IoClose } from "react-icons/io5";

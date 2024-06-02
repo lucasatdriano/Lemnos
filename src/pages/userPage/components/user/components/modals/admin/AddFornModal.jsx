@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
@@ -5,7 +7,7 @@ import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep } from '../../../../../../../services/ApiService';
+import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/apiService';
 
 export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
@@ -155,18 +157,39 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
  
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateForm()) {  
+      const formattedForm = {
+        ...form,
+        nome: form.nome ? form.nome.toLowerCase() : '',
+        cnpj:  String(form.cnpj).replace(/\D/g, ''),
+        telefone: String(form.telefone).replace(/\D/g, '').substring(0, 11),
+        endereco: {
+          ...form.endereco,
+          cep: form.endereco && form.endereco.cep ? String(form.endereco.cep).replace(/\D/g, '') : ''
+        }
+      }
+
       try {
-        const response = await axios.put(`${baseUri}/fornecedor/${selectedForn.id}`, form);
-        console.log('Fornecedor atualizado:', response.data);
-        onUpdate(form);
-        setForm(initialFormState);
-        setSelectedForn(null);
+        const cepValido = await verificarCep(formattedForm.endereco.cep);
+        if (!cepValido) {
+          toast.error('CEP não existente.');
+          return;
+        }
+       
+        const entidadeAtualizada = await updateFornecedor(formattedForm);
+        
+        if (entidadeAtualizada === true) {
+          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
+          await updateEndereco(id, formattedForm.endereco, tipoEntidade);
+          // setSelectedForn(null);
+          return;
+        }
       } catch (error) {
         console.error('Erro ao atualizar fornecedor:', error);
+        toast.error('Erro ao atualizar fornecedor.');
         throw error;
       }
-    }
+    }  
   };
 
   const isFornSelected = () => {
@@ -200,6 +223,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
               maxLength={50}
               value={form.email}
               onChange={(e) => handleChange('email', e.target.value)}
+              disabled={isFornSelected()}
             />
             {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>

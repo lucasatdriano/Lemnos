@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { IoClose } from "react-icons/io5";
 
 export default function UpdateProductModal({ produtos, onSelect, onClose }) {
+  const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
   return (
     <div className="modal produto-list-modal" onClick={(e) => { onClose(); e.stopPropagation(); }} >
       <div className="containerModal">
@@ -9,11 +11,16 @@ export default function UpdateProductModal({ produtos, onSelect, onClose }) {
         <ul className='listItens'>
           {produtos && produtos.map((produto, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(produto)}>
-              <p>Produto: <span>{produto.nome}</span></p> 
-              <p>Preço: <span>{produto.valor}</span></p>
-              <p>SubCategoria: <span>{produto.subCategoria}</span></p> 
-              <p>Marca: <span>{produto.fabricante}</span></p>
               <img src={produto.imagemPrincipal} alt={produto.nome} />
+              <div className='infos'>
+                <p>Produto: <span>{produto.nome}</span></p>
+                <p>Preço: <span>{BRL.format(produto.valorTotal)}</span></p>
+                <p>Desconto: <span>{produto.desconto}%</span></p>
+                <p>Preço c/ Desconto: <span>{BRL.format(produto.valorComDesconto)}</span></p>
+                <p>Categoria: <span>{produto.categoria}</span></p>
+                <p>SubCategoria: <span>{produto.subCategoria}</span></p>
+                <p>Marca: <span>{produto.fabricante}</span></p>
+              </div>
             </li>
           ))}
         </ul>

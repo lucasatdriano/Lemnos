@@ -5,7 +5,7 @@ import './login.scss';
 import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
-import { cadastrarCliente } from '../../services/ApiService'; 
+import { cadastrarCliente } from '../../services/apiService'; 
 import AuthService from '../../services/authService';
 
 export default function Login() {

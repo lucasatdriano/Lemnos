@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,7 +16,7 @@ import AddProdutoModal from './components/modals/admin/AddProductModal';
 
 import HistoricoCompras from './components/history/History';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
-import { cadastrarFuncionario } from '../../../../services/ApiService';
+import { cadastrarFuncionario } from '../../../../services/apiService';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import './user.scss';
@@ -214,7 +216,7 @@ export default function User({ onLogout }) {
               maxLength={40}
               value={form.email}
               onChange={handleChange}
-              disabled={!isEditing}
+              disabled='true'
             />
             {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>

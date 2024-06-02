@@ -9,9 +9,11 @@ export default function UpdateFuncModal({ funcionarios, onSelect, onClose }) {
         <ul className='listItens'>
           {funcionarios && funcionarios.map((funcionario, index) => (
             <li className='itemUpdate' key={index} onClick={() => onSelect(funcionario.id)}>
-              <p>Nome: <span className='spanNome'>{funcionario.nome}</span></p> 
-              <p>Email: <span>{funcionario.email}</span></p>
-              <p>Situação: <span>{funcionario.situacao}</span></p>
+              <div>
+                <p>Nome: <span className='spanNome'>{funcionario.nome}</span></p>
+                <p>Email: <span>{funcionario.email}</span></p>
+                <p>Situação: <span>{funcionario.situacao}</span></p>
+              </div>
             </li>
           ))}
         </ul>

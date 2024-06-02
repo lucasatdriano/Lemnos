@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import imgBanner1 from '../../../../assets/banners/banner1.svg';
@@ -7,6 +8,37 @@ import imgBanner3 from '../../../../assets/banners/banner3.svg';
 import imgBanner4 from '../../../../assets/banners/banner4.svg';
 import imgBanner5 from '../../../../assets/banners/banner5.svg';
 import './carousel.scss';
+
+const ImageWithLoadingEffect = ({ src, alt }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef();
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt={alt}
+      style={{
+        width: '100%',
+        height: 'auto',
+        filter: isLoaded ? 'none' : 'blur(10px)',
+        transition: 'filter 1s ease-out',
+      }}
+      onLoad={() => setIsLoaded(true)}
+    />
+  );
+};
+
+ImageWithLoadingEffect.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
 
 export default function Slide() {
   const [isHovered, setIsHovered] = useState(false);
@@ -32,7 +64,7 @@ export default function Slide() {
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [autoplayPaused]); 
+  }, [autoplayPaused]);
 
   return (
     <section className='carousel'>
@@ -49,21 +81,21 @@ export default function Slide() {
         }}
       >
         <SplideSlide>
-          <img src={imgBanner1} alt="Slide 1" />
+          <ImageWithLoadingEffect src={imgBanner1} alt="Slide 1" />
         </SplideSlide>
         <SplideSlide>
-          <img src={imgBanner2} alt="Slide 2" />
+          <ImageWithLoadingEffect src={imgBanner2} alt="Slide 2" />
         </SplideSlide>
         <SplideSlide>
-          <img src={imgBanner3} alt="Slide 3" />
+          <ImageWithLoadingEffect src={imgBanner3} alt="Slide 3" />
         </SplideSlide>
         <SplideSlide>
-        <img src={imgBanner4} alt="Slide 4" />
+          <ImageWithLoadingEffect src={imgBanner4} alt="Slide 4" />
         </SplideSlide>
         <SplideSlide>
-        <img src={imgBanner5} alt="Slide 5" />
+          <ImageWithLoadingEffect src={imgBanner5} alt="Slide 5" />
         </SplideSlide>
       </Splide>
     </section>
   );
-};
+}

@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
@@ -6,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { cadastrarProduto } from '../../../../../../../services/ApiService';
+import { cadastrarProduto } from '../../../../../../../services/apiService';
 
 const categorias = [
   'Casa Inteligente', 
@@ -37,6 +39,7 @@ const subcategoriasPorCategoria = {
   'Video Games': ['Console de Mesa', 'Portátil']
 };
 
+// eslint-disable-next-line react/prop-types, no-unused-vars
 const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   const filteredOptions = filterFunction ? options.filter(filterFunction) : options;
 
@@ -53,6 +56,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
   );
 };
 
+// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function ProdutoModal({ onSave, onUpdate, onClose }) {
   const initialFormState = {
     nome: '',
@@ -146,7 +150,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         imagens: produto.imagens || ['', '', ''],
         desconto: produto.desconto || '',
         cor: produto.cor || '',
-        preco: produto.valor || '',
+        preco: produto.valorTotal || '',
         modelo: produto.modelo || '',
         peso: produto.peso || '',
         altura: produto.altura || '',

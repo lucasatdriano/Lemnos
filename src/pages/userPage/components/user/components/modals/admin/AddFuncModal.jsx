@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
@@ -6,9 +7,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco } from '../../../../../../../services/apiService';
 
-
+// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
@@ -135,13 +136,13 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
     
     if (!form.confSenha) {
       newErrors.confSenha = 'Confirmar Senha é obrigatório';
-    } else if (form.senha != form.confSenha) {
+    } else if (form.senha !== form.confSenha) {
       newErrors.confSenha = 'As Senhas devem ser iguais';
     }
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length == 0;
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleForm = (form) => {
@@ -176,10 +177,10 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
         let entidadeCadastrada = await cadastrarFuncionario(formattedForm, tipoEntidade);
 
-        if (entidadeCadastrada == true) {
+        if (entidadeCadastrada === true) {
           const id = await findIdByEmail(formattedForm.email, tipoEntidade);
           const enderecoResponse = await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
-          if(enderecoResponse == true) {
+          if (enderecoResponse === true) {
             setForm(initialFormState);
           }
           return;
@@ -193,16 +194,22 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   };
   
   const formatarData = (data) => {
+    if (!data) {
+      return '';
+    }
     return `${data.substring(8, 10)}/${data.substring(5, 7)}/${data.substring(0, 4)}`;
   };
 
   const handleDisable = async (id) => {
-      axios.delete(`${baseUri}/funcionario/${id}`)
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error));
+    try {
+      await axios.delete(`${baseUri}/funcionario/${id}`);
+      console.log('Funcionário desativado com sucesso.');
+    } catch (error) {
+      console.error('Erro ao desativar funcionário:', error);
+    }
   }
 
-  const handleUpdate = async (form) => {
+  const handleUpdate = async () => {
     if (validateForm()) {
       const formattedForm = handleForm(form);
       delete formattedForm.confSenha;
@@ -214,19 +221,18 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
           return;
         }
 
-        let entidadeCadastrada = await updateFuncionario(formattedForm);
-
-        if (entidadeCadastrada == true) {
+        let entidadeAtualizada = await updateFuncionario(formattedForm);
+        
+        if (entidadeAtualizada === true) {
           const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
-          // setForm(initialFormState);
+          await updateEndereco(id, formattedForm.endereco, tipoEntidade);
+          // setSelectedFunc(null);
           return;
         }
-          setSelectedFunc(null);
       } catch (error) {
         console.error('Erro ao atualizar funcionário:', error);
         toast.error('Erro ao atualizar funcionário.');
-        toast.error(error.response.data.message)
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -271,6 +277,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
               maxLength={14}
               value={form.cpf}
               onChange={(e) => handleChange('cpf', e.target.value)}
+              disabled={isFuncSelected()}
             />
             {errors.cpf && <span className='invalid'>{errors.cpf}</span>}
           </p>
@@ -316,14 +323,14 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
           <p>
             <CustomInput
-            type="text"
-            label="CEP:"
-            id="cep"
-            name="cep"
-            mask='CEP'
-            maxLength={9}
-            value={form.endereco.cep}
-            onChange={(e) => handleChange('endereco', { ...form.endereco, cep: e.target.value })}
+              type="text"
+              label="CEP:"
+              id="cep"
+              name="cep"
+              mask='CEP'
+              maxLength={9}
+              value={form.endereco.cep}
+              onChange={(e) => handleChange('endereco.cep', e.target.value)}
             />
             {errors.cep && <span className='invalid'>{errors.cep}</span>}
           </p>
@@ -336,7 +343,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
               name="numeroLogradouro"
               maxLength={6}
               value={form.endereco.numLogradouro}
-              onChange={(e) => handleChange('endereco', { ...form.endereco, numLogradouro: e.target.value })}
+              onChange={(e) => handleChange('endereco.numLogradouro', e.target.value)}
             />
             {errors.numLogradouro && <span className='invalid'>{errors.numLogradouro}</span>}
           </p>
@@ -349,7 +356,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
               name="complemento"
               maxLength={20}
               value={form.endereco.complemento}
-              onChange={(e) => handleChange('endereco', { ...form.endereco, complemento: e.target.value })}
+              onChange={(e) => handleChange('endereco.complemento', e.target.value)}
             />
             {errors.complemento && <span className='invalid'>{errors.complemento}</span>}
           </p>
@@ -363,6 +370,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
               maxLength={40}
               value={form.email}
               onChange={(e) => handleChange('email', e.target.value)}
+              disabled={isFuncSelected()}
             />
             {errors.email && <span className='invalid'>{errors.email}</span>}
           </p>
@@ -409,7 +417,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
           {!isFuncSelected() ? (
             <button type='button' onClick={handleAdd} disabled={isFuncSelected()}>Adicionar</button>
           ) : (
-            <button type='button' onClick={handleDisable} disabled={!isFuncSelected()}>Desativar</button>
+            <button type='button' onClick={() => handleDisable(selectedFunc.id)} disabled={!isFuncSelected()}>Desativar</button>
           )}
           <button type='button' onClick={handleUpdate} disabled={!isFuncSelected()}>Atualizar</button>
           <button type='button' onClick={handleFuncionarioListToggle}>Mostrar Lista</button>
@@ -417,7 +425,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isFuncionarioListOpen && (
-       <UpdateFuncModal funcionarios={funcionarios} onSelect={selectFuncionario} onClose={handleFuncionarioListToggle} />
+        <UpdateFuncModal funcionarios={funcionarios} onSelect={selectFuncionario} onClose={handleFuncionarioListToggle} />
       )}
     </div>
   );

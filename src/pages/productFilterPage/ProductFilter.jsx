@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
+import { getProdutosFilter } from '../../services/apiProductService';
 
 const brands = [
   'AMD',
@@ -47,33 +47,6 @@ const subcategoriasPorCategoria = {
   'Video Games': ['Console de Mesa', 'Portátil']
 };
 
-const products = [
-  {
-    id: 1,
-    name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
-    price: 19.99,
-    image: logoHorizontal,
-    brand: `Apple`,
-    category: 'Computadores',
-    subcategory: 'Computadores Workstation'
-  },
-];
-for (let i = 2; i <= 100; i++) {
-  const category = categorias[Math.floor(Math.random() * categorias.length)];
-  const brand = brands[Math.floor(Math.random() * brands.length)];
-  const subcategories = subcategoriasPorCategoria[category];
-  const subcategory = subcategories ? subcategories[Math.floor(Math.random() * subcategories.length)] : '';
-  products.push({
-    id: i,
-    name: `Product ${i}`,
-    price: parseFloat((Math.random() * 10000).toFixed(2)),
-    image: logoHorizontal,
-    brand: brand,
-    category: category,
-    subcategory: subcategory,
-  });
-}
-
 export default function ProductFilter() {
   const { category } = useParams();
   const navigate = useNavigate();
@@ -90,33 +63,23 @@ export default function ProductFilter() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const applyFilters = () => {
+  const applyFilters = async () => {
     setLoading(true);
-    const filtered = products.filter(item => {
-      if (selectedBrand && item.brand !== selectedBrand) {
-        return false;
-      }
-      if (minPrice && item.price < parseFloat(minPrice)) {
-        return false;
-      }
-      if (maxPrice && item.price > parseFloat(maxPrice)) {
-        return false;
-      }
-      if (selectedSubCategory && item.subcategory !== selectedSubCategory) {
-        return false;
-      }
-      if (selectedCategory && item.category !== selectedCategory) {
-        return false;
-      }
-      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return false;
-      }
-      return true;
-    });
-    setTimeout(() => {
-      setFilteredData(filtered);
+    try {
+      const filtro = {
+        categoria: selectedCategory || '',
+        subCategoria: selectedSubCategory || '',
+        marca: selectedBrand || '',
+        menorPreco: minPrice !== undefined ? minPrice : 0,
+        maiorPreco: maxPrice !== undefined ? maxPrice : 10000
+      };
+      const produtosFiltrados = await getProdutosFilter(filtro);
+      setFilteredData(produtosFiltrados);
+    } catch (error) {
+      toast.error('Erro ao buscar produtos.');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -130,24 +93,6 @@ export default function ProductFilter() {
   useEffect(() => {
     applyFilters();
   }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
-  
-  const handleMinPriceChange = (e) => {
-    const value = e.target.value;
-    setMinPrice(value);
-    if (maxPrice && parseFloat(value) > parseFloat(maxPrice)) {
-      toast.warning('O valor mínimo não pode ser maior que o valor máximo.');
-      setMaxPrice(value);
-    }
-  };
-
-  const handleMaxPriceChange = (e) => {
-    const value = e.target.value;
-    setMaxPrice(value);
-    if (minPrice && parseFloat(value) < parseFloat(minPrice)) {
-      toast.warning('O valor máximo não pode ser menor que o valor mínimo.');
-      setMinPrice(value);
-    }
-  };
 
   const handleClearFilters = () => {
     setSelectedBrand('');
