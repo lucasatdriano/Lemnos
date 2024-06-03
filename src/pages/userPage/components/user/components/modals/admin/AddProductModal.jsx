@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { cadastrarProduto } from '../../../../../../../services/ApiService';
+import { cadastrarProduto, updateProduto } from '../../../../../../../services/ApiService';
 
 const categorias = [
   'Casa Inteligente', 
@@ -57,7 +57,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 };
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export default function ProdutoModal({ onSave, onUpdate, onClose }) {
+export default function ProdutoModal({ onSave, onClose }) {
   const initialFormState = {
     nome: '',
     preco: '',
@@ -126,6 +126,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         throw error;
       }
       setSelectedProduct(null);
+      setForm(initialFormState);
     }
     else {
       setIsProdutoListOpen(false);
@@ -138,7 +139,6 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         timeout: 10000,
       });
       const produto = response.data;
-
       if (!produto) {
         throw new Error('Dados do produto não encontrados.');
       }
@@ -167,7 +167,6 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     } catch (error) {
       console.error('Erro ao carregar dados do produto:', error);
       toast.error('Erro ao carregar dados do produto.');
-      console.log(produtos.id);
       throw error;
     }
   }
@@ -249,7 +248,8 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
           fornecedor: form.fornecedor ? form.fornecedor.toLowerCase() : '',
         };      
         await cadastrarProduto(formattedForm);
-  
+        
+        toast.success('Produto cadastrado com sucesso');
         // setForm(initialFormState);
 
       }
@@ -259,13 +259,49 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
     }
   };
 
-  const handleUpdate = (e) => {
+  const handleSelect = (produto) => {
+    setSelectedProduct(produto);
+  };
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Dados do Produto atualizados:', form);
-      // onUpdate(form); no futuro
-      setForm(initialFormState);
-      setSelectedProduct(null);
+    if (!selectedProduct) return;
+    
+    try {
+      if (validateForm()) {
+        const formattedForm = {
+          ...form,
+          preco: parseFloat(form.preco),
+          desconto: parseFloat(form.desconto),
+          peso: parseFloat(form.peso),
+          altura: parseFloat(form.altura),
+          comprimento: parseFloat(form.comprimento),
+          largura: parseFloat(form.largura),
+          imagens: form.imagens.filter(Boolean),
+          fornecedor: form.fornecedor ? form.fornecedor.toLowerCase() : '',
+        };
+
+        try {
+          let entidadeAtualizada = await updateProduto(formattedForm, selectedProduct.id);
+
+          if (entidadeAtualizada === true) {
+            toast.success('Produto atualizado com sucesso.');
+            setSelectedProduct(null);
+            setForm(initialFormState);
+            return;
+          }
+
+        } catch (error) {
+          console.error('Erro ao atualizar produto:', error);
+          toast.error(error.response.data.message);
+          throw error;
+        }
+      } else {
+        console.log('Form validation failed');
+      }
+    } catch (error) {
+      console.error('Erro na requisição de produto:', error);
+      toast.error('Erro ao buscar produto.');
     }
   };
 
@@ -546,7 +582,7 @@ export default function ProdutoModal({ onSave, onUpdate, onClose }) {
         <IoClose onClick={onClose} className='iconClose' />
       </div>
       {isProdutoListOpen && (
-        <UpdateProductModal produtos={produtos} onSelect={selectProduto} onClose={handleProdutoListToggle}/>
+        <UpdateProductModal produtos={produtos} onUpdate={handleUpdate} onSelect={selectProduto} onClose={handleProdutoListToggle}/>
       )}
     </div>
   );

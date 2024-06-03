@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/ApiService';
 
-export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
+export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
     email: '',
@@ -34,13 +34,8 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
         const response = await axios.get(`${baseUri}/fornecedor`, {
           timeout: 10000,
         });
-        
-        const fornecedoresComId = response.data.map((fornecedor, index) => ({
-          ...fornecedor,
-          id: index + 1
-        }));
       
-        setFornecedores(fornecedoresComId);
+        setFornecedores(response.data);
         setSelectedForn(null);
         setForm(initialFormState);
         setIsFornecedorListOpen(true);
@@ -55,7 +50,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
 
   const selectFornecedor = async (id) => {
     try {
-      const response = await axios.get(`${baseUri}/fornecedor/${id}`, {
+      const response = await axios.get(`${baseUri}/fornecedor/find?email=${id}`, {
         timeout: 10000,
       });
       const fornecedor = response.data;
@@ -157,6 +152,7 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
  
   const handleUpdate = async (e) => {
     e.preventDefault();
+  
     if (validateForm()) {  
       const formattedForm = {
         ...form,
@@ -179,11 +175,15 @@ export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidad
         const entidadeAtualizada = await updateFornecedor(formattedForm);
         
         if (entidadeAtualizada === true) {
-          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          await updateEndereco(id, formattedForm.endereco, tipoEntidade);
-          // setSelectedForn(null);
-          return;
+          let enderecoAtualizada = await updateEndereco(formattedForm, formattedForm.endereco, tipoEntidade);
+          
+          if (enderecoAtualizada === true) {
+            toast.success('Endereço atualizado com sucesso');
+            // setSelectedFunc(null);
+            return;
+          }
         }
+        toast.success('Fornecedor atualizado com sucesso');
       } catch (error) {
         console.error('Erro ao atualizar fornecedor:', error);
         toast.error('Erro ao atualizar fornecedor.');

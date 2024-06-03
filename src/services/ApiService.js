@@ -115,19 +115,21 @@ export async function cadastrarProduto(produto){
             },
             data: {
                 nome: produto.nome,
-                descricao: produto.descricao,
-                cor: produto.cor,
                 valor: produto.preco,
+                descricao: produto.descricao,
+                desconto: produto.desconto,
+                cor: produto.cor,
                 modelo: produto.modelo,
+                imagemPrincipal: produto.imagemPrinc,
+                imagens: produto.imagens,
+                categoria: produto.categoria,
+                subCategoria: produto.subCategoria,
                 peso: produto.peso,
                 altura: produto.altura,
                 comprimento: produto.comprimento,
                 largura: produto.largura,
                 fabricante: produto.fabricante,
-                fornecedor: produto.fornecedor,
-                subCategoria: produto.subCategoria,
-                imagemPrincipal: produto.imagemPrinc,
-                imagens: produto.imagens
+                fornecedor: produto.fornecedor
             },
             timeout: 10000,
         });
@@ -149,12 +151,34 @@ export async function cadastrarProduto(produto){
 }
 
 export async function updateCliente(cliente) {
-    axios.put(baseUri + `/cliente/${cliente.id}`, {
-        nome: cliente.nome,
-        cpf: cliente.cpf,
-    })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: `/cliente/`,
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                nome: cliente.nome,
+                senha: cliente.senha,
+            },
+            params: {
+                email: cliente.email
+            },
+            timeout: 10000,
+        });
+        
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+       if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
 }
 
 export async function updateFuncionario(funcionario) {
@@ -168,7 +192,8 @@ export async function updateFuncionario(funcionario) {
                 nome: funcionario.nome,
                 telefone: funcionario.telefone,
                 dataNascimento: funcionario.dataNasc,
-                dataAdmissao: funcionario.dataAdmissao
+                dataAdmissao: funcionario.dataAdmissao,
+                senha: funcionario.senha
             },
             params: {
                 email: funcionario.email
@@ -209,6 +234,65 @@ export async function updateFornecedor(fornecedor) {
         });
 
         if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function updateProduto(produto, id) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: `/produto/${id}`,
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                nome: produto.nome,
+                valor: produto.preco,
+                descricao: produto.descricao,
+                desconto: produto.desconto,
+                imagemPrincipal: produto.imagemPrinc,
+                imagens: produto.imagens,
+                fornecedor: produto.fornecedor
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function excluirFuncionario(email) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "DELETE",
+            url: `/funcionario`,
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            params: {
+                email: email
+            }
+        })
+
+        if (response.status != 200) {
             return false;
         }
 

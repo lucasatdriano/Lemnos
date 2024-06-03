@@ -20,127 +20,116 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-main {
-    .offers {
-        width: 90%;
-        margin: 0 auto;
-        padding-top: .5em;
+.offers {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: .5em;
 
-        .offersList {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            cursor: grab;
+    .offersList {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        cursor: grab;
 
-            .splide__list {
-                margin: auto;
-                width: 85vw;
-            }
+        .splide__list {
+            margin: auto;
+            width: 85vw;
+        }
+        
+        .splide__slide {
+            margin-right: -5em;
+        }
+
+        .splide__pagination__page {
+            display: none;
+        }
+        
+        .splide__arrow {
+            &.splide__arrow--prev,
+            &.splide__arrow--next {
+                font-size: 2.2rem;
+                transition: 0.3s ease;
+                background-color: $color-primaryLight;
+                box-shadow: 2px 2px 4px $color-shadow;
             
-            .splide__slide {
-                margin-right: -5em;
+                &:hover {
+                    opacity: .8;
+                }
             }
 
-            .splide__pagination__page {
-                display: none;
+            &.splide__arrow--prev {
+                left: -3em;
             }
-            
-            .splide__arrow {
-                &.splide__arrow--prev,
-                &.splide__arrow--next {
-                    font-size: 2.2rem;
-                    transition: 0.3s ease;
-                    background-color: $color-primaryLight;
-                    box-shadow: 2px 2px 4px $color-shadow;
-                
-                    &:hover {
-                        opacity: .8;
-                    }
-                }
+            &.splide__arrow--next {
+                right: -3em;
+            }
+        }
 
-                &.splide__arrow--prev {
-                    left: -3em;
-                }
-                &.splide__arrow--next {
-                    right: -3em;
-                }
-            }
-   
-            &:active {
-                cursor: grabbing;
-            }
+        &:active {
+            cursor: grabbing;
         }
     }
 }
 
 @media only screen and (max-width: 1340px) {
-    main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 82vw;
-                }
-                .splide__slide {
-                    margin-right: -2em;
-                }
+    .offers {
+        .offersList {   
+            .splide__list {
+                width: 82vw;
+            }
+            .splide__slide {
+                margin-right: -2em;
             }
         }
     }
 }
 
 @media only screen and (max-width: 1024px) {
-    main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 77vw;
-                }
+    .offers {
+        .offersList {   
+            .splide__list {
+                width: 77vw;
             }
         }
     }
 }
 
 @media only screen and (max-width: 700px) {
-    main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 75vw;
-                }
-                .splide__slide {
-                    margin-right: 0;
-                    padding-left: 2em;
-                }
-                .splide__arrow {   
-                   display: none;
-                }
+    .offers {
+        .offersList {   
+            .splide__list {
+                width: 75vw;
+            }
+            .splide__slide {
+                margin-right: 0;
+                padding-left: 2em;
+            }
+            .splide__arrow {   
+                display: none;
             }
         }
     }
 }
 
 @media only screen and (max-width: 425px) {
-    main {
-        .offers {
-            .offersList {   
-                .splide__list {
-                    width: 77vw;
-                }
-                .splide__slide {
-                    margin-right: 1em;
-                    padding-left: .5em;
-                }
+    .offers {
+        .offersList {   
+            .splide__list {
+                width: 77vw;
+            }
+            .splide__slide {
+                margin-right: 1em;
+                padding-left: .5em;
             }
         }
     }
 }
+
 @media only screen and (max-width: 375px) {
-    main {
-        .offers {
-            .offersList {
-                .splide__slide {
-                    padding-left: .3em;
-                }
+    .offers {
+        .offersList {
+            .splide__slide {
+                padding-left: .3em;
             }
         }
     }

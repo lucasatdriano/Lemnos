@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario } from '../../../../../../../services/ApiService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
+export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
     cpf: '',
@@ -196,11 +196,19 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
   };
 
   const handleDisable = async (id) => {
-    try {
-      await axios.delete(`${baseUri}/funcionario/${id}`);
-      console.log('Funcionário desativado com sucesso.');
-    } catch (error) {
-      console.error('Erro ao desativar funcionário:', error);
+    if (validateForm()) {
+      const formattedForm = handleForm(form);
+
+      try {
+        await excluirFuncionario(formattedForm.email);
+        console.log('Funcionário desativado com sucesso.');
+        toast.success('Funcionário desativado');
+        setForm(initialFormState);
+        setSelectedFunc(null);
+      } catch (error) {
+        toast.error('Erro ao desativar funcionário.');
+        console.error('Erro ao desativar funcionário:', error);
+      }
     }
   }
 
@@ -217,22 +225,22 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         }
 
         let entidadeAtualizada = await updateFuncionario(formattedForm);
-        toast.success('Funcionario atualizado com sucesso');
         
         if (entidadeAtualizada === true) {
-          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
           let enderecoAtualizada = await updateEndereco(formattedForm, formattedForm.endereco, tipoEntidade);
           
           if (enderecoAtualizada === true) {
             toast.success('Endereço atualizado com sucesso');
-            // setSelectedFunc(null);
+            setForm(initialFormState);
+            setSelectedFunc(null);
             return;
           }
         }
+        toast.success('Funcionario atualizado com sucesso');
       } catch (error) {
         console.error('Erro ao atualizar funcionário:', error);
-        toast.error('Erro ao atualizar funcionário.');
         toast.error(error.response.data.message);
+        throw error;
       }
     }
   };

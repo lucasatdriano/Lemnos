@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
-import { getProdutosFilter } from '../../services/apiProductService';
+import { getProdutosFilter } from '../../services/apiProductService'; // Certifique-se de que esse serviço está implementado corretamente
 
 const brands = [
   'AMD',
@@ -55,11 +55,11 @@ export default function ProductFilter() {
   const search = searchParams.get('search') || '';
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(category || '');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(search || '');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   
@@ -142,7 +142,6 @@ export default function ProductFilter() {
           setMinValue={setMinPrice}
           setMaxValue={setMaxPrice}
         />
-
       </section>
 
       <section className="filtered-data-container">
@@ -176,7 +175,6 @@ export default function ProductFilter() {
                 <ul className='listResults'>
                   {filteredData.map(item => (
                     <li key={item.id} className='listItemResults'>
-                      {/* <img className='imgProduct' src={item.image} alt={item.name} /> */}
                       <div>
                         <h3 className='titleProduct'>{item.name}</h3>
                         <p className='priceProduct'>{BRL.format(item.price)}</p>

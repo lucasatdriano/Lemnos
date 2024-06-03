@@ -1,84 +1,30 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Card from '../card/Card';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import CardOffer from '../cardOffer/CardOffer';
 import './offerList.scss';
-import logoHorizontal from '../../assets/imgLemnos/logoHorizontal.svg'
 
 export default function OfferList() {
+  const [produtos, setProdutos] = useState([]);
+  const baseUri = "http://localhost:8080/api";
+
+  useEffect(() => { 
+    const fetchProdutos = async () => {
+      try {
+        const response = await axios.get(`${baseUri}/produto`, {
+          timeout: 10000,
+        });
+        setProdutos(response.data);
+      } catch (error) {
+        console.error('Erro ao listar Produtos:', error);
+      }
+    };
   
-    //chamada da API
-  const offers = [
-    {
-      id: 1,
-      name: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)',
-      price: 2049.99,
-      descont: 12,
-      image: logoHorizontal
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 3,
-      name: 'Product 3',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 4,
-      name: 'Product 4',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 5,
-      name: 'Product 5',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 6,
-      name: 'Product 6',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 7,
-      name: 'Product 7',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 8,
-      name: 'Product 8',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 9,
-      name: 'Product 9',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-    {
-      id: 10,
-      name: 'Product 10',
-      price: 24.99,
-      descont: 12,
-      image: 'product2.jpg'
-    },
-  ];
+    fetchProdutos();
+  }, []);
+
+  const produtosComDesconto = produtos.filter(produto => produto.desconto > 0);
 
   return (    
     <div className="offersList">
@@ -99,9 +45,9 @@ export default function OfferList() {
           },
         }}
       >
-        {offers.map(offer => (     
-          <SplideSlide key={offer.id}>
-            <CardOffer offer={offer} />
+        {produtosComDesconto.map(produto => (
+          <SplideSlide key={produto.id}>
+            <Card produto={produto} />
           </SplideSlide>
         ))}
       </Splide>
