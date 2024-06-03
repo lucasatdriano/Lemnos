@@ -168,8 +168,7 @@ export async function updateFuncionario(funcionario) {
                 nome: funcionario.nome,
                 telefone: funcionario.telefone,
                 dataNascimento: funcionario.dataNasc,
-                dataAdmissao: funcionario.dataAdmissao,
-                senha: funcionario.senha
+                dataAdmissao: funcionario.dataAdmissao
             },
             params: {
                 email: funcionario.email
@@ -256,7 +255,7 @@ export async function cadastrarEndereco(idEntidade, endereco, tipoEntidade) {
     }
 }
 
-export async function updateEndereco(idEntidade, endereco, entidade) {
+export async function updateEndereco(entidade, endereco, TipoEntidade) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -264,13 +263,11 @@ export async function updateEndereco(idEntidade, endereco, entidade) {
             url: "/endereco",
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
             data: {
+                email: entidade.email,
                 cep: endereco.cep,
                 numeroLogradouro: endereco.numLogradouro,
                 complemento: endereco.complemento,
-                entidade: entidade
-            },
-            params: {
-                id: idEntidade
+                entidade: TipoEntidade
             },
             timeout: 10000,
         });

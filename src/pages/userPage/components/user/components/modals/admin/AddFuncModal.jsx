@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco } from '../../../../../../../services/apiService';
+import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco } from '../../../../../../../services/ApiService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEntidade }) {
@@ -43,13 +43,8 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         const response = await axios.get(`${baseUri}/funcionario`, {
           timeout: 10000,
         });
-        
-        const funcionariosComId = response.data.map((funcionario, index) => ({
-          ...funcionario,
-          id: index + 1
-        }));
       
-        setFuncionarios(funcionariosComId);
+        setFuncionarios(response.data);
         setSelectedFunc(null);
         setIsFuncionarioListOpen(true);
         setForm(initialFormState);
@@ -64,7 +59,7 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
 
   const selectFuncionario = async (id) => {
     try {
-      const response = await axios.get(`${baseUri}/funcionario/${id}`, {
+      const response = await axios.get(`${baseUri}/funcionario/find?email=${id}`, {
         timeout: 10000,
       });
       const funcionario = response.data;
@@ -222,12 +217,17 @@ export default function FuncionarioModal({ onAddFunc, onUpdate, onClose, tipoEnt
         }
 
         let entidadeAtualizada = await updateFuncionario(formattedForm);
+        toast.success('Funcionario atualizado com sucesso');
         
         if (entidadeAtualizada === true) {
           const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          await updateEndereco(id, formattedForm.endereco, tipoEntidade);
-          // setSelectedFunc(null);
-          return;
+          let enderecoAtualizada = await updateEndereco(formattedForm, formattedForm.endereco, tipoEntidade);
+          
+          if (enderecoAtualizada === true) {
+            toast.success('Endereço atualizado com sucesso');
+            // setSelectedFunc(null);
+            return;
+          }
         }
       } catch (error) {
         console.error('Erro ao atualizar funcionário:', error);

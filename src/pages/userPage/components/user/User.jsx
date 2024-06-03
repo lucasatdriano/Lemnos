@@ -16,7 +16,7 @@ import AddProdutoModal from './components/modals/admin/AddProductModal';
 
 import HistoricoCompras from './components/history/History';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
-import { cadastrarFuncionario } from '../../../../services/apiService';
+import { cadastrarFuncionario } from '../../../../services/ApiService';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import './user.scss';

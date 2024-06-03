@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { cadastrarProduto } from '../../../../../../../services/apiService';
+import { cadastrarProduto } from '../../../../../../../services/ApiService';
 
 const categorias = [
   'Casa Inteligente', 

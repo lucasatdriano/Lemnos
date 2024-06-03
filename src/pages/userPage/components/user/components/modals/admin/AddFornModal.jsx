@@ -7,7 +7,7 @@ import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/apiService';
+import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/ApiService';
 
 export default function FornecedorModal({ onSave, onUpdate, onClose, tipoEntidade }) {
   const initialFormState = {
