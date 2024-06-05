@@ -23,8 +23,72 @@ export async function getProdutosFilter(filtro) {
             timeout: 10000,
         });
 
-        if (response.status !== 200) {
+        if (response.status != 200 && response.status != 204) {
             throw new Error('Erro ao filtrar produto.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao filtrar produto.');
+        }
+        throw error;
+    }
+}
+
+export async function adicionarFavorito(produto, cliente){
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/produto/fav",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            params: {
+                id_cliente: cliente.id,
+                id_prod: produto.id
+            },
+            timeout: 10000
+        });
+
+        if (response.status != 200) {
+            throw new Error('Erro ao favoritar produto.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao filtrar produto.');
+        }
+        throw error;
+    }
+}
+
+export async function dasfavoritarProduto(produto, cliente){
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "DELETE",
+            url: "/produto/fav",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            params: {
+                id_cliente: cliente.id,
+                id_prod: produto.id
+            },
+            timeout: 10000
+        });
+
+        if (response.status != 200) {
+            throw new Error('Erro ao favoritar produto.');
         }
 
         return response.data;

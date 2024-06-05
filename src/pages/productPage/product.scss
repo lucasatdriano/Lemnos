@@ -37,20 +37,19 @@ $font-items: 'Poppins', Helvetica;
     margin: 0 auto;
 
     .productMain {
-      margin: auto;
+      margin: 0 auto 2em;
       width: 90%;
       display: flex;
-      justify-content: center;
-      // margin-top: -2em;
-      gap: 2em;
+      justify-content: space-evenly;
+      align-items: center;
 
       .containerImages {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        position: relative;
         gap: .5em;
-        width: 50%;
+        width: 40%;
         padding: 2em 0;
 
         .imageMain {
@@ -81,16 +80,29 @@ $font-items: 'Poppins', Helvetica;
             box-shadow: 2px 2px 10px $color-shadow;
           }
         }
+
+        .offerDescont {
+          background-color: $color-detailsLight;
+          padding: 20px 10px;
+          text-align: center;
+          font-size: 2rem;
+          z-index: 10;
+          color: $color-fontDark;
+          border-radius: 10px;
+        
+          position: absolute;
+          top: 35px;
+          right: 50px;
+        }    
       }
 
       .containerInfos {
         width: 50%;
         display: flex;
         flex-direction: column;
-        align-self: center;
-        gap: 1.5em;
+        gap: 2em;
         font-size: 2.6rem;
-        padding: 1em 0;
+        margin-top: -.5em;
 
         .iconFav {
           color: $color-primaryLight;
@@ -98,7 +110,7 @@ $font-items: 'Poppins', Helvetica;
           display: flex;
           align-self: end;
           margin-bottom: -.5em;
-          font-size: clamp(4rem, 1rem + 5vw, 5rem);
+          font-size: clamp(4rem, 4rem + 5vw, 5.4rem);
           cursor: pointer;
         }
 
@@ -139,6 +151,7 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .addCart {
+          margin-top: 1em;
           font-family: $font-items;
           display: flex;
           align-items: center;

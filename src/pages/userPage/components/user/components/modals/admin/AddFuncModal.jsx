@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, findIdByEmail, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario } from '../../../../../../../services/ApiService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
@@ -173,8 +173,7 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
         let entidadeCadastrada = await cadastrarFuncionario(formattedForm, tipoEntidade);
 
         if (entidadeCadastrada === true) {
-          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          const enderecoResponse = await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
+          const enderecoResponse = await cadastrarEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
           if (enderecoResponse === true) {
             setForm(initialFormState);
           }
@@ -227,7 +226,7 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
         let entidadeAtualizada = await updateFuncionario(formattedForm);
         
         if (entidadeAtualizada === true) {
-          let enderecoAtualizada = await updateEndereco(formattedForm, formattedForm.endereco, tipoEntidade);
+          let enderecoAtualizada = await updateEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
           
           if (enderecoAtualizada === true) {
             toast.success('Endereço atualizado com sucesso');

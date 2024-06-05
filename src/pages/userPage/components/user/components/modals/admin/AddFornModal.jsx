@@ -7,7 +7,7 @@ import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { cadastrarFornecedor, cadastrarEndereco, findIdByEmail, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/ApiService';
+import { cadastrarFornecedor, cadastrarEndereco, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/ApiService';
 
 export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
   const initialFormState = {
@@ -135,8 +135,7 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
        const entidadeCadastrada = await cadastrarFornecedor(formattedForm, tipoEntidade);
 
         if (entidadeCadastrada == true) {
-          const id = await findIdByEmail(formattedForm.email, tipoEntidade);
-          const enderecoResponse = await cadastrarEndereco(id, formattedForm.endereco, tipoEntidade);
+          const enderecoResponse = await cadastrarEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
 
           if (enderecoResponse && enderecoResponse.success) {
             setForm(initialFormState);
@@ -175,7 +174,7 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
         const entidadeAtualizada = await updateFornecedor(formattedForm);
         
         if (entidadeAtualizada === true) {
-          let enderecoAtualizada = await updateEndereco(formattedForm, formattedForm.endereco, tipoEntidade);
+          let enderecoAtualizada = await updateEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
           
           if (enderecoAtualizada === true) {
             toast.success('Endereço atualizado com sucesso');

@@ -46,7 +46,6 @@ export default function Product() {
         setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     };
     
-    // Verifica se o produto existe antes de acessar a propriedade desconto
     const hasDiscount = product && product.desconto > 0;
 
     return (
@@ -58,6 +57,7 @@ export default function Product() {
                     <section className='productMain'>
                         <div className="containerImages">
                             <img src={mainImage} alt={product.nome} className='imageMain' />
+                            {hasDiscount && <p className='offerDescont'>{product.desconto}%</p>}
                             <div className="optionsImages">
                                 <img
                                     src={product.imagemPrincipal}

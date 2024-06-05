@@ -39,15 +39,15 @@ $font-items: 'Poppins', Helvetica;
  
     .offerDescont {
       background-color: $color-detailsLight;
-      padding: 12px 6px;
+      padding: 15px 5px;
+      text-align: center;
       z-index: 10;
-      width: 36px;
       color: $color-fontDark;
       border-radius: 5px;
     
       position: absolute;
       top: 2px;
-      right: 5px;
+      right: 2px;
     }
 
     .offerImage {

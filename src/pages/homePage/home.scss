@@ -94,8 +94,7 @@ main {
         width: 90%;
         margin: 2em auto 0; 
         height: auto;
-        padding-top: 1em;    
-        
+        padding-top: 1em;
         
         .brandsList {
             width: 100%;
@@ -153,6 +152,7 @@ main {
         .mainProds {    
             .productsList {
                 grid-template-columns: repeat(4, minmax(100px, 1fr));
+                flex-wrap: wrap;
             }
         }
         .brands {

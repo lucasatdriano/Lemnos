@@ -173,9 +173,15 @@ export default function ProdutoModal({ onSave, onClose }) {
   
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    if (isProductSelected()) {
+      setIsDropdownOpen(!isDropdownOpen);
+    }
   };
   const handleSubDropdownToggle = () => {
     setIsSubDropdownOpen(!isSubDropdownOpen);
+    if (!isProductSelected()) {
+      setIsSubDropdownOpen(!isSubDropdownOpen);
+    }
   };
 
   const validateForm = () => {
@@ -392,6 +398,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               maxLength={30}
               value={form.cor}
               onChange={(e) => handleChange('cor', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.cor && <span className='invalid'>{errors.cor}</span>}
           </p>
@@ -405,6 +412,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               maxLength={30}
               value={form.modelo}
               onChange={(e) => handleChange('modelo', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.modelo && <span className='invalid'>{errors.modelo}</span>}
           </p>
@@ -443,6 +451,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               maxLength={30}
               value={form.categoria}
               onChange={(e) => handleChange('categoria', e.target.value)}
+              disabled={isProductSelected()}
             />
             {isDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleDropdownToggle}/> 
@@ -474,6 +483,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               onChange={() => {
                 setIsSubDropdownOpen(false);
               }}
+              disabled={isProductSelected()}
             />
             {isSubDropdownOpen ? 
               <RiArrowDropUpLine className='iconDrop' onClick={handleSubDropdownToggle}/> 
@@ -502,6 +512,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               mask="NUMBERS"
               value={form.peso}
               onChange={(e) => handleNumberChange('peso', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.peso && <span className='invalid'>{errors.peso}</span>}
           </p>
@@ -516,6 +527,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               mask="NUMBERS"
               value={form.altura}
               onChange={(e) => handleNumberChange('altura', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.altura && <span className='invalid'>{errors.altura}</span>}
           </p>
@@ -530,6 +542,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               mask="NUMBERS"
               value={form.comprimento}
               onChange={(e) => handleNumberChange('comprimento', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.comprimento && <span className='invalid'>{errors.comprimento}</span>}
           </p>
@@ -544,6 +557,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               mask="NUMBERS"
               value={form.largura}
               onChange={(e) => handleNumberChange('largura', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.largura && <span className='invalid'>{errors.largura}</span>}
           </p>
@@ -557,6 +571,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               maxLength={50}
               value={form.fabricante}
               onChange={(e) => handleChange('fabricante', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.fabricante && <span className='invalid'>{errors.fabricante}</span>}
           </p>

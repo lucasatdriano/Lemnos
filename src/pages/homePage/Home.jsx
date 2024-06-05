@@ -33,6 +33,7 @@ export default function Home() {
   }, []);
 
   const mainProducts = produtos.slice(0, 20);
+  const produtosSemDesconto = mainProducts.filter(produto => produto.desconto == 0);
 
   return (
     <>
@@ -89,7 +90,7 @@ export default function Home() {
         <section className='mainProds'>
           <h2>Principais Produtos</h2>
           <div className='productsList'>
-            {mainProducts.map(produto => (
+            {produtosSemDesconto.map(produto => (
               <Card key={produto.id} produto={produto} />
             ))}
           </div>

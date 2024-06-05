@@ -306,7 +306,7 @@ export async function excluirFuncionario(email) {
     }
 }
 
-export async function cadastrarEndereco(idEntidade, endereco, tipoEntidade) {
+export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -316,11 +316,11 @@ export async function cadastrarEndereco(idEntidade, endereco, tipoEntidade) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             data: {
+                email: emailEntidade,
                 cep: endereco.cep,
                 numeroLogradouro: endereco.numLogradouro,
                 complemento: endereco.complemento,
-                entidade: tipoEntidade,
-                id: idEntidade
+                entidade: tipoEntidade
             },
             timeout: 10000,
         });
@@ -339,7 +339,7 @@ export async function cadastrarEndereco(idEntidade, endereco, tipoEntidade) {
     }
 }
 
-export async function updateEndereco(entidade, endereco, TipoEntidade) {
+export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -347,7 +347,7 @@ export async function updateEndereco(entidade, endereco, TipoEntidade) {
             url: "/endereco",
             headers: {'Content-Type': 'application/json; charset=UTF-8'},
             data: {
-                email: entidade.email,
+                email: emailEntidade,
                 cep: endereco.cep,
                 numeroLogradouro: endereco.numLogradouro,
                 complemento: endereco.complemento,
@@ -367,35 +367,6 @@ export async function updateEndereco(entidade, endereco, TipoEntidade) {
             toast.error(error.response.data.error);
         }
         return false;
-    }
-}
-
-export async function findIdByEmail(email, tipoEntidade) {
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "GET",
-            url: `/${tipoEntidade}/find`,
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            params: {
-                email: email
-            },
-            timeout: 10000,
-        });
-
-        if (response.status != 200) {
-            throw new Error(`Erro encontrar ${tipoEntidade}.`);
-        }
-        
-        return response.data["id"];
-
-    } catch (error) {
-        console.log(error)
-        if (error.response && error.response.data && error.response.data.error) {
-            toast.error(error.response.data.error);
-        }
     }
 }
 
