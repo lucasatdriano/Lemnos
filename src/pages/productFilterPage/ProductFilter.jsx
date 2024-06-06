@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
-import { getProdutosFilter } from '../../services/apiProductService'; // Certifique-se de que esse serviço está implementado corretamente
+import { listarProdutosFiltrados } from '../../services/apiProductService'; // Certifique-se de que esse serviço está implementado corretamente
 
 const brands = [
   'AMD',
@@ -73,7 +73,7 @@ export default function ProductFilter() {
         menorPreco: minPrice !== undefined ? minPrice : 0,
         maiorPreco: maxPrice !== undefined ? maxPrice : 10000
       };
-      const produtosFiltrados = await getProdutosFilter(filtro);
+      const produtosFiltrados = await listarProdutosFiltrados(filtro);
       setFilteredData(produtosFiltrados);
     } catch (error) {
       toast.error('Erro ao buscar produtos.');

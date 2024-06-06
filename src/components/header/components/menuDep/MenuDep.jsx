@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogoVertical from '../../../../assets/imgLemnos/logoVerticalClaro.svg';
 import './menuDep.scss';
@@ -10,6 +10,19 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                handleCloseMenu();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isActive]);
+
     const toggleMenu = () => {
         setIsActive(!isActive);
         toggleModal();
@@ -17,12 +30,17 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
 
     const toggleModal = () => {
         const htmlTag = document.querySelector('html');
-        const modalOpen = isActive;
-        if (modalOpen) {
+        if (isActive) {
             htmlTag.classList.remove('modalOpen');
         } else {
             htmlTag.classList.add('modalOpen');
         }
+    }
+
+    const handleCloseMenu = () => {
+        setIsActive(false);
+        const htmlTag = document.querySelector('html');
+        htmlTag.classList.remove('modalOpen');
     }
 
     return (
@@ -31,49 +49,49 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                 <RiMenuUnfoldLine className='menuIcon' />
             </a>
 
-            <div onClick={toggleMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
+            <div onClick={handleCloseMenu} className={`modal ${isActive ? "active" : "inactive"}`}></div>
                         
             <nav ref={dropDownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-                <Link to="/" className='link' onClick={toggleMenu}>
+                <Link to="/" className='link' onClick={handleCloseMenu}>
                     <img src={ LogoVertical } alt="Logo" className='logoMenu'/>
                 </Link>
                 <hr className='hrMenu'/>
 
                 <h3>Departamentos</h3>
                 <ul className='categorias'>
-                    <Link to="/productFilter/Periféricos" className='filterDeps' onClick={toggleMenu}>Periféricos</Link>
-                    <Link to="/productFilter/Hardware" className='filterDeps' onClick={toggleMenu}>Hardware</Link>
-                    <Link to="/productFilter/Computadores" className='filterDeps' onClick={toggleMenu}>Computadores</Link>
-                    <Link to="/productFilter/Kits" className='filterDeps' onClick={toggleMenu}>Kits</Link>
-                    <Link to="/productFilter/Eletrônicos" className='filterDeps' onClick={toggleMenu}>Eletrônicos</Link>
-                    <Link to="/productFilter/Notebooks e Portáteis" className='filterDeps' onClick={toggleMenu}>Notebooks e Portáteis</Link>
-                    <Link to="/productFilter/Video Games" className='filterDeps' onClick={toggleMenu}>Video Games</Link>
-                    <Link to="/productFilter/Redes e Wireless" className='filterDeps' onClick={toggleMenu}>Redes e Wireless</Link>
-                    <Link to="/productFilter/Realidade Virtual" className='filterDeps' onClick={toggleMenu}>Realidade Virtual</Link>
-                    <Link to="/productFilter/Casa Inteligente" className='filterDeps' onClick={toggleMenu}>Casa Inteligente</Link>
-                    <Link to="/productFilter/Monitores" className='filterDeps' onClick={toggleMenu}>Monitores</Link>
+                    <Link to="/productFilter/Periféricos" className='filterDeps' onClick={handleCloseMenu}>Periféricos</Link>
+                    <Link to="/productFilter/Hardware" className='filterDeps' onClick={handleCloseMenu}>Hardware</Link>
+                    <Link to="/productFilter/Computadores" className='filterDeps' onClick={handleCloseMenu}>Computadores</Link>
+                    <Link to="/productFilter/Kits" className='filterDeps' onClick={handleCloseMenu}>Kits</Link>
+                    <Link to="/productFilter/Eletrônicos" className='filterDeps' onClick={handleCloseMenu}>Eletrônicos</Link>
+                    <Link to="/productFilter/Notebooks e Portáteis" className='filterDeps' onClick={handleCloseMenu}>Notebooks e Portáteis</Link>
+                    <Link to="/productFilter/Video Games" className='filterDeps' onClick={handleCloseMenu}>Video Games</Link>
+                    <Link to="/productFilter/Redes e Wireless" className='filterDeps' onClick={handleCloseMenu}>Redes e Wireless</Link>
+                    <Link to="/productFilter/Realidade Virtual" className='filterDeps' onClick={handleCloseMenu}>Realidade Virtual</Link>
+                    <Link to="/productFilter/Casa Inteligente" className='filterDeps' onClick={handleCloseMenu}>Casa Inteligente</Link>
+                    <Link to="/productFilter/Monitores" className='filterDeps' onClick={handleCloseMenu}>Monitores</Link>
                 </ul>
 
                 <h3>Navegação</h3>
                 <nav className='menuNav'>
                     <ul className='navegacoes'>
-                        <Link to="/" className='link' onClick={toggleMenu}>
+                        <Link to="/" className='link' onClick={handleCloseMenu}>
                             <RiHome4Line className='homeIcon'/>
                             Home
                         </Link>
-                        <Link to="/about" className='link' onClick={toggleMenu}>
+                        <Link to="/about" className='link' onClick={handleCloseMenu}>
                             <AiOutlineTeam className='aboutIcon'/>
                             Sobre
                         </Link>
-                        <Link to="#" className='link' onClick={() => { showMenuFav(); toggleMenu(); }}>
+                        <Link to="#" className='link' onClick={() => { showMenuFav(); handleCloseMenu(); }}>
                             <RiHeartLine className='favIcon' /> 
                             Favoritos
                         </Link>
-                        <Link to="/login" className='link' onClick={toggleMenu}>
+                        <Link to="/login" className='link' onClick={handleCloseMenu}>
                             <RiUser3Line className='userIcon' />
                             Conta
                         </Link>
-                        <Link to="/cart" className='link' onClick={toggleMenu}>
+                        <Link to="/cart" className='link' onClick={handleCloseMenu}>
                             <RiShoppingCartLine className='cartIcon' />
                             Carrinho
                         </Link>
@@ -95,5 +113,5 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                 </div>
             </nav>
         </nav>
-    )
+    );
 }

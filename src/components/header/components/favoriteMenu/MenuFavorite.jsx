@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menuFavorite.scss';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
@@ -12,6 +14,19 @@ export default function MenuFavorite({ onClose }) {
         { id: 2, name: "Produto 2", image: "caminho/para/imagem2.jpg", price: 19.99 }
     ]);
     const [removingIndex, setRemovingIndex] = useState(null);
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                handleCloseModal();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     const removeFromFavorites = (index) => {
         setRemovingIndex(index);
@@ -28,10 +43,14 @@ export default function MenuFavorite({ onClose }) {
         onClose();
     };
 
+    const handleCloseModal = () => {
+        onClose();
+    };
+
     return (
-        <div onClick={onClose} className='modal'>
+        <div onClick={handleCloseModal} className='modal'>
             <div className='menuFavorite' onClick={(e) => e.stopPropagation()}>
-                <IoClose className='iconClose' onClick={onClose}/>       
+                <IoClose className='iconClose' onClick={handleCloseModal}/>       
                 <div className="title">
                     <hr />
                     <h2>Meus Favoritos</h2>
@@ -40,7 +59,7 @@ export default function MenuFavorite({ onClose }) {
                 {favorites.length === 0 ? (
                     <div className="emptyFavMessage">
                         <h2 className='textEmpty'>Você não tem nenhum item adicionado aos Favoritos.</h2>
-                        <button className='btnBack' onClick={(e) => {navigate('/productFilter'); onClose();}}>Adicione itens aos Favoritos</button>
+                        <button className='btnBack' onClick={(e) => { navigate('/productFilter'); handleCloseModal(); }}>Adicione itens aos Favoritos</button>
                     </div>
                 ) : (
                     <ul className='listaFavoritos'>
@@ -51,7 +70,7 @@ export default function MenuFavorite({ onClose }) {
                                     {removingIndex === index ? (
                                         <MdFavoriteBorder className='iconFav' />
                                     ) : (
-                                        <MdFavorite className='iconFav' onClick={(e) => {removeFromFavorites(index); e.stopPropagation();}} />
+                                        <MdFavorite className='iconFav' onClick={(e) => { removeFromFavorites(index); e.stopPropagation(); }} />
                                     )}
                                     <h3>{favorite.name}</h3>
                                     <p>{favorite.price}</p>
@@ -62,5 +81,5 @@ export default function MenuFavorite({ onClose }) {
                 )}
             </div>
         </div>
-    )
+    );
 }

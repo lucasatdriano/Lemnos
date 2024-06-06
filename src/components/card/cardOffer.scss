@@ -30,6 +30,7 @@ $font-items: 'Poppins', Helvetica;
     height: 25em;
     background-color: #f6fefd4d;
     margin: 1em 0;
+    padding: 10px;
     border-radius: 10px;
     text-align: left;
     box-shadow: 2px 2px 8px $color-shadow;
@@ -53,9 +54,10 @@ $font-items: 'Poppins', Helvetica;
     .offerImage {
       width: 100%;
       height: 10em;
-      padding: 10px 10px 0;
+      border-radius: 10px;
       object-fit: contain;
       margin-right: 16px;
+      background: $color-bgLight;
     }
 
     .offerDetails {
@@ -70,7 +72,7 @@ $font-items: 'Poppins', Helvetica;
         font-size: 1.7rem;
         margin-bottom: 8px;
         font-weight: 700;
-        padding: 0 10px;
+        padding: 5px 0 0;
       }
 
       .offerPrice {
@@ -80,7 +82,6 @@ $font-items: 'Poppins', Helvetica;
         opacity: 1;
         visibility: visible;
         line-height: 2;
-        padding: 0 10px;
         transition: .2s ease-in-out;
       }
 
@@ -88,7 +89,6 @@ $font-items: 'Poppins', Helvetica;
         font-size: 1.4rem;
         font-weight: 500;
         line-height: 1.2;
-        padding: 0 10px;
         transition: .7s ease;
     
         span {

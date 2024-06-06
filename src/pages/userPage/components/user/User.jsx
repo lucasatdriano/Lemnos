@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,7 +20,6 @@ import { cadastrarFuncionario } from '../../../../services/ApiService';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import './user.scss';
-
 
 const historicoExemplo = [
   { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -57,6 +56,18 @@ export default function User({ onLogout }) {
   const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
   const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        handleCloseAllModals();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,18 +141,20 @@ export default function User({ onLogout }) {
       case 'addFornecedor':
         setShowAddFornecedorModal(false);
         break;
-      case 'updateProduto':
-        setShowAddFornecedorModal(false);
-        break;
-      case 'updateFornecedor':
-        setShowAddFornecedorModal(false);
-        break;
-      case 'updateFuncionario':
-        setShowAddFornecedorModal(false);
-        break;
       default:
         break;
     }
+    const htmlTag = document.querySelector('html');
+    htmlTag.classList.remove('modalOpen');
+  };
+
+  const handleCloseAllModals = () => {
+    setShowEmailModal(false);
+    setShowPasswordModal(false);
+    setShowEnderecoModal(false);
+    setShowAddProdutoModal(false);
+    setShowAddFuncionarioModal(false);
+    setShowAddFornecedorModal(false);
     const htmlTag = document.querySelector('html');
     htmlTag.classList.remove('modalOpen');
   };

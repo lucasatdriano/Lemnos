@@ -2,6 +2,7 @@ $color-primaryLight: #36CEC4;
 
 $color-primaryDark: #10A88D;
 
+$color-bgLight: #F9FBFB;
 $color-fontDark: #F6FEFD;
 $color-fontLight: #121717;
 
@@ -32,6 +33,7 @@ $font-items: 'Poppins', Helvetica;
     border-radius: 10px;
     object-fit: contain;
     margin-right: 16px;
+    background: $color-bgLight;
   }
 
   .productDetails {
@@ -91,7 +93,7 @@ $font-items: 'Poppins', Helvetica;
   &:hover {
     .productDetails {
       .productName {
-        margin-bottom: 3px;
+        margin-bottom: 15px;
       }
     }
     .btnAdd {
