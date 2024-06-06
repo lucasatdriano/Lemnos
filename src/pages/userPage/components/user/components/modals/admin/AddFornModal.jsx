@@ -178,7 +178,7 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
           
           if (enderecoAtualizada === true) {
             toast.success('Endereço atualizado com sucesso');
-            // setSelectedFunc(null);
+            setSelectedForn(null);
             return;
           }
         }
@@ -259,14 +259,15 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
 
           <p>
             <CustomInput
-            type="text"
-            label="CEP:"
-            id="cep"
-            name="cep"
-            mask='CEP'
-            maxLength={9}
-            value={form.endereco.cep}
-            onChange={(e) => handleChange('endereco', { ...form.endereco, cep: e.target.value })}
+              type="text"
+              label="CEP:"
+              id="cep"
+              name="cep"
+              mask='CEP'
+              maxLength={9}
+              value={form.endereco.cep}
+              onChange={(e) => handleChange('endereco', { ...form.endereco, cep: e.target.value })}
+              disabled={isFornSelected()}
             />
             {errors.cep && <span className='invalid'>{errors.cep}</span>}
           </p>

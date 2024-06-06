@@ -210,7 +210,7 @@ export default function User({ onLogout }) {
                 type="text"
                 label="Nome Completo:"
                 id="name"
-                name="nome"
+                name="name"
                 maxLength={40}
                 minLength={5}
                 value={form.name}
@@ -221,18 +221,18 @@ export default function User({ onLogout }) {
             </p>
 
             <p>
-            <CustomInput
-              type="text"
-              label="Email:"
-              id="emailUser"
-              name="email"
-              maxLength={40}
-              value={form.email}
-              onChange={handleChange}
-              disabled='true'
-            />
-            {errors.email && <span className='invalid'>{errors.email}</span>}
-          </p>
+              <CustomInput
+                type="text"
+                label="Email:"
+                id="emailUser"
+                name="email"
+                maxLength={40}
+                value={form.email}
+                onChange={handleChange}
+                disabled='true'
+              />
+              {errors.email && <span className='invalid'>{errors.email}</span>}
+            </p>
 
           </div>
           <div className="containerButtons">

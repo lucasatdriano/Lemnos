@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
-import { listarProdutosFiltrados } from '../../services/apiProductService'; // Certifique-se de que esse serviço está implementado corretamente
+import { listarProdutosFiltrados } from '../../services/apiProductService'; 
 
 const brands = [
   'AMD',
@@ -63,24 +63,28 @@ export default function ProductFilter() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const applyFilters = async () => {
-    setLoading(true);
-    try {
-      const filtro = {
-        categoria: selectedCategory || '',
-        subCategoria: selectedSubCategory || '',
-        marca: selectedBrand || '',
-        menorPreco: minPrice !== undefined ? minPrice : 0,
-        maiorPreco: maxPrice !== undefined ? maxPrice : 10000
-      };
-      const produtosFiltrados = await listarProdutosFiltrados(filtro);
-      setFilteredData(produtosFiltrados);
-    } catch (error) {
-      toast.error('Erro ao buscar produtos.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const applyFilters = async () => {
+      setLoading(true);
+      try {
+        const filtro = {
+          categoria: selectedCategory || '',
+          subCategoria: selectedSubCategory || '',
+          marca: selectedBrand || '',
+          menorPreco: minPrice !== undefined ? minPrice : 0,
+          maiorPreco: maxPrice !== undefined ? maxPrice : 10000,
+        };
+        const produtosFiltrados = await listarProdutosFiltrados(filtro);
+        setFilteredData(produtosFiltrados);
+      } catch (error) {
+        toast.error('Erro ao buscar produtos.');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    applyFilters();
+  }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
 
   useEffect(() => {
     setSelectedCategory(category);
@@ -89,10 +93,6 @@ export default function ProductFilter() {
   useEffect(() => {
     setSearchTerm(search);
   }, [search]);
-
-  useEffect(() => {
-    applyFilters();
-  }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
 
   const handleClearFilters = () => {
     setSelectedBrand('');

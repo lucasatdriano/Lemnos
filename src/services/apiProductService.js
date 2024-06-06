@@ -23,8 +23,8 @@ export async function listarProdutosFiltrados(filtro) {
             timeout: 10000,
         });
 
-        if (response.status != 200 && response.status != 204) {
-            throw new Error('Erro ao filtrar produto.');
+        if (response.status !== 200 && response.status !== 204) {
+            throw new Error('Erro ao filtrar produtos.');
         }
 
         return response.data;
@@ -33,13 +33,13 @@ export async function listarProdutosFiltrados(filtro) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao filtrar produto.');
+            toast.error('Erro ao filtrar produtos.');
         }
         throw error;
     }
 }
 
-export async function adicionarFavorito(produto, cliente){
+export async function adicionarFavorito(produto, cliente) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -55,8 +55,8 @@ export async function adicionarFavorito(produto, cliente){
             timeout: 10000
         });
 
-        if (response.status != 200) {
-            throw new Error('Erro ao favoritar produto.');
+        if (response.status !== 200) {
+            throw new Error('Erro ao adicionar favorito.');
         }
 
         return response.data;
@@ -65,13 +65,13 @@ export async function adicionarFavorito(produto, cliente){
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao filtrar produto.');
+            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
 }
 
-export async function dasfavoritarProduto(produto, cliente){
+export async function desfavoritarProduto(produto, cliente) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -87,8 +87,8 @@ export async function dasfavoritarProduto(produto, cliente){
             timeout: 10000
         });
 
-        if (response.status != 200) {
-            throw new Error('Erro ao favoritar produto.');
+        if (response.status !== 200) {
+            throw new Error('Erro ao remover favorito.');
         }
 
         return response.data;
@@ -97,7 +97,7 @@ export async function dasfavoritarProduto(produto, cliente){
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao filtrar produto.');
+            toast.error('Erro ao remover favorito.');
         }
         throw error;
     }
@@ -113,13 +113,13 @@ export async function avaliarProduto(produto, valorAvaliacao) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             data: {
-              avaliacao: valorAvaliacao,
+                avaliacao: valorAvaliacao,
             },
             timeout: 10000
         });
 
-        if (response.status != 200) {
-            throw new Error('Erro ao favoritar produto.');
+        if (response.status !== 200) {
+            throw new Error('Erro ao avaliar produto.');
         }
 
         return response.data;
@@ -128,61 +128,127 @@ export async function avaliarProduto(produto, valorAvaliacao) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao filtrar produto.');
+            toast.error('Erro ao avaliar produto.');
         }
         throw error;
     }
 }
 
 export async function listarCarrinho(email) {
-    axios({
-      baseURL: baseUri,
-      method: "GET",
-      url: "/carrinho",
-      params: {
-        email: email
-      }
-    })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: "/carrinho",
+            params: {
+                email: email
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao listar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao listar carrinho.');
+        }
+        throw error;
+    }
 }
 
 export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
-    axios({
-      baseURL: baseUri,
-      method: "POST",
-      url: "/carrinho",
-      data: {
-        id: produto.id,
-        email: entidade.email,
-        quantidade: qntd
-      }
-    })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/carrinho",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                id: produto.id,
+                email: entidade.email,
+                quantidade: qntd
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao adicionar produto ao carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao adicionar produto ao carrinho.');
+        }
+        throw error;
+    }
 }
 
 export async function removerProdutoCarrinho(produto, entidade, qntd) {
-    axios({
-      baseURL: baseUri,
-      method: "DELETE",
-      url: "/carrinho",
-      data: {
-        id: produto.id,
-        email: entidade.email,
-        quantidade: qntd
-      }
-    })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "DELETE",
+            url: "/carrinho",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                id: produto.id,
+                email: entidade.email,
+                quantidade: qntd
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao remover produto do carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao remover produto do carrinho.');
+        }
+        throw error;
+    }
 }
 
 export async function apagarCarrinho() {
-    axios({
-      baseURL: baseUri,
-      method: "DELETE",
-      url: "/carrinho/tudo"
-    })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "DELETE",
+            url: "/carrinho/tudo",
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
 }

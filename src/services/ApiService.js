@@ -382,3 +382,29 @@ export async function verificarCep(cep) {
         return false;
     }
 }
+
+export async function login(usuario) {  
+    let token = "";
+    
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/auth/login/fav",
+            headers: { 
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                email: usuario.email,
+                senha: usuario.senha
+            },
+            timeout: 10000,
+        });
+        token = response.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+    
+    return token;  
+}

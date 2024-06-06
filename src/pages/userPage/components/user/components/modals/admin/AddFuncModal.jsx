@@ -335,9 +335,11 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
               id="cep"
               name="cep"
               mask='CEP'
+              minLength={9}
               maxLength={9}
               value={form.endereco.cep}
               onChange={(e) => handleChange('endereco.cep', e.target.value)}
+              disabled={isFuncSelected()}
             />
             {errors.cep && <span className='invalid'>{errors.cep}</span>}
           </p>
