@@ -215,24 +215,10 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
-        ul {
-            width: 100%;
-            
-            li {
-                width: 100%;
-                border-bottom: 1px solid #ccc;
-                padding: 10px 0;
-                transition: background-color 0.3s ease;
-        
-                &:last-child {
-                    border-bottom: none;
-                }
-        
-                &:hover {
-                    background-color: #e7ecec;
-                    cursor: pointer;
-                }
-            }
+        .productsList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2em;
         }
     }
 }

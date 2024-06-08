@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './product.scss';
+import Vibrant from 'node-vibrant';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import OfferList from '../../components/lists/OfferList';
@@ -13,6 +15,7 @@ export default function Product() {
     const [product, setProduct] = useState(null);
     const [mainImage, setMainImage] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState('#f2f2f2');
     const baseUri = "http://localhost:8080/api";
 
     useEffect(() => {
@@ -42,6 +45,19 @@ export default function Product() {
         }
     };
 
+    useEffect(() => {
+        if (mainImage) {
+            Vibrant.from(mainImage)
+                .getPalette()
+                .then((palette) => {
+                    const { Vibrant } = palette;
+                    if (Vibrant) {
+                        setBackgroundColor(Vibrant.hex);
+                    }
+                });
+        }
+    }, [mainImage]);
+
     const handleAddToFavorites = () => {
         setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     };
@@ -61,7 +77,7 @@ export default function Product() {
                             <div className="optionsImages">
                                 <img
                                     src={product.imagemPrincipal}
-                                    alt='Main'
+                                    alt={product.nome}
                                     onClick={() => handleImageClick(product.imagemPrincipal)}
                                 />
                                 {product.imagens && product.imagens.map((image, index) => (
@@ -77,6 +93,7 @@ export default function Product() {
                         <div className="containerInfos">
                             <div className="sectionIcons">
                                 <div className="rating">
+                                    <p className='productNote'>({product.avaliacao})</p>
                                     <input type="radio" id="star-1" name="star-radio" value="star-1" />
                                     <label htmlFor="star-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>

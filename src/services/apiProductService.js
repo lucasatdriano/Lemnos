@@ -8,17 +8,17 @@ export async function listarProdutosFiltrados(filtro) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: "GET",
+            method: "POST",
             url: "/produto/find",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            params: {
-                categoria: filtro.categoria || '',
-                subCategoria: filtro.subCategoria || '',
-                marca: filtro.marca || '',
-                menorPreco: filtro.menorPreco !== undefined ? filtro.menorPreco : 0,
-                maiorPreco: filtro.maiorPreco !== undefined ? filtro.maiorPreco : 10000
+            data: {
+              nome: filtro.nome,
+              categoria: filtro.categoria,
+              subCategoria: filtro.subCategoria,
+              marca: filtro.marca,
+              menorPreco: filtro.menorPreco,
+              maiorPreco: filtro.maiorPreco,
+              page: filtro.page,
+              size: filtro.size
             },
             timeout: 10000,
         });
@@ -26,7 +26,8 @@ export async function listarProdutosFiltrados(filtro) {
         if (response.status !== 200 && response.status !== 204) {
             throw new Error('Erro ao filtrar produtos.');
         }
-
+console.log(response)
+console.log(response.data)
         return response.data;
 
     } catch (error) {

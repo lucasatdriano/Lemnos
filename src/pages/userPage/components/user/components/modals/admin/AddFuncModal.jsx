@@ -200,7 +200,6 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
 
       try {
         await excluirFuncionario(formattedForm.email);
-        console.log('Funcionário desativado com sucesso.');
         toast.success('Funcionário desativado');
         setForm(initialFormState);
         setSelectedFunc(null);

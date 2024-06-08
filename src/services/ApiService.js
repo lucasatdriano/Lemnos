@@ -408,3 +408,32 @@ export async function login(usuario) {
     
     return token;  
 }
+
+export async function sendFirebaseToken(token){
+    try{
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/auth/login-firebase",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                token: token
+            },
+            timeout: 10000,
+        });
+  
+        if (response.status != 200) {
+            throw new Error('Erro ao cadastrar cliente.');
+        }
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.token)
+    
+        return response.data.token;
+    
+    } catch(error) {
+        toast.error(error);
+    }
+}

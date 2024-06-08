@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './loginForm.scss';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { sendFirebaseToken } from '../../../../services/ApiService';
+import AuthService from '../../../../services/authService';
 import { auth, googleProvider, facebookProvider } from '../../../../services/firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
@@ -55,6 +58,8 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      const tokenServer = await sendFirebaseToken(user.accessToken);
+      await AuthService.loginServer(tokenServer);
       console.log('Google login successful:', user);
       onLogin({ email: user.email, password: null });
     } catch (error) {
