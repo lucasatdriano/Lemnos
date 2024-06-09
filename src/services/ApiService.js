@@ -35,6 +35,32 @@ export async function cadastrarCliente(cliente) {
     }
 }
 
+export async function sendFirebaseToken(token){
+    try{
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/auth/login-firebase",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                token: token
+            },
+            timeout: 10000,
+        });
+  
+        if (response.status != 200) {
+            throw new Error('Erro ao cadastrar cliente.');
+        }
+    
+        return response.data.token;
+    
+    } catch(error) {
+        toast.error(error);
+    }
+}
+
 export async function cadastrarFuncionario(funcionario, tipoEntidade) {
     try {
         const response = await axios({

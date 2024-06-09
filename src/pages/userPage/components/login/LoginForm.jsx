@@ -6,6 +6,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { auth, googleProvider, facebookProvider } from '../../../../services/firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { sendFirebaseToken } from '../../../../services/ApiService';
+import AuthService from '../../../../services/authService';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
@@ -55,8 +57,10 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      const tokenServer = await sendFirebaseToken(user.accessToken);
+      await AuthService.loginServer(tokenServer);
       console.log('Google login successful:', user);
-      onLogin({ email: user.email, password: null });
+      onLogin({ email: localStorage.getItem('token').email, password: null });
     } catch (error) {
       console.error('Error during Google login:', error.code, error.message);
     }

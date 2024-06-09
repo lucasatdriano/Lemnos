@@ -7,6 +7,9 @@ const AuthService = {
     },
     isLoggedIn: () => {
       return !!localStorage.getItem('authToken');
+    },
+    loginServer: token => {
+      localStorage.setItem('token', token);
     }
 };
   
