@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Range, getTrackBackground } from 'react-range';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './doubleInput.scss';
 
-const STEP = 1;
+const STEP = 50;
 const MIN = 0;
-const MAX = 10000;
+const MAX = 30000;
 
 export default function DoubleInputRange({ minValue, maxValue, setMinValue, setMaxValue }) {
   const [values, setValues] = useState([minValue, maxValue]);
@@ -152,10 +152,3 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
     </div>
   );
 }
-
-DoubleInputRange.propTypes = {
-  minValue: PropTypes.number.isRequired,
-  maxValue: PropTypes.number.isRequired,
-  setMinValue: PropTypes.func.isRequired,
-  setMaxValue: PropTypes.func.isRequired,
-};

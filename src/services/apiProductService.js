@@ -8,17 +8,17 @@ export async function listarProdutosFiltrados(filtro) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: "GET",
+            method: "POST",
             url: "/produto/find",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            params: {
-                categoria: filtro.categoria || '',
-                subCategoria: filtro.subCategoria || '',
-                marca: filtro.marca || '',
-                menorPreco: filtro.menorPreco !== undefined ? filtro.menorPreco : 0,
-                maiorPreco: filtro.maiorPreco !== undefined ? filtro.maiorPreco : 10000
+            data: {
+              nome: filtro.nome,
+              categoria: filtro.categoria,
+              subCategoria: filtro.subCategoria,
+              marca: filtro.marca,
+              menorPreco: filtro.menorPreco,
+              maiorPreco: filtro.maiorPreco,
+              page: filtro.page,
+              size: filtro.size
             },
             timeout: 10000,
         });
@@ -39,6 +39,34 @@ export async function listarProdutosFiltrados(filtro) {
     }
 }
 
+export async function listarProdutosFavoritos(email) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/produto/fav`,
+            params: {
+              email: email
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao adicionar favorito.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao adicionar favorito.');
+        }
+        throw error;
+    }
+}
+
 export async function adicionarFavorito(produto, cliente) {
     try {
         const response = await axios({
@@ -49,7 +77,7 @@ export async function adicionarFavorito(produto, cliente) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             params: {
-                id_cliente: cliente.id,
+                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -81,7 +109,7 @@ export async function desfavoritarProduto(produto, cliente) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             params: {
-                id_cliente: cliente.id,
+                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -118,7 +146,8 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             timeout: 10000
         });
 
-        if (response.status !== 200) {
+        if (response.status != 201) {
+            console.log("1");
             throw new Error('Erro ao avaliar produto.');
         }
 
@@ -182,8 +211,6 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
         if (response.status !== 200) {
             throw new Error('Erro ao adicionar produto ao carrinho.');
         }
-
-        return response.data;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {

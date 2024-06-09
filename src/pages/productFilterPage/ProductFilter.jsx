@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Card from '../../components/card/Card';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
 import { listarProdutosFiltrados } from '../../services/apiProductService'; 
@@ -53,52 +52,45 @@ export default function ProductFilter() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get('search') || '';
-  const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(category || '');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const [maxPrice, setMaxPrice] = useState(30000);
   const [searchTerm, setSearchTerm] = useState(search || '');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  useEffect(() => {
-    const applyFilters = async () => {
-      setLoading(true);
-      try {
-        const filtro = {
-          categoria: selectedCategory || '',
-          subCategoria: selectedSubCategory || '',
-          marca: selectedBrand || '',
-          menorPreco: minPrice !== undefined ? minPrice : 0,
-          maiorPreco: maxPrice !== undefined ? maxPrice : 10000,
-        };
-        const produtosFiltrados = await listarProdutosFiltrados(filtro);
-        setFilteredData(produtosFiltrados);
-      } catch (error) {
-        toast.error('Erro ao buscar produtos.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const applyFilters = async () => {
+    setLoading(true);
+    try {
+      const filtro = {
+        categoria: selectedCategory ?? null,
+        subCategoria: selectedSubCategory ?? null,
+        marca: selectedBrand ?? null,
+        menorPreco: minPrice ?? 0,
+        maiorPreco: maxPrice ?? 30000,
+      };
   
+      const produtosFiltrados = await listarProdutosFiltrados(filtro);
+      setFilteredData(produtosFiltrados);
+    } catch (error) {
+      console.error('Erro ao aplicar filtros:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  useEffect(() => {
     applyFilters();
   }, [selectedBrand, selectedCategory, selectedSubCategory, minPrice, maxPrice, searchTerm]);
-
-  useEffect(() => {
-    setSelectedCategory(category);
-  }, [category]);
-
-  useEffect(() => {
-    setSearchTerm(search);
-  }, [search]);
 
   const handleClearFilters = () => {
     setSelectedBrand('');
     setSelectedSubCategory('');
     setMinPrice(0);
-    setMaxPrice(10000);
+    setMaxPrice(30000);
     setSearchTerm('');
     setSelectedCategory('');
     navigate(`/productFilter`);
@@ -172,18 +164,11 @@ export default function ProductFilter() {
 
             {filteredData.length > 0 && (
               <>
-                <ul className='listResults'>
-                  {filteredData.map(item => (
-                    <li key={item.id} className='listItemResults'>
-                      <div>
-                        <h3 className='titleProduct'>{item.name}</h3>
-                        <p className='priceProduct'>{BRL.format(item.price)}</p>
-                        <p>categoria: {item.category}</p>
-                        <p>Subcategoria: {item.subcategory}</p>
-                      </div>
-                    </li>
+                <div className='productsList'>
+                  {filteredData.map(produto => (
+                    <Card key={produto.id} produto={produto} />
                   ))}
-                </ul>
+                </div>
               </>
             )}
           </>

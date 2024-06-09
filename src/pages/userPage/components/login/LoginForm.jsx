@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './loginForm.scss';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { auth, googleProvider, facebookProvider } from '../../../../services/firebaseConfig';
+import { sendFirebaseToken } from '../../../../services/ApiService';
+import AuthService from '../../../../services/authService';
+import { auth, googleProvider } from '../../../../services/firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { sendFirebaseToken } from '../../../../services/ApiService';
 import AuthService from '../../../../services/authService';
@@ -45,7 +48,6 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
         const user = userCredential.user;
-        console.log('Login successful:', user);
         onLogin({ email: form.email, password: form.password });
       } catch (error) {
         console.error('Error during login:', error.code, error.message);
@@ -66,17 +68,6 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     }
   };
 
-  const handleFacebookLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, facebookProvider);
-      const user = result.user;
-      console.log('Facebook login successful:', user);
-      onLogin({ email: user.email, password: null });
-    } catch (error) {
-      console.error('Error during Facebook login:', error.code, error.message);
-    }
-  };
-
   const handleCadastroClick = () => {
     onCadastroClick();
   };
@@ -88,10 +79,9 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
   return (
     <section className="login-form-container">
       <div className="loginCredencial">
-        <h2>Entre com sua Conta</h2>
+        <h2>Entre com sua Conta do Google</h2>
         <div className="btnCredencials">  
           <button onClick={handleGoogleLogin}><FcGoogle className='iconGoogle'/>Entrar com Google</button>
-          <button className='btnFace' onClick={handleFacebookLogin}><FaFacebook className='iconFacebook'/>Entrar com Facebook</button>
         </div>
       </div>
 

@@ -41,6 +41,10 @@ $color-shadow: #12171740;
             border-radius: 20px;
         }
 
+        .slideMob {
+            display: none;
+        }
+
         &:active {
             cursor: grabbing;
         }
@@ -116,6 +120,14 @@ $color-shadow: #12171740;
                 max-height: 70vh;
                 max-width: 100%;
             }
+
+            .slide {
+                display: none;
+            }   
+
+            .slideMob {
+                display: block;
+            }    
         }
 
         .splide__arrow {

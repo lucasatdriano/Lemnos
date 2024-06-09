@@ -163,12 +163,10 @@ export async function cadastrarProduto(produto){
         if (response.status != 201) {
             throw new Error('Erro ao cadastrar o produto.');
         }
-        console.log(response.data);
         
         return response.data;
 
     } catch (error) {
-        console.log(error.response.data.error);
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
             console.log(error)
@@ -433,4 +431,30 @@ export async function login(usuario) {
     }
     
     return token;  
+}
+
+export async function sendFirebaseToken(token){
+    try{
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/auth/login-firebase",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                token: token
+            },
+            timeout: 10000,
+        });
+  
+        if (response.status != 200) {
+            throw new Error('Erro ao cadastrar cliente.');
+        }
+    
+        return response.data.token;
+    
+    } catch(error) {
+        toast.error(error);
+    }
 }

@@ -66,7 +66,7 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
         email: fornecedor.email || '',
         endereco: {
           cep: fornecedor.endereco ? fornecedor.endereco.cep || '' : '',
-          numLogradouro: fornecedor.endereco ? fornecedor.endereco.numLogradouro || '' : '',
+          numLogradouro: fornecedor.endereco ? fornecedor.endereco.numeroLogradouro || '' : '',
           complemento: fornecedor.endereco ? fornecedor.endereco.complemento || '' : ''
         }
       });
@@ -136,10 +136,9 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
 
         if (entidadeCadastrada == true) {
           const enderecoResponse = await cadastrarEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
-
-          if (enderecoResponse && enderecoResponse.success) {
-            setForm(initialFormState);
-          }
+          toast.success('Fornecedor adicionado com sucesso');
+          setSelectedForn(null);
+          setForm(initialFormState);
         }
       } catch (error) {
         console.error('Erro ao cadastrar fornecedor:', error);
@@ -177,12 +176,12 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
           let enderecoAtualizada = await updateEndereco(formattedForm.email, formattedForm.endereco, tipoEntidade);
           
           if (enderecoAtualizada === true) {
-            toast.success('Endereço atualizado com sucesso');
+            toast.success('Fornecedor atualizado com sucesso');
             setSelectedForn(null);
+            setForm(initialFormState);
             return;
           }
         }
-        toast.success('Fornecedor atualizado com sucesso');
       } catch (error) {
         console.error('Erro ao atualizar fornecedor:', error);
         toast.error('Erro ao atualizar fornecedor.');

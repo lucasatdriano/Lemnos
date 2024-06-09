@@ -324,7 +324,10 @@ $font-items: 'Poppins', Helvetica;
 }
 
 .dark {
-    .userContainer {      
+    .userContainer {   
+        background-color: #72757478;
+        box-shadow: 4px 4px 8px #4b4c4c78;
+
         .userData {      
             .user {        
                 img {
