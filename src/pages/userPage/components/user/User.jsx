@@ -229,7 +229,7 @@ export default function User({ onLogout }) {
                 maxLength={40}
                 value={form.email}
                 onChange={handleChange}
-                disabled='true'
+                disabled={true}
               />
               {errors.email && <span className='invalid'>{errors.email}</span>}
             </p>

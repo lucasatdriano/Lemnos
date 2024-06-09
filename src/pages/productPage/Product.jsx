@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './product.scss';
@@ -111,6 +111,7 @@ export default function Product() {
                 await avaliarProduto(product, rating);
                 toast.success('Produto avaliado com sucesso!');
                 setProductRating(rating);
+          
             } catch (error) {
                 console.error('Erro ao avaliar o produto:', error);
                 toast.error('Erro ao avaliar o produto');
@@ -147,29 +148,28 @@ export default function Product() {
                                         onClick={() => handleImageClick(image)}
                                     />
                                 ))}
-                            </div>
+                            </div> 
                         </div>
                         <div className="containerInfos">
                             <div className="sectionIcons">
                                 <div className="rating">
                                     <p className='productNote'>({product.avaliacao})</p>
-                                    {[1, 2, 3, 4, 5].map((index) => (
-                                        <input
-                                            key={index}
-                                            type="radio"
-                                            id={`star-${index}`}
-                                            name="star-radio"
-                                            value={`star-${index}`}
-                                            checked={index === productRating}
-                                            onChange={() => handleProductRating(index)}
-                                        />
-                                    ))}
-                                    {[1, 2, 3, 4, 5].map((index) => (
-                                        <label key={index} htmlFor={`star-${index}`}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path>
-                                            </svg>
-                                        </label>
+                                    {[1, 2, 3, 4, 5].reverse().map((index) => (
+                                        <React.Fragment key={index}>
+                                            <input
+                                                type="radio"
+                                                id={`star-${index}`}
+                                                name={`star-rating-${id}`}
+                                                value={index}
+                                                checked={index === productRating}
+                                                onChange={() => handleProductRating(index)}
+                                            />
+                                            <label htmlFor={`star-${index}`}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={index <= productRating ? 'filled' : ''}>
+                                                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path>
+                                                </svg>
+                                            </label>
+                                        </React.Fragment>
                                     ))}
                                 </div>
                                 {isFavorite ? (
@@ -186,7 +186,7 @@ export default function Product() {
                             </p>
                             <p className='priceFees'>
                                 Ou no Cartão <br />
-                               Em até 12x de <span>{BRL.format(product.valorComDesconto / 12)}</span> sem juros 
+                            Em até 12x de <span>{BRL.format(product.valorComDesconto / 12)}</span> sem juros 
                             </p>
                             <button className='addCart' onClick={handleAddToCart}>
                                 Adicionar ao Carrinho

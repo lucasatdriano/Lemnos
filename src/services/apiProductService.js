@@ -146,7 +146,8 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             timeout: 10000
         });
 
-        if (response.status !== 200) {
+        if (response.status != 201) {
+            console.log("1");
             throw new Error('Erro ao avaliar produto.');
         }
 

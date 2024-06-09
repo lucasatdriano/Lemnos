@@ -237,9 +237,7 @@ export default function ProdutoModal({ onSave, onClose }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    
+  const handleAdd = async (e) => {    
     if (validateForm()) {
       try {
         const formattedForm = {
@@ -256,7 +254,7 @@ export default function ProdutoModal({ onSave, onClose }) {
         await cadastrarProduto(formattedForm);
         
         toast.success('Produto cadastrado com sucesso');
-        // setForm(initialFormState);
+        setForm(initialFormState);
 
       }
       catch (error) {
@@ -385,6 +383,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               mask="NUMBERS"
               value={form.desconto}
               onChange={(e) => handleChange('desconto', e.target.value)}
+              disabled={!isProductSelected()}
             />
             {errors.desconto && <span className='invalid'>{errors.desconto}</span>}
           </p>
@@ -425,6 +424,7 @@ export default function ProdutoModal({ onSave, onClose }) {
               name="imagemPrinc"
               value={form.imagemPrinc}
               onChange={(e) => handleChange('imagemPrinc', e.target.value)}
+              disabled={isProductSelected()}
             />
             {errors.imagemPrinc && <span className='invalid'>{errors.imagemPrinc}</span>}
           </p>
@@ -438,6 +438,7 @@ export default function ProdutoModal({ onSave, onClose }) {
                 name={`imagem${index + 2}`}
                 value={imagem}
                 onChange={(e) => handleImageChange(index, e.target.value)}
+                disabled={isProductSelected()}
               />
             </p>
           ))}

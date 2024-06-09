@@ -121,13 +121,13 @@ $font-items: 'Poppins', Helvetica;
             flex-direction: row-reverse;
             gap: .3rem;
             --stroke: #666;
-
+        
             .productNote {
               color: #837f7f7e;
             }
           
             input {
-              appearance: unset;
+              appearance: none;
             }
           
             label {
@@ -149,7 +149,7 @@ $font-items: 'Poppins', Helvetica;
             label:hover svg {
               stroke: $color-primaryLight;
             }
-
+        
             input:checked ~ label svg {
               transition: 0s;
               animation: idle 4s linear infinite, yippee 0.75s backwards;
