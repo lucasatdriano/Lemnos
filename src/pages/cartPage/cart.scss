@@ -139,6 +139,7 @@ main {
                             height: 10em;
                             width: 100%;
                             object-fit: contain;
+                            border-radius: 10px;
                         }
 
                         .nameProduct {
@@ -204,6 +205,96 @@ main {
 
                 .icon {
                     font-size: 3rem;
+                }
+            }  
+        }
+
+        .resume {
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+
+            .resumeBuy {
+                font-family: $font-items;
+                color: $color-fontDark;
+                background-color: $color-secundaryLight;
+                border-radius: 10px;
+                padding: 10px 0 0;
+                height: 30em;
+                width: clamp(25em, 90vw, 30em);
+                position: relative;
+                box-shadow: 4px 4px 10px $color-shadow;
+    
+                h3 {
+                    font-family: $font-title;
+                    text-align: center;
+                    font-size: 2.8rem;
+                }
+                
+                .hrResume {
+                    width: 100%;
+                    border: 2px solid $color-primaryLight;
+                }
+                .hrValues {
+                    border: 1px solid $color-card;
+                }
+                .hrOptions {
+                    margin: auto;
+                    width: 90%;
+                    border: 1px solid $color-primaryLight;
+                }
+    
+                .values {
+                    display: flex;
+                    justify-content: space-around;
+                    font-size: 2.4rem;
+                    padding: .5em 0;
+                }
+    
+                .paymentOptions {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5em;
+                    padding: 15px;
+                    font-size: 2rem;
+    
+                    .options {
+                        display: flex;
+                        align-items: center;
+                        gap: .75em;
+    
+                        .icon {
+                            font-size: 3.6rem;
+                        }
+    
+                        p {
+                            strong {
+                                color: $color-primaryLight;
+                            }
+                            span {
+                                color: $color-primaryLight;
+                            }
+                        }
+                    }
+                }
+    
+                .endOrder {
+                    width: 100%;
+                    font-size: 2.4rem;
+                    padding: .75em 1em;
+                    border-radius: 0 0 10px 10px;
+                    border: none;
+                    position: absolute;
+                    bottom: 0;
+                    font-family: $font-title;
+                    background: $color-primaryLight;
+                    cursor: pointer;
+                    transition: .5s ease;
+    
+                    &:hover {
+                        filter: brightness(.95);
+                        box-shadow: 0 0 10px #4e8581;
+                    }
                 }
             }
 
@@ -327,96 +418,6 @@ main {
                             opacity: 0;
                         }
                     }
-                }
-            }
-        }
-
-        .resumeBuy {
-            font-family: $font-items;
-            color: $color-fontDark;
-            background-color: $color-secundaryLight;
-            border-radius: 10px;
-            padding: 10px 0 0;
-            height: 30em;
-            width: clamp(25em, 90vw, 30em);
-            position: relative;
-            box-shadow: 4px 4px 10px $color-shadow;
-
-            // &.fixed {
-            //     position: fixed;
-            //     top: 0;
-            //     z-index: 1000; 
-            // }
-
-            h3 {
-                font-family: $font-title;
-                text-align: center;
-                font-size: 2.8rem;
-            }
-            
-            .hrResume {
-                width: 100%;
-                border: 2px solid $color-primaryLight;
-            }
-            .hrValues {
-                border: 1px solid $color-card;
-            }
-            .hrOptions {
-                margin: auto;
-                width: 90%;
-                border: 1px solid $color-primaryLight;
-            }
-
-            .values {
-                display: flex;
-                justify-content: space-around;
-                font-size: 2.4rem;
-                padding: .5em 0;
-            }
-
-            .paymentOptions {
-                display: flex;
-                flex-direction: column;
-                gap: .5em;
-                padding: 15px;
-                font-size: 2rem;
-
-                .options {
-                    display: flex;
-                    align-items: center;
-                    gap: .75em;
-
-                    .icon {
-                        font-size: 3.6rem;
-                    }
-
-                    p {
-                        strong {
-                            color: $color-primaryLight;
-                        }
-                        span {
-                            color: $color-primaryLight;
-                        }
-                    }
-                }
-            }
-
-            .endOrder {
-                width: 100%;
-                font-size: 2.4rem;
-                padding: .75em 1em;
-                border-radius: 0 0 10px 10px;
-                border: none;
-                position: absolute;
-                bottom: 0;
-                font-family: $font-title;
-                background: $color-primaryLight;
-                cursor: pointer;
-                transition: .5s ease;
-
-                &:hover {
-                    filter: brightness(.95);
-                    box-shadow: 0 0 10px #4e8581;
                 }
             }
         }

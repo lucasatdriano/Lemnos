@@ -26,8 +26,7 @@ export async function listarProdutosFiltrados(filtro) {
         if (response.status !== 200 && response.status !== 204) {
             throw new Error('Erro ao filtrar produtos.');
         }
-console.log(response)
-console.log(response.data)
+
         return response.data;
 
     } catch (error) {
@@ -35,6 +34,34 @@ console.log(response.data)
             toast.error(error.response.data.error);
         } else {
             toast.error('Erro ao filtrar produtos.');
+        }
+        throw error;
+    }
+}
+
+export async function listarProdutosFavoritos(email) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/produto/fav`,
+            params: {
+              email: email
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao adicionar favorito.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
@@ -50,7 +77,7 @@ export async function adicionarFavorito(produto, cliente) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             params: {
-                id_cliente: cliente.id,
+                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -82,7 +109,7 @@ export async function desfavoritarProduto(produto, cliente) {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             params: {
-                id_cliente: cliente.id,
+                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -183,8 +210,6 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
         if (response.status !== 200) {
             throw new Error('Erro ao adicionar produto ao carrinho.');
         }
-
-        return response.data;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {

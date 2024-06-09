@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+/* eslint-disable no-unused-vars */
+import { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,8 +8,11 @@ import { MdDelete } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
-import OfferList from '../../components/lists/OfferList'
+import OfferList from '../../components/lists/OfferList';
 import './cart.scss';
+import { adicionarProdutoCarrinho, apagarCarrinho, listarCarrinho, removerProdutoCarrinho } from '../../services/apiProductService';
+import { auth } from '../../services/firebaseConfig';
+import { verificarCep } from '../../services/ApiService';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -18,25 +23,54 @@ export default function Cart() {
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
     const [isResumoFixo, setIsResumoFixo] = useState(false);
+    const [carrinho, setCarrinho] = useState([]);
+    const [userEmail, setUserEmail] = useState(null);
+    const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
+    const baseUri = "http://localhost:8080/api";
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         const resumoElement = document.querySelector('.resumeBuy');
-    //         const resumoTopOffset = resumoElement.offsetTop;
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserEmail(user.email);
+            } else {
+                setUserEmail(null);
+            }
+        });
 
-    //         if (window.pageYOffset >= resumoTopOffset) {
-    //             setIsResumoFixo(true);
-    //         } else {
-    //             setIsResumoFixo(false);
-    //         }
-    //     };
+        return () => unsubscribe();
+    }, []);
 
-    //     window.addEventListener('scroll', handleScroll);
+    async function fetchProduto(id) {
+        try {
+            const response = await axios.get(`${baseUri}/produto/${id}`, {
+                timeout: 10000,
+            });
+            return response.data; 
+        } catch (error) {
+            console.error('Erro ao obter detalhes do produto:', error);
+            return null;
+        }
+    }
 
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll);
-    //     };
-    // }, []);
+    async function fetchCarrinho() {
+        try {
+            if (userEmail) {
+                const response = await listarCarrinho(userEmail);
+                const carrinhoDetalhado = await Promise.all(response.produtos.map(async (produto) => {
+                    const detalhesProduto = await fetchProduto(produto.id);
+                    return { ...produto, ...detalhesProduto };
+                }));
+                setCarrinho(Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []);
+                setValorTotalCarrinho(response.valorTotal);
+            }
+        } catch (error) {
+            console.error('Erro ao obter itens do carrinho:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchCarrinho();
+    }, [userEmail]);
 
     let priceDelivery = 0;
     switch (deliveryOption) {
@@ -57,26 +91,31 @@ export default function Cart() {
         setDeliveryOption(option);
     };
 
-    const [carrinho, setCarrinho] = useState([
-        { id: 1, nome: 'Apple 27" iMac Desktop Computer (16GB RAM, 1TB HDD, Intel Core i5)', quantidade: 1, precoUnitario: 1799.99 },
-        { id: 2, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
-        { id: 3, nome: 'Produto B', quantidade: 1, precoUnitario: 30 },
-    ]);
-
     const handleCepChange = (event) => {
         let formattedCep = event.target.value.replace(/\D/g, '');
         if (formattedCep.length > 5) {
             formattedCep = formattedCep.replace(/^(\d{5})(\d)/, '$1-$2');
-        } 
+        }
         setCep(formattedCep);
         if (cep.length !== 10) {
             setShowOptions(false);
         }
-    }
+    };
 
-    const handleCalculateDelivery = () => {
+    const handleCalculateDelivery = async () => {
         if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
-            setShowOptions(true);
+            try {
+                const cepValido = await verificarCep(cep);
+                if (cepValido) {
+                    setShowOptions(true);
+                } else {
+                    toast.error('CEP não existente.');
+                    setShowOptions(false);
+                }
+            } catch (error) {
+                toast.error('Erro ao verificar o CEP.');
+                setShowOptions(false);
+            }
         } else if (cep.length === 0) {
             toast.warning('Por favor, adicione o seu CEP para calcularmos.');
             cepInputRef.current.focus();
@@ -86,40 +125,54 @@ export default function Cart() {
             cepInputRef.current.focus();
             setShowOptions(false);
         }
-    }
+    };
 
     const calcularSubTotal = () => {
-        return carrinho.reduce((total, item) => total + (item.quantidade * item.precoUnitario), 0);
-    }
+        return carrinho.reduce((total, produto) => total + (produto.qntdProduto * produto.valorComDesconto), 0);
+    };
 
     const calcularTotal = () => {
         return calcularSubTotal() + priceDelivery;
-    }
+    };
 
-    const handleRemoverItem = (id) => {
-        const novoCarrinho = carrinho.filter(item => item.id !== id);
-        setCarrinho(novoCarrinho);
-    }
+    const diminuirQuantidadeCarrinho = async (produtoId) => {
+        try {
+            await removerProdutoCarrinho({ id: produtoId }, { email: userEmail }, 1);
+            fetchCarrinho();
+        } catch (error) {
+            console.error('Erro ao diminuir produto do carrinho:', error);
+        }
+    };
 
-    const handleAlterarQuantidade = (id, operacao) => {
-        const novoCarrinho = carrinho.map(item => {
-            if (item.id === id) {
-                let novaQuantidade = item.quantidade;
-                if (operacao === 'aumentar') {
-                    novaQuantidade++;
-                } else if (operacao === 'diminuir' && novaQuantidade > 1) {
-                    novaQuantidade--;
-                }
-                return { ...item, quantidade: novaQuantidade };
+    const aumentarQuantidadeCarrinho = async (produtoId) => {
+        try {
+            const produto = carrinho.find(item => item.id === produtoId);
+            if (produto) {
+                await adicionarProdutoCarrinho({ id: produtoId }, { email: userEmail }, produto.quantidade + 1);
+                fetchCarrinho();
             }
-            return item;
-        });
-        setCarrinho(novoCarrinho);
-    }
+        } catch (error) {
+            console.error('Erro ao aumentar quantidade do produto:', error);
+        }
+    };
 
-    const limparCarrinho = () => {
-        setCarrinho([]);
-    }
+    const removerProdutoCarrinhoAPI = async (produtoId, produto) => {
+        try {
+            await removerProdutoCarrinho({ id: produtoId }, { email: userEmail }, produto.qntdProduto);
+            fetchCarrinho();
+        } catch (error) {
+            console.error('Erro ao remover produto do carrinho:', error);
+        }
+    };
+
+    const limparCarrinho = async () => {
+        try {
+            await apagarCarrinho();
+            fetchCarrinho();
+        } catch (error) {
+            console.error('Erro ao limpar carrinho:', error);
+        }
+    };
 
     const finalizarPedido = () => {
         if (carrinho.length === 0) {
@@ -138,7 +191,7 @@ export default function Cart() {
             setCep('');
             toast.success('Compra finalizada com sucesso!');
         }
-    }    
+    };
 
     return (
         <main>
@@ -156,8 +209,8 @@ export default function Cart() {
                     </div>
                 ) : (
                     <ul className='listCart'>
-                        {carrinho.map(item => (
-                            <li key={item.id} className='order'>
+                        {Array.isArray(carrinho) && carrinho.map(produto => (
+                            <li key={produto.id} className='order'>
                                 <div className='labels'>
                                     <p>Produto</p>
                                     <div className='labelsNumber'>
@@ -167,30 +220,30 @@ export default function Cart() {
                                 </div>
                                 <hr className='hrLabels'/>
                                 <div className="productDesc">
-                                    <img src="" alt="" />
-                                    <h4 className='nameProduct'>{item.nome}</h4>
+                                    <img src={produto.imagemPrincipal} alt={produto.nome} />
+                                    <h4 className='nameProduct'>{produto.nome}</h4>
                                     <p className='amount'>
                                         <button 
                                         type='button' 
                                         className='buttonQtd' 
                                         id='minusQtd' 
-                                        onClick={() => handleAlterarQuantidade(item.id, 'diminuir')}
+                                        onClick={() => diminuirQuantidadeCarrinho(produto.id)}
                                         >
                                             <FaMinus />
                                         </button>
-                                        <span id='qtdNumber'>{item.quantidade}</span>
+                                        <span id='qtdNumber'>{produto.qntdProduto}</span>
                                         <button 
                                             type='button' 
                                             className='buttonQtd' 
                                             id='plusQtd' 
-                                            onClick={() => handleAlterarQuantidade(item.id, 'aumentar')}
+                                            onClick={() => aumentarQuantidadeCarrinho(produto.id)}
                                         >
                                             <FaPlus />
                                         </button>
                                     </p>
-                                    <h4 className='priceProduct'>{BRL.format(item.quantidade * item.precoUnitario)}</h4>
+                                    <h4 className='priceProduct'>{BRL.format(produto.qntdProduto * produto.valorComDesconto)}</h4>
                                     <p>
-                                        <button className="btnRemove" onClick={() => handleRemoverItem(item.id)}>
+                                        <button className="btnRemove" onClick={() => removerProdutoCarrinhoAPI(produto.id, produto)}>
                                             <TiDeleteOutline />
                                         </button>
                                     </p>
@@ -203,6 +256,45 @@ export default function Cart() {
                         Limpar Carrinho 
                         <MdDelete className='icon'/>
                     </button>
+                </div>
+
+                <div className="resume">
+                    <div className={`resumeBuy`}>
+                    <h3>Resumo</h3>
+                        <hr className='hrResume'/>
+                        <div className='values'>
+                            <p>SubTotal:</p>
+                            <p>{BRL.format(calcularSubTotal())}</p>
+                        </div>
+                        <div className='values'>
+                            <p>Entrega:</p>
+                            <p>{BRL.format(priceDelivery)}</p>
+                        </div>
+                        <hr className='hrTotal'/>
+                        <div className='values'>
+                            <p>Total:</p>
+                            <strong>{BRL.format(calcularTotal())}</strong>
+                        </div>
+                        <hr className='hrOptions'/>
+                        <div className='paymentOptions'>
+                            <div className='options'>
+                                <FaRegCreditCard className='icon'/>
+                                <p>
+                                    <strong>{BRL.format(calcularTotal())}</strong> <br />
+                                    em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
+                                </p>
+                            </div>
+                            <div className='options'>
+                                <FaBarcode className='icon'/>
+                                <p>
+                                    <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
+                                    com desconto à vista no boleto ou pix
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
+                    </div>
+
                     <div className='delivery'>
                         <h4>Calcular Entrega</h4>
                         <hr className='hrDelivery'/>
@@ -225,7 +317,7 @@ export default function Cart() {
                         </div>
                         {showOptions && (
                             <div>
-                                <div className='optionsDelivery' >
+                                <div className='optionsDelivery'>
                                     <label className="radio-container">
                                         <input 
                                             type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
@@ -236,7 +328,7 @@ export default function Cart() {
                                     <label htmlFor='rbSedex' className='labelOp'>
                                         <strong>Sedex:</strong>
                                         <p>Prazo de entrega: até 7 dias úteis</p>
-                                    </label> 
+                                    </label>
                                     <strong>{BRL.format(26.99)}</strong>
                                 </div>
                                 <div className='optionsDelivery'>
@@ -271,46 +363,10 @@ export default function Cart() {
                         )}
                     </div>
                 </div>
-                <div className={`resumeBuy ${isResumoFixo ? 'fixed' : ''}`}>
-                    <h3>Resumo</h3>
-                    <hr className='hrResume'/>
-                    <div className='values'>
-                        <p>SubTotal:</p>
-                        <p>{BRL.format(calcularSubTotal())}</p>
-                    </div>
-                    <hr className='hrValues'/>
-                    <div className='values'>
-                        <p>Entrega:</p>
-                        <p>{BRL.format(priceDelivery)}</p>
-                    </div>
-                    <hr className='hrValues'/>
-                    <div className='values'>
-                        <strong>Total:</strong> 
-                        <strong>{BRL.format(calcularTotal())}</strong>
-                    </div>
-                    <hr className='hrOptions'/>
-                    <div className='paymentOptions'>
-                        <div className='options'>
-                            <FaRegCreditCard className='icon'/>
-                            <p>
-                                <strong>{BRL.format(calcularTotal())}</strong> <br />
-                                em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
-                            </p>
-                        </div>
-                        <div className='options'>
-                            <FaBarcode className='icon'/>
-                            <p>
-                                <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
-                                com desconto à vista no boleto ou pix
-                            </p>
-                        </div>
-                    </div>
-                    <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
-                </div>
             </section>
             <section className='offers'>
                 <h2>Continue Comprando</h2>
-                <OfferList  />
+                <OfferList />
             </section>
         </main>
     );

@@ -135,15 +135,15 @@ $font-items: 'Poppins', Helvetica;
         width: 100%;
         height: 10em;
         max-height: 12em;
-        padding: .5em;
+        padding: 1em;
         border-radius: 10px;
         display: flex;
         gap: 1em;
         position: relative;
 
         img {
-          width: 25%;
-          border: 2px solid white;
+          width: 10vw;
+          border-radius: 15px;
         }
 
         .containerInfosFav {
@@ -152,7 +152,7 @@ $font-items: 'Poppins', Helvetica;
           justify-content: space-between;
           font-family: $font-items;
           color: $color-fontDark;
-          width: 65%;
+          width: 50%;
           height: 100%;
           font-size: clamp(1.6rem, .2rem + 1vw, 2rem);
 
@@ -167,6 +167,8 @@ $font-items: 'Poppins', Helvetica;
           }
 
           p {
+            text-shadow: 2px 2px 2px $color-shadow;
+            color: $color-primaryLight;
             font-size: clamp(2.4rem, .2rem + 2vw, 3rem);
             font-weight: bold;
           }
@@ -200,6 +202,10 @@ $font-items: 'Poppins', Helvetica;
   
           .containerInfosFav {  
             .iconFav {
+              color: $color-primaryDark;
+            }
+
+            p {
               color: $color-primaryDark;
             }
           }

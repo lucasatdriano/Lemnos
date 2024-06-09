@@ -137,12 +137,10 @@ export async function cadastrarProduto(produto){
         if (response.status != 201) {
             throw new Error('Erro ao cadastrar o produto.');
         }
-        console.log(response.data);
         
         return response.data;
 
     } catch (error) {
-        console.log(error.response.data.error);
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
             console.log(error)
@@ -427,9 +425,6 @@ export async function sendFirebaseToken(token){
         if (response.status != 200) {
             throw new Error('Erro ao cadastrar cliente.');
         }
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.token)
     
         return response.data.token;
     

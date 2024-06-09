@@ -1,6 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
+// Configuração do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAzHbzF7okGZfDPfUGHWnlNr6UUborXkrY",
   authDomain: "lemnos-79d4b.firebaseapp.com",
@@ -11,14 +14,13 @@ const firebaseConfig = {
   measurementId: "G-LQP4JLB1KD"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Get auth instance
 const auth = getAuth(app);
+const firestore = getFirestore(app);
+const storage = getStorage(app);
 
-// Setup providers
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
-export { auth, googleProvider, facebookProvider };
+export { auth, firestore, storage, googleProvider, facebookProvider };

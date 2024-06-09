@@ -1,15 +1,45 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import './card.scss';
 import './cardOffer.scss';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { auth } from '../../services/firebaseConfig';
+import AuthService from '../../services/authService';
+import { adicionarProdutoCarrinho } from '../../services/apiProductService';
 
 export default function Card({ produto }) {
+  const navigate = useNavigate();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+  const [userEmail, setUserEmail] = useState(null);
 
-  function handleAddToCart() {
-    // Adicione sua lógica para adicionar o produto ao carrinho aqui
-    console.log('Produto adicionado ao carrinho:', produto);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserEmail(user.email);
+      } else {
+        setUserEmail(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  async function handleAddToCart() {
+    if (AuthService.isLoggedIn()) {
+      try {
+        const response = await adicionarProdutoCarrinho(produto, { email: auth.currentUser.email }, 1);
+        toast.success('Produto adicionado ao carrinho!');
+      } catch (error) {
+        console.error('Erro ao adicionar produto ao carrinho:', error);
+        toast.error('Erro ao adicionar produto ao carrinho.');
+      }
+    } else {
+      toast.warning('Você precisa estar logado para adicionar produtos ao carrinho.');
+      navigate('/login')
+    }
   }
 
   const hasDiscount = produto.desconto > 0;
@@ -52,14 +82,3 @@ export default function Card({ produto }) {
     </>
   );
 }
-
-Card.propTypes = {
-  produto: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    nome: PropTypes.string.isRequired,
-    imagemPrincipal: PropTypes.string.isRequired,
-    valorComDesconto: PropTypes.number.isRequired,
-    valorTotal: PropTypes.number,
-    desconto: PropTypes.number,
-  }).isRequired,
-};

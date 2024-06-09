@@ -23,6 +23,7 @@ $font-items: 'Poppins', Helvetica;
 
 .productContainer {
   display: grid;
+  position: relative;
   place-items: center;
   padding-top: 8em;
 
@@ -54,8 +55,8 @@ $font-items: 'Poppins', Helvetica;
 
         .imageMain {
           border-radius: 15px;
-          height: 40em;
-          width: 40em;
+          height: 60svh;
+          width: 35vw;
           cursor: pointer;
           object-fit: contain;
           box-shadow: 2px 2px 10px $color-shadow;
@@ -65,15 +66,13 @@ $font-items: 'Poppins', Helvetica;
         .optionsImages {
           display: flex;
           width: 100%;
-          max-width: 40em;
-          min-width: 40em;
+          max-width: 35vw;
           gap: 1em;
 
           img {
             border-radius: 10px;
             object-fit: contain;
-            width: 25%;
-            height: clamp(5em, 15vh, 8em);
+            width: 8vw;
             cursor: pointer;
             box-shadow: 2px 2px 10px $color-shadow;
           }
@@ -92,7 +91,7 @@ $font-items: 'Poppins', Helvetica;
         
           position: absolute;
           top: 35px;
-          right: 60px;
+          right: 20px;
         }    
 
         &:hover {       
@@ -280,6 +279,12 @@ $font-items: 'Poppins', Helvetica;
       }
     }
   }
+
+  .toastLogin {
+    button {
+      padding: 2em;
+    }
+  }
 }
 
 @keyframes yippee {
@@ -393,22 +398,27 @@ $font-items: 'Poppins', Helvetica;
           justify-content: center;
           align-items: center;
           width: 100%;
-          margin: 0 auto -5em;
   
           .imageMain {
-            width: clamp(35em, 30em + 20vw, 35em);
+            width: 50vw;
+            height: 60svh;
           }
   
           .optionsImages {
             flex-direction: column;
             max-width: 10em;
             min-width: 10em;
+            max-height: 60svh;
   
             img {
-              width: 8em;
-              height: 8em;
+              width: 9em;
+              height: 9em;
             }
           }
+
+          .offerDescont {          
+            right: 150px;
+          }   
         }
   
         .containerInfos {
@@ -450,13 +460,21 @@ $font-items: 'Poppins', Helvetica;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          margin: 0 auto;
+          margin: 0 auto 5em;
+
+          .imageMain {
+            width: 75vw;
+          }
 
           .optionsImages {
             flex-direction: row;
-            max-width: 100%;
+            max-width: 75vw;
             justify-content: center;
           }
+
+          .offerDescont {          
+            right: 60px;
+          }   
         }
   
         .containerInfos {
@@ -474,21 +492,27 @@ $font-items: 'Poppins', Helvetica;
       .productMain {  
         .containerImages {
           .imageMain {
-            width: 100%;
+            width: 90vw;
+            height: 40svh;
           }
   
           .optionsImages {
-            max-width: 80%;
+            max-width: 50vw;
   
             img {
               width: 40%;
-              // height: 5em;
+              height: 7em;
             }
           }
+
+          .offerDescont {          
+            right: 5px;
+          }   
         }
 
         .containerInfos {
-          .addCart {  
+          .addCart { 
+            padding: 1em; 
             .iconAdd {
               width: 32px;   
               height: 32px;   

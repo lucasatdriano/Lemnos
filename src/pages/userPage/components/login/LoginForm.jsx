@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
@@ -58,8 +59,6 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      const tokenServer = await sendFirebaseToken(user.accessToken);
-      await AuthService.loginServer(tokenServer);
       console.log('Google login successful:', user);
       onLogin({ email: user.email, password: null });
     } catch (error) {
