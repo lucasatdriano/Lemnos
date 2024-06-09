@@ -167,7 +167,9 @@ export default function Cart() {
 
     const limparCarrinho = async () => {
         try {
-            await apagarCarrinho();
+            await axios.delete(`${baseUri}/carrinho/tudo`, {
+                timeout: 10000,
+            });
             fetchCarrinho();
         } catch (error) {
             console.error('Erro ao limpar carrinho:', error);

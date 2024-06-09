@@ -37,6 +37,8 @@ $font-items: 'Poppins', Helvetica;
   }
 
   .productDetails {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
 
     .productName {
@@ -105,6 +107,7 @@ $font-items: 'Poppins', Helvetica;
 .dark {
   .productCard {
     background-color: #72757478;
+    box-shadow: 4px 4px 8px #4b4c4c78;
 
     .productDetails {
       color: $color-fontDark;
@@ -127,26 +130,65 @@ $font-items: 'Poppins', Helvetica;
   }
 }
 
-@media only screen and (max-width: 500px) {
-  .productCard {    
-    .productImage {
-      height: 9em;
-    }
-  
-    .productDetails {  
-      .productName {
-        margin-bottom: 1em;
+@media only screen and (max-width: 700px) {
+  .productCard {
+    width: 80vw;
+    height: 18em;
+
+    .productLink {
+      display: flex;
+
+      .productImage {
+        height: 80%;
+        width: 35%;
+      }
+
+      .productDetails {
+        gap: 2.5em;
+
+        .productName {
+          font-size: 2rem;
+          margin-bottom: .5em;
+        }
+
+        .productPrice {
+          span {
+           font-size: 3.4rem;
+          }
+        }
+      }
+
+      &:hover {
+        .productDetails {
+          .productName {
+            margin-bottom: .5em;
+          }
+        }
       }
     }
-  
+
     .btnAdd {
       bottom: 0;
     }
+  }
+}
 
-    &:hover {
-      .productDetails {
+@media only screen and (max-width: 500px) {
+  .productCard {    
+    width: 90vw;
+
+    .productLink {
+      .productDetails {  
         .productName {
-          margin-bottom: 1em;
+          font-size: 1.8rem;
+        }
+      }
+
+      &:hover {
+        .productDetails {
+          .productName {
+          font-size: 1.8rem;
+          }
         }
       }
     }

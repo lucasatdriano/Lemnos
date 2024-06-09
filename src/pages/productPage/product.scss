@@ -6,7 +6,7 @@ $color-detailsLight: #850E5D;
 $color-primaryDark: #0d977e;
 $color-secundaryDark: #2D3A3A;
 $color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-detailsDark: #b33e8c;
 
 $color-bgDark: #2D2D2D;
 $color-bgLight: #f2f2f2;
@@ -333,12 +333,13 @@ $font-items: 'Poppins', Helvetica;
       .productMain {
         .containerImages {
           .imageMain {
-            filter: drop-shadow(4px 4px 6px $color-card);
+            filter: drop-shadow(4px 4px 6px #4b4c4c78);
+            box-shadow: 4px 4px 8px #4b4c4c78;
           }
 
           .optionsImages {
             img {
-              box-shadow: 3px 3px 6px $color-card;
+              box-shadow: 4px 4px 8px #4b4c4c78;
             }
           }
         }

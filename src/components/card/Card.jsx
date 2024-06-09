@@ -48,7 +48,7 @@ export default function Card({ produto }) {
     <>
       <div className='descont'>
         <div className={hasDiscount ? "offerCard" : "productCard"}>
-          <Link to={`/product/${produto.id}`} className={hasDiscount ? "" : "productLink"}>
+          <Link to={`/product/${produto.id}`} className={hasDiscount ? "offerLink" : "productLink"}>
             {hasDiscount && <p className='offerDescont'>{produto.desconto}%</p>}
             <img 
               src={produto.imagemPrincipal} 

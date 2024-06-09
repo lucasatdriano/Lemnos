@@ -6,7 +6,7 @@ $color-detailsLight: #850E5D;
 $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
 $color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-detailsDark: #7B1559;
 
 $color-bgDark: #2D2D2D;
 $color-bgLight: #F9FBFB;
@@ -35,7 +35,7 @@ $font-items: 'Poppins', Helvetica;
 
   .menuFavorite {
     background-color: $color-bgLight;
-    width: 55%;
+    width: 40%;
     height: 100vh;
     position: absolute;
     z-index: 999; 
@@ -130,6 +130,128 @@ $font-items: 'Poppins', Helvetica;
       flex-direction: column;
       gap: 1em;
 
+      .itemFav {
+        width: 80%;
+        height: 17em;
+        padding: .25em;
+        position: relative;
+        display: flex;
+        background: $color-bgLight;
+        box-shadow: 2px 2px 8px $color-shadow;
+        border-radius: 5px;
+  
+        .favLink {
+          display:flex;
+          width: 85%;
+
+          .containerInfosFav {
+            .iconFav {
+              cursor: pointer;
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              color: $color-primaryLight;
+              float: right;
+              width: 42px;
+              height: 42px
+            }
+          }
+
+          .offerDescont {
+            background-color: $color-detailsLight;
+            padding: 15px 5px;
+            text-align: center;
+            z-index: 10;
+            color: $color-fontDark;
+            border-radius: 5px;
+          
+            position: absolute;
+            top: 4px;
+            left: 4px;
+          }
+    
+          .productImage {
+            width: 30%;
+            height: 12.5em;
+            border-radius: 5px;
+            object-fit: contain;
+            margin-right: 16px;
+            background: $color-bgLight;
+          }
+    
+          .productDetails {
+            gap: 2.5em;
+            width: 65%;
+    
+            .productName {
+              font-size: 2.4rem;
+              margin-bottom: .5em;
+            }
+
+            .offerPrice {
+              color: $color-detailsLight;
+              text-decoration: line-through;
+              font-size: 1.8rem;
+              opacity: 1;
+              visibility: visible;
+              line-height: 2;
+              transition: .2s ease-in-out;
+            }
+    
+            .productPrice {
+              font-size: 1.4rem;
+              font-weight: 500;
+              line-height: 1.2;
+        
+              span {
+                font-weight: 700;
+                color: $color-primaryLight;
+                font-size: 3.4rem;
+              }
+            }
+          }
+    
+          &:hover {
+            .productDetails {
+              .productName {
+                margin-bottom: .5em;
+              }
+            }
+          }
+        }
+    
+        .btnAdd {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: .5em;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          border-radius: 5px;
+          background-color: $color-primaryLight;
+          color: $color-fontDark;
+          font-family: $font-items;
+          box-shadow: 0 0 10px $color-primaryDark;
+          border: none;
+          width: 100%;
+          font-size: 2rem;
+          padding: .8em 0;
+          transition: .5s ease-out;
+          cursor: pointer;
+      
+          &:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 40px $color-primaryLight;
+          }
+      
+          .iconAdd {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+
       .productFav {
         background: $color-secundaryLight;
         width: 100%;
@@ -197,16 +319,43 @@ $font-items: 'Poppins', Helvetica;
       }
   
       .listaFavoritos {
-        .productFav {
-          background: $color-secundaryDark;
-  
-          .containerInfosFav {  
-            .iconFav {
-              color: $color-primaryDark;
-            }
+        .itemFav {
+          background-color: #72757478;
+          box-shadow: 2px 2px 8px $color-shadow;
+          
+          .favLink {  
+            color: $color-fontDark;
 
-            p {
-              color: $color-primaryDark;
+            .containerInfosFav {
+              .iconFav {
+                color: $color-primaryDark;
+              }
+            }
+  
+            .offerDescont {
+              background-color: $color-detailsDark;
+            }
+      
+            .productDetails {  
+              .offerPrice {
+                color: $color-detailsDark;
+              }
+      
+              .productPrice {
+                span {
+                  color: $color-primaryDark;
+                }
+              }
+            }
+          }
+      
+          .btnAdd {
+            background-color: $color-primaryDark;
+            box-shadow: 0 0 10px $color-primaryDark;
+
+            &:hover {
+              filter: brightness(1.1);
+              box-shadow: 0 0 40px $color-primaryDark;
             }
           }
         }

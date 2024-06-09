@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import { IoClose } from "react-icons/io5";
-import './menuFavorite.scss';
-import { listarProdutosFavoritos, desfavoritarProduto } from '../../../../services/apiProductService';
+import { listarProdutosFavoritos, desfavoritarProduto, adicionarProdutoCarrinho } from '../../../../services/apiProductService';
 import { auth } from '../../../../services/firebaseConfig';
-import axios from 'axios';
+import AuthService from '../../../../services/authService';
+import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
+import { IoClose } from "react-icons/io5";
+import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import './menuFavorite.scss';
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
@@ -82,9 +84,23 @@ export default function MenuFavorite({ onClose }) {
         }
     };
 
-
     const handleCloseModal = () => {
         onClose();
+    };
+
+    const handleAddToCart = async (favorite) => {
+        if (AuthService.isLoggedIn()) {
+            try {
+                await adicionarProdutoCarrinho(favorite, { email: auth.currentUser.email }, 1);
+                toast.success('Produto adicionado ao carrinho!');
+            } catch (error) {
+                console.error('Erro ao adicionar produto ao carrinho:', error);
+                toast.error('Erro ao adicionar produto ao carrinho.');
+            }
+        } else {
+            toast.warning('Você precisa estar logado para adicionar produtos ao carrinho.');
+            navigate('/login');
+        }
     };
 
     return (
@@ -103,20 +119,44 @@ export default function MenuFavorite({ onClose }) {
                     </div>
                 ) : (
                     <ul className='listaFavoritos'>
-                        {favorites.map((favorite, index) => (
-                            <li key={index} className='productFav'>
-                                <img src={favorite.imagemPrincipal} alt={favorite.nome} />
-                                <div className='containerInfosFav'>
-                                    {removingIndex === index ? (
-                                        <MdFavoriteBorder className='iconFav' />
-                                    ) : (
-                                        <MdFavorite className='iconFav' onClick={(e) => { handleRemoveFavorite(index); e.stopPropagation(); }} />
-                                    )}
-                                    <h3>{favorite.nome}</h3>
-                                    <p>{BRL.format(favorite.valorComDesconto)}</p>
-                                </div>
-                            </li>
-                        ))}
+                        {favorites.map((favorite, index) => {
+                            const hasDiscount = favorite.desconto > 0;
+                            return (
+                                <li key={favorite.id} className='itemFav'>
+                                    <Link to={`/product/${favorite.id}`} className="favLink">
+                                        {hasDiscount && <p className='offerDescont'>{favorite.desconto}%</p>}
+                                        <img 
+                                            src={favorite.imagemPrincipal} 
+                                            alt={favorite.nome} 
+                                            className='productImage' 
+                                        />
+                                        <div className='containerInfosFav'>
+                                            {removingIndex === index ? (
+                                                <MdFavoriteBorder className='iconFav' />
+                                            ) : (
+                                                <MdFavorite className='iconFav' onClick={(e) => { handleRemoveFavorite(index); e.stopPropagation(); }} />
+                                            )}
+                                        </div>
+                                        <div className='productDetails'>
+                                            <h2 className='productName'>{favorite.nome}</h2>
+                                            {hasDiscount && <p className='offerPrice'>{BRL.format(favorite.valorTotal)}</p>}
+                                            <p className="productPrice">À vista <br />
+                                                <span>{BRL.format(favorite.valorComDesconto)}</span> <br />
+                                                no PIX com 15% de desconto
+                                            </p>
+                                        </div>
+                                    </Link>
+                                    <button 
+                                        type="button" 
+                                        className='btnAdd' 
+                                        onClick={() => handleAddToCart(favorite)}
+                                    >
+                                        Adicionar ao Carrinho
+                                        <img src={iconAddCart} alt="icon add Cart" className='iconAdd' />
+                                    </button>
+                                </li>
+                            );
+                        })}
                     </ul>
                 )}
             </div>

@@ -6,7 +6,7 @@ $color-detailsLight: #850E5D;
 $color-primaryDark: #10A88D;
 $color-secundaryDark: #2D3A3A;
 $color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-detailsDark: #7B1559;
 
 $color-bgLight: #F9FBFB;
 $color-bgDark: #2D2D2D;
@@ -97,6 +97,7 @@ $font-items: 'Poppins', Helvetica;
         }
       }
     }
+
     .btnAdd {
       display: flex;
       align-items: center;
@@ -151,20 +152,33 @@ $font-items: 'Poppins', Helvetica;
 .dark { 
   .descont {
     .offerCard {
+      background-color: #72757478;
+      box-shadow: 4px 4px 8px #4b4c4c78;
+
+      .offerDescont {
+        background-color: $color-detailsDark;
+      }
+
       .offerDetails {
+        color: $color-fontDark;
+
+        .offerPrice {
+          color: $color-detailsDark;
+        }
+
         .offerPriceDescont {    
           span {
             color: $color-primaryDark;
           }
         }
+      }
 
-        .btnAdd {
-          background-color: $color-primaryDark;
-
-          &:hover {
-            filter: brightness(1.1);
-            box-shadow: 0 0 40px $color-primaryDark;
-          }
+      .btnAdd {
+        background-color: $color-primaryDark;
+        
+        &:hover {
+          filter: brightness(1.1);
+          box-shadow: 0 0 40px $color-primaryDark;
         }
       }
     }
