@@ -2,8 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const baseUri = "http://localhost:8080/api";
-const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJMZW1ub3MtU2VydmVyIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzE3OTg0MzY3LCJpYXQiOjE3MTc5ODQwNjd9.W6tnLtVG-wN1sof5zdMXfe9tlOsaTVN6MDYw2WzMfTOypIzZulAcyDRLSOXVXrKljZkz5veEiun6hM7yaNDLixf6dUnLtqA-d2Y1OTtk3wFqxM3v0047LLTfOVKDarrg1EB4SBLc-_hQn2stmdekFV-RUnWNJt6Q84fD01-ZsxWBMksNO0FQZssghVSulX6GYboMvknVt1wtWhgTmVNzChozZuz74lyProeES85yrZxfax6VduAJ2MWkE_ZibDf4hxUh2XJVw9RlaIeL6rGCTZWrflz8GwEi2crLUe4fwYBI6dkHOHwB8QssBG9JXePUulMWaR986AbFrqqd1bE_8A';
+const baseUri = "https://lemnos-server.up.railway.app/api";
 
 export async function cadastrarUsuario(usuario) {
     try {
@@ -44,7 +43,7 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
             url: `/auth/register/${tipoEntidade}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: funcionario.nome,
@@ -81,7 +80,7 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
             url: `/auth/register/${tipoEntidade}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: fornecedor.nome,
@@ -115,7 +114,7 @@ export async function cadastrarProduto(produto){
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: produto.nome,
@@ -159,7 +158,7 @@ export async function updateCliente(cliente) {
             url: `/cliente`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                "Authorization": token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: cliente.nome,
@@ -193,7 +192,7 @@ export async function updateFuncionario(funcionario) {
             url: `/funcionario`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: funcionario.nome,
@@ -263,7 +262,7 @@ export async function updateProduto(produto, id) {
             url: `/produto/${id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 nome: produto.nome,
@@ -297,7 +296,7 @@ export async function excluirFuncionario(email) {
             url: `/funcionario`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
                 email: email
@@ -326,7 +325,7 @@ export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
             url: `/endereco`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 email: emailEntidade,
@@ -360,7 +359,7 @@ export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
             url: "/endereco",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 email: emailEntidade,
@@ -394,7 +393,7 @@ export async function excluirEndereco(emailEntidade, endereco, entidade) {
             url: "/endereco",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
                 email: emailEntidade,
@@ -432,9 +431,8 @@ export async function verificarCep(cep) {
 }
 
 export async function login(usuario) {  
-    let token = "";
-    
     try {
+        console.log(usuario)
         const response = await axios({
             baseURL: baseUri,
             method: "POST",
@@ -444,42 +442,23 @@ export async function login(usuario) {
             },
             data: {
                 email: usuario.email,
-                senha: usuario.senha
+                senha: usuario.password
             },
             timeout: 10000,
         });
-        token = response.data;
 
-    } catch (error) {
-        console.log(error);
-    }
-    
-    return token;  
-}
-
-export async function loginGoogle() {
-    let token = "";
-    
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: "/auth/login-firebase",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            body: {
-                token: localStorage.getItem('authTokenGoogle')
-            },
-            timeout: 10000,
-        });
-        token = response.data;
+        if(response.status == 200) {
+            localStorage.setItem('authToken', response.data.token);
+            return true 
+        }
+        console.log('Token não enviado')
 
     } catch (error) {
         console.log(error);
     }
     
     return token;
+
 }
 
 export async function sendFirebaseToken(token){
@@ -498,12 +477,43 @@ export async function sendFirebaseToken(token){
         });
   
         if (response.status != 200) {
-            throw new Error('Erro ao cadastrar cliente.');
+            throw new Error('Erro ao logar cliente.');
         }
-    
-        return response.data.token;
+        
+        localStorage.setItem('authToken', response.data.token);
+
+        return true; 
     
     } catch(error) {
         toast.error(error);
+    }
+}
+
+export async function getCliente() {
+    try{
+        console.log(localStorage.getItem('authToken'));
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/cliente/find`,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+                'Authorization': localStorage.getItem('authToken')
+            },
+            timeout: 10000,
+        })
+        if (response.status !== 200) {
+            throw new Error('Erro ao pegar dados do usuário.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao pegar dados do usuário');
+        }
+        throw error;
     }
 }

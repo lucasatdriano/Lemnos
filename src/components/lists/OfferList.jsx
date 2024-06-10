@@ -7,7 +7,7 @@ import './offerList.scss';
 
 export default function OfferList() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   useEffect(() => { 
     const fetchProdutos = async () => {

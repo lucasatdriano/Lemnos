@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const baseUri = "http://localhost:8080/api";
+const baseUri = "https://lemnos-server.up.railway.app/api";
 const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJMZW1ub3MtU2VydmVyIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzE3OTg0MzY3LCJpYXQiOjE3MTc5ODQwNjd9.W6tnLtVG-wN1sof5zdMXfe9tlOsaTVN6MDYw2WzMfTOypIzZulAcyDRLSOXVXrKljZkz5veEiun6hM7yaNDLixf6dUnLtqA-d2Y1OTtk3wFqxM3v0047LLTfOVKDarrg1EB4SBLc-_hQn2stmdekFV-RUnWNJt6Q84fD01-ZsxWBMksNO0FQZssghVSulX6GYboMvknVt1wtWhgTmVNzChozZuz74lyProeES85yrZxfax6VduAJ2MWkE_ZibDf4hxUh2XJVw9RlaIeL6rGCTZWrflz8GwEi2crLUe4fwYBI6dkHOHwB8QssBG9JXePUulMWaR986AbFrqqd1bE_8A';
 
 export async function listarProdutosFiltrados(filtro, size) {
@@ -48,7 +48,7 @@ export async function listarProdutosFavoritos(email) {
             url: `/produto/fav`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
               email: email
@@ -80,7 +80,7 @@ export async function adicionarFavorito(produto, cliente) {
             url: "/produto/fav",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
                 email: cliente.email,
@@ -113,7 +113,7 @@ export async function desfavoritarProduto(produto, cliente) {
             url: "/produto/fav",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
                 email: cliente.email,
@@ -146,7 +146,7 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             url: `/produto/avaliar/${produto.id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 avaliacao: valorAvaliacao,
@@ -179,7 +179,7 @@ export async function listarCarrinho() {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             timeout: 10000
         });
@@ -208,7 +208,7 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 id: produto.id,
@@ -239,7 +239,7 @@ export async function removerProdutoCarrinho(produto, entidade, qntd) {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 id: produto.id,
@@ -272,7 +272,7 @@ export async function apagarCarrinho() {
             url: "/carrinho/tudo",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             timeout: 10000
         });
@@ -301,7 +301,7 @@ export async function listarPedido(pedido) {
             url: `/pedido/${pedido.id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': token
+                'Authorization': localStorage.getItem('authToken')
             },
             timeout: 10000
         });

@@ -35,7 +35,7 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
   
   const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {

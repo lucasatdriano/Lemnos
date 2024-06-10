@@ -40,7 +40,6 @@ export default function Login() {
   };
 
   const handleLogin = (token) => {
-    AuthService.login(token);
     setLoggedIn(true);
   };
 

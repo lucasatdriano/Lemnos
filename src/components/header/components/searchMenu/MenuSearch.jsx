@@ -11,7 +11,7 @@ export default function MenuSearch() {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    const baseUri = "http://localhost:8080/api";
+    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const fetchProdutos = async () => {

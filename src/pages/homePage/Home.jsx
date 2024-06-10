@@ -15,7 +15,7 @@ import perifericos from '../../assets/deps/imgPerifericos.svg';
 
 export default function Home() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   useEffect(() => { 
     const fetchProdutos = async () => {

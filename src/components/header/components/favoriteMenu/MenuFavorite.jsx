@@ -19,7 +19,7 @@ export default function MenuFavorite({ onClose }) {
     const [favorites, setFavorites] = useState([]);
     const [removingIndex, setRemovingIndex] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    const baseUri = "http://localhost:8080/api";
+    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {

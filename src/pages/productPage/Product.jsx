@@ -20,7 +20,7 @@ export default function Product() {
     const [isFavorite, setIsFavorite] = useState(false);
     const [userEmail, setUserEmail] = useState(null);
     const [productRating, setProductRating] = useState(0);
-    const baseUri = "http://localhost:8080/api";
+    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
