@@ -145,7 +145,6 @@ export async function cadastrarProduto(produto){
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-            console.log(error.response.data);
         }
     }
 }
@@ -491,7 +490,6 @@ export async function sendFirebaseToken(token){
 
 export async function getCliente() {
     try{
-        console.log(localStorage.getItem('authToken'));
         const response = await axios({
             baseURL: baseUri,
             method: "GET",

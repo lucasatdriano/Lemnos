@@ -155,7 +155,6 @@ export async function avaliarProduto(produto, valorAvaliacao) {
         });
 
         if (response.status != 201) {
-            console.log("1");
             throw new Error('Erro ao avaliar produto.');
         }
 
