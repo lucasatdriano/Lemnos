@@ -3,8 +3,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const baseUri = "http://localhost:8080/api";
+const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJMZW1ub3MtU2VydmVyIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzE3OTg0MzY3LCJpYXQiOjE3MTc5ODQwNjd9.W6tnLtVG-wN1sof5zdMXfe9tlOsaTVN6MDYw2WzMfTOypIzZulAcyDRLSOXVXrKljZkz5veEiun6hM7yaNDLixf6dUnLtqA-d2Y1OTtk3wFqxM3v0047LLTfOVKDarrg1EB4SBLc-_hQn2stmdekFV-RUnWNJt6Q84fD01-ZsxWBMksNO0FQZssghVSulX6GYboMvknVt1wtWhgTmVNzChozZuz74lyProeES85yrZxfax6VduAJ2MWkE_ZibDf4hxUh2XJVw9RlaIeL6rGCTZWrflz8GwEi2crLUe4fwYBI6dkHOHwB8QssBG9JXePUulMWaR986AbFrqqd1bE_8A';
 
-export async function listarProdutosFiltrados(filtro) {
+export async function listarProdutosFiltrados(filtro, size) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -18,7 +19,7 @@ export async function listarProdutosFiltrados(filtro) {
               menorPreco: filtro.menorPreco,
               maiorPreco: filtro.maiorPreco,
               page: filtro.page,
-              size: filtro.size
+              size: size
             },
             timeout: 10000,
         });
@@ -45,6 +46,10 @@ export async function listarProdutosFavoritos(email) {
             baseURL: baseUri,
             method: "GET",
             url: `/produto/fav`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
+            },
             params: {
               email: email
             },
@@ -74,7 +79,8 @@ export async function adicionarFavorito(produto, cliente) {
             method: "POST",
             url: "/produto/fav",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             params: {
                 email: cliente.email,
@@ -106,7 +112,8 @@ export async function desfavoritarProduto(produto, cliente) {
             method: "DELETE",
             url: "/produto/fav",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             params: {
                 email: cliente.email,
@@ -138,7 +145,8 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             method: "POST",
             url: `/produto/avaliar/${produto.id}`,
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             data: {
                 avaliacao: valorAvaliacao,
@@ -163,14 +171,15 @@ export async function avaliarProduto(produto, valorAvaliacao) {
     }
 }
 
-export async function listarCarrinho(email) {
+export async function listarCarrinho() {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "GET",
             url: "/carrinho",
-            params: {
-                email: email
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             timeout: 10000
         });
@@ -198,11 +207,11 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
             method: "POST",
             url: "/carrinho",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             data: {
                 id: produto.id,
-                email: entidade.email,
                 quantidade: qntd
             },
             timeout: 10000
@@ -229,11 +238,11 @@ export async function removerProdutoCarrinho(produto, entidade, qntd) {
             method: "DELETE",
             url: "/carrinho",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
             },
             data: {
                 id: produto.id,
-                email: entidade.email,
                 quantidade: qntd
             },
             timeout: 10000
@@ -261,6 +270,97 @@ export async function apagarCarrinho() {
             baseURL: baseUri,
             method: "DELETE",
             url: "/carrinho/tudo",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function listarPedido(pedido) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/pedido/${pedido.id}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': token
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function novoPedido(pedido, cliente) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/pedido",
+            data: {
+                email: cliente.email,
+                metodoPagamento: pedido.metodoPagamento
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function atualizarStatus(pedido, cliente) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: "/pedido",
+            data: {
+                email: cliente.email,
+                id: pedido.id
+            },
             timeout: 10000
         });
 

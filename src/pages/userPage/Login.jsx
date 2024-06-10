@@ -5,7 +5,7 @@ import './login.scss';
 import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
-import { cadastrarCliente } from '../../services/ApiService'; 
+import { cadastrarUsuario } from '../../services/ApiService'; 
 import AuthService from '../../services/authService';
 
 export default function Login() {
@@ -31,7 +31,7 @@ export default function Login() {
     };
 
     try {
-      await cadastrarCliente(formattedForm);
+      await cadastrarUsuario(formattedForm);
       toast.success(`Cadastro realizado, ${firstName}!!`);
       handleBackToLogin();
     } catch (error) {

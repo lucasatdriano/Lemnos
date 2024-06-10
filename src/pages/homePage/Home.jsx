@@ -32,7 +32,7 @@ export default function Home() {
     fetchProdutos();
   }, []);
 
-  const mainProducts = produtos.slice(0, 20);
+  const mainProducts = produtos.slice(0, 21);
   const produtosSemDesconto = mainProducts.filter(produto => produto.desconto == 0);
 
   return (

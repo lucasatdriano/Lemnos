@@ -7,7 +7,7 @@ import './doubleInput.scss';
 
 const STEP = 50;
 const MIN = 0;
-const MAX = 30000;
+const MAX = 50000;
 
 export default function DoubleInputRange({ minValue, maxValue, setMinValue, setMaxValue }) {
   const [values, setValues] = useState([minValue, maxValue]);
