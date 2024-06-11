@@ -61,8 +61,8 @@ export default function Footer() {
             </section>
             <hr className='hrAuthorship'/>
             <div className='authorship'>
-                <small>© 2024 Lemnos - All rights reserved. - By <a href="https://techverse-co.vercel.app" target='_blank'>TechVerse</a></small>
-                <small><a href="#">Term And Conditions</a> | <a href="#">Privacy Policy</a></small>
+                <small>© 2024 Lemnos - Todos os Direitos Reservados. - Por <a href="https://techverse-co.vercel.app" target='_blank'>TechVerse</a></small>
+                <small><a href="#">Termos e Condições</a> | <a href="#">Política de Privacidade</a></small>
             </div>
         </footer>
     )

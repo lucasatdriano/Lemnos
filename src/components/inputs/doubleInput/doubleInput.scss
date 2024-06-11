@@ -23,6 +23,7 @@ $font-items: 'Poppins', Helvetica;
 
 .doubleRangeInput {
     .rangeSlider {
+        max-width: 20vw;
         font-family: $font-items;
         position: relative;
         width: 100%;

@@ -72,7 +72,7 @@ export default function ProductFilter() {
         maiorPreco: maxPrice ?? 50000,
       };
   
-      const produtosFiltrados = await listarProdutosFiltrados(filtro);
+      const produtosFiltrados = await listarProdutosFiltrados(filtro, 0, 20);
       setFilteredData(produtosFiltrados);
     } catch (error) {
       console.error('Erro ao aplicar filtros:', error);

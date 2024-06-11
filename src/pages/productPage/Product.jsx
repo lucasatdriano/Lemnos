@@ -34,26 +34,26 @@ export default function Product() {
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await axios.get(`${baseUri}/produto/${id}`, {
-                    timeout: 10000,
-                });
-                setProduct(response.data);
-                setMainImage(response.data.imagemPrincipal);
-                setProductRating(response.data.avaliacao);
-                if (userEmail) {
-                    const favorites = await listarProdutosFavoritos(userEmail);
-                    const isFavorited = favorites.some(fav => fav.id === response.data.id);
-                    setIsFavorite(isFavorited);
-                }
-            } catch (error) {
-                console.error('Error fetching product:', error);
-                navigate('/Error404');
+    const fetchProduct = async () => {
+        try {
+            const response = await axios.get(`${baseUri}/produto/${id}`, {
+                timeout: 10000,
+            });
+            setProduct(response.data);
+            setMainImage(response.data.imagemPrincipal);
+            setProductRating(response.data.avaliacao);
+            if (AuthService.isLoggedIn()) {
+                const favorites = await listarProdutosFavoritos();
+                const isFavorited = favorites.some(fav => fav.id === response.data.id);
+                setIsFavorite(isFavorited);
             }
-        };
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            navigate('/Error404');
+        }
+    };
 
+    useEffect(() => {
         fetchProduct();
     }, [id, navigate, userEmail]);
 
@@ -64,7 +64,7 @@ export default function Product() {
     const handleAddToCart = async () => {
         if (AuthService.isLoggedIn()) {
             try {
-                await adicionarProdutoCarrinho(product, { email: userEmail }, 1);
+                await adicionarProdutoCarrinho(product, 1);
                 toast.success('Produto adicionado ao carrinho com sucesso!');
             } catch (error) {
                 console.error('Erro ao adicionar produto ao carrinho:', error);
@@ -78,7 +78,7 @@ export default function Product() {
     const handleAddToFavorites = async () => {
         if (AuthService.isLoggedIn()) {
             try {
-                await adicionarFavorito(product, { email: userEmail });
+                await adicionarFavorito(product);
                 toast.success('Produto adicionado aos favoritos!');
                 setIsFavorite(true);
             } catch (error) {
@@ -93,7 +93,7 @@ export default function Product() {
     const handleRemoveToFavorites = async () => {
         if (AuthService.isLoggedIn()) {
             try {
-                await desfavoritarProduto(product, { email: userEmail });
+                await desfavoritarProduto(product);
                 toast.success('Produto removido dos favoritos');
                 setIsFavorite(false);
             } catch (error) {

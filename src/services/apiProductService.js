@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const baseUri = "https://lemnos-server.up.railway.app/api";
 const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJMZW1ub3MtU2VydmVyIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzE3OTg0MzY3LCJpYXQiOjE3MTc5ODQwNjd9.W6tnLtVG-wN1sof5zdMXfe9tlOsaTVN6MDYw2WzMfTOypIzZulAcyDRLSOXVXrKljZkz5veEiun6hM7yaNDLixf6dUnLtqA-d2Y1OTtk3wFqxM3v0047LLTfOVKDarrg1EB4SBLc-_hQn2stmdekFV-RUnWNJt6Q84fD01-ZsxWBMksNO0FQZssghVSulX6GYboMvknVt1wtWhgTmVNzChozZuz74lyProeES85yrZxfax6VduAJ2MWkE_ZibDf4hxUh2XJVw9RlaIeL6rGCTZWrflz8GwEi2crLUe4fwYBI6dkHOHwB8QssBG9JXePUulMWaR986AbFrqqd1bE_8A';
 
-export async function listarProdutosFiltrados(filtro, size) {
+export async function listarProdutosFiltrados(filtro, page, size) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -18,7 +18,7 @@ export async function listarProdutosFiltrados(filtro, size) {
               marca: filtro.marca,
               menorPreco: filtro.menorPreco,
               maiorPreco: filtro.maiorPreco,
-              page: filtro.page,
+              page: page,
               size: size
             },
             timeout: 10000,
@@ -40,7 +40,7 @@ export async function listarProdutosFiltrados(filtro, size) {
     }
 }
 
-export async function listarProdutosFavoritos(email) {
+export async function listarProdutosFavoritos() {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -49,9 +49,6 @@ export async function listarProdutosFavoritos(email) {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': localStorage.getItem('authToken')
-            },
-            params: {
-              email: email
             },
             timeout: 10000
         });
@@ -65,14 +62,12 @@ export async function listarProdutosFavoritos(email) {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
 }
 
-export async function adicionarFavorito(produto, cliente) {
+export async function adicionarFavorito(produto) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -83,7 +78,6 @@ export async function adicionarFavorito(produto, cliente) {
                 'Authorization': localStorage.getItem('authToken')
             },
             params: {
-                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -98,14 +92,12 @@ export async function adicionarFavorito(produto, cliente) {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
 }
 
-export async function desfavoritarProduto(produto, cliente) {
+export async function desfavoritarProduto(produto) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -116,23 +108,23 @@ export async function desfavoritarProduto(produto, cliente) {
                 'Authorization': localStorage.getItem('authToken')
             },
             params: {
-                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
         });
 
+        console.log(produto.id)
+        debugger;
+
         if (response.status !== 200) {
             throw new Error('Erro ao remover favorito.');
         }
 
-        return response.data;
+        return true;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao remover favorito.');
         }
         throw error;
     }
@@ -192,14 +184,12 @@ export async function listarCarrinho() {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao listar carrinho.');
         }
         throw error;
     }
 }
 
-export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
+export async function adicionarProdutoCarrinho(produto, qntd) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -230,7 +220,7 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
     }
 }
 
-export async function removerProdutoCarrinho(produto, entidade, qntd) {
+export async function removerProdutoCarrinho(produto, qntd) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -321,14 +311,13 @@ export async function listarPedido(pedido) {
     }
 }
 
-export async function novoPedido(pedido, cliente) {
+export async function novoPedido(pedido) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "POST",
             url: "/pedido",
             data: {
-                email: cliente.email,
                 metodoPagamento: pedido.metodoPagamento
             },
             timeout: 10000

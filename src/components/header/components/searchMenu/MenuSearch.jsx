@@ -49,6 +49,8 @@ export default function MenuSearch() {
     const handleSearch = (e) => {
         e.preventDefault();
         navigate(`/productFilter?search=${searchTerm}`);
+        setFilteredProducts([]);
+        setShowResults(false);
     };
 
     const handleSearchResultClick = (productId) => {
@@ -63,7 +65,7 @@ export default function MenuSearch() {
             <form onSubmit={handleSearch} className="inputSearch">
                 <input
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Pesquisar..."
                     name="search"
                     id="inputSearch"
                     value={searchTerm}

@@ -116,7 +116,6 @@ export default function DoubleInputRange({ minValue, maxValue, setMinValue, setM
         />
         <div className="inputBox">
           <div className="minBox">
-            <p>DE</p>
             <div className="inputWrap">
               <span className="inputAddon">R$</span>
               <input
