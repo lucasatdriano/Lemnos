@@ -79,9 +79,12 @@ export default function RegistrationForm({ onLogin, onCadastroSuccess, handleBac
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      console.log('Google login successful:', user);
-      onLogin({ email: user.email, password: null });
+      const token = result.user.accessToken;
+      const resultLogin = await sendFirebaseToken(token);
+
+      if(resultLogin){
+        onLogin({ email: result.user.email, password: result.user.password });
+      }
     } catch (error) {
       console.error('Error during Google login:', error.code, error.message);
     }

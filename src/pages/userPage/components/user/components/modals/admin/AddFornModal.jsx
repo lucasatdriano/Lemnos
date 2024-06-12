@@ -26,7 +26,7 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
   const [selectedForn, setSelectedForn] = useState(null);
   const [fornecedores, setFornecedores] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   const handleFornecedorListToggle = async () => {
     if (!isFornecedorListOpen) {

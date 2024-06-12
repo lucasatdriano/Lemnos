@@ -87,7 +87,7 @@ export default function ProdutoModal({ onSave, onClose }) {
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   const handleChange = (name, value) => {
     setForm(prevForm => ({

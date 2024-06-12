@@ -65,6 +65,7 @@ $font-items: 'Poppins', Helvetica;
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
     gap: .5em;
     position: absolute;
     bottom: -70px;
@@ -139,7 +140,7 @@ $font-items: 'Poppins', Helvetica;
       display: flex;
 
       .productImage {
-        height: 80%;
+        height: 13em;
         width: 35%;
       }
 

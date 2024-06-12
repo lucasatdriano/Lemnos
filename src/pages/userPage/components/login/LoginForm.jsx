@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import CustomInput from '../../../../components/inputs/customInput/Inputs';
-import './loginForm.scss';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { sendFirebaseToken } from '../../../../services/ApiService';
+import { login, sendFirebaseToken } from '../../../../services/ApiService';
+import { sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import AuthService from '../../../../services/authService';
 import { auth, googleProvider } from '../../../../services/firebaseConfig';
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { sendFirebaseToken } from '../../../../services/ApiService';
-import AuthService from '../../../../services/authService';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
+import './loginForm.scss';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
   const [form, setForm] = useState({
@@ -38,17 +38,22 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
       newErrors.email = 'Digite um Email válido';
     } 
   
-    if (!form.password || form.password.length < 8) {
-      newErrors.password = 'A Senha deve ter no mínimo 8 caracteres';
+    if (!form.password) {
+      newErrors.password = 'A Senha é obrigatória';
     }
   
     setErrors(newErrors);
   
     if (Object.keys(newErrors).length === 0) {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
-        const user = userCredential.user;
-        onLogin({ email: form.email, password: form.password });
+        const loginSuccess = await login(form);
+
+        if(loginSuccess) {
+          onLogin({ email: form.email, password: form.password });
+          toast.success("Usuário logado");
+        } else {
+          toast.error("Usuário não cadastrado");
+        }
       } catch (error) {
         console.error('Error during login:', error.code, error.message);
       }
@@ -58,11 +63,12 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      const tokenServer = await sendFirebaseToken(user.accessToken);
-      await AuthService.loginServer(tokenServer);
-      console.log('Google login successful:', user);
-      onLogin({ email: localStorage.getItem('token').email, password: null });
+      const token = result.user.accessToken;
+      const resultLogin = await sendFirebaseToken(token);
+
+      if(resultLogin){
+        onLogin({ email: result.user.email, password: result.user.password });
+      }
     } catch (error) {
       console.error('Error during Google login:', error.code, error.message);
     }
@@ -113,7 +119,6 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
               label="Senha:"
               id="password"
               name="password"
-              minLength={8}
               maxLength={16}
               value={form.password}
               onChange={handleChange}

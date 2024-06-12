@@ -5,12 +5,13 @@ import './login.scss';
 import LoginForm from './components/login/LoginForm';
 import RegistrationForm from './components/registration/RegistrationForm';
 import User from './components/user/User';
-import { cadastrarCliente } from '../../services/ApiService'; 
+import { cadastrarUsuario } from '../../services/ApiService'; 
 import AuthService from '../../services/authService';
 
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [funcionario, setFuncionario] = useState(true);
 
   useEffect(() => {
     if (AuthService.isLoggedIn()) {
@@ -31,7 +32,7 @@ export default function Login() {
     };
 
     try {
-      await cadastrarCliente(formattedForm);
+      await cadastrarUsuario(formattedForm);
       toast.success(`Cadastro realizado, ${firstName}!!`);
       handleBackToLogin();
     } catch (error) {
@@ -39,9 +40,18 @@ export default function Login() {
     }
   };
 
-  const handleLogin = (token) => {
-    AuthService.login(token);
-    setLoggedIn(true);
+  const handleLogin = () => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const tokenList = token.split('.');
+      const json = JSON.parse(atob(tokenList[1]));
+      if (json.role === 'CLIENTE') {
+        setFuncionario(false);
+      } else {
+        setFuncionario(true);
+      }
+      setLoggedIn(true);
+    }
   };
 
   const handleLogout = () => {
@@ -60,7 +70,7 @@ export default function Login() {
   return (
     <main className='container'>
       {loggedIn ? (
-        <User onLogout={handleLogout} />
+        <User onLogout={handleLogout} role={funcionario} />
       ) : (
         <div className='loginScreen'>
           {showLoginForm ? (

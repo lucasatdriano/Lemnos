@@ -54,6 +54,7 @@ $font-items: 'Poppins', Helvetica;
         padding: 2em 0;
 
         .imageMain {
+          background: #fff;
           border-radius: 15px;
           height: 60svh;
           width: 35vw;
@@ -70,9 +71,11 @@ $font-items: 'Poppins', Helvetica;
           gap: 1em;
 
           img {
+            background: #fff;
             border-radius: 10px;
             object-fit: contain;
             width: 8vw;
+            height: 8vw;
             cursor: pointer;
             box-shadow: 2px 2px 10px $color-shadow;
           }

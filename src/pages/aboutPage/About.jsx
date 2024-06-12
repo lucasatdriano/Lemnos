@@ -4,6 +4,7 @@ import './about.scss';
 import LogoHorizontalLight from '../../assets/imgLemnos/logoHorizontal.svg';
 import LogoHorizontalDark from '../../assets/imgLemnos/logoHorizontalClaro.svg';
 import TechFesto from '../../assets/imgLemnos/imgMascote.svg';
+import { cadastrarFornecedor, cadastrarProduto } from '../../services/ApiService';
 
 export default function About() {    
     useEffect(() => {

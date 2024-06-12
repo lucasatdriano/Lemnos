@@ -22,11 +22,10 @@ export default function Cart() {
     const [deliveryOption, setDeliveryOption] = useState('');
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
-    const [isResumoFixo, setIsResumoFixo] = useState(false);
     const [carrinho, setCarrinho] = useState([]);
     const [userEmail, setUserEmail] = useState(null);
     const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
-    const baseUri = "http://localhost:8080/api";
+    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {

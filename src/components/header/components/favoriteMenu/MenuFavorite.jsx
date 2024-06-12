@@ -19,7 +19,7 @@ export default function MenuFavorite({ onClose }) {
     const [favorites, setFavorites] = useState([]);
     const [removingIndex, setRemovingIndex] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    const baseUri = "http://localhost:8080/api";
+    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -57,7 +57,6 @@ export default function MenuFavorite({ onClose }) {
             }
         } catch (error) {
             console.error('Erro ao listar produtos favoritos:', error);
-            toast.error('Erro ao listar produtos favoritos.');
         }
     };
 
@@ -65,24 +64,17 @@ export default function MenuFavorite({ onClose }) {
         fetchFavorites();
     }, [userEmail]);
 
-    const handleRemoveFavorite = async (index) => {
-        setRemovingIndex(index);
+    const handleRemoveFavorite = async (productId) => {
         try {
-            const produto = favorites[index];
-            await desfavoritarProduto(produto, { email: userEmail });
-            setTimeout(() => {
-                const updatedFavorites = [...favorites];
-                updatedFavorites.splice(index, 1);
-                setFavorites(updatedFavorites);
-                toast.success('Produto removido dos favoritos.');
-                setRemovingIndex(null);
-            }, 250);
+            const updatedFavorites = favorites.filter(favorite => favorite.id !== productId);
+            setFavorites(updatedFavorites);
+            await desfavoritarProduto(productId);
+            toast.success('Produto removido dos favoritos.');
         } catch (error) {
             console.error('Erro ao remover produto dos favoritos:', error);
             toast.error('Erro ao remover produto dos favoritos.');
-            setRemovingIndex(null);
         }
-    };
+    };    
 
     const handleCloseModal = () => {
         onClose();
@@ -119,7 +111,7 @@ export default function MenuFavorite({ onClose }) {
                     </div>
                 ) : (
                     <ul className='listaFavoritos'>
-                        {favorites.map((favorite, index) => {
+                       {favorites.map((favorite) => {
                             const hasDiscount = favorite.desconto > 0;
                             return (
                                 <li key={favorite.id} className='itemFav'>
@@ -131,10 +123,16 @@ export default function MenuFavorite({ onClose }) {
                                             className='productImage' 
                                         />
                                         <div className='containerInfosFav'>
-                                            {removingIndex === index ? (
+                                            {removingIndex === favorite.id ? (
                                                 <MdFavoriteBorder className='iconFav' />
                                             ) : (
-                                                <MdFavorite className='iconFav' onClick={(e) => { handleRemoveFavorite(index); e.stopPropagation(); }} />
+                                                <MdFavorite 
+                                                    className='iconFav'  
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleRemoveFavorite(favorite.id);
+                                                    }} 
+                                                />
                                             )}
                                         </div>
                                         <div className='productDetails'>

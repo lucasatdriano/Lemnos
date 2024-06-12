@@ -7,7 +7,7 @@ import './offerList.scss';
 
 export default function OfferList() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   useEffect(() => { 
     const fetchProdutos = async () => {
@@ -31,16 +31,23 @@ export default function OfferList() {
       <Splide
         options={{
           type: 'carousel',
-          perPage: 3,
+          perPage: 5,
           perMove: 1,
           speed: 1000,
           arrows: true,
+          gap: 350,
           breakpoints: {
             1300: {
-              perPage: 2,
+              perPage: 4,
             },
             860: {
-              perPage: 1,
+              perPage: 4,
+            },
+            560: {
+              perPage: 4,
+            },
+            460: {
+              perPage: 4,
             },
           },
         }}

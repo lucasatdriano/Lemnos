@@ -2,9 +2,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const baseUri = "http://localhost:8080/api";
+const baseUri = "https://lemnos-server.up.railway.app/api";
+const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJMZW1ub3MtU2VydmVyIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzE3OTg0MzY3LCJpYXQiOjE3MTc5ODQwNjd9.W6tnLtVG-wN1sof5zdMXfe9tlOsaTVN6MDYw2WzMfTOypIzZulAcyDRLSOXVXrKljZkz5veEiun6hM7yaNDLixf6dUnLtqA-d2Y1OTtk3wFqxM3v0047LLTfOVKDarrg1EB4SBLc-_hQn2stmdekFV-RUnWNJt6Q84fD01-ZsxWBMksNO0FQZssghVSulX6GYboMvknVt1wtWhgTmVNzChozZuz74lyProeES85yrZxfax6VduAJ2MWkE_ZibDf4hxUh2XJVw9RlaIeL6rGCTZWrflz8GwEi2crLUe4fwYBI6dkHOHwB8QssBG9JXePUulMWaR986AbFrqqd1bE_8A';
 
-export async function listarProdutosFiltrados(filtro) {
+export async function listarProdutosFiltrados(filtro, page, size) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -17,8 +18,8 @@ export async function listarProdutosFiltrados(filtro) {
               marca: filtro.marca,
               menorPreco: filtro.menorPreco,
               maiorPreco: filtro.maiorPreco,
-              page: filtro.page,
-              size: filtro.size
+              page: page,
+              size: size
             },
             timeout: 10000,
         });
@@ -39,14 +40,15 @@ export async function listarProdutosFiltrados(filtro) {
     }
 }
 
-export async function listarProdutosFavoritos(email) {
+export async function listarProdutosFavoritos() {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "GET",
             url: `/produto/fav`,
-            params: {
-              email: email
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             timeout: 10000
         });
@@ -60,24 +62,22 @@ export async function listarProdutosFavoritos(email) {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
 }
 
-export async function adicionarFavorito(produto, cliente) {
+export async function adicionarFavorito(produto) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "POST",
             url: "/produto/fav",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
-                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
@@ -92,40 +92,39 @@ export async function adicionarFavorito(produto, cliente) {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao adicionar favorito.');
         }
         throw error;
     }
 }
 
-export async function desfavoritarProduto(produto, cliente) {
+export async function desfavoritarProduto(produto) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "DELETE",
             url: "/produto/fav",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             params: {
-                email: cliente.email,
                 id_prod: produto.id
             },
             timeout: 10000
         });
 
+        console.log(produto.id)
+        debugger;
+
         if (response.status !== 200) {
             throw new Error('Erro ao remover favorito.');
         }
 
-        return response.data;
+        return true;
 
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao remover favorito.');
         }
         throw error;
     }
@@ -138,7 +137,8 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             method: "POST",
             url: `/produto/avaliar/${produto.id}`,
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 avaliacao: valorAvaliacao,
@@ -147,7 +147,6 @@ export async function avaliarProduto(produto, valorAvaliacao) {
         });
 
         if (response.status != 201) {
-            console.log("1");
             throw new Error('Erro ao avaliar produto.');
         }
 
@@ -163,14 +162,15 @@ export async function avaliarProduto(produto, valorAvaliacao) {
     }
 }
 
-export async function listarCarrinho(email) {
+export async function listarCarrinho() {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "GET",
             url: "/carrinho",
-            params: {
-                email: email
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             timeout: 10000
         });
@@ -184,25 +184,23 @@ export async function listarCarrinho(email) {
     } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao listar carrinho.');
         }
         throw error;
     }
 }
 
-export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
+export async function adicionarProdutoCarrinho(produto, qntd) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "POST",
             url: "/carrinho",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 id: produto.id,
-                email: entidade.email,
                 quantidade: qntd
             },
             timeout: 10000
@@ -222,18 +220,18 @@ export async function adicionarProdutoCarrinho(produto, entidade, qntd) {
     }
 }
 
-export async function removerProdutoCarrinho(produto, entidade, qntd) {
+export async function removerProdutoCarrinho(produto, qntd) {
     try {
         const response = await axios({
             baseURL: baseUri,
             method: "DELETE",
             url: "/carrinho",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
             },
             data: {
                 id: produto.id,
-                email: entidade.email,
                 quantidade: qntd
             },
             timeout: 10000
@@ -261,6 +259,96 @@ export async function apagarCarrinho() {
             baseURL: baseUri,
             method: "DELETE",
             url: "/carrinho/tudo",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function listarPedido(pedido) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: `/pedido/${pedido.id}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': localStorage.getItem('authToken')
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function novoPedido(pedido) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/pedido",
+            data: {
+                metodoPagamento: pedido.metodoPagamento
+            },
+            timeout: 10000
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao apagar carrinho.');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao apagar carrinho.');
+        }
+        throw error;
+    }
+}
+
+export async function atualizarStatus(pedido, cliente) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "PUT",
+            url: "/pedido",
+            data: {
+                email: cliente.email,
+                id: pedido.id
+            },
             timeout: 10000
         });
 

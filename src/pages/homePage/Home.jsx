@@ -15,7 +15,7 @@ import perifericos from '../../assets/deps/imgPerifericos.svg';
 
 export default function Home() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "http://localhost:8080/api";
+  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   useEffect(() => { 
     const fetchProdutos = async () => {
@@ -32,7 +32,7 @@ export default function Home() {
     fetchProdutos();
   }, []);
 
-  const mainProducts = produtos.slice(0, 20);
+  const mainProducts = produtos.slice(0, 21);
   const produtosSemDesconto = mainProducts.filter(produto => produto.desconto == 0);
 
   return (

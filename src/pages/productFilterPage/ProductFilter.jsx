@@ -36,7 +36,7 @@ const subcategoriasPorCategoria = {
   'Casa Inteligente': ['Assistente Virtual', 'Controles Smarts', 'Lâmpadas Inteligentes', 'Sensores'],
   'Computadores': ['Computadores Gamers', 'Computadores Workstation'],
   'Eletrônicos': ['Acessórios de Console', 'Carregadores', 'Refrigeração', 'Smart Box'],
-  'Hardware': ['Armazenamento', 'Coolers', 'Fonte', 'Memória RAM', 'Placa de vídeo', 'Placa Mãe', 'Processadores'],
+  'Hardware': ['Armazenamento', 'Coolers', 'Fonte', 'Memória RAM', 'Placa de Vídeo', 'Placa Mãe', 'Processadores'],
   'Kits': ['Gamer', 'Periféricos', 'Upgrade'],
   'Monitores': ['Monitores Gamers', 'Monitores Workstation'],
   'Notebooks e Portáteis': ['Notebooks', 'Smartphones', 'Tablets'],
@@ -56,7 +56,7 @@ export default function ProductFilter() {
   const [selectedCategory, setSelectedCategory] = useState(category || '');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(30000);
+  const [maxPrice, setMaxPrice] = useState(50000);
   const [searchTerm, setSearchTerm] = useState(search || '');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -69,10 +69,10 @@ export default function ProductFilter() {
         subCategoria: selectedSubCategory ?? null,
         marca: selectedBrand ?? null,
         menorPreco: minPrice ?? 0,
-        maiorPreco: maxPrice ?? 30000,
+        maiorPreco: maxPrice ?? 50000,
       };
   
-      const produtosFiltrados = await listarProdutosFiltrados(filtro);
+      const produtosFiltrados = await listarProdutosFiltrados(filtro, 0, 20);
       setFilteredData(produtosFiltrados);
     } catch (error) {
       console.error('Erro ao aplicar filtros:', error);
@@ -90,7 +90,7 @@ export default function ProductFilter() {
     setSelectedBrand('');
     setSelectedSubCategory('');
     setMinPrice(0);
-    setMaxPrice(30000);
+    setMaxPrice(50000);
     setSearchTerm('');
     setSelectedCategory('');
     navigate(`/productFilter`);

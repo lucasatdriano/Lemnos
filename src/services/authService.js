@@ -1,7 +1,4 @@
 const AuthService = {
-    login: (token) => {
-      localStorage.setItem('authToken', token);
-    },
     loginServer: token => {
       localStorage.setItem('token', token);
     },
