@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import './product.scss';
-import iconAddCart from '../../assets/icons/iconAddCart.svg';
-import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import OfferList from '../../components/lists/OfferList';
+import iconAddCart from '../../assets/icons/iconAddCart.svg';
+import AuthService from '../../services/authService';
+import { useParams, useNavigate } from 'react-router-dom';
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { adicionarFavorito, adicionarProdutoCarrinho, avaliarProduto, desfavoritarProduto, listarProdutosFavoritos } from '../../services/apiProductService';
 import { toast } from 'react-toastify';
 import { auth } from '../../services/firebaseConfig';
-import AuthService from '../../services/authService';
 import { getProdutoById } from '../../services/ApiService';
+import React, { useState, useEffect } from 'react';
 
 export default function Product() {
     const { id } = useParams();
@@ -35,6 +35,7 @@ export default function Product() {
 
     const fetchProduct = async () => {
         try {
+            console.log(id);
             setProduct(await getProdutoById(id));
             setMainImage(response.data.imagemPrincipal);
             setProductRating(response.data.avaliacao);
