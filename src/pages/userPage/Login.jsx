@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
-  const [role, setRole] = useState();
   
   useEffect(() => {
     if (AuthService.isLoggedIn()) {
@@ -23,7 +22,7 @@ export default function Login() {
     if (AuthService.isLoggedIn()) {
       const tokenList = AuthService.getToken().split('.');
       const json = JSON.parse(atob(tokenList[1]));
-      setRole(json.role);
+      AuthService.setRole(json.role);
       setLoggedIn(true);
     }
   };
@@ -65,7 +64,7 @@ export default function Login() {
   return (
     <main className='container'>
       {loggedIn ? (
-        <User onLogout={handleLogout} role={role} />
+        <User onLogout={handleLogout} />
       ) : (
         <div className='loginScreen'>
           {showLoginForm ? (

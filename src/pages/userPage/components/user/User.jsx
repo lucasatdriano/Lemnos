@@ -32,7 +32,7 @@ const historicoExemplo = [
   { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
 ];
 
-export default function User({ onLogout, role }) {
+export default function User({ onLogout }) {
   const [isEditing, setIsEditing] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -72,29 +72,16 @@ export default function User({ onLogout, role }) {
 
   useEffect(() => {
     fetchUsuario();
-  }, [userEmail]);
+  }, []);
 
   async function fetchUsuario() {
     try {
-      if(role == "CLIENTE") {
-        const usuario = await getCliente();
-        setForm({
-          name: usuario.nome || '',
-          email: usuario.email || '',
-        });
-  
-        setUsername(usuario.nome.split(" ")[0]);
-        return;
-      }
-      const funcionario = await getFuncionarioByToken();
-      setForm({
-        name: funcionario.nome,
-        email: funcionario.email
-      });
-      setUsername(funcionario.nome.split(" ")[0]);
+      const usuario = (AuthService.getRole() == "CLIENTE") ? await getCliente() : await getFuncionarioByToken(); 
 
+      setForm({ name: usuario.nome, email: usuario.email });
+      setUsername(usuario.nome.split(" ")[0]);
     } catch (error) {
-      console.error('Erro ao obter dados do usuário', error);
+      toast.error("Erro ao obter os dados do Usuário");
     }
   }
 
@@ -273,7 +260,7 @@ export default function User({ onLogout, role }) {
       </div>
 
       <hr />
-      {role == 'CLIENTE' ? (
+      {AuthService.getRole() == 'CLIENTE' ? (
         <HistoricoCompras compras={historicoExemplo}/>
       ) : (
         <div className='adminPage'>
