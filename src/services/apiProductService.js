@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthService from './authService';
 
-const baseUri = "http://localhost:8080/api";
+const baseUri = "https://lemnos-server.up.railway.app/api";
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -47,7 +48,7 @@ export async function listarProdutosFavoritos() {
             url: `/produto/fav`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             timeout: 10000
         });
@@ -74,7 +75,7 @@ export async function adicionarFavorito(produto) {
             url: "/produto/fav",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             params: {
                 id_prod: produto.id
@@ -104,7 +105,7 @@ export async function desfavoritarProduto(produto) {
             url: "/produto/fav",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             params: {
                 id_prod: produto.id
@@ -137,7 +138,7 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             url: `/produto/avaliar/${produto.id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 avaliacao: valorAvaliacao,
@@ -169,7 +170,7 @@ export async function listarCarrinho() {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             timeout: 10000
         });
@@ -196,7 +197,7 @@ export async function adicionarProdutoCarrinho(produto, qntd) {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 id: produto.id,
@@ -227,7 +228,7 @@ export async function removerProdutoCarrinho(produto, qntd) {
             url: "/carrinho",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 id: produto.id,
@@ -260,7 +261,7 @@ export async function apagarCarrinho() {
             url: "/carrinho/tudo",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             timeout: 10000
         });
@@ -289,7 +290,7 @@ export async function listarPedido(pedido) {
             url: `/pedido/${pedido.id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             timeout: 10000
         });

@@ -47,11 +47,10 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
         if(loginSuccess) {
           onLogin();
           toast.success("Usuário logado");
-          return;
         }
-        toast.error("Usuário não cadastrado");
       } catch (error) {
-        console.error('Error during login:', error.code, error.message);
+          console.error('Error during login:', error.code, error.message);
+          toast.error("Usuário não cadastrado");
       }
     }
   };

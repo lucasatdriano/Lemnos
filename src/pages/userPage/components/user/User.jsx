@@ -40,22 +40,9 @@ export default function User({ onLogout }) {
   const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
   const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
   const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
   const [form, setForm] = useState({ name: '', email: '' });
   const [username, setUsername] = useState('');
   const [errors, setErrors] = useState({ cpf: false });
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserEmail(user.email);
-      } else {
-        setUserEmail(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -65,9 +52,7 @@ export default function User({ onLogout }) {
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => { document.removeEventListener('keydown', handleKeyDown); };
   }, []);
 
   useEffect(() => {
@@ -182,24 +167,7 @@ export default function User({ onLogout }) {
   const handleEnderecoSave = (enderecoData) => {
     console.log("Endereço salvo:", enderecoData);
   };
-
-  const handleAddProduto = (produtoData) => {
-    console.log("Produto adicionado:", produtoData);
-  };
-
-  const handleAddFuncionario = async (funcionario) => {
-    try {
-      await cadastrarFuncionario(funcionario);
-      toast.success(`Funcionário Cadastrado Com Sucesso!!`);
-    } catch (error) {
-      toast.error(`${error.message}`);
-    }
-  };
   
-  const handleAddFornecedor = (fornecedorData) => {
-    console.log("Fornecedor adicionado:", fornecedorData);
-  };
-
   return (
     <section className="userContainer">
       <div className="userData">

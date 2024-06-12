@@ -13,24 +13,12 @@ import { adicionarProdutoCarrinho } from '../../services/apiProductService';
 export default function Card({ produto }) {
   const navigate = useNavigate();
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-  const [userEmail, setUserEmail] = useState(null);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserEmail(user.email);
-      } else {
-        setUserEmail(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   async function handleAddToCart() {
     if (AuthService.isLoggedIn()) {
       try {
-        const response = await adicionarProdutoCarrinho(produto, { email: auth.currentUser.email }, 1);
+        const response = await adicionarProdutoCarrinho(produto, 1);
         toast.success('Produto adicionado ao carrinho!');
       } catch (error) {
         console.error('Erro ao adicionar produto ao carrinho:', error);

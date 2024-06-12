@@ -13,22 +13,20 @@ import BuyPage from './pages/buyPage/Buy';
 import { createRoot } from 'react-dom/client';
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/productFilter/:category" element={<ProductFilter />} />
-          <Route path="/productFilter/:brand" element={<ProductFilter />} />
-          <Route path="/productFilter" element={<ProductFilter />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/buy" element={<BuyPage/>} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Router>
-  </React.StrictMode>
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/productFilter/:category" element={<ProductFilter />} />
+        <Route path="/productFilter/:brand" element={<ProductFilter />} />
+        <Route path="/productFilter" element={<ProductFilter />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/buy" element={<BuyPage/>} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  </Router>
 );
