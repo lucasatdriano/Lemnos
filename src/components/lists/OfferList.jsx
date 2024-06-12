@@ -1,26 +1,18 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Card from '../card/Card';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import './offerList.scss';
+import { getAllProdutos } from '../../services/ApiService';
 
 export default function OfferList() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "https://lemnos-server.up.railway.app/api";
 
-  useEffect(() => { 
-    const fetchProdutos = async () => {
-      try {
-        const response = await axios.get(`${baseUri}/produto`, {
-          timeout: 10000,
-        });
-        setProdutos(response.data);
-      } catch (error) {
-        console.error('Erro ao listar Produtos:', error);
-      }
-    };
-  
+  useEffect(() => {
+    async function fetchProdutos() {
+      const data = await getAllProdutos() 
+      setProdutos(data);
+    }
     fetchProdutos();
   }, []);
 

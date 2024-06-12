@@ -1,31 +1,23 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
+import { getAllProdutos } from '../../../../services/ApiService';
 
 export default function MenuSearch() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-    const [products, setProducts] = useState([]);
+    const [products, setProdutos] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
-        const fetchProdutos = async () => {
-            try {
-                const response = await axios.get(`${baseUri}/produto`, {
-                    timeout: 10000,
-                });
-                setProducts(response.data);
-            } catch (error) {
-                console.error('Erro ao listar Produtos:', error);
-            }
-        };
-
-        fetchProdutos();
+        async function fetchProdutos() {
+            const data = await getAllProdutos() 
+            setProdutos(data);
+          }
+          fetchProdutos();
     }, []);
 
     const handleSearchChange = (event) => {

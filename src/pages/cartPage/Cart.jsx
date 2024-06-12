@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +11,7 @@ import OfferList from '../../components/lists/OfferList';
 import './cart.scss';
 import { adicionarProdutoCarrinho, apagarCarrinho, listarCarrinho, removerProdutoCarrinho } from '../../services/apiProductService';
 import { auth } from '../../services/firebaseConfig';
-import { verificarCep } from '../../services/ApiService';
+import { getProdutoById, verificarCep } from '../../services/ApiService';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -25,7 +24,6 @@ export default function Cart() {
     const [carrinho, setCarrinho] = useState([]);
     const [userEmail, setUserEmail] = useState(null);
     const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
-    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -39,24 +37,12 @@ export default function Cart() {
         return () => unsubscribe();
     }, []);
 
-    async function fetchProduto(id) {
-        try {
-            const response = await axios.get(`${baseUri}/produto/${id}`, {
-                timeout: 10000,
-            });
-            return response.data; 
-        } catch (error) {
-            console.error('Erro ao obter detalhes do produto:', error);
-            return null;
-        }
-    }
-
     async function fetchCarrinho() {
         try {
             if (userEmail) {
                 const response = await listarCarrinho(userEmail);
                 const carrinhoDetalhado = await Promise.all(response.produtos.map(async (produto) => {
-                    const detalhesProduto = await fetchProduto(produto.id);
+                    const detalhesProduto = await getProdutoById(produto.id);
                     return { ...produto, ...detalhesProduto };
                 }));
                 setCarrinho(Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []);
@@ -164,18 +150,7 @@ export default function Cart() {
         }
     };
 
-    const limparCarrinho = async () => {
-        try {
-            await axios.delete(`${baseUri}/carrinho/tudo`, {
-                timeout: 10000,
-            });
-            fetchCarrinho();
-        } catch (error) {
-            console.error('Erro ao limpar carrinho:', error);
-        }
-    };
-
-    const finalizarPedido = () => {
+    const finalizarPedido = async () => {
         if (carrinho.length === 0) {
             toast.warning('Por favor, adicione algum item no carrinho.');
             cartRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -186,7 +161,7 @@ export default function Cart() {
             toast.warning('Por favor, selecione uma opção de entrega.');
             cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
         } else {
-            limparCarrinho();
+            await apagarCarrinho();
             setShowOptions(false);
             setDeliveryOption('');
             setCep('');

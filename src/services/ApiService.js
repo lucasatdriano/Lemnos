@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthService from './authService';
 
-const baseUri = "https://lemnos-server.up.railway.app/api";
+const baseUri = "http://localhost:8080/api";
 
 export async function cadastrarUsuario(usuario) {
     try {
@@ -35,6 +36,32 @@ export async function cadastrarUsuario(usuario) {
     }
 }
 
+export async function login(usuario) {  
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "POST",
+            url: "/auth/login",
+            headers: { 
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            data: {
+                email: usuario.email,
+                senha: usuario.password
+            },
+            timeout: 10000,
+        });
+
+        if(response.status != 200) {
+            throw new Error('Erro ao fazer login do usuário.');
+        }
+        AuthService.setToken(response.data.token);
+        return true;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function sendFirebaseToken(token){
     try{
         const response = await axios({
@@ -51,13 +78,15 @@ export async function sendFirebaseToken(token){
         });
   
         if (response.status != 200) {
-            throw new Error('Erro ao cadastrar cliente.');
+            throw new Error('Erro ao fazer login do usuário.');
         }
-    
-        return response.data.token;
+        AuthService.setGoogleToken(token);
+        AuthService.setToken(response.data.token);
+        return true;
     
     } catch(error) {
         toast.error(error);
+        return false;
     }
 }
 
@@ -209,6 +238,61 @@ export async function updateCliente(cliente) {
     }
 }
 
+export async function getFuncionarioByToken(token) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/funcionario/me`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': AuthService.getToken()
+            },
+            timeout: 10000,
+        });
+        
+        if(response.status != 200){
+            throw new Error("Não foi encontrar o funcionario");
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
+export async function getFuncionarioByEmail(email) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/funcionario/find?email=${email}`,
+            timeout: 10000,
+        });
+        
+        if(response.status != 200){
+            throw new Error("Não foi encontrar o funcionario");
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
+export async function getFuncionarios() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/funcionario`,
+            timeout: 10000,
+        });
+        
+        if(response.status != 200){
+            throw new Error("Não foi possível listar os funcionarios");
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
 export async function updateFuncionario(funcionario) {
     try {
         const response = await axios({
@@ -243,6 +327,40 @@ export async function updateFuncionario(funcionario) {
             toast.error(error.response.data.error);
         }
         return false;
+    }
+}
+
+export async function getFornecedorByEmail(email) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/fornecedor/find?email=${email}`,
+            timeout: 10000,
+        });
+        
+        if(response.status != 200){
+            throw new Error("Não foi encontrar o fornecedor");
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
+export async function getFornecedores() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/fornecedor`,
+            timeout: 10000,
+        });
+        
+        if(response.status != 200){
+            throw new Error("Não foi possível listar os fornecedores");
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
     }
 }
 
@@ -442,6 +560,34 @@ export async function excluirEndereco(emailEntidade, endereco, entidade) {
     }
 }
 
+export async function getProdutoById(id) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/produto/${id}`,
+            timeout: 10000
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao obter detalhes do produto:', error);
+        return null;
+    }
+}
+
+export async function getAllProdutos() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: `/produto`,
+            timeout: 10000
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao listar Produtos:', error);
+        return null;
+    }
+}
+
 export async function verificarCep(cep) {
     try {
         const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
@@ -452,65 +598,6 @@ export async function verificarCep(cep) {
     } catch (error) {
         console.error('Erro ao verificar o CEP:', error);
         return false;
-    }
-}
-
-export async function login(usuario) {  
-    try {
-        console.log(usuario)
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: "/auth/login",
-            headers: { 
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            data: {
-                email: usuario.email,
-                senha: usuario.password
-            },
-            timeout: 10000,
-        });
-
-        if(response.status == 200) {
-            localStorage.setItem('authToken', response.data.token);
-            return true 
-        }
-        console.log('Token não enviado')
-
-    } catch (error) {
-        console.log(error);
-    }
-    
-    return token;
-
-}
-
-export async function sendFirebaseToken(token){
-    try{
-        const response = await axios({
-            baseURL: baseUri,
-            method: "POST",
-            url: "/auth/login-firebase",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            data: {
-                token: token
-            },
-            timeout: 10000,
-        });
-  
-        if (response.status != 200) {
-            throw new Error('Erro ao logar cliente.');
-        }
-        
-        localStorage.setItem('authToken', response.data.token);
-
-        return true; 
-    
-    } catch(error) {
-        toast.error(error);
     }
 }
 

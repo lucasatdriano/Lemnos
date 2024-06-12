@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
-import { cadastrarFornecedor, cadastrarEndereco, verificarCep, updateEndereco, updateFornecedor } from '../../../../../../../services/ApiService';
+import { cadastrarFornecedor, cadastrarEndereco, verificarCep, updateEndereco, updateFornecedor, getFornecedores, getFornecedorByEmail } from '../../../../../../../services/ApiService';
 
 export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
   const initialFormState = {
@@ -26,16 +25,11 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
   const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
   const [selectedForn, setSelectedForn] = useState(null);
   const [fornecedores, setFornecedores] = useState([]);
-  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   const handleFornecedorListToggle = async () => {
     if (!isFornecedorListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/fornecedor`, {
-          timeout: 10000,
-        });
-      
-        setFornecedores(response.data);
+        setFornecedores(await getFornecedores());
         setSelectedForn(null);
         setForm(initialFormState);
         setIsFornecedorListOpen(true);
@@ -48,12 +42,9 @@ export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
     }
   };
 
-  const selectFornecedor = async (id) => {
+  const selectFornecedor = async (email) => {
     try {
-      const response = await axios.get(`${baseUri}/fornecedor/find?email=${id}`, {
-        timeout: 10000,
-      });
-      const fornecedor = response.data;
+      const fornecedor = await getFornecedorByEmail(email);
 
       if (!fornecedor) {
         throw new Error('Dados do fornecedor não encontrados.');

@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateProductModal from './UpdateProductModal';
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { cadastrarProduto, updateProduto } from '../../../../../../../services/ApiService';
+import { cadastrarProduto, getAllProdutos, getProdutoById, updateProduto } from '../../../../../../../services/ApiService';
 
 const categorias = [
   'Casa Inteligente', 
@@ -87,7 +86,6 @@ export default function ProdutoModal({ onSave, onClose }) {
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   const handleChange = (name, value) => {
     setForm(prevForm => ({
@@ -114,11 +112,7 @@ export default function ProdutoModal({ onSave, onClose }) {
   const handleProdutoListToggle = async () => {
     if (!isProdutoListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/produto`, {
-          timeout: 10000,
-        });
-
-        setProdutos(response.data);
+        setProdutos(await getAllProdutos());
         setSelectedProduct(null);
         setIsProdutoListOpen(true);
       } catch (error) {
@@ -135,10 +129,7 @@ export default function ProdutoModal({ onSave, onClose }) {
 
   const selectProduto = async (produtos) => {
     try {
-      const response = await axios.get(`${baseUri}/produto/${produtos.id}`, {
-        timeout: 10000,
-      });
-      const produto = response.data;
+      const produto = await getProdutoById(produtos.id);
       if (!produto) {
         throw new Error('Dados do produto não encontrados.');
       }

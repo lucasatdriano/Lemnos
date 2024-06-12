@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './product.scss';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
@@ -10,6 +9,7 @@ import { adicionarFavorito, adicionarProdutoCarrinho, avaliarProduto, desfavorit
 import { toast } from 'react-toastify';
 import { auth } from '../../services/firebaseConfig';
 import AuthService from '../../services/authService';
+import { getProdutoById } from '../../services/ApiService';
 
 export default function Product() {
     const { id } = useParams();
@@ -20,7 +20,6 @@ export default function Product() {
     const [isFavorite, setIsFavorite] = useState(false);
     const [userEmail, setUserEmail] = useState(null);
     const [productRating, setProductRating] = useState(0);
-    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -36,10 +35,7 @@ export default function Product() {
 
     const fetchProduct = async () => {
         try {
-            const response = await axios.get(`${baseUri}/produto/${id}`, {
-                timeout: 10000,
-            });
-            setProduct(response.data);
+            setProduct(await getProdutoById(id));
             setMainImage(response.data.imagemPrincipal);
             setProductRating(response.data.avaliacao);
             if (AuthService.isLoggedIn()) {

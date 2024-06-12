@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import axios from 'axios';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { cadastrarFuncionario, cadastrarEndereco, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario } from '../../../../../../../services/ApiService';
+import { cadastrarFuncionario, cadastrarEndereco, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario, getFuncionarios, getFuncionarioByEmail } from '../../../../../../../services/ApiService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
@@ -35,16 +34,11 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
   const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
   const [selectedFunc, setSelectedFunc] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
-  const baseUri = "https://lemnos-server.up.railway.app/api";
   
   const handleFuncionarioListToggle = async () => {
     if (!isFuncionarioListOpen) {
       try {
-        const response = await axios.get(`${baseUri}/funcionario`, {
-          timeout: 10000,
-        });
-      
-        setFuncionarios(response.data);
+        setFuncionarios(await getFuncionarios());
         setSelectedFunc(null);
         setIsFuncionarioListOpen(true);
         setForm(initialFormState);
@@ -57,12 +51,9 @@ export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
     }
   };
 
-  const selectFuncionario = async (id) => {
+  const selectFuncionario = async (email) => {
     try {
-      const response = await axios.get(`${baseUri}/funcionario/find?email=${id}`, {
-        timeout: 10000,
-      });
-      const funcionario = response.data;
+      const funcionario = await getFuncionarioByEmail(email);
   
       if (!funcionario) {
         throw new Error('Dados do funcionário não encontrados.');

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +11,7 @@ import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import { IoClose } from "react-icons/io5";
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 import './menuFavorite.scss';
+import { getProdutoById } from '../../../../services/ApiService';
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
@@ -19,7 +19,6 @@ export default function MenuFavorite({ onClose }) {
     const [favorites, setFavorites] = useState([]);
     const [removingIndex, setRemovingIndex] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    const baseUri = "https://lemnos-server.up.railway.app/api";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -33,24 +32,12 @@ export default function MenuFavorite({ onClose }) {
         return () => unsubscribe();
     }, []);
 
-    async function fetchProduto(id) {
-        try {
-            const response = await axios.get(`${baseUri}/produto/${id}`, {
-                timeout: 10000,
-            });
-            return response.data;
-        } catch (error) {
-            console.error('Erro ao obter detalhes do produto:', error);
-            return null;
-        }
-    }
-
     const fetchFavorites = async () => {
         try {
             if (userEmail) {
                 const response = await listarProdutosFavoritos(userEmail);
                 const favoritoDetalhado = await Promise.all(response.map(async (produto) => {
-                    const detalhesProduto = await fetchProduto(produto.id);
+                    const detalhesProduto = await getProdutoById(produto.id);
                     return { ...produto, ...detalhesProduto };
                 }));
                 setFavorites(Array.isArray(favoritoDetalhado) ? favoritoDetalhado : []);

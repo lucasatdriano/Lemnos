@@ -1,23 +1,41 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './login.scss';
-import LoginForm from './components/login/LoginForm';
-import RegistrationForm from './components/registration/RegistrationForm';
+import 'react-toastify/dist/ReactToastify.css';
 import User from './components/user/User';
-import { cadastrarUsuario } from '../../services/ApiService'; 
+import LoginForm from './components/login/LoginForm';
 import AuthService from '../../services/authService';
+import RegistrationForm from './components/registration/RegistrationForm';
+import { toast } from 'react-toastify';
+import { cadastrarUsuario } from '../../services/ApiService'; 
+import { useState, useEffect } from 'react';
 
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
-  const [funcionario, setFuncionario] = useState(true);
-
+  const [role, setRole] = useState();
+  
   useEffect(() => {
     if (AuthService.isLoggedIn()) {
       setLoggedIn(true);
     }
   }, []);
+
+  const handleLogin = () => {
+    if (AuthService.isLoggedIn()) {
+      const tokenList = AuthService.getToken().split('.');
+      const json = JSON.parse(atob(tokenList[1]));
+      setRole(json.role);
+      setLoggedIn(true);
+    }
+  };
+
+  const handleLogout = () => {
+    AuthService.logout();
+    setLoggedIn(false);
+  };
+
+  const handleRegistrationForm = () => {
+    setShowLoginForm(false);
+  };
 
   const handleRegistrationSuccess = async (form) => {
     const firstName = form.name.split(" ")[0];
@@ -40,29 +58,6 @@ export default function Login() {
     }
   };
 
-  const handleLogin = () => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const tokenList = token.split('.');
-      const json = JSON.parse(atob(tokenList[1]));
-      if (json.role === 'CLIENTE') {
-        setFuncionario(false);
-      } else {
-        setFuncionario(true);
-      }
-      setLoggedIn(true);
-    }
-  };
-
-  const handleLogout = () => {
-    AuthService.logout();
-    setLoggedIn(false);
-  };
-
-  const handleRegistrationForm = () => {
-    setShowLoginForm(false);
-  };
-
   const handleBackToLogin = () => {
     setShowLoginForm(true);
   };
@@ -70,7 +65,7 @@ export default function Login() {
   return (
     <main className='container'>
       {loggedIn ? (
-        <User onLogout={handleLogout} role={funcionario} />
+        <User onLogout={handleLogout} role={role} />
       ) : (
         <div className='loginScreen'>
           {showLoginForm ? (

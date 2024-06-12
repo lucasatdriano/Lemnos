@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Slide from './components/carousel/Carousel';
 import Card from '../../components/card/Card';
@@ -12,23 +11,16 @@ import monitor from '../../assets/deps/imgMonitor.svg';
 import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
+import { getAllProdutos } from '../../services/ApiService';
 
 export default function Home() {
   const [produtos, setProdutos] = useState([]);
-  const baseUri = "https://lemnos-server.up.railway.app/api";
 
   useEffect(() => { 
-    const fetchProdutos = async () => {
-      try {
-        const response = await axios.get(`${baseUri}/produto`, {
-          timeout: 10000,
-        });
-        setProdutos(response.data);
-      } catch (error) {
-        console.error('Erro ao listar Produtos:', error);
-      }
-    };
-  
+    async function fetchProdutos() {
+      const data = await getAllProdutos() 
+      setProdutos(data);
+    }
     fetchProdutos();
   }, []);
 

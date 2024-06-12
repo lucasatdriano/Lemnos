@@ -1,27 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import './user.scss';
 import 'react-toastify/dist/ReactToastify.css';
-
+import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import ToolTip from '../../../../components/tooltip/ToolTip';
-import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import EmailModal from './components/modals/EmailModal';
+import AuthService from '../../../../services/authService';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import PasswordModal from './components/modals/PasswordModal';
 import EnderecoModal from './components/modals/EnderecoModal';
-
-import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
-import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddProdutoModal from './components/modals/admin/AddProductModal'; 
-
 import HistoricoCompras from './components/history/History';
-import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
-import { cadastrarFuncionario, getCliente } from '../../../../services/ApiService';
+import AddFornecedorModal from './components/modals/admin/AddFornModal';
+import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
+import { auth } from '../../../../services/firebaseConfig';
+import { toast } from 'react-toastify';
 import { MdLogout } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import './user.scss';
-import { auth } from '../../../../services/firebaseConfig';
-
+import { useState, useEffect } from 'react';
+import { cadastrarFuncionario, getCliente, getFuncionarioByToken } from '../../../../services/ApiService';
 
 const historicoExemplo = [
   { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -36,12 +33,17 @@ const historicoExemplo = [
 ];
 
 export default function User({ onLogout, role }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showEnderecoModal, setShowEnderecoModal] = useState(false);
+  const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
+  const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
+  const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-  });
+  const [form, setForm] = useState({ name: '', email: '' });
   const [username, setUsername] = useState('');
+  const [errors, setErrors] = useState({ cpf: false });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -56,42 +58,6 @@ export default function User({ onLogout, role }) {
   }, []);
 
   useEffect(() => {
-    fetchUsuario();
-  }, [userEmail]);
-
-  async function fetchUsuario() {
-    try {
-      if (userEmail) {
-        const response = await getCliente();
-        const usuario = response;
-      
-        setForm({
-          name: usuario.nome || '',
-          email: usuario.email || '',
-        });
-
-
-        setUsername(usuario.nome.split(" ")[0]);
-      }
-    } catch (error) {
-      console.error('Erro ao obter dados do usuário', error);
-    }
-  }
-
-  const [errors, setErrors] = useState({
-    cpf: false,
-  });
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [showEnderecoModal, setShowEnderecoModal] = useState(false);
-
-  const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
-  const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
-  const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
-
-  useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         handleCloseAllModals();
@@ -103,6 +69,34 @@ export default function User({ onLogout, role }) {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    fetchUsuario();
+  }, [userEmail]);
+
+  async function fetchUsuario() {
+    try {
+      if(role == "CLIENTE") {
+        const usuario = await getCliente();
+        setForm({
+          name: usuario.nome || '',
+          email: usuario.email || '',
+        });
+  
+        setUsername(usuario.nome.split(" ")[0]);
+        return;
+      }
+      const funcionario = await getFuncionarioByToken();
+      setForm({
+        name: funcionario.nome,
+        email: funcionario.email
+      });
+      setUsername(funcionario.nome.split(" ")[0]);
+
+    } catch (error) {
+      console.error('Erro ao obter dados do usuário', error);
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
