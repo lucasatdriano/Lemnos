@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from './authService';
 
-const baseUri = "http://localhost:8080/api";
+const baseUri = "https://lemnos-server.up.railway.app/api";
 
 export async function cadastrarUsuario(usuario) {
     try {
@@ -83,7 +83,6 @@ export async function sendFirebaseToken(token){
         AuthService.setGoogleToken(token);
         AuthService.setToken(response.data.token);
         return true;
-    
     } catch(error) {
         toast.error(error);
         return false;
@@ -98,7 +97,7 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
             url: `/auth/register/${tipoEntidade}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: funcionario.nome,
@@ -135,7 +134,7 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
             url: `/auth/register/${tipoEntidade}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: fornecedor.nome,
@@ -169,7 +168,7 @@ export async function cadastrarProduto(produto){
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: produto.nome,
@@ -212,7 +211,7 @@ export async function updateCliente(cliente) {
             url: `/cliente`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: cliente.nome,
@@ -301,7 +300,7 @@ export async function updateFuncionario(funcionario) {
             url: `/funcionario`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: funcionario.nome,
@@ -405,7 +404,7 @@ export async function updateProduto(produto, id) {
             url: `/produto/${id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 nome: produto.nome,
@@ -439,7 +438,7 @@ export async function excluirFuncionario(email) {
             url: `/funcionario`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             params: {
                 email: email
@@ -468,7 +467,7 @@ export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
             url: `/endereco`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 email: emailEntidade,
@@ -502,7 +501,7 @@ export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
             url: "/endereco",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             data: {
                 email: emailEntidade,
@@ -536,7 +535,7 @@ export async function excluirEndereco(emailEntidade, endereco, entidade) {
             url: "/endereco",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             params: {
                 email: emailEntidade,
@@ -609,7 +608,7 @@ export async function getCliente() {
             url: `/cliente/find`,
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
-                'Authorization': localStorage.getItem('authToken')
+                'Authorization': AuthService.getToken()
             },
             timeout: 10000,
         })

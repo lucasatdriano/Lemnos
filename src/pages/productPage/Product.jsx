@@ -7,56 +7,66 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { adicionarFavorito, adicionarProdutoCarrinho, avaliarProduto, desfavoritarProduto, listarProdutosFavoritos } from '../../services/apiProductService';
 import { toast } from 'react-toastify';
-import { auth } from '../../services/firebaseConfig';
 import { getProdutoById } from '../../services/ApiService';
 import React, { useState, useEffect } from 'react';
+import Loading from '../../components/loading/Loading';
 
 export default function Product() {
     const { id } = useParams();
     const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState({});
     const [mainImage, setMainImage] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
-    const [userEmail, setUserEmail] = useState(null);
     const [productRating, setProductRating] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserEmail(user.email);
-            } else {
-                setUserEmail(null);
-            }
-        });
+        fetchData();
+    }, [id, navigate]);
+    
+    useEffect(() => {
+        if (product) {
+            setInfo();
+        }
+    }, [product]);
 
-        return () => unsubscribe();
-    }, []);
-
-    const fetchProduct = async () => {
+    const fetchData = async () => {
+        setLoading(true)
         try {
-            console.log(id);
-            setProduct(await getProdutoById(id));
-            setMainImage(response.data.imagemPrincipal);
-            setProductRating(response.data.avaliacao);
-            if (AuthService.isLoggedIn()) {
-                const favorites = await listarProdutosFavoritos();
-                const isFavorited = favorites.some(fav => fav.id === response.data.id);
-                setIsFavorite(isFavorited);
-            }
+            const data = await getProdutoById(id);
+            setProduct(data);
         } catch (error) {
             console.error('Error fetching product:', error);
             navigate('/Error404');
+        } finally {
+            setLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchProduct();
-    }, [id, navigate, userEmail]);
+    const setInfo = async () => {
+        setLoading(true)
+        try {
+            console.log("Produto:", product);
+            setMainImage(product.imagemPrincipal);
+            setProductRating(product.avaliacao);
+            if (AuthService.isLoggedIn()) {
+                const favorites = await listarProdutosFavoritos();
+                const isFavorited = favorites.some(fav => fav.id === product.id);
+                setIsFavorite(isFavorited);
+            }
+        } catch (error) {
+            toast.error("Deu ruim mané");   
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleImageClick = (image) => {
         setMainImage(image);
     };
+
+
 
     const handleAddToCart = async () => {
         if (AuthService.isLoggedIn()) {
@@ -124,8 +134,8 @@ export default function Product() {
     return (
         <main className="productContainer">
             <hr />
-            {product && (
-                <>
+            {!product && loading ? 
+                <Loading /> : 
                 <section className='containerMain'>
                     <section className='productMain'>
                         <div className="containerImages">
@@ -232,12 +242,11 @@ export default function Product() {
                         </div>
                     </section>
                 </section>
-                <section className='offers'>
-                    <h2>Produtos Similares</h2>
-                    <OfferList />
-                </section>
-                </>
-            )}
+            }
+            <section className='offers'>
+                <h2>Produtos Similares</h2>
+                <OfferList />
+            </section>
         </main>
     );
 }

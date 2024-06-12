@@ -10,8 +10,8 @@ import { TbTruckDelivery } from "react-icons/tb";
 import OfferList from '../../components/lists/OfferList';
 import './cart.scss';
 import { adicionarProdutoCarrinho, apagarCarrinho, listarCarrinho, removerProdutoCarrinho } from '../../services/apiProductService';
-import { auth } from '../../services/firebaseConfig';
 import { getProdutoById, verificarCep } from '../../services/ApiService';
+import AuthService from '../../services/authService';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -22,25 +22,16 @@ export default function Cart() {
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
     const [carrinho, setCarrinho] = useState([]);
-    const [userEmail, setUserEmail] = useState(null);
     const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserEmail(user.email);
-            } else {
-                setUserEmail(null);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     async function fetchCarrinho() {
         try {
-            if (userEmail) {
-                const response = await listarCarrinho(userEmail);
+            if (AuthService.isLoggedIn()) {
+                const response = await listarCarrinho();
+                if(response.length == 0) {
+                    setCarrinho([]);
+                    return;
+                }
                 const carrinhoDetalhado = await Promise.all(response.produtos.map(async (produto) => {
                     const detalhesProduto = await getProdutoById(produto.id);
                     return { ...produto, ...detalhesProduto };
@@ -55,7 +46,7 @@ export default function Cart() {
 
     useEffect(() => {
         fetchCarrinho();
-    }, [userEmail]);
+    }, [AuthService.isLoggedIn()]);
 
     let priceDelivery = 0;
     switch (deliveryOption) {
@@ -122,7 +113,7 @@ export default function Cart() {
 
     const diminuirQuantidadeCarrinho = async (produtoId) => {
         try {
-            await removerProdutoCarrinho({ id: produtoId }, { email: userEmail }, 1);
+            await removerProdutoCarrinho({ id: produtoId }, 1);
             fetchCarrinho();
         } catch (error) {
             console.error('Erro ao diminuir produto do carrinho:', error);
@@ -133,7 +124,7 @@ export default function Cart() {
         try {
             const produto = carrinho.find(item => item.id === produtoId);
             if (produto) {
-                await adicionarProdutoCarrinho({ id: produtoId }, { email: userEmail }, produto.quantidade + 1);
+                await adicionarProdutoCarrinho({ id: produtoId }, produto.quantidade + 1);
                 fetchCarrinho();
             }
         } catch (error) {
@@ -143,12 +134,21 @@ export default function Cart() {
 
     const removerProdutoCarrinhoAPI = async (produtoId, produto) => {
         try {
-            await removerProdutoCarrinho({ id: produtoId }, { email: userEmail }, produto.qntdProduto);
+            await removerProdutoCarrinho({ id: produtoId }, produto.qntdProduto);
             fetchCarrinho();
         } catch (error) {
             console.error('Erro ao remover produto do carrinho:', error);
         }
     };
+
+    const handleCleanCart = async () => {
+        try {
+            await apagarCarrinho();
+            fetchCarrinho();
+        } catch {
+            console.error('Erro ao apagar carrinho:', error);
+        }
+    }
 
     const finalizarPedido = async () => {
         if (carrinho.length === 0) {
@@ -228,7 +228,7 @@ export default function Cart() {
                         ))}
                     </ul>
                     )}
-                    <button type="button" className='cleanCart' onClick={limparCarrinho}>
+                    <button type="button" className='cleanCart' onClick={handleCleanCart}>
                         Limpar Carrinho 
                         <MdDelete className='icon'/>
                     </button>

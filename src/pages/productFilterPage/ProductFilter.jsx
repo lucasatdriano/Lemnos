@@ -4,6 +4,7 @@ import Card from '../../components/card/Card';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
 import { listarProdutosFiltrados } from '../../services/apiProductService'; 
+import Loading from '../../components/loading/Loading';
 
 const brands = [
   'AMD',
@@ -140,19 +141,7 @@ export default function ProductFilter() {
         <hr className='hrFilter' />
         
         {loading ? (
-          <div className="loadingIndicator">
-            <h2 className='textLoading'>Carregando...</h2>
-            <div className="dot-spinner">
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-            </div>
-          </div>
+          <Loading />
         ) : (
           <>
             {filteredData.length === 0 && (
