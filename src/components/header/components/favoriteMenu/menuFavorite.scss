@@ -132,7 +132,7 @@ $font-items: 'Poppins', Helvetica;
       gap: 1em;
 
       .itemFav {
-        width: 80%;
+        width: 90%;
         height: 17em;
         padding: .25em;
         position: relative;
@@ -181,12 +181,13 @@ $font-items: 'Poppins', Helvetica;
           }
     
           .productDetails {
-            gap: 2.5em;
+            display: flex;
+            flex-direction: column;
+            gap: .5em;
             width: 65%;
     
             .productName {
-              font-size: 2.4rem;
-              margin-bottom: .5em;
+              font-size: 1.8rem;
             }
 
             .offerPrice {
@@ -200,6 +201,8 @@ $font-items: 'Poppins', Helvetica;
             }
     
             .productPrice {
+              position: absolute;
+              bottom: 6em;
               font-size: 1.4rem;
               font-weight: 500;
               line-height: 1.2;
@@ -208,14 +211,6 @@ $font-items: 'Poppins', Helvetica;
                 font-weight: 700;
                 color: $color-primaryLight;
                 font-size: 3.4rem;
-              }
-            }
-          }
-    
-          &:hover {
-            .productDetails {
-              .productName {
-                margin-bottom: .5em;
               }
             }
           }
@@ -363,6 +358,14 @@ $font-items: 'Poppins', Helvetica;
       }
     }
   }  
+}
+
+@media only screen and (max-width: 1400px) {
+  .modal {  
+    .menuFavorite {
+      width: 50%;
+    }
+  }
 }
 
 @media only screen and (max-width: 1024px) {

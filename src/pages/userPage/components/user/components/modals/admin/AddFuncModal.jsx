@@ -9,7 +9,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { cadastrarFuncionario, cadastrarEndereco, verificarCep, updateFuncionario, updateEndereco, excluirFuncionario, getFuncionarios, getFuncionarioByEmail } from '../../../../../../../services/ApiService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export default function FuncionarioModal({ onAddFunc, onClose, tipoEntidade }) {
+export default function FuncionarioModal({ onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
     cpf: '',

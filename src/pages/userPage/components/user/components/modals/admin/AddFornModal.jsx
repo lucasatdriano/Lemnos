@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from "react-icons/io5";
 import { cadastrarFornecedor, cadastrarEndereco, verificarCep, updateEndereco, updateFornecedor, getFornecedores, getFornecedorByEmail } from '../../../../../../../services/ApiService';
 
-export default function FornecedorModal({ onSave, onClose, tipoEntidade }) {
+export default function FornecedorModal({ onClose, tipoEntidade }) {
   const initialFormState = {
     nome: '',
     email: '',

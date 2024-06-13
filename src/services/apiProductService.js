@@ -113,9 +113,6 @@ export async function desfavoritarProduto(produto) {
             timeout: 10000
         });
 
-        console.log(produto.id)
-        debugger;
-
         if (response.status !== 200) {
             throw new Error('Erro ao remover favorito.');
         }

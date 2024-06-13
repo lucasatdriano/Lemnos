@@ -37,6 +37,17 @@ $font-items: 'Poppins', Helvetica;
     font-family: $font-items;
     position: relative;
  
+    .iconFav {
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      color: $color-primaryLight;
+      float: right;
+      width: 32px;
+      height: 32px;
+    }
+
     .offerDescont {
       background-color: $color-detailsLight;
       padding: 15px 5px;

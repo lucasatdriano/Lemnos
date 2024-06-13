@@ -25,7 +25,7 @@ export default function App() {
         <Header toggleTheme={toggleTheme} />
         <Outlet />
         <BackToTopButton />
-        <ToastContainer />
+        <ToastContainer position="bottom-right"/>
         <Footer />
       </section>
     </>

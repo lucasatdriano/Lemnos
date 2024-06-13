@@ -11,21 +11,28 @@ import monitor from '../../assets/deps/imgMonitor.svg';
 import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
-import { getAllProdutos } from '../../services/ApiService';
+import { listarProdutosFiltrados } from '../../services/apiProductService';
 
 export default function Home() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => { 
     async function fetchProdutos() {
-      const data = await getAllProdutos() 
+      const filtro = {
+        categoria: '',
+        subCategoria: '',
+        marca: '',
+        menorPreco: 0,
+        maiorPreco: 50000,
+      };
+
+      const data = await listarProdutosFiltrados(filtro, 5, 20) 
       setProdutos(data);
     }
     fetchProdutos();
   }, []);
 
-  const mainProducts = produtos.slice(0, 21);
-  const produtosSemDesconto = mainProducts.filter(produto => produto.desconto == 0);
+  const produtosSemDesconto = produtos.filter(produto => produto.desconto == 0);
 
   return (
     <>

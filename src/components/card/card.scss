@@ -27,6 +27,17 @@ $font-items: 'Poppins', Helvetica;
   position: relative;
   transition: .5s ease-in-out;
 
+  .iconFav {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: $color-primaryLight;
+    float: right;
+    width: 32px;
+    height: 32px;
+  }
+
   .productImage {
     width: 100%;
     height: 10em;
@@ -45,14 +56,16 @@ $font-items: 'Poppins', Helvetica;
       font-size: 1.7rem;
       margin-bottom: 24px;
       font-weight: 700;
-      transition: .5s ease-in-out;
-    }
-
-    .productPrice {
-      font-size: 1.4rem;
-      font-weight: 500;
-      line-height: 1.2;
-
+      }
+      
+      .productPrice {
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.2;
+        position: absolute;  
+        top: 250px;      
+        transition: .5s ease-in-out;
+        
       span {
         font-weight: 700;
         color: $color-primaryLight;
@@ -95,8 +108,8 @@ $font-items: 'Poppins', Helvetica;
 
   &:hover {
     .productDetails {
-      .productName {
-        margin-bottom: 15px;
+      .productPrice {
+        top: 240px;   
       }
     }
     .btnAdd {
@@ -153,16 +166,10 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .productPrice {
+          top: 130px;
+
           span {
            font-size: 3.4rem;
-          }
-        }
-      }
-
-      &:hover {
-        .productDetails {
-          .productName {
-            margin-bottom: .5em;
           }
         }
       }
@@ -182,14 +189,6 @@ $font-items: 'Poppins', Helvetica;
       .productDetails {  
         .productName {
           font-size: 1.8rem;
-        }
-      }
-
-      &:hover {
-        .productDetails {
-          .productName {
-          font-size: 1.8rem;
-          }
         }
       }
     }

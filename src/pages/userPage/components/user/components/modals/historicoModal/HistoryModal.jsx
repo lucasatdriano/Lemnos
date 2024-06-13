@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import './historyModal.scss';
 import { IoClose } from "react-icons/io5";
 

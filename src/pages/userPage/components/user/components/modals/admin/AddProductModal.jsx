@@ -56,7 +56,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
 };
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export default function ProdutoModal({ onSave, onClose }) {
+export default function ProdutoModal({ onClose }) {
   const initialFormState = {
     nome: '',
     preco: '',

@@ -237,7 +237,7 @@ export async function updateCliente(cliente) {
     }
 }
 
-export async function getFuncionarioByToken(token) {
+export async function getFuncionarioByToken() {
     try {
         const response = await axios({
             baseURL: baseUri,

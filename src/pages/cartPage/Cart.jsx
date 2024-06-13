@@ -12,6 +12,7 @@ import './cart.scss';
 import { adicionarProdutoCarrinho, apagarCarrinho, listarCarrinho, removerProdutoCarrinho } from '../../services/apiProductService';
 import { getProdutoById, verificarCep } from '../../services/ApiService';
 import AuthService from '../../services/authService';
+import Loading from '../../components/loading/Loading';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -23,12 +24,14 @@ export default function Cart() {
     const cartRef = useRef(null);
     const [carrinho, setCarrinho] = useState([]);
     const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function fetchCarrinho() {
+        setIsLoading(true);
         try {
             if (AuthService.isLoggedIn()) {
                 const response = await listarCarrinho();
-                if(response.length == 0) {
+                if(response.length === 0) {
                     setCarrinho([]);
                     return;
                 }
@@ -41,6 +44,8 @@ export default function Cart() {
             }
         } catch (error) {
             console.error('Erro ao obter itens do carrinho:', error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -114,7 +119,7 @@ export default function Cart() {
     const diminuirQuantidadeCarrinho = async (produtoId) => {
         try {
             await removerProdutoCarrinho({ id: produtoId }, 1);
-            fetchCarrinho();
+            await fetchCarrinho();
         } catch (error) {
             console.error('Erro ao diminuir produto do carrinho:', error);
         }
@@ -125,7 +130,7 @@ export default function Cart() {
             const produto = carrinho.find(item => item.id === produtoId);
             if (produto) {
                 await adicionarProdutoCarrinho({ id: produtoId }, produto.quantidade + 1);
-                fetchCarrinho();
+                await fetchCarrinho();
             }
         } catch (error) {
             console.error('Erro ao aumentar quantidade do produto:', error);
@@ -135,37 +140,47 @@ export default function Cart() {
     const removerProdutoCarrinhoAPI = async (produtoId, produto) => {
         try {
             await removerProdutoCarrinho({ id: produtoId }, produto.qntdProduto);
-            fetchCarrinho();
+            await fetchCarrinho();
         } catch (error) {
             console.error('Erro ao remover produto do carrinho:', error);
         }
     };
 
     const handleCleanCart = async () => {
+        setIsLoading(true);
         try {
             await apagarCarrinho();
-            fetchCarrinho();
-        } catch {
+            await fetchCarrinho();
+        } catch (error) {
             console.error('Erro ao apagar carrinho:', error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     const finalizarPedido = async () => {
-        if (carrinho.length === 0) {
-            toast.warning('Por favor, adicione algum item no carrinho.');
-            cartRef.current.scrollIntoView({ behavior: 'smooth' });
-        } else if(cep.length !== 9) {
-            toast.warning('Por favor, adicione o seu CEP para prosseguir.');
-            cepInputRef.current.focus();
-        } else if (deliveryOption === '') {
-            toast.warning('Por favor, selecione uma opção de entrega.');
-            cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            await apagarCarrinho();
-            setShowOptions(false);
-            setDeliveryOption('');
-            setCep('');
-            toast.success('Compra finalizada com sucesso!');
+        setIsLoading(true);
+        try {
+            if (carrinho.length === 0) {
+                toast.warning('Por favor, adicione algum item no carrinho.');
+                cartRef.current.scrollIntoView({ behavior: 'smooth' });
+            } else if(cep.length !== 9) {
+                toast.warning('Por favor, adicione o seu CEP para prosseguir.');
+                cepInputRef.current.focus();
+            } else if (deliveryOption === '') {
+                toast.warning('Por favor, selecione uma opção de entrega.');
+                cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                await apagarCarrinho();
+                setShowOptions(false);
+                setDeliveryOption('');
+                setCep('');
+                toast.success('Compra finalizada com sucesso!');
+            }
+        } catch (error) {
+            console.error('Erro ao finalizar pedido:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -178,8 +193,10 @@ export default function Cart() {
             </div>
             <section className='containerMain'>
                 <div className='containerCart'>
-                {carrinho.length === 0 ? (
-                    <div className="emptyCartMessage">
+                {isLoading ? (
+                    <Loading />
+                ) : carrinho.length === 0 ? (
+                    <div className="                    emptyCartMessage">
                         <h2 className='textEmpty'>O seu carrinho está vazio.</h2>
                         <button className='btnBackBuy' onClick={() => navigate('/productFilter')}>Voltar para às compras</button>
                     </div>
@@ -227,123 +244,124 @@ export default function Cart() {
                             </li>
                         ))}
                     </ul>
-                    )}
-                    <button type="button" className='cleanCart' onClick={handleCleanCart}>
-                        Limpar Carrinho 
-                        <MdDelete className='icon'/>
-                    </button>
-                </div>
+                )}
 
-                <div className="resume">
-                    <div className={`resumeBuy`}>
+                <button type="button" className='cleanCart' onClick={handleCleanCart}>
+                    Limpar Carrinho 
+                    <MdDelete className='icon'/>
+                </button>
+            </div>
+
+            <div className="resume">
+                <div className={`resumeBuy ${isLoading ? 'loading' : ''}`}>
                     <h3>Resumo</h3>
-                        <hr className='hrResume'/>
-                        <div className='values'>
-                            <p>SubTotal:</p>
-                            <p>{BRL.format(calcularSubTotal())}</p>
-                        </div>
-                        <div className='values'>
-                            <p>Entrega:</p>
-                            <p>{BRL.format(priceDelivery)}</p>
-                        </div>
-                        <hr className='hrTotal'/>
-                        <div className='values'>
-                            <p>Total:</p>
-                            <strong>{BRL.format(calcularTotal())}</strong>
-                        </div>
-                        <hr className='hrOptions'/>
-                        <div className='paymentOptions'>
-                            <div className='options'>
-                                <FaRegCreditCard className='icon'/>
-                                <p>
-                                    <strong>{BRL.format(calcularTotal())}</strong> <br />
-                                    em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
-                                </p>
-                            </div>
-                            <div className='options'>
-                                <FaBarcode className='icon'/>
-                                <p>
-                                    <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
-                                    com desconto à vista no boleto ou pix
-                                </p>
-                            </div>
-                        </div>
-                        <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
+                    <hr className='hrResume'/>
+                    <div className='values'>
+                        <p>SubTotal:</p>
+                        <p>{BRL.format(calcularSubTotal())}</p>
                     </div>
-
-                    <div className='delivery'>
-                        <h4>Calcular Entrega</h4>
-                        <hr className='hrDelivery'/>
-                        <div className="inputCep">
-                            <input
-                                type="text"
-                                placeholder="Digite seu CEP"
-                                value={cep}
-                                onChange={handleCepChange}
-                                maxLength={9}
-                                inputMode='numeric'
-                                pattern="\d{5}-?\d{3}"
-                                ref={cepInputRef}
-                            />
-                            <button type="button" className='calcDelivery' onClick={handleCalculateDelivery}>
-                                Calcular
-                                <TbTruckDelivery className='icon'/>
-                            </button>
-                            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target='_blank' className='SearchCep'>Não sei meu CEP</a>
-                        </div>
-                        {showOptions && (
-                            <div>
-                                <div className='optionsDelivery'>
-                                    <label className="radio-container">
-                                        <input 
-                                            type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
-                                            onClick={() => handleDeliveryOptionChange('sedex')} 
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <label htmlFor='rbSedex' className='labelOp'>
-                                        <strong>Sedex:</strong>
-                                        <p>Prazo de entrega: até 7 dias úteis</p>
-                                    </label>
-                                    <strong>{BRL.format(26.99)}</strong>
-                                </div>
-                                <div className='optionsDelivery'>
-                                    <label className="radio-container">
-                                        <input 
-                                            type="radio" name="optionsDel" id="rbJadLog" className='rbDelivery'
-                                            onClick={() => handleDeliveryOptionChange('jadlog')}
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <label htmlFor='rbJadLog' className='labelOp'>
-                                        <strong>JadLog:</strong>
-                                        <p>Prazo de entrega: até 5 dias úteis</p>
-                                    </label>  
-                                    <strong>{BRL.format(32.99)}</strong>
-                                </div>
-                                <div className='optionsDelivery'>
-                                    <label className="radio-container">
-                                        <input 
-                                            type="radio" name="optionsDel" id="rbExpress" className='rbDelivery'
-                                            onClick={() => handleDeliveryOptionChange('express')}
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <label htmlFor='rbExpress' className='labelOp'>
-                                        <strong>Express:</strong>
-                                        <p>Prazo de entrega: até 12 dias úteis</p>
-                                    </label> 
-                                    <strong>{BRL.format(45.99)}</strong>
-                                </div>
-                            </div>
-                        )}
+                    <div className='values'>
+                        <p>Entrega:</p>
+                        <p>{BRL.format(priceDelivery)}</p>
                     </div>
+                    <hr className='hrTotal'/>
+                    <div className='values'>
+                        <p>Total:</p>
+                        <strong>{BRL.format(calcularTotal())}</strong>
+                    </div>
+                    <hr className='hrOptions'/>
+                    <div className='paymentOptions'>
+                        <div className='options'>
+                            <FaRegCreditCard className='icon'/>
+                            <p>
+                                <strong>{BRL.format(calcularTotal())}</strong> <br />
+                                em 12x de <span>{BRL.format(calcularTotal() / 12)}</span> s/ juros
+                            </p>
+                        </div>
+                        <div className='options'>
+                            <FaBarcode className='icon'/>
+                            <p>
+                                <strong>{BRL.format(calcularTotal() - (calcularTotal() / 100 * 15))}</strong> <br />
+                                com desconto à vista no boleto ou pix
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" className='endOrder' onClick={() => finalizarPedido()}>Finalizar Pedido</button>
                 </div>
-            </section>
-            <section className='offers'>
-                <h2>Continue Comprando</h2>
-                <OfferList />
-            </section>
-        </main>
-    );
+
+                <div className={`delivery ${isLoading ? 'loading' : ''}`}>
+                    <h4>Calcular Entrega</h4>
+                    <hr className='hrDelivery'/>
+                    <div className="inputCep">
+                        <input
+                            type="text"
+                            placeholder="Digite seu CEP"
+                            value={cep}
+                            onChange={handleCepChange}
+                            maxLength={9}
+                            inputMode='numeric'
+                            pattern="\d{5}-?\d{3}"
+                            ref={cepInputRef}
+                        />
+                        <button type="button" className='calcDelivery' onClick={handleCalculateDelivery}>
+                            Calcular
+                            <TbTruckDelivery className='icon'/>
+                        </button>
+                        <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target='_blank' className='SearchCep'>Não sei meu CEP</a>
+                    </div>
+                    {showOptions && (
+                        <div>
+                            <div className='optionsDelivery'>
+                                <label className="radio-container">
+                                    <input 
+                                        type="radio" name="optionsDel" id="rbSedex" className='rbDelivery'
+                                        onClick={() => handleDeliveryOptionChange('sedex')} 
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                                <label htmlFor='rbSedex' className='labelOp'>
+                                    <strong>Sedex:</strong>
+                                    <p>Prazo de entrega: até 7 dias úteis</p>
+                                </label>
+                                <strong>{BRL.format(26.99)}</strong>
+                            </div>
+                            <div className='optionsDelivery'>
+                                <label className="radio-container">
+                                    <input 
+                                        type="radio" name="optionsDel" id="rbJadLog" className='rbDelivery'
+                                        onClick={() => handleDeliveryOptionChange('jadlog')}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                                <label htmlFor='rbJadLog' className='labelOp'>
+                                    <strong>JadLog:</strong>
+                                    <p>Prazo de entrega: até 5 dias úteis</p>
+                                </label>  
+                                <strong>{BRL.format(32.99)}</strong>
+                            </div>
+                            <div className='optionsDelivery'>
+                                <label className="radio-container">
+                                    <input 
+                                        type="radio" name="optionsDel" id="rbExpress" className='rbDelivery'
+                                        onClick={() => handleDeliveryOptionChange('express')}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                                <label htmlFor='rbExpress' className='labelOp'>
+                                    <strong>Express:</strong>
+                                    <p>Prazo de entrega: até 12 dias úteis</p>
+                                </label> 
+                                <strong>{BRL.format(45.99)}</strong>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
+        <section className='offers'>
+            <h2>Continue Comprando</h2>
+            <OfferList />
+        </section>
+    </main>
+);
 }

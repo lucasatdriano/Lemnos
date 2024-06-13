@@ -87,14 +87,6 @@ export default function User({ onLogout }) {
     console.log('Dados atualizados:', form);
   };
 
-  const handleEmailSave = (newEmail) => {
-    setForm(prevForm => ({
-      ...prevForm,
-      email: newEmail
-    }));
-    console.log("Novo email:", newEmail);
-  };
-
   const handleShowModal = (modalName) => {
     switch (modalName) {
       case 'email':
@@ -170,76 +162,83 @@ export default function User({ onLogout }) {
   
   return (
     <section className="userContainer">
-      <div className="userData">
-        <div className="user">
-          <img src={UserImg} alt="user" />
-          <h3>{username}</h3>
-        </div>
-        <div className='configUser'>
-          <ToolTip message="Editar Perfil">
-            <FaRegEdit className='icon' onClick={handleEditProfile}/>
-          </ToolTip>
-          <ToolTip message="Fazer Logout">
-            <MdLogout className='icon' onClick={onLogout} />
-          </ToolTip>
-        </div>
-      </div>
-
-      <hr className='lineUser' />
-
-      <div className="updateInfos">
-        <div className="updateInputs">
-          <p>
-            <CustomInput
-              type="text"
-              label="Nome Completo:"
-              id="name"
-              name="name"
-              maxLength={40}
-              minLength={5}
-              value={form.name}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            {errors.name && <span className='invalid'>{errors.name}</span>}
-          </p>
-
-          <p>
-            <CustomInput
-              type="text"
-              label="Email:"
-              id="emailUser"
-              name="email"
-              maxLength={40}
-              value={form.email}
-              onChange={handleChange}
-              disabled={true}
-            />
-            {errors.email && <span className='invalid'>{errors.email}</span>}
-          </p>
-        </div>
-        <div className="containerButtons">
-          <div className='updateButtons'>
-            <button type="button" onClick={() => handleShowModal('password')} disabled={!isEditing}>Alterar Senha</button>
-            <button type="button" onClick={handleSaveChanges} disabled={!isEditing}>Salvar Alterações</button>
-            <button type="button" onClick={() => handleShowModal('endereco')} disabled={!isEditing}>Adicionar Endereço</button>
+      <section>
+        <div className="userData">
+          <div className="user">
+            <img src={UserImg} alt="user" />
+            <h3>{username}</h3>
+          </div>
+          <div className='configUser'>
+            <ToolTip message="Editar Perfil">
+              <FaRegEdit className='icon' onClick={handleEditProfile}/>
+            </ToolTip>
+            <ToolTip message="Fazer Logout">
+              <MdLogout className='icon' onClick={onLogout} />
+            </ToolTip>
           </div>
         </div>
-      </div>
+
+        <hr className='lineUser' />
+
+        <div className="updateInfos">
+          <div className="updateInputs">
+            <p>
+              <CustomInput
+                type="text"
+                label="Nome Completo:"
+                id="name"
+                name="name"
+                maxLength={40}
+                minLength={5}
+                value={form.name}
+                onChange={handleChange}
+                disabled={!isEditing}
+              />
+              {errors.name && <span className='invalid'>{errors.name}</span>}
+            </p>
+
+            <p>
+              <CustomInput
+                type="text"
+                label="Email:"
+                id="emailUser"
+                name="email"
+                maxLength={40}
+                value={form.email}
+                onChange={handleChange}
+                disabled={true}
+              />
+              {errors.email && <span className='invalid'>{errors.email}</span>}
+            </p>
+          </div>
+          <div className="containerButtons">
+            <div className='updateButtons'>
+              <button type="button" onClick={() => handleShowModal('password')} disabled={!isEditing}>Alterar Senha</button>
+              <button type="button" onClick={handleSaveChanges} disabled={!isEditing}>Salvar Alterações</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <hr />
-      {AuthService.getRole() == 'CLIENTE' ? (
-        <HistoricoCompras compras={historicoExemplo}/>
-      ) : (
-        <div className='adminPage'>
-          <button type="button" onClick={() => handleShowModal('addProduto')}>Adicionar Produto</button>
-          <button type="button" onClick={() => handleShowModal('addFuncionario')}>Adicionar Funcionário</button>
-          <button type="button" onClick={() => handleShowModal('addFornecedor')}>Adicionar Fornecedor</button>
-        </div>
-      )}
+      <section>
+        {AuthService.getRole() == 'CLIENTE' ? (
+          <>
+            <HistoricoCompras compras={historicoExemplo}/>
+            {/* <button type="button" onClick={() => handleShowModal('endereco')} disabled={!isEditing}>Adicionar Endereço</button> */}
+          </>
+        ) : (
+          <div className='adminPage'>
+            <button type="button" onClick={() => handleShowModal('addProduto')}>Adicionar Produto</button>
+            <button type="button" onClick={() => handleShowModal('addFuncionario')}>Adicionar Funcionário</button>
+            <button type="button" onClick={() => handleShowModal('addFornecedor')}>Adicionar Fornecedor</button>
+          </div>
+        )}
+      </section>
+      
 
       {showEmailModal && (
-        <EmailModal onSave={handleEmailSave} onClose={() => handleCloseModal('email')} />
+        <EmailModal onClose={() => handleCloseModal('email')} />
       )}
 
       {showPasswordModal && (
@@ -251,15 +250,15 @@ export default function User({ onLogout }) {
       )}
 
       {showAddProdutoModal && (
-        <AddProdutoModal onSave={handleAddProduto} onClose={() => handleCloseModal('addProduto')} />
+        <AddProdutoModal onClose={() => handleCloseModal('addProduto')} />
       )}
 
       {showAddFuncionarioModal && (
-        <AddFuncionarioModal tipoEntidade="funcionario" onAddFunc={handleAddFuncionario} onClose={() => handleCloseModal('addFuncionario')} />
+        <AddFuncionarioModal tipoEntidade="funcionario" onClose={() => handleCloseModal('addFuncionario')} />
       )}
 
       {showAddFornecedorModal && (
-        <AddFornecedorModal tipoEntidade="fornecedor" onSave={handleAddFornecedor} onClose={() => handleCloseModal('addFornecedor')} />
+        <AddFornecedorModal tipoEntidade="fornecedor" onClose={() => handleCloseModal('addFornecedor')} />
       )}
     </section>
   );

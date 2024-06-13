@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import './product.scss';
 import OfferList from '../../components/lists/OfferList';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
@@ -20,7 +19,7 @@ export default function Product() {
     const [isFavorite, setIsFavorite] = useState(false);
     const [productRating, setProductRating] = useState(0);
     const [loading, setLoading] = useState(false);
-
+    
     useEffect(() => {
         fetchData();
     }, [id, navigate]);
@@ -47,7 +46,6 @@ export default function Product() {
     const setInfo = async () => {
         setLoading(true)
         try {
-            console.log("Produto:", product);
             setMainImage(product.imagemPrincipal);
             setProductRating(product.avaliacao);
             if (AuthService.isLoggedIn()) {
@@ -55,8 +53,6 @@ export default function Product() {
                 const isFavorited = favorites.some(fav => fav.id === product.id);
                 setIsFavorite(isFavorited);
             }
-        } catch (error) {
-            toast.error("Deu ruim mané");   
         } finally {
             setLoading(false);
         }
@@ -65,8 +61,6 @@ export default function Product() {
     const handleImageClick = (image) => {
         setMainImage(image);
     };
-
-
 
     const handleAddToCart = async () => {
         if (AuthService.isLoggedIn()) {
@@ -228,7 +222,7 @@ export default function Product() {
                                 <span>{product.comprimento}cm</span>
                             </p>
                             <p className='specification'>
-                                <strong>Altura:</strong>
+                                <strong>Altura:</strong>           
                                 <span>{product.altura}cm</span>
                             </p>
                             <p className='specification'>

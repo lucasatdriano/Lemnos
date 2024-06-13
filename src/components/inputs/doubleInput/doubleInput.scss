@@ -23,7 +23,7 @@ $font-items: 'Poppins', Helvetica;
 
 .doubleRangeInput {
     .rangeSlider {
-        max-width: 20vw;
+        max-width: 18vw;
         font-family: $font-items;
         position: relative;
         width: 100%;
@@ -72,41 +72,18 @@ $font-items: 'Poppins', Helvetica;
             }
         }
         
-        .toolTip {
-            padding: .25em .5em;
-            border: 0;
-            background: $color-primaryLight;
-            color: $color-fontDark;
-            font-size: 1.6rem;
-            line-height: 1.2;
-            border-radius: 5px;
-            bottom: 120%;
-            display: block;
-            position: absolute;
-            text-align: center;
-            white-space: nowrap;
-            
-            &.minToolTip {
-               left: 50%;
-               transform: translateX(-50%) translateY(-100%); 
-            }
-            
-            &.maxToolTip {
-                right: 50%;
-                transform: translateX(50%) translateY(-100%); 
-            }
-        }   
-        
         .inputBox {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 35px;
 
             .minBox, .maxBox {
                 display: flex;
                 align-items: center;
                 margin: 0 auto;
                 gap: 1em;
-                width: 40%;
-                margin-top: 35px;
+                width: 50%;
 
                 .inputWrap {
                     position: relative;
@@ -143,7 +120,7 @@ $font-items: 'Poppins', Helvetica;
                         position: relative;
                         flex: 1 1 auto;
                         width: auto;
-                        max-width: 40%;
+                        max-width: 50%;
                         min-width: 0;
                         color: $color-fontLight;
                         background: $color-fontDark;
@@ -211,6 +188,14 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .doubleRangeInput {
+        .rangeSlider {
+            max-width: 80vw; 
         }
     }
 }

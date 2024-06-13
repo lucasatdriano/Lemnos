@@ -206,6 +206,11 @@ $font-items: 'Poppins', Helvetica;
             grid-template-columns: 1fr 1fr;
             gap: 2em;
             margin-bottom: 5em;
+            max-width: 100vw;
+
+            select {
+                max-width: 100vw;
+            }
         }
         
         .filtered-data-container {

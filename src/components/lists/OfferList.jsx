@@ -9,11 +9,11 @@ export default function OfferList() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    async function fetchProdutos() {
+    async function fetchDescontos() {
       const data = await getAllProdutos() 
       setProdutos(data);
     }
-    fetchProdutos();
+    fetchDescontos();
   }, []);
 
   const produtosComDesconto = produtos.filter(produto => produto.desconto > 0);

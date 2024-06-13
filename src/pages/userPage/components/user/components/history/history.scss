@@ -21,8 +21,15 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .containerHistory {
-    padding: 1.5em 0 1em;
+    padding: 1.5em 0 .5em;
+    width: 25em;
     text-align: center;
+    overflow-y: auto;
+    max-height: 22.5em;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     ul {
         text-align: left;
