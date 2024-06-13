@@ -1,25 +1,25 @@
 /* eslint-disable no-unused-vars */
 import './product.scss';
+import Loading from '../../components/loading/Loading';
 import OfferList from '../../components/lists/OfferList';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import AuthService from '../../services/authService';
+import { toast } from 'react-toastify';
+import { getProdutoById } from '../../services/ApiService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { adicionarFavorito, adicionarProdutoCarrinho, avaliarProduto, desfavoritarProduto, listarProdutosFavoritos } from '../../services/apiProductService';
-import { toast } from 'react-toastify';
-import { getProdutoById } from '../../services/ApiService';
 import React, { useState, useEffect } from 'react';
-import Loading from '../../components/loading/Loading';
 
 export default function Product() {
-    const { id } = useParams();
-    const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(false);
     const [mainImage, setMainImage] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
     const [productRating, setProductRating] = useState(0);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -56,7 +56,7 @@ export default function Product() {
                 setIsFavorite(isFavorited);
             }
         } catch (error) {
-            toast.error("Deu ruim mané");   
+            toast.error("Erro ao setar as informações do produto");
         } finally {
             setLoading(false);
         }
@@ -65,8 +65,6 @@ export default function Product() {
     const handleImageClick = (image) => {
         setMainImage(image);
     };
-
-
 
     const handleAddToCart = async () => {
         if (AuthService.isLoggedIn()) {

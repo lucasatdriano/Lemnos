@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from './authService';
 
-const baseUri = "https://lemnos-server.up.railway.app/api";
+//const baseUri = "https://lemnos-server.up.railway.app/api";
+const baseUri = "http://localhost:8080/api";
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -113,8 +114,7 @@ export async function desfavoritarProduto(produto) {
             timeout: 10000
         });
 
-        console.log(produto.id)
-        debugger;
+        toast.info(response);
 
         if (response.status !== 200) {
             throw new Error('Erro ao remover favorito.');
@@ -123,10 +123,8 @@ export async function desfavoritarProduto(produto) {
         return true;
 
     } catch (error) {
-        if (error.response && error.response.data && error.response.data.error) {
-            toast.error(error.response.data.error);
-        }
-        throw error;
+        toast.error(error);
+        return false;
     }
 }
 

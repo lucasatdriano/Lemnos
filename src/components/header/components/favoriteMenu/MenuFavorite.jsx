@@ -1,41 +1,30 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import './menuFavorite.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { listarProdutosFavoritos, desfavoritarProduto, adicionarProdutoCarrinho } from '../../../../services/apiProductService';
-import { auth } from '../../../../services/firebaseConfig';
 import AuthService from '../../../../services/authService';
 import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
+import { toast } from 'react-toastify';
 import { IoClose } from "react-icons/io5";
-import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
-import './menuFavorite.scss';
+import { MdFavorite } from 'react-icons/md';
 import { getProdutoById } from '../../../../services/ApiService';
+import { Link, useNavigate } from 'react-router-dom';
+import { listarProdutosFavoritos, adicionarProdutoCarrinho, desfavoritarProduto } from '../../../../services/apiProductService';
+import React, { useState, useEffect } from 'react';
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
     const [favorites, setFavorites] = useState([]);
-    const [removingIndex, setRemovingIndex] = useState(null);
-    const [userEmail, setUserEmail] = useState(null);
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserEmail(user.email);
-            } else {
-                setUserEmail(null);
-            }
-        });
-
-        return () => unsubscribe();
+        fetchFavorites();
     }, []);
 
     const fetchFavorites = async () => {
         try {
-            if (userEmail) {
-                const response = await listarProdutosFavoritos(userEmail);
+            if (AuthService.isLoggedIn()) {
+                const response = await listarProdutosFavoritos();
                 const favoritoDetalhado = await Promise.all(response.map(async (produto) => {
                     const detalhesProduto = await getProdutoById(produto.id);
                     return { ...produto, ...detalhesProduto };
@@ -47,21 +36,18 @@ export default function MenuFavorite({ onClose }) {
         }
     };
 
-    useEffect(() => {
-        fetchFavorites();
-    }, [userEmail]);
-
-    const handleRemoveFavorite = async (productId) => {
+    const handleRemoveFavorite = async (produto, e) => {
+        e.preventDefault();
+        e.stopPropagation();
         try {
-            const updatedFavorites = favorites.filter(favorite => favorite.id !== productId);
-            setFavorites(updatedFavorites);
-            await desfavoritarProduto(productId);
-            toast.success('Produto removido dos favoritos.');
+            const success = await desfavoritarProduto(produto);
+            if (success) {
+                fetchFavorites();
+            }
         } catch (error) {
-            console.error('Erro ao remover produto dos favoritos:', error);
             toast.error('Erro ao remover produto dos favoritos.');
         }
-    };    
+    };
 
     const handleCloseModal = () => {
         onClose();
@@ -70,10 +56,9 @@ export default function MenuFavorite({ onClose }) {
     const handleAddToCart = async (favorite) => {
         if (AuthService.isLoggedIn()) {
             try {
-                await adicionarProdutoCarrinho(favorite, { email: auth.currentUser.email }, 1);
+                await adicionarProdutoCarrinho(favorite, 1);
                 toast.success('Produto adicionado ao carrinho!');
             } catch (error) {
-                console.error('Erro ao adicionar produto ao carrinho:', error);
                 toast.error('Erro ao adicionar produto ao carrinho.');
             }
         } else {
@@ -110,17 +95,10 @@ export default function MenuFavorite({ onClose }) {
                                             className='productImage' 
                                         />
                                         <div className='containerInfosFav'>
-                                            {removingIndex === favorite.id ? (
-                                                <MdFavoriteBorder className='iconFav' />
-                                            ) : (
-                                                <MdFavorite 
-                                                    className='iconFav'  
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleRemoveFavorite(favorite.id);
-                                                    }} 
-                                                />
-                                            )}
+                                            <MdFavorite 
+                                                className='iconFav'  
+                                                onClick={(e) => handleRemoveFavorite(favorite, e) } 
+                                            />
                                         </div>
                                         <div className='productDetails'>
                                             <h2 className='productName'>{favorite.nome}</h2>
