@@ -47,7 +47,6 @@ export default function Product() {
     const setInfo = async () => {
         setLoading(true)
         try {
-            console.log("Produto:", product);
             setMainImage(product.imagemPrincipal);
             setProductRating(product.avaliacao);
             if (AuthService.isLoggedIn()) {

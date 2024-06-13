@@ -114,8 +114,6 @@ export async function desfavoritarProduto(produto) {
             timeout: 10000
         });
 
-        toast.info(response);
-
         if (response.status !== 200) {
             throw new Error('Erro ao remover favorito.');
         }

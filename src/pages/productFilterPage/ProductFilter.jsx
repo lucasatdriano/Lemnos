@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import Card from '../../components/card/Card';
-import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import './productFilter.scss';
-import { listarProdutosFiltrados } from '../../services/apiProductService'; 
+import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
+import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
+import { useState, useEffect } from 'react';
+import { listarProdutosFiltrados } from '../../services/apiProductService'; 
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const brands = [
   'AMD',
@@ -66,6 +66,7 @@ export default function ProductFilter() {
     setLoading(true);
     try {
       const filtro = {
+        nome: searchTerm ?? null,
         categoria: selectedCategory ?? null,
         subCategoria: selectedSubCategory ?? null,
         marca: selectedBrand ?? null,
