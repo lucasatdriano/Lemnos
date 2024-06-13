@@ -1,17 +1,17 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
+$color-primaryDark: #10a88d;
 $color-secundaryDarkAlt: #415352;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -38,7 +38,8 @@ $font-items: 'Poppins', Helvetica;
             background: $color-primaryLight;
         }
 
-        .minValue, .maxValue {
+        .minValue,
+        .maxValue {
             position: absolute;
             width: 100%;
             background: none;
@@ -71,14 +72,15 @@ $font-items: 'Poppins', Helvetica;
                 box-shadow: 0 0 5px $color-shadow;
             }
         }
-        
+
         .inputBox {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 35px;
 
-            .minBox, .maxBox {
+            .minBox,
+            .maxBox {
                 display: flex;
                 align-items: center;
                 margin: 0 auto;
@@ -91,11 +93,11 @@ $font-items: 'Poppins', Helvetica;
                     flex-wrap: wrap;
                     align-items: center;
                     width: 100%;
-                    
+
                     .inputAddon {
                         display: flex;
                         align-items: center;
-                        padding: .5em 1em;
+                        padding: 0.5em 1em;
                         height: 2em;
                         font-size: 1.8rem;
                         font-weight: 400;
@@ -114,7 +116,7 @@ $font-items: 'Poppins', Helvetica;
                     .inputField {
                         margin-left: -1px;
                         height: 2em;
-                        padding: .5em .75em;
+                        padding: 0.5em 0.75em;
                         font-size: 1.8rem;
                         border-radius: 5px;
                         position: relative;
@@ -134,12 +136,12 @@ $font-items: 'Poppins', Helvetica;
                             outline: none;
                             border: 1px solid #c1c2c5;
                         }
-                    } 
+                    }
                 }
             }
 
             .minBox {
-                padding-right: .5em;
+                padding-right: 0.5em;
                 margin-right: -2em;
             }
         }
@@ -155,7 +157,8 @@ $font-items: 'Poppins', Helvetica;
                 background: $color-primaryDark;
             }
 
-            .minValue, .maxValue {
+            .minValue,
+            .maxValue {
                 &::-webkit-slider-thumb {
                     border: 2px solid #7dccc7;
                     background: #7dccc7;
@@ -168,10 +171,11 @@ $font-items: 'Poppins', Helvetica;
                     box-shadow: 0 0 5px $color-card;
                 }
             }
-            
+
             .inputBox {
-                .minBox, .maxBox {
-                    .inputWrap {                    
+                .minBox,
+                .maxBox {
+                    .inputWrap {
                         .inputAddon {
                             border: 1px solid #9d9d9e;
                             box-shadow: 1px 1px 8px $color-card;
@@ -184,7 +188,7 @@ $font-items: 'Poppins', Helvetica;
                             &:focus {
                                 border-left: 1px solid #2a2a2b;
                             }
-                        } 
+                        }
                     }
                 }
             }
@@ -195,7 +199,7 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 1024px) {
     .doubleRangeInput {
         .rangeSlider {
-            max-width: 80vw; 
+            max-width: 80vw;
         }
     }
 }

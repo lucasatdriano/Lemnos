@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
 $color-primaryDark: #0d977e;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -30,21 +30,21 @@ $font-items: 'Poppins', Helvetica;
     border-radius: 20px;
     padding: 0 1em;
     box-shadow: 2px 2px 15px $color-shadow;
-  
+
     .userData {
         width: 100%;
         padding: 0 2em;
         display: flex;
         align-items: center;
         justify-content: space-between;
-  
+
         .user {
             display: flex;
             align-items: center;
-            gap: .75em;
-            padding: .5em 0;
+            gap: 0.75em;
+            padding: 0.5em 0;
             font-size: 2rem;
-    
+
             img {
                 object-fit: contain;
                 border: 1px solid $color-primaryLight;
@@ -53,12 +53,12 @@ $font-items: 'Poppins', Helvetica;
                 border-radius: 50%;
             }
         }
-    
+
         .configUser {
             display: flex;
             align-items: center;
             gap: 2em;
-            
+
             .icon {
                 height: 38px;
                 width: 38px;
@@ -95,7 +95,7 @@ $font-items: 'Poppins', Helvetica;
             gap: 1em;
             width: 100%;
             justify-content: space-evenly;
-    
+
             .updateButtons {
                 display: flex;
                 flex-direction: column;
@@ -103,22 +103,24 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
-  
+
     hr {
         width: 0;
         height: 100%;
         border: 1.5px solid $color-primaryLight;
     }
-    
-    .adminPage {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
-        place-items: center;
+
+    .adminPage,
+    .funcionarioPage {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         padding: 1em;
-        gap: 1em;
+        gap: 2em;
     }
-    
+
     .modal {
         display: grid;
         place-items: center;
@@ -129,7 +131,7 @@ $font-items: 'Poppins', Helvetica;
         width: 100vw;
         background: $color-shadow;
         z-index: 99;
-    
+
         .containerModal {
             display: flex;
             flex-direction: column;
@@ -143,16 +145,53 @@ $font-items: 'Poppins', Helvetica;
             border-radius: 15px;
             overflow-y: auto;
 
+            p {
+                margin: 0.25em;
+            }
+
+            .inputSearch {
+                width: 100%;
+                position: relative;
+
+                .btnSearch {
+                    width: auto;
+                    box-shadow: none;
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 11;
+
+                    .searchIcon {
+                        color: $color-fontLight;
+                        height: 28px;
+                        width: 28px;
+                    }
+                }
+            }
+
+            .emptyMessage {
+                width: 25em;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1em;
+                text-align: center;
+            }
+
             .listItens {
                 text-align: left;
                 overflow-y: auto;
-                
+
                 .itemUpdate {
                     display: flex;
                     align-items: center;
                     gap: 1em;
-                    padding: .5em 1em;
-                    margin: .5em 0;
+                    padding: 0.5em 1em;
+                    margin: 0.5em 0;
                     font-size: 1.8rem;
                     font-family: $font-items;
                     cursor: pointer;
@@ -161,11 +200,12 @@ $font-items: 'Poppins', Helvetica;
 
                     .spanNome {
                         text-transform: capitalize;
+                        width: 20%;
                     }
 
                     img {
-                        height: 175px;
-                        width: 175px;
+                        max-width: 175px;
+                        height: clamp(175px, 20%, 200px);
                     }
 
                     &:last-child {
@@ -173,7 +213,7 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
-    
+
             .iconClose {
                 width: 32px;
                 height: 32px;
@@ -192,25 +232,31 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
-        .modalProduto, .modalFuncionario, .modalFornecedor, .modalEndereco {
+        .modalProduto,
+        .modalFuncionario,
+        .modalFornecedor,
+        .modalEndereco {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5em;
-            padding: .5em 2em 1em;
+            padding: 0.5em 2em 1em;
             width: 100%;
 
-            .inputNome, .inputEmail, .inputDesc, .inputCep {
+            .inputNome,
+            .inputEmail,
+            .inputDesc,
+            .inputCep {
                 grid-column: span 2;
             }
 
             p {
-                position: relative; 
-                  
+                position: relative;
+
                 .dropdown {
-                    position: absolute;  
+                    position: absolute;
                     display: grid;
                     text-align: center;
-                    grid-template-columns: 1fr 1fr;   
+                    grid-template-columns: 1fr 1fr;
                     width: 100%;
                     height: 0;
                     max-height: 15em;
@@ -221,24 +267,24 @@ $font-items: 'Poppins', Helvetica;
                     opacity: 0;
                     cursor: pointer;
                     box-shadow: 2px 2px 4px $color-shadow;
-                    transition: .2s ease;
-                
+                    transition: 0.2s ease;
+
                     &.open {
                         background-color: $color-bgLight;
                         top: 40px;
-                        height: auto;   
+                        height: auto;
                         opacity: 1;
                     }
 
-                    [class^=dropdown] {
+                    [class^='dropdown'] {
                         text-indent: 10px;
                         border-bottom: 2px solid $color-primaryLight;
                         background-color: $color-bgLight;
                         cursor: pointer;
-                        transition: .25s ease;
+                        transition: 0.25s ease;
 
                         &:hover {
-                            filter: brightness(.9);
+                            filter: brightness(0.9);
                         }
 
                         &:last-child {
@@ -279,10 +325,10 @@ $font-items: 'Poppins', Helvetica;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: .5em;
+        gap: 0.5em;
         font-size: 2.2rem;
         width: clamp(8em, 8em + 10vw, 15em);
-        padding: .5em 1em;
+        padding: 0.5em 1em;
         border: none;
         border-radius: 5px;
         color: $color-fontDark;
@@ -291,19 +337,18 @@ $font-items: 'Poppins', Helvetica;
         font-family: $font-web;
         cursor: pointer;
         white-space: nowrap;
-        transition: .5s ease;
+        transition: 0.5s ease;
 
         &:disabled {
-            filter: brightness(.9);
+            filter: brightness(0.9);
             color: $color-fontDark;
-            opacity: .5;
+            opacity: 0.5;
             cursor: not-allowed;
 
             &:hover {
-                filter: brightness(.9);
+                filter: brightness(0.9);
                 box-shadow: 2px 2px 8px $color-shadow;
             }
-            
         }
 
         &:hover {
@@ -319,32 +364,32 @@ $font-items: 'Poppins', Helvetica;
 }
 
 .dark {
-    .userContainer {   
+    .userContainer {
         background-color: #72757478;
         box-shadow: 4px 4px 8px #4b4c4c78;
 
-        .userData {      
-            .user {        
+        .userData {
+            .user {
                 img {
                     border: 1px solid $color-primaryDark;
                 }
             }
-        
-            .configUser {                
+
+            .configUser {
                 .icon {
                     color: $color-fontDark;
                 }
             }
         }
-    
+
         .lineUser {
             border: 1.5px solid $color-primaryDark;
         }
-      
+
         hr {
             border: 1.5px solid $color-primaryDark;
         }
-    
+
         .modal {
             .containerModal {
                 background: #383737;
@@ -355,26 +400,29 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
-    
-            .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {    
-                p {    
+
+            .modalEndereco,
+            .modalProduto,
+            .modalFuncionario,
+            .modalFornecedor {
+                p {
                     .dropdown {
                         box-shadow: 2px 2px 4px $color-shadow;
-                    
+
                         &.open {
                             background: #383737;
                         }
-    
-                        [class^=dropdown] {
+
+                        [class^='dropdown'] {
                             border-bottom: 2px solid $color-primaryDark;
                             background: #383737;
-    
+
                             &:hover {
                                 filter: brightness(1.1);
                             }
                         }
 
-                        .dropdown-situacao {    
+                        .dropdown-situacao {
                             &:last-child {
                                 &:hover {
                                     filter: brightness(1.1);
@@ -382,7 +430,7 @@ $font-items: 'Poppins', Helvetica;
                             }
                         }
                     }
-    
+
                     .iconDrop {
                         color: $color-fontLight;
                     }
@@ -392,50 +440,55 @@ $font-items: 'Poppins', Helvetica;
 
         button {
             background: $color-primaryDark;
-    
-            &:disabled {    
+
+            &:disabled {
                 &:hover {
                     box-shadow: 2px 2px 8px $color-shadow;
                 }
             }
-    
+
             &:hover {
                 box-shadow: 0 0 10px $color-primaryDark;
             }
         }
-    }    
+    }
 }
 
 @media only screen and (max-width: 900px) {
     .userContainer {
-        .modal {     
+        .modal {
             .containerModal {
-                .containerButtons {        
+                .containerButtons {
                     flex-direction: column;
                 }
             }
-    
-            .modalEndereco, .modalProduto, .modalFuncionario, .modalFornecedor {
+
+            .modalEndereco,
+            .modalProduto,
+            .modalFuncionario,
+            .modalFornecedor {
                 grid-template-columns: 1fr;
                 max-height: 60vh;
                 overflow-y: auto;
                 padding-top: 1.5em;
 
-                .inputNome, .inputEmail, .inputDesc {
+                .inputNome,
+                .inputEmail,
+                .inputDesc {
                     grid-column: span 1;
                 }
 
                 &::-webkit-scrollbar {
                     display: none;
                 }
-    
+
                 p {
                     position: relative;
-                      
+
                     .dropdown {
-                        position: absolute;  
+                        position: absolute;
                         display: grid;
-                        grid-template-columns: 1fr 1fr;   
+                        grid-template-columns: 1fr 1fr;
                         width: 100%;
                         height: 0;
                         padding: 1em 10px 10px;
@@ -445,59 +498,59 @@ $font-items: 'Poppins', Helvetica;
                         opacity: 0;
                         cursor: pointer;
                         box-shadow: 2px 2px 4px $color-shadow;
-                        transition: .2s ease;
-                    
+                        transition: 0.2s ease;
+
                         &.open {
                             background-color: $color-bgLight;
                             top: 40px;
-                            height: auto;   
+                            height: auto;
                             opacity: 1;
                         }
-    
-                        [class^=dropdown] {
+
+                        [class^='dropdown'] {
                             text-indent: 10px;
                             border-bottom: 2px solid $color-primaryLight;
                             background-color: $color-bgLight;
                             cursor: pointer;
-                            transition: .25s ease;
-    
+                            transition: 0.25s ease;
+
                             &:hover {
-                                filter: brightness(.9);
+                                filter: brightness(0.9);
                             }
-    
+
                             &:last-child {
                                 cursor: default;
-    
+
                                 &:hover {
                                     filter: brightness(1);
                                 }
                             }
                         }
-    
+
                         .dropdown-categoria {
                             padding: 10px 0;
                             font-size: 1.8rem;
                         }
-    
+
                         .dropdown-estado {
                             padding: 5px 0;
                             font-size: 1.6rem;
                         }
-    
+
                         .dropdown-situacao {
                             padding: 10px 0;
                             font-size: 1.8rem;
-    
+
                             &:last-child {
                                 cursor: pointer;
-    
+
                                 &:hover {
-                                    filter: brightness(.9);
+                                    filter: brightness(0.9);
                                 }
                             }
                         }
                     }
-    
+
                     .iconDrop {
                         position: absolute;
                         right: 1vw;
@@ -511,7 +564,7 @@ $font-items: 'Poppins', Helvetica;
                 }
             }
         }
-    }    
+    }
 }
 
 @media only screen and (max-width: 720px) {
@@ -522,7 +575,7 @@ $font-items: 'Poppins', Helvetica;
             .user {
                 max-width: 10em;
                 flex-direction: column;
-                gap: .25em;
+                gap: 0.25em;
             }
 
             .configUser {
@@ -532,11 +585,11 @@ $font-items: 'Poppins', Helvetica;
 
         .updateInfos {
             .updateInputs {
-                grid-template-columns: 1fr ;
+                grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr;
             }
 
-            .containerButtons {                          
+            .containerButtons {
                 .updateButtons {
                     flex-direction: column;
                     gap: 1em;
@@ -548,13 +601,13 @@ $font-items: 'Poppins', Helvetica;
             grid-template-columns: 1fr;
         }
 
-        .modal {        
+        .modal {
             .containerModal {
-                .listItens {                    
+                .listItens {
                     .itemUpdate {
                         flex-direction: column;
                         align-items: center;
-    
+
                         img {
                             height: 150px;
                             width: 150px;
@@ -563,5 +616,5 @@ $font-items: 'Poppins', Helvetica;
                 }
             }
         }
-    }    
+    }
 }

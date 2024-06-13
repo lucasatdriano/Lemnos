@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -29,13 +29,13 @@ footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 3em 0 .7em 3em;
+        padding: 3em 0 0.7em 3em;
 
         img {
             height: 10em;
             width: 15em;
             object-fit: contain;
-            filter: drop-shadow( 4px 4px 4px $color-shadow);
+            filter: drop-shadow(4px 4px 4px $color-shadow);
         }
 
         .navLinks {
@@ -52,13 +52,12 @@ footer {
                     color: $color-fontDark;
                     font-size: clamp(1.8rem, 1.8rem + 1vw, 2.2rem);
                     margin: 0 0 2px 5px;
-                    transition: .5s ease;
-                    
+                    transition: 0.5s ease;
+
                     &:hover {
                         border-bottom: 1.5px solid $color-fontDark;
                     }
                 }
-            
             }
         }
 
@@ -70,7 +69,7 @@ footer {
                 align-items: center;
                 justify-content: space-around;
                 padding: 0 0 0 20px;
-                gap: .5em;
+                gap: 0.5em;
 
                 .icon {
                     margin: 5px;
@@ -83,7 +82,11 @@ footer {
             hr {
                 height: 5px;
                 width: 100%;
-                background-image: linear-gradient(to right, transparent, $color-fontDark);
+                background-image: linear-gradient(
+                    to right,
+                    transparent,
+                    $color-fontDark
+                );
                 border: none;
             }
         }
@@ -97,7 +100,7 @@ footer {
         display: flex;
         margin: 5px 20px 0 20px;
         justify-content: space-between;
-        
+
         a {
             color: $color-primaryLight;
         }
@@ -105,9 +108,9 @@ footer {
 }
 
 @media only screen and (max-width: 1320px) {
-    footer {   
+    footer {
         #footerContent {
-            padding-left: .7em;
+            padding-left: 0.7em;
 
             img {
                 display: none;
@@ -119,7 +122,7 @@ footer {
 
             .iconsNav {
                 width: 17em;
-    
+
                 .icons {
                     .icon {
                         width: 40px;
@@ -136,7 +139,7 @@ footer {
 }
 
 @media only screen and (max-width: 1080px) {
-    footer {   
+    footer {
         margin-top: 2em;
 
         #footerContent {
@@ -149,7 +152,7 @@ footer {
 
             .iconsNav {
                 width: 20em;
-    
+
                 .icons {
                     .icon {
                         width: 42px;
@@ -166,7 +169,7 @@ footer {
 }
 
 @media only screen and (max-width: 800px) {
-    footer {   
+    footer {
         padding-top: 9em;
         margin-top: 8em;
 

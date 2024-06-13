@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
-$color-fontDark: #F6FEFD;
+$color-bgLight: #f9fbfb;
+$color-bgDark: #2d2d2d;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -29,7 +29,7 @@ $font-items: 'Poppins', Helvetica;
     border-radius: 10px;
     text-align: center;
     box-shadow: 2px 2px 15px $color-shadow;
-    transition: .5s ease;
+    transition: 0.5s ease;
 
     .brandImage {
         width: 85%;
@@ -42,9 +42,9 @@ $font-items: 'Poppins', Helvetica;
     .brandName {
         font-family: $font-title;
         text-transform: uppercase;
-        transition: .3s ease;
+        transition: 0.3s ease;
     }
-} 
+}
 
 .dark {
     .brandCard {

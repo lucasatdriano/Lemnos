@@ -2,15 +2,15 @@
 @import './components/card/card.scss';
 @import './components/footer/footer.scss';
 
-$color-primaryLight: #36CEC4;
-$color-secundaryLight: #415352;
+$color-primaryLight: #36cec4;
+$color-secundaryLight: #536362;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
 
 $color-bgDark: #252525;
-$color-bgLight: #F2F2F2;
-$color-fontDark: #F6FEFD;
+$color-bgLight: #f2f2f2;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $font-web: 'Roboto Flex', Arial;
@@ -18,20 +18,20 @@ $font-web: 'Roboto Flex', Arial;
 @mixin lightMode {
     background-color: $color-bgLight;
     color: $color-fontLight;
-    transition: .25s ease-in;
+    transition: 0.25s ease-in;
 }
 
 @mixin darkMode {
     background-color: $color-bgDark;
     color: $color-fontDark;
-    transition: .25s ease-in;
+    transition: 0.25s ease-in;
 }
 
 :root {
     font-family: $font-web;
     line-height: 1.5;
     font-weight: 400;
-  
+
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -45,14 +45,14 @@ $font-web: 'Roboto Flex', Arial;
 
     &::-webkit-scrollbar {
         width: 0.5em;
-        background:$color-secundaryDark;
+        background: $color-secundaryDark;
     }
 
     &::-webkit-scrollbar-track {
         border-radius: 50px;
         background-color: $color-secundaryDark;
     }
-    
+
     &::-webkit-scrollbar-thumb {
         border-radius: 50px;
         background-color: $color-secundaryLight;
@@ -72,7 +72,7 @@ html {
         background-color: $color-bgLight;
         color: $color-fontLight;
         position: relative;
-     
+
         &::-webkit-scrollbar {
             width: 0.7em;
         }
@@ -94,16 +94,16 @@ html {
         ul {
             list-style: none;
         }
-        
+
         .light {
-            @include lightMode; 
+            @include lightMode;
         }
 
         .dark {
             @include darkMode;
         }
     }
-    
+
     &.modalOpen {
         overflow-y: hidden;
         margin: 0 1em 0 0;

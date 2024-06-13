@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
 $color-primaryDark: #0d977e;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -21,230 +21,230 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .login-form-container {
-  border-radius: 20px;
-  margin: 6em auto 0;
-  padding: 1em 2em;
-  display: flex;
-  justify-content: center;
-  background-color: #f3faf9de;
-  box-shadow: 2px 2px 15px $color-shadow;
-
-  h2 {
-    font-size: 3.8rem;
-    font-family: $font-title;
-    text-align: left;
-    width: 8.5em;
-  }
-
-  .loginCredencial {
+    border-radius: 20px;
+    margin: 6em auto 0;
+    padding: 1em 2em;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7%;
-
-    .btnCredencials {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 2.5em 0;
-      gap: 2em;
-
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1em;
-        padding: .1em 2em;
-        max-width: 16em;
-        font-size: 2.4rem;
-        font-family: $font-title;
-        font-weight: bold;
-        border-radius: 10px;
-        background: $color-bgLight;
-        border: none;
-        cursor: pointer;
-        box-shadow: 4px 4px 4px $color-shadow;
-        transition: .25s ease;
-
-        &:hover {
-          filter: brightness(.9);
-        }
-
-        &.btnFace {
-          max-width: 18em;
-          font-size: 2.2rem;
-        }
-
-        .iconGoogle {
-          height: 62px;
-          width: 36px;
-        }
-
-        .iconFacebook {
-          height: 62px;
-          width: 36px;
-          color: #0866FF;
-        }
-      }
-    }
-  }
-
-  .containerSeparate {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    margin: 0 2.5em;
-    color: $color-primaryLight;
-    gap: .5em;
+    background-color: #f3faf9de;
+    box-shadow: 2px 2px 15px $color-shadow;
 
-    hr {
-      border: none;
-      background-color: $color-primaryLight;
-      width: 3px;
-      height: 100%;
-      border-radius: 5px;
-    }
-
-    h3 {
-      font-family: $font-items;
-      font-size: 2rem;
-    }
-  }
-
-  .login {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 2.5em;
-
-    .inputsLogin {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5em;
-    }
-
-    .btnLoginForm {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      place-self: center;
-      gap: 3em; 
-
-      button {
-        font-size: 2rem;
-        width: 10em;
-        height: 2.5em;
-        border-radius: 5px;
-        border: none;
-        background-color: $color-primaryLight;
-        color: $color-fontLight;
-        font-family: $font-title;
-        cursor: pointer;
-        box-shadow: 2px 2px 4px $color-shadow;
-        transition: .2s ease;
-
-        &:hover {
-          filter: brightness(.9);
-          box-shadow: 0 0 10px $color-primaryLight;
-        }
-        &:active + .login-form-container {
-          transition: 2s linear;
-          transform: rotateX(180deg);
-        }
-      }
-    }
-  }
-}
-
-.dark {
-  .login-form-container {
-    background-color: #72757478;
-    box-shadow: 4px 4px 8px #4b4c4c78;
-  
-    .loginCredencial {  
-      .btnCredencials {        
-        button {
-          box-shadow: 4px 4px 4px $color-shadow;
-        }
-      }
-    }
-  
-    .containerSeparate {
-      color: $color-primaryDark;
-  
-      hr {
-        background-color: $color-primaryDark;
-      }
-    }
-  
-    .login {  
-      .btnLoginForm {
-        button {
-          background-color: $color-primaryDark;
-          color: $color-fontDark;
-          box-shadow: 2px 2px 4px $color-shadow;
-        }
-      }
-    }
-  }  
-}
-
-@media only screen and (max-width: 1024px) {
-  .login-form-container {
-    flex-direction: column;
-    margin: 4em auto 10em;
-  
     h2 {
-      text-align: center;
-      width: 10em;
+        font-size: 3.8rem;
+        font-family: $font-title;
+        text-align: left;
+        width: 8.5em;
     }
 
     .loginCredencial {
-      flex-direction: column;
-      padding: 1em 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7%;
 
-      .btnCredencials {
-        margin: 1em 0 0;
-      }
+        .btnCredencials {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2.5em 0;
+            gap: 2em;
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1em;
+                padding: 0.1em 2em;
+                max-width: 16em;
+                font-size: 2.4rem;
+                font-family: $font-title;
+                font-weight: bold;
+                border-radius: 10px;
+                background: $color-bgLight;
+                border: none;
+                cursor: pointer;
+                box-shadow: 4px 4px 4px $color-shadow;
+                transition: 0.25s ease;
+
+                &:hover {
+                    filter: brightness(0.9);
+                }
+
+                &.btnFace {
+                    max-width: 18em;
+                    font-size: 2.2rem;
+                }
+
+                .iconGoogle {
+                    height: 62px;
+                    width: 36px;
+                }
+
+                .iconFacebook {
+                    height: 62px;
+                    width: 36px;
+                    color: #0866ff;
+                }
+            }
+        }
     }
-  
+
     .containerSeparate {
-      flex-direction: row;
-      margin: 0;
-      height: 4em;
-      width: 100%;
-  
-      hr {
-        width: 100%;
-        height: 3px;
-      }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 2.5em;
+        color: $color-primaryLight;
+        gap: 0.5em;
+
+        hr {
+            border: none;
+            background-color: $color-primaryLight;
+            width: 3px;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        h3 {
+            font-family: $font-items;
+            font-size: 2rem;
+        }
     }
-  
+
     .login {
-      align-items: center;
-      padding: 0 1em 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 2.5em;
+
+        .inputsLogin {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+        }
+
+        .btnLoginForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-self: center;
+            gap: 3em;
+
+            button {
+                font-size: 2rem;
+                width: 10em;
+                height: 2.5em;
+                border-radius: 5px;
+                border: none;
+                background-color: $color-primaryLight;
+                color: $color-fontLight;
+                font-family: $font-title;
+                cursor: pointer;
+                box-shadow: 2px 2px 4px $color-shadow;
+                transition: 0.2s ease;
+
+                &:hover {
+                    filter: brightness(0.9);
+                    box-shadow: 0 0 10px $color-primaryLight;
+                }
+                &:active + .login-form-container {
+                    transition: 2s linear;
+                    transform: rotateX(180deg);
+                }
+            }
+        }
     }
-  }  
+}
+
+.dark {
+    .login-form-container {
+        background-color: #72757478;
+        box-shadow: 4px 4px 8px #4b4c4c78;
+
+        .loginCredencial {
+            .btnCredencials {
+                button {
+                    box-shadow: 4px 4px 4px $color-shadow;
+                }
+            }
+        }
+
+        .containerSeparate {
+            color: $color-primaryDark;
+
+            hr {
+                background-color: $color-primaryDark;
+            }
+        }
+
+        .login {
+            .btnLoginForm {
+                button {
+                    background-color: $color-primaryDark;
+                    color: $color-fontDark;
+                    box-shadow: 2px 2px 4px $color-shadow;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .login-form-container {
+        flex-direction: column;
+        margin: 4em auto 10em;
+
+        h2 {
+            text-align: center;
+            width: 10em;
+        }
+
+        .loginCredencial {
+            flex-direction: column;
+            padding: 1em 0 0;
+
+            .btnCredencials {
+                margin: 1em 0 0;
+            }
+        }
+
+        .containerSeparate {
+            flex-direction: row;
+            margin: 0;
+            height: 4em;
+            width: 100%;
+
+            hr {
+                width: 100%;
+                height: 3px;
+            }
+        }
+
+        .login {
+            align-items: center;
+            padding: 0 1em 2em;
+        }
+    }
 }
 
 @media only screen and (max-width: 600px) {
-  .login-form-container {
-    padding: 0 1em;
-  
-    h2 {
-      font-size: 3rem;
-    }
-  
-    .login {
-      .btnLoginForm {  
-        grid-template-columns: 1fr;
-        gap: 1em;
+    .login-form-container {
+        padding: 0 1em;
 
-        button {
-          width: 10em;
+        h2 {
+            font-size: 3rem;
         }
-      }
+
+        .login {
+            .btnLoginForm {
+                grid-template-columns: 1fr;
+                gap: 1em;
+
+                button {
+                    width: 10em;
+                }
+            }
+        }
     }
-  }  
 }

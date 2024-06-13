@@ -1,64 +1,64 @@
 $color-fontLight: #121717;
 $color-shadow: #12171740;
 
-.scrollBtn{
-  width: 18%;
-  margin-left: auto;
-  padding-right: 5%;
-  margin-top: 10%;
-  cursor: pointer;
+.scrollBtn {
+    width: 18%;
+    margin-left: auto;
+    padding-right: 5%;
+    margin-top: 10%;
+    cursor: pointer;
 
-  .progressBar{
-    position: fixed;
-    z-index: 999;
-    bottom: 20px;
-    right: 10px;
-    height: 3.5em;
-    width: 3.5em;
-    display: none;
-    place-items: center;
-    border-radius: 50%;
-    box-shadow: 0 0 10px $color-shadow;
+    .progressBar {
+        position: fixed;
+        z-index: 999;
+        bottom: 20px;
+        right: 10px;
+        height: 3.5em;
+        width: 3.5em;
+        display: none;
+        place-items: center;
+        border-radius: 50%;
+        box-shadow: 0 0 10px $color-shadow;
 
-    &.visible {
-      animation-name: is-bouncing, appearScrollButton;
-      animation-duration: 1s, 0.3s;
-      animation-timing-function: ease-in-out, cubic-bezier(0, .30, .80, 1);
-      animation-direction: alternate, forwards;
-      animation-iteration-count: infinite, 1;
+        &.visible {
+            animation-name: is-bouncing, appearScrollButton;
+            animation-duration: 1s, 0.3s;
+            animation-timing-function: ease-in-out, cubic-bezier(0, 0.3, 0.8, 1);
+            animation-direction: alternate, forwards;
+            animation-iteration-count: infinite, 1;
 
-      animation-direction: alternate, normal;
+            animation-direction: alternate, normal;
+        }
+
+        .arrowUp {
+            display: block;
+            height: calc(100% - 10px);
+            width: calc(100% - 10px);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 3rem;
+            color: $color-fontLight;
+        }
     }
-
-    .arrowUp{
-      display: block;
-      height: calc(100% - 10px);
-      width: calc(100% - 10px);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 3rem;
-      color: $color-fontLight;
-    }
-  }
 }
 
 @keyframes appearScrollButton {
-  0% {
-    opacity: 0;
-    transform: translateY(-100vh);
-  }
-  95% {
-    transform: translateY(22px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(10px);
-  }
+    0% {
+        opacity: 0;
+        transform: translateY(-100vh);
+    }
+    95% {
+        transform: translateY(22px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(10px);
+    }
 }
 
 @keyframes is-bouncing {
-  to {
-    transform: translateY(10px);
-  }
+    to {
+        transform: translateY(10px);
+    }
 }

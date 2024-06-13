@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
-$color-fontDark: #F6FEFD;
+$color-bgLight: #f9fbfb;
+$color-bgDark: #2d2d2d;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -20,7 +20,7 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
-main {   
+main {
     .title {
         display: flex;
         align-items: center;
@@ -75,17 +75,17 @@ main {
                 .btnBackBuy {
                     font-family: $font-items;
                     border: none;
-                    padding: .75em 1.5em;
+                    padding: 0.75em 1.5em;
                     border-radius: 10px;
                     background: $color-primaryLight;
                     box-shadow: 0 0 8px $color-shadow;
                     font-size: 2.4rem;
                     cursor: pointer;
                     position: relative;
-                    transition: .2s ease;
+                    transition: 0.2s ease;
 
                     &:hover {
-                        filter: brightness(.9);
+                        filter: brightness(0.9);
                         box-shadow: 5px 10px 5px $color-shadow;
                         transform: rotateX(25deg);
                         top: 0px;
@@ -118,7 +118,7 @@ main {
                         justify-content: space-between;
                         padding: 0 18% 0 25%;
                         font-size: 2rem;
-                        
+
                         .labelsNumber {
                             display: flex;
                             gap: 7.5em;
@@ -132,10 +132,10 @@ main {
 
                     .productDesc {
                         display: flex;
-                        align-items: center; 
+                        align-items: center;
                         gap: 3em;
                         padding: 1em 1em 0;
-                  
+
                         img {
                             height: 10em;
                             width: 15em;
@@ -146,7 +146,7 @@ main {
 
                         .nameProduct {
                             width: 200%;
-                            font-size: clamp(1.8rem, .2rem + 1vw, 2rem);
+                            font-size: clamp(1.8rem, 0.2rem + 1vw, 2rem);
                         }
 
                         .amount {
@@ -159,18 +159,18 @@ main {
                                 color: $color-fontDark;
                                 background: none;
                                 border: none;
-                                font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
+                                font-size: clamp(2rem, 0.8rem + 1vw, 2.4rem);
                                 cursor: pointer;
                             }
 
                             span {
-                                font-size: clamp(2rem, .8rem + 1vw, 2.4rem);
+                                font-size: clamp(2rem, 0.8rem + 1vw, 2.4rem);
                             }
                         }
-                        
+
                         .priceProduct {
                             width: 100%;
-                            font-size: clamp(2rem, .8rem + 1vw, 2rem);
+                            font-size: clamp(2rem, 0.8rem + 1vw, 2rem);
                         }
 
                         .btnRemove {
@@ -186,8 +186,8 @@ main {
 
             .cleanCart {
                 margin: 1em 0;
-                padding: .5em 1.5em;
-                gap: .5em;
+                padding: 0.5em 1.5em;
+                gap: 0.5em;
                 display: flex;
                 align-items: center;
                 border: none;
@@ -198,7 +198,7 @@ main {
                 background: $color-secundaryDark;
                 box-shadow: 0 0 10px $color-shadow;
                 font-family: $font-items;
-                transition: .5s ease;
+                transition: 0.5s ease;
 
                 &:hover {
                     filter: brightness(1.2);
@@ -208,7 +208,7 @@ main {
                 .icon {
                     font-size: 3rem;
                 }
-            }  
+            }
         }
 
         .resume {
@@ -226,13 +226,13 @@ main {
                 width: clamp(25em, 90vw, 30em);
                 position: relative;
                 box-shadow: 4px 4px 10px $color-shadow;
-    
+
                 h3 {
                     font-family: $font-title;
                     text-align: center;
                     font-size: 2.8rem;
                 }
-                
+
                 .hrResume {
                     width: 100%;
                     border: 2px solid $color-primaryLight;
@@ -245,30 +245,30 @@ main {
                     width: 90%;
                     border: 1px solid $color-primaryLight;
                 }
-    
+
                 .values {
                     display: flex;
                     justify-content: space-around;
                     font-size: 2.4rem;
-                    padding: .5em 0;
+                    padding: 0.5em 0;
                 }
-    
+
                 .paymentOptions {
                     display: flex;
                     flex-direction: column;
-                    gap: .5em;
+                    gap: 0.5em;
                     padding: 15px;
                     font-size: 2rem;
-    
+
                     .options {
                         display: flex;
                         align-items: center;
-                        gap: .75em;
-    
+                        gap: 0.75em;
+
                         .icon {
                             font-size: 3.6rem;
                         }
-    
+
                         p {
                             strong {
                                 color: $color-primaryLight;
@@ -279,11 +279,11 @@ main {
                         }
                     }
                 }
-    
+
                 .endOrder {
                     width: 100%;
                     font-size: 2.4rem;
-                    padding: .75em 1em;
+                    padding: 0.75em 1em;
                     border-radius: 0 0 10px 10px;
                     border: none;
                     position: absolute;
@@ -291,10 +291,10 @@ main {
                     font-family: $font-title;
                     background: $color-primaryLight;
                     cursor: pointer;
-                    transition: .5s ease;
-    
+                    transition: 0.5s ease;
+
                     &:hover {
-                        filter: brightness(.95);
+                        filter: brightness(0.95);
                         box-shadow: 0 0 10px #4e8581;
                     }
                 }
@@ -312,7 +312,7 @@ main {
                 h4 {
                     font-family: $font-title;
                     font-size: 2rem;
-                    padding: 0 1em .5em ;
+                    padding: 0 1em 0.5em;
                 }
 
                 .hrDelivery {
@@ -342,13 +342,13 @@ main {
                     .calcDelivery {
                         display: flex;
                         align-items: center;
-                        gap: .5em;
+                        gap: 0.5em;
                         position: absolute;
                         height: 100%;
                         right: 0;
                         top: 0;
                         font-size: clamp(2rem, 1rem + 1vw, 2.2rem);
-                        padding: .5em 1em;
+                        padding: 0.5em 1em;
                         border: 1px solid $color-primaryLight;
                         background-color: $color-primaryLight;
                         color: $color-fontLight;
@@ -356,10 +356,10 @@ main {
                         font-weight: 600;
                         border-radius: 0 10px 10px 0;
                         cursor: pointer;
-                        transition: .5s ease;
+                        transition: 0.5s ease;
 
                         &:hover {
-                            filter: brightness(.95);
+                            filter: brightness(0.95);
                             box-shadow: 0 0 10px #4e8581;
                         }
 
@@ -381,8 +381,8 @@ main {
                     display: flex;
                     justify-content: space-evenly;
                     align-items: center;
-                    padding: .5em 0;
-                
+                    padding: 0.5em 0;
+
                     .radio-container {
                         cursor: pointer;
 
@@ -395,7 +395,7 @@ main {
                             border-radius: 50%;
 
                             &:after {
-                                content: "";
+                                content: '';
                                 position: absolute;
                                 display: none;
                             }
@@ -414,7 +414,7 @@ main {
                             border-radius: 50%;
                             background: $color-primaryLight;
                         }
-                          
+
                         .rbDelivery {
                             position: absolute;
                             opacity: 0;
@@ -428,81 +428,81 @@ main {
 
 .dark {
     main {
-        .title {    
+        .title {
             hr {
-                border: 2px solid $color-primaryDark
+                border: 2px solid $color-primaryDark;
             }
         }
-    
-        .containerMain {    
-            .containerCart {    
+
+        .containerMain {
+            .containerCart {
                 .emptyCartMessage {
                     box-shadow: 0 0 8px $color-card;
-    
+
                     .btnBackBuy {
                         background: $color-primaryDark;
                         box-shadow: 0 0 15px $color-shadow;
                     }
                 }
-    
-                .listCart {    
+
+                .listCart {
                     .order {
                         box-shadow: 2px 2px 5px $color-card;
                         background-color: $color-secundaryDark;
-    
+
                         hr {
                             border: 1px solid $color-primaryDark;
                         }
                     }
                 }
-    
+
                 .cleanCart {
                     background: $color-secundaryLight;
                     box-shadow: 2px 2px 5px $color-card;
-    
+
                     &:hover {
-                        filter: brightness(.9);
+                        filter: brightness(0.9);
                         box-shadow: 0 0 15px #263d3c;
                     }
-    
+
                     .icon {
                         font-size: 3rem;
                     }
                 }
-    
+
                 .delivery {
                     box-shadow: 2px 2px 5px $color-card;
                     background-color: $color-secundaryDark;
-    
+
                     hr {
                         border: 1px solid $color-primaryDark;
                     }
-    
-                    .inputCep {    
-                        input {      
+
+                    .inputCep {
+                        input {
                             border: 1px solid $color-primaryDark;
                         }
-    
+
                         .calcDelivery {
                             border: 1px solid $color-primaryDark;
                             background-color: $color-primaryDark;
-    
+
                             &:hover {
                                 box-shadow: 0 0 10px #3e706d;
                             }
                         }
-    
+
                         .SearchCep {
                             color: $color-primaryDark;
                         }
                     }
-    
+
                     .optionsDelivery {
-                        .radio-container {    
+                        .radio-container {
                             .checkmark {
                                 border: 1px solid $color-primaryDark;
                             }
-    
+
                             & .checkmark:after {
                                 background: $color-primaryDark;
                             }
@@ -510,18 +510,18 @@ main {
                     }
                 }
             }
-    
+
             .resumeBuy {
                 box-shadow: 2px 2px 5px $color-card;
                 background-color: $color-secundaryDark;
-                
+
                 .hrResume {
                     border: 2px solid $color-primaryDark;
                 }
                 .hrOptions {
                     border: 1px solid $color-primaryDark;
                 }
-    
+
                 .paymentOptions {
                     .options {
                         p {
@@ -534,10 +534,10 @@ main {
                         }
                     }
                 }
-    
+
                 .endOrder {
                     background: $color-primaryDark;
-    
+
                     &:hover {
                         box-shadow: 0 0 10px #3e706d;
                     }
@@ -547,29 +547,30 @@ main {
     }
 }
 
-@media only screen and (max-width: 1350px){
+@media only screen and (max-width: 1350px) {
     section {
         .containerMain {
             justify-content: center;
             align-items: center;
             flex-direction: column;
-    
+
             .containerCart {
                 align-items: center;
-    
+
                 .emptyCartMessage {
                     width: clamp(30em, 90vw, 90em);
                 }
-    
-                .listCart {    
+
+                .listCart {
                     .order {
                         width: clamp(23em, 90vw, 90em);
-    
-                        .labels, hr {
+
+                        .labels,
+                        hr {
                             display: none;
                         }
 
-                        .productDesc {   
+                        .productDesc {
                             gap: 1em;
                             flex-wrap: wrap;
 
@@ -589,7 +590,7 @@ main {
                                 .buttonQtd {
                                     font-size: 2.4rem;
                                 }
-    
+
                                 span {
                                     font-size: 2.4rem;
                                 }
@@ -599,19 +600,19 @@ main {
                                 width: 40%;
                                 font-size: 2.4rem;
                             }
-                            
+
                             .btnRemove {
                                 width: 40%;
                             }
                         }
                     }
                 }
-    
+
                 .delivery {
-                    margin: 0 0 2em; 
+                    margin: 0 0 2em;
                 }
             }
-    
+
             .resumeBuy {
                 height: 31em;
                 width: clamp(23em, 90vw, 30em);
@@ -621,17 +622,17 @@ main {
     }
 }
 
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 500px) {
     section {
-        .containerMain {    
-            .containerCart {    
+        .containerMain {
+            .containerCart {
                 .emptyCartMessage {
                     width: clamp(23em, 90vw, 90em);
                 }
-    
-                .listCart {    
+
+                .listCart {
                     .order {
-                        .productDesc {   
+                        .productDesc {
                             gap: 1em;
                             flex-wrap: wrap;
 
@@ -652,7 +653,7 @@ main {
                                 .buttonQtd {
                                     font-size: 2.2rem;
                                 }
-    
+
                                 h4 {
                                     font-size: 2.2rem;
                                 }

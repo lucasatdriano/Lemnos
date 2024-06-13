@@ -5,75 +5,85 @@ import LoginForm from './components/login/LoginForm';
 import AuthService from '../../services/authService';
 import RegistrationForm from './components/registration/RegistrationForm';
 import { toast } from 'react-toastify';
-import { cadastrarUsuario } from '../../services/ApiService'; 
+import { cadastrarUsuario } from '../../services/ApiService';
 import { useState, useEffect } from 'react';
 
 export default function Login() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [showLoginForm, setShowLoginForm] = useState(true);
-  
-  useEffect(() => {
-    if (AuthService.isLoggedIn()) {
-      setLoggedIn(true);
-    }
-  }, []);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(true);
 
-  const handleLogin = () => {
-    if (AuthService.isLoggedIn()) {
-      const tokenList = AuthService.getToken().split('.');
-      const json = JSON.parse(atob(tokenList[1]));
-      AuthService.setRole(json.role);
-      setLoggedIn(true);
-    }
-  };
+    useEffect(() => {
+        if (AuthService.isLoggedIn()) {
+            setLoggedIn(true);
+        }
+    }, []);
 
-  const handleLogout = () => {
-    AuthService.logout();
-    setLoggedIn(false);
-  };
-
-  const handleRegistrationForm = () => {
-    setShowLoginForm(false);
-  };
-
-  const handleRegistrationSuccess = async (form) => {
-    const firstName = form.name.split(" ")[0];
-
-    form.cpf = form.cpf.substring(0, 3) + form.cpf.substring(4, 7) + form.cpf.substring(8, 11) + form.cpf.substring(12);
-
-    const formattedForm = {
-      name: form.name,
-      cpf: form.cpf,
-      email: form.email,
-      password: form.password,
+    const handleLogin = () => {
+        if (AuthService.isLoggedIn()) {
+            const tokenList = AuthService.getToken().split('.');
+            const json = JSON.parse(atob(tokenList[1]));
+            AuthService.setRole(json.role);
+            setLoggedIn(true);
+        }
     };
 
-    try {
-      await cadastrarUsuario(formattedForm);
-      toast.success(`Cadastro realizado, ${firstName}!!`);
-      handleBackToLogin();
-    } catch (error) {
-      toast.error(`${error.message}`);
-    }
-  };
+    const handleLogout = () => {
+        AuthService.logout();
+        setLoggedIn(false);
+    };
 
-  const handleBackToLogin = () => {
-    setShowLoginForm(true);
-  };
+    const handleRegistrationForm = () => {
+        setShowLoginForm(false);
+    };
 
-  return (
-    <main className='container'>
-      {loggedIn ? (
-        <User onLogout={handleLogout} />
-      ) : (
-        <div className='loginScreen'>
-          {showLoginForm ? (
-            <LoginForm onLogin={handleLogin} onCadastroClick={handleRegistrationForm} />
-          ) : (
-            <RegistrationForm onCadastroSuccess={handleRegistrationSuccess} handleBackToLogin={handleBackToLogin} />
-          )}
-        </div>
-      )}
-    </main>
-  );
+    const handleRegistrationSuccess = async (form) => {
+        const firstName = form.name.split(' ')[0];
+
+        form.cpf =
+            form.cpf.substring(0, 3) +
+            form.cpf.substring(4, 7) +
+            form.cpf.substring(8, 11) +
+            form.cpf.substring(12);
+
+        const formattedForm = {
+            name: form.name,
+            cpf: form.cpf,
+            email: form.email,
+            password: form.password,
+        };
+
+        try {
+            await cadastrarUsuario(formattedForm);
+            toast.success(`Cadastro realizado, ${firstName}!!`);
+            handleBackToLogin();
+        } catch (error) {
+            toast.error(`${error.message}`);
+        }
+    };
+
+    const handleBackToLogin = () => {
+        setShowLoginForm(true);
+    };
+
+    return (
+        <main className="container">
+            {loggedIn ? (
+                <User onLogout={handleLogout} />
+            ) : (
+                <div className="loginScreen">
+                    {showLoginForm ? (
+                        <LoginForm
+                            onLogin={handleLogin}
+                            onCadastroClick={handleRegistrationForm}
+                        />
+                    ) : (
+                        <RegistrationForm
+                            onCadastroSuccess={handleRegistrationSuccess}
+                            handleBackToLogin={handleBackToLogin}
+                        />
+                    )}
+                </div>
+            )}
+        </main>
+    );
 }

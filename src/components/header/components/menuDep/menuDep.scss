@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -29,7 +29,7 @@ $font-items: 'Poppins', Helvetica;
 
         .menuIcon {
             color: $color-fontDark;
-            margin: .5em .8em 0;
+            margin: 0.5em 0.8em 0;
             height: 36px;
             width: 36px;
         }
@@ -45,7 +45,7 @@ $font-items: 'Poppins', Helvetica;
         z-index: 99;
         opacity: 0;
         display: none;
-    
+
         &.active {
             animation: modal 0.2s ease-in forwards;
             display: block;
@@ -66,7 +66,7 @@ $font-items: 'Poppins', Helvetica;
         overflow-y: auto;
         animation: menuDep 0.5s ease-in-out forwards;
         width: 20%;
-        
+
         &.active {
             display: flex;
             align-items: center;
@@ -78,7 +78,7 @@ $font-items: 'Poppins', Helvetica;
             width: 100%;
             max-width: 5em;
             height: 100%;
-            filter: drop-shadow( 4px 4px 4px $color-shadow);
+            filter: drop-shadow(4px 4px 4px $color-shadow);
         }
 
         .hrMenu {
@@ -111,9 +111,9 @@ $font-items: 'Poppins', Helvetica;
                 padding: 8px 10px;
                 color: $color-fontDark;
                 font-size: 2rem;
-                transition: .3s ease-in;
+                transition: 0.3s ease-in;
                 cursor: pointer;
-                
+
                 &:hover {
                     background-color: $color-secundaryDark;
                     text-decoration: underline;
@@ -133,24 +133,24 @@ $font-items: 'Poppins', Helvetica;
                 // align-items: center;
                 flex-direction: column;
                 text-align: left;
-                
+
                 .link {
                     display: flex;
                     // justify-content: center;
-                    gap: .5em;
+                    gap: 0.5em;
                     align-items: center;
                     padding: 10px 10px 5px;
-                    transition: .3s ease-in;
+                    transition: 0.3s ease-in;
                     color: $color-fontDark;
                     font-size: 2rem;
                     width: 100%;
 
                     &:hover {
                         background-color: $color-secundaryDark;
-                        text-decoration: underline; 
+                        text-decoration: underline;
                     }
 
-                    [class*=Icon] {
+                    [class*='Icon'] {
                         width: 28px;
                         height: 28px;
                     }
@@ -163,7 +163,7 @@ $font-items: 'Poppins', Helvetica;
             padding: 0 0 10px;
             justify-content: center;
             position: relative;
-        
+
             .checkbox {
                 cursor: pointer;
                 position: absolute;
@@ -187,7 +187,7 @@ $font-items: 'Poppins', Helvetica;
                     color: $color-fontDark;
                 }
             }
-            
+
             .label {
                 cursor: pointer;
                 display: block;
@@ -198,7 +198,7 @@ $font-items: 'Poppins', Helvetica;
                 position: relative;
                 box-shadow: 2px 2px 4px $color-shadow;
                 overflow: hidden;
-        
+
                 .ball {
                     width: 28px;
                     height: 28px;
@@ -219,19 +219,23 @@ $font-items: 'Poppins', Helvetica;
                     left: 5px;
                     top: 50%;
                     transform: translateY(-50%);
-                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    transition:
+                        color 5ms ease-in-out,
+                        transform 0.5s ease-in-out;
                 }
-                
+
                 .iconMoon {
                     position: absolute;
                     z-index: 10;
-                    color:$color-fontDark;
+                    color: $color-fontDark;
                     width: 26px;
                     height: 26px;
                     right: 5px;
                     top: -50%;
                     transform: translateY(-50%);
-                    transition: color 5ms ease-in-out, transform .5s ease-in-out;
+                    transition:
+                        color 5ms ease-in-out,
+                        transform 0.5s ease-in-out;
                 }
             }
         }
@@ -277,10 +281,10 @@ $font-items: 'Poppins', Helvetica;
 }
 
 @media only screen and (max-width: 1000px) {
-    .menuCat {    
+    .menuCat {
         .menuButton {
             .menuIcon {
-                margin: .5em 0 0;
+                margin: 0.5em 0 0;
             }
         }
 
@@ -296,10 +300,10 @@ $font-items: 'Poppins', Helvetica;
 }
 
 @media only screen and (max-width: 620px) {
-    .menuCat {   
+    .menuCat {
         .menuButton {
             .menuIcon {
-                margin: .5em 1em 0 -1em;
+                margin: 0.5em 1em 0 -1em;
             }
         }
 

@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -26,16 +26,16 @@ $color-shadow: #12171740;
     }
 
     .splide__slide {
-        padding: 0 .5em;
+        padding: 0 0.5em;
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center; 
+        justify-content: center;
         cursor: grab;
 
         img {
             margin: 0;
-            object-fit: contain; 
+            object-fit: contain;
             max-width: 100%;
             max-height: 100%;
             border-radius: 20px;
@@ -62,7 +62,7 @@ $color-shadow: #12171740;
 
             &.is-active {
                 &::after {
-                    content: "";
+                    content: '';
                     position: absolute;
                     top: 50%;
                     left: 0;
@@ -87,7 +87,7 @@ $color-shadow: #12171740;
             font-size: 2.4rem;
             background-color: #f7efef5e;
             box-shadow: 2px 2px 4px $color-shadow;
-            transition: background-color .3s ease;
+            transition: background-color 0.3s ease;
             cursor: pointer;
 
             &:hover {
@@ -123,18 +123,17 @@ $color-shadow: #12171740;
 
             .slide {
                 display: none;
-            }   
+            }
 
             .slideMob {
                 display: block;
-            }    
+            }
         }
 
         .splide__arrow {
             &.splide__arrow--prev,
             &.splide__arrow--next {
                 font-size: 1.8rem;
-
             }
         }
 

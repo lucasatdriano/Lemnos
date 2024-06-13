@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
 $color-primaryDark: #0d977e;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -21,7 +21,7 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .containerHistory {
-    padding: 1.5em 0 .5em;
+    padding: 1.5em 0 0.5em;
     width: 25em;
     text-align: center;
     overflow-y: auto;
@@ -33,9 +33,9 @@ $font-items: 'Poppins', Helvetica;
 
     ul {
         text-align: left;
-        
+
         .itensCompra {
-            margin: .5em 0;
+            margin: 0.5em 0;
             font-family: $font-items;
             cursor: pointer;
             border-bottom: 2px solid $color-primaryLight;
@@ -52,13 +52,13 @@ $font-items: 'Poppins', Helvetica;
 }
 
 .dark {
-    .containerHistory {    
-        ul {            
+    .containerHistory {
+        ul {
             .itensCompra {
                 border-bottom: 2px solid $color-primaryDark;
             }
         }
-    
+
         .btnMost {
             color: $color-secundaryLight;
         }

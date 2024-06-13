@@ -8,26 +8,26 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-  const [theme, setTheme] = useState('light');
-  const { pathname } = useLocation();
+    const [theme, setTheme] = useState('light');
+    const { pathname } = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
+    const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+    };
 
-  return (
-    <>
-      <section className={`${theme}`}>
-        <Header toggleTheme={toggleTheme} />
-        <Outlet />
-        <BackToTopButton />
-        <ToastContainer position="bottom-right"/>
-        <Footer />
-      </section>
-    </>
-  );
+    return (
+        <>
+            <section className={`${theme}`}>
+                <Header toggleTheme={toggleTheme} />
+                <Outlet />
+                <BackToTopButton />
+                <ToastContainer position="bottom-right" />
+                <Footer />
+            </section>
+        </>
+    );
 }

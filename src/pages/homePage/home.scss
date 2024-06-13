@@ -1,14 +1,14 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-fontDark: #F6FEFD;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -29,11 +29,11 @@ main {
         .containerDeps {
             display: grid;
             grid-template-columns: repeat(5, minmax(100px, 1fr));
-            grid-template-rows: repeat(2, minmax(200px, 1fr)); 
+            grid-template-rows: repeat(2, minmax(200px, 1fr));
             gap: 20px;
-            padding: .5em 0 1em;
+            padding: 0.5em 0 1em;
             font-family: $font-items;
-        
+
             .gridItem {
                 background-color: $color-card;
                 padding: 20px;
@@ -47,21 +47,21 @@ main {
                     border-radius: 10px;
                     object-fit: contain;
                 }
-            } 
+            }
 
             .item1 {
                 grid-column: span 3;
             }
-            
-            .item2 { 
+
+            .item2 {
                 grid-row: span 2;
 
                 img {
                     height: 395px;
                 }
             }
-            
-            .item4 { 
+
+            .item4 {
                 grid-column: span 2;
             }
 
@@ -86,25 +86,39 @@ main {
             grid-template-rows: 1fr 1fr;
             gap: 2em;
             height: auto;
-            padding: .5em 0 1em;
+            padding: 0.5em 0 1em;
         }
     }
 
     .brands {
         width: 90%;
-        margin: 2em auto 0; 
+        margin: 2em auto 0;
         height: auto;
         padding-top: 1em;
-        
+
         .brandsList {
             width: 100%;
             white-space: nowrap;
-            overflow: hidden; 
+            overflow: hidden;
 
-            &[data-animated=true] {
+            &[data-animated='true'] {
                 overflow: hidden;
-                -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
-                mask: linear-gradient(90deg, transparent, white 20%, white 80%, white 20%, transparent);
+                -webkit-mask: linear-gradient(
+                    90deg,
+                    transparent,
+                    white 20%,
+                    white 80%,
+                    white 20%,
+                    transparent
+                );
+                mask: linear-gradient(
+                    90deg,
+                    transparent,
+                    white 20%,
+                    white 80%,
+                    white 20%,
+                    transparent
+                );
 
                 .brandCard {
                     animation: scroll 80s linear infinite;
@@ -115,27 +129,27 @@ main {
                 animation-play-state: paused;
             }
 
-          .brandCard {
-            padding-block: 1em;
-            margin: 1em;
-            display: inline-block;
-          }
+            .brandCard {
+                padding-block: 1em;
+                margin: 1em;
+                display: inline-block;
+            }
         }
     }
 }
 
 @keyframes scroll {
     0% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-3500% - 100vw));
+        transform: translateX(calc(-3500% - 100vw));
     }
 }
 
 .dark {
-    main {    
-        .mainDep {    
+    main {
+        .mainDep {
             .containerDeps {
                 .gridItem {
                     background-color: $color-secundaryLight;
@@ -149,7 +163,7 @@ main {
 
 @media only screen and (max-width: 1740px) {
     main {
-        .mainProds {    
+        .mainProds {
             .productsList {
                 grid-template-columns: repeat(4, minmax(100px, 1fr));
                 flex-wrap: wrap;
@@ -165,7 +179,7 @@ main {
 
 @media only screen and (max-width: 1340px) {
     main {
-        .mainProds {    
+        .mainProds {
             .productsList {
                 grid-template-columns: repeat(3, minmax(100px, 1fr));
             }
@@ -180,18 +194,20 @@ main {
 
 @media only screen and (max-width: 1024px) {
     main {
-        .mainDep {    
+        .mainDep {
             .containerDeps {
                 grid-template-columns: repeat(2, minmax(100px, 1fr));
-                grid-template-rows: repeat(1, minmax(200px, 1fr)); 
-            
-                .gridItem {    
+                grid-template-rows: repeat(1, minmax(200px, 1fr));
+
+                .gridItem {
                     img {
                         height: 12em;
                     }
-                } 
-    
-                .item1, .item2, .item4 {
+                }
+
+                .item1,
+                .item2,
+                .item4 {
                     grid-column: span 1;
                     grid-row: span 1;
                 }
@@ -203,7 +219,7 @@ main {
                 }
             }
         }
-        .mainProds {    
+        .mainProds {
             .productsList {
                 grid-template-columns: repeat(2, minmax(100px, 1fr));
             }
@@ -232,7 +248,7 @@ main {
                 &::-webkit-scrollbar {
                     display: none;
                 }
-        
+
                 .gridItem {
                     width: 80vw;
                     height: 17em;
@@ -244,7 +260,7 @@ main {
                 }
             }
         }
-        .mainProds {    
+        .mainProds {
             .productsList {
                 grid-template-columns: repeat(1, minmax(100px, 1fr));
             }
