@@ -22,129 +22,129 @@ import imgXiaomi from '../../../assets/brands/xiaomi.svg';
 import '../home.scss';
 
 const brands = [
-  {
-    id: 1,
-    name: 'Acer',
-    image: imgAcer
-  },
-  {
-    id: 2,
-    name: 'AMD',
-    image: imgAMD
-  },
-  {
-    id: 3,
-    name: 'Apple',
-    image: imgApple
-  },    
-  {
-    id: 4,
-    name: 'Asus',
-    image: imgAsus
-  },    
-  {
-    id: 5,
-    name: 'Dell',
-    image: imgDell
-  },
-  {
-    id: 6,
-    name: 'Gigabyte',
-    image: imgGigabyte
-  },    
-  {
-    id: 7,
-    name: 'HP',
-    image: imgHP
-  },    
-  {
-    id: 8,
-    name: 'Intel',
-    image: imgIntel
-  },    
-  {
-    id: 9,
-    name: 'JBL',
-    image: imgJBL
-  },    
-  {
-    id: 10,
-    name: 'Kingston',
-    image: imgKingston
-  },    
-  {
-    id: 11,
-    name: 'Lenovo',
-    image: imgLenovo
-  },    
-  {
-    id: 12,
-    name: 'LG',
-    image: imgLG
-  },    
-  {
-    id: 13,
-    name: 'Microsoft',
-    image: imgMicrosoft
-  },    
-  {
-    id: 14,
-    name: 'Nvidia',
-    image: imgNvidia
-  },    
-  {
-    id: 15,
-    name: 'Panasonic',
-    image: imgPanasonic
-  },    
-  {
-    id: 16,
-    name: 'Philips',
-    image: imgPhilips
-  },    
-  {
-    id: 17,
-    name: 'Positivo',
-    image: imgPositivo
-  },    
-  {
-    id: 18,
-    name: 'Samsung',
-    image: imgSamsung
-  },
-  {
-    id: 19,
-    name: 'Sony',
-    image: imgSony
-  },
-  {
-    id: 20,
-    name: 'Xiaomi',
-    image: imgXiaomi
-  },
+    {
+        id: 1,
+        name: 'Acer',
+        image: imgAcer,
+    },
+    {
+        id: 2,
+        name: 'AMD',
+        image: imgAMD,
+    },
+    {
+        id: 3,
+        name: 'Apple',
+        image: imgApple,
+    },
+    {
+        id: 4,
+        name: 'Asus',
+        image: imgAsus,
+    },
+    {
+        id: 5,
+        name: 'Dell',
+        image: imgDell,
+    },
+    {
+        id: 6,
+        name: 'Gigabyte',
+        image: imgGigabyte,
+    },
+    {
+        id: 7,
+        name: 'HP',
+        image: imgHP,
+    },
+    {
+        id: 8,
+        name: 'Intel',
+        image: imgIntel,
+    },
+    {
+        id: 9,
+        name: 'JBL',
+        image: imgJBL,
+    },
+    {
+        id: 10,
+        name: 'Kingston',
+        image: imgKingston,
+    },
+    {
+        id: 11,
+        name: 'Lenovo',
+        image: imgLenovo,
+    },
+    {
+        id: 12,
+        name: 'LG',
+        image: imgLG,
+    },
+    {
+        id: 13,
+        name: 'Microsoft',
+        image: imgMicrosoft,
+    },
+    {
+        id: 14,
+        name: 'Nvidia',
+        image: imgNvidia,
+    },
+    {
+        id: 15,
+        name: 'Panasonic',
+        image: imgPanasonic,
+    },
+    {
+        id: 16,
+        name: 'Philips',
+        image: imgPhilips,
+    },
+    {
+        id: 17,
+        name: 'Positivo',
+        image: imgPositivo,
+    },
+    {
+        id: 18,
+        name: 'Samsung',
+        image: imgSamsung,
+    },
+    {
+        id: 19,
+        name: 'Sony',
+        image: imgSony,
+    },
+    {
+        id: 20,
+        name: 'Xiaomi',
+        image: imgXiaomi,
+    },
 ];
 
 export default function BrandsList() {
-  const scrollers = document.querySelectorAll(".brandsList");
+    const scrollers = document.querySelectorAll('.brandsList');
 
-  const addAnimation = () => {
-    scrollers.forEach((scroller) => {
-      scroller.setAttribute("data-animated", true);
-    });
-  }
+    const addAnimation = () => {
+        scrollers.forEach((scroller) => {
+            scroller.setAttribute('data-animated', true);
+        });
+    };
 
-  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    addAnimation(); 
-  }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        addAnimation();
+    }
 
-  return (
-    <div className="brandsList" data-animated='true'>
-        {brands.map(brand => (
-          <CardBrands key={brand.id} brand={brand} />
-        ))}
-        {brands.map(brand => (
-          <CardBrands key={brand.id} brand={brand} />
-        ))}
-    </div>
-  );
+    return (
+        <div className="brandsList" data-animated="true">
+            {brands.map((brand) => (
+                <CardBrands key={brand.id} brand={brand} />
+            ))}
+            {brands.map((brand) => (
+                <CardBrands key={brand.id} brand={brand} />
+            ))}
+        </div>
+    );
 }

@@ -1,6 +1,3 @@
-
 export default function BuyPage() {
-    return {
-
-    }
+    return {};
 }

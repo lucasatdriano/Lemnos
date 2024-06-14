@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -38,13 +38,13 @@ header {
     left: 0;
     right: 0;
     margin: 0 auto;
-    animation: expandHeader .3s linear forwards;
+    animation: expandHeader 0.3s linear forwards;
 
     &.shrink {
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        animation: sizeHeader .3s linear forwards;
+        animation: sizeHeader 0.3s linear forwards;
     }
 
     .logo {
@@ -53,7 +53,7 @@ header {
         color: $color-fontDark;
         text-shadow: 4px 4px 8px #121217b8;
         text-transform: uppercase;
-        transition: .2s ease;
+        transition: 0.2s ease;
 
         &:hover {
             transform: scale(1.1);
@@ -82,7 +82,7 @@ header {
                 transform-origin: bottom right;
                 transition: transform 0.25s ease-out;
             }
-                
+
             &:hover::after {
                 transform: scaleX(1);
                 transform-origin: bottom left;
@@ -98,7 +98,7 @@ header {
         .userIcon,
         .cartIcon {
             color: $color-fontDark;
-            margin: .5em .8em 0;
+            margin: 0.5em 0.8em 0;
             height: 36px;
             width: 36px;
         }
@@ -145,7 +145,7 @@ header {
         .navegation {
             display: none;
         }
-    
+
         .menuDesktop {
             display: none;
         }
@@ -166,7 +166,7 @@ header {
 
 @media only screen and (max-width: 500px) {
     header {
-        gap: .5em;
+        gap: 0.5em;
         padding: 0 2em 0 0;
     }
 }

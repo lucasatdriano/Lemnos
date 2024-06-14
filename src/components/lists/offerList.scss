@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgLight: #F9FBFB;
-$color-bgDark: #2D2D2D;
-$color-fontDark: #F6FEFD;
+$color-bgLight: #f9fbfb;
+$color-bgDark: #2d2d2d;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -23,7 +23,7 @@ $font-items: 'Poppins', Helvetica;
 .offers {
     width: 90%;
     margin: 0 auto;
-    padding-top: .5em;
+    padding-top: 0.5em;
 
     .offersList {
         display: flex;
@@ -35,7 +35,7 @@ $font-items: 'Poppins', Helvetica;
             margin: auto;
             width: 85vw;
         }
-        
+
         .splide__slide {
             padding-bottom: 1em;
         }
@@ -43,7 +43,7 @@ $font-items: 'Poppins', Helvetica;
         .splide__pagination__page {
             display: none;
         }
-        
+
         .splide__arrow {
             &.splide__arrow--prev,
             &.splide__arrow--next {
@@ -51,9 +51,9 @@ $font-items: 'Poppins', Helvetica;
                 transition: 0.3s ease;
                 background-color: $color-primaryLight;
                 box-shadow: 2px 2px 4px $color-shadow;
-            
+
                 &:hover {
-                    opacity: .8;
+                    opacity: 0.8;
                 }
             }
 
@@ -73,7 +73,7 @@ $font-items: 'Poppins', Helvetica;
 
 // @media only screen and (max-width: 1340px) {
 //     .offers {
-//         .offersList {   
+//         .offersList {
 //             .splide__list {
 //                 width: 82vw;
 //             }
@@ -86,7 +86,7 @@ $font-items: 'Poppins', Helvetica;
 
 // @media only screen and (max-width: 1024px) {
 //     .offers {
-//         .offersList {   
+//         .offersList {
 //             .splide__list {
 //                 width: 77vw;
 //             }
@@ -96,7 +96,7 @@ $font-items: 'Poppins', Helvetica;
 
 // @media only screen and (max-width: 700px) {
 //     .offers {
-//         .offersList {   
+//         .offersList {
 //             .splide__list {
 //                 width: 75vw;
 //             }
@@ -104,7 +104,7 @@ $font-items: 'Poppins', Helvetica;
 //                 margin-right: 0;
 //                 padding-left: 2em;
 //             }
-//             .splide__arrow {   
+//             .splide__arrow {
 //                 display: none;
 //             }
 //         }
@@ -113,7 +113,7 @@ $font-items: 'Poppins', Helvetica;
 
 // @media only screen and (max-width: 425px) {
 //     .offers {
-//         .offersList {   
+//         .offersList {
 //             .splide__list {
 //                 width: 77vw;
 //             }

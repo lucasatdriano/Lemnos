@@ -15,96 +15,145 @@ import imgBannerMob3 from '../../../../assets/banners/bannerMob3.svg';
 import imgBannerMob4 from '../../../../assets/banners/bannerMob4.svg';
 import imgBannerMob5 from '../../../../assets/banners/bannerMob5.svg';
 import './carousel.scss';
+import { Link } from 'react-router-dom';
 
 const ImageWithLoadingEffect = ({ src, alt, className }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const imgRef = useRef();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const imgRef = useRef();
 
-  useEffect(() => {
-    if (imgRef.current && imgRef.current.complete) {
-      setIsLoaded(true);
-    }
-  }, []);
+    useEffect(() => {
+        if (imgRef.current && imgRef.current.complete) {
+            setIsLoaded(true);
+        }
+    }, []);
 
-  return (
-    <img
-      ref={imgRef}
-      src={src}
-      alt={alt}
-      className={className}
-      style={{
-        width: '100%',
-        height: 'auto',
-        filter: isLoaded ? 'none' : 'blur(10px)',
-        transition: 'filter 1s ease-out',
-      }}
-      onLoad={() => setIsLoaded(true)}
-    />
-  );
+    return (
+        <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            className={className}
+            style={{
+                width: '100%',
+                height: 'auto',
+                filter: isLoaded ? 'none' : 'blur(10px)',
+                transition: 'filter 1s ease-out',
+            }}
+            onLoad={() => setIsLoaded(true)}
+        />
+    );
 };
 
 export default function Slide() {
-  const [isHovered, setIsHovered] = useState(false);
-  const splideRef = useRef(null);
-  const [autoplayPaused, setAutoplayPaused] = useState(false);
-  const [splideOptions, setSplideOptions] = useState({
-    type: 'loop',
-    perPage: 1,
-    pauseOnHover: false,
-    speed: 1000,
-    rewind: true,
-    gap: 15,
-  });
+    const [isHovered, setIsHovered] = useState(false);
+    const splideRef = useRef(null);
+    const [autoplayPaused, setAutoplayPaused] = useState(false);
+    const [splideOptions, setSplideOptions] = useState({
+        type: 'loop',
+        perPage: 1,
+        pauseOnHover: false,
+        speed: 1000,
+        rewind: true,
+        gap: 15,
+    });
 
-  const nextSlide = () => {
-    const splide = splideRef.current.splide;
-    splide.go('+1');
-  };
+    const nextSlide = () => {
+        const splide = splideRef.current.splide;
+        splide.go('+1');
+    };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!autoplayPaused) {
-        nextSlide();
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [autoplayPaused]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (!autoplayPaused) {
+                nextSlide();
+            }
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [autoplayPaused]);
 
-  return (
-    <section className='carousel'>
-      <Splide
-        options={splideOptions}
-        ref={splideRef}
-        onMouseEnter={() => {
-          setIsHovered(true);
-          setAutoplayPaused(true);
-        }}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setTimeout(() => setAutoplayPaused(false), 100);
-        }}
-      >
-        <SplideSlide>
-          <ImageWithLoadingEffect src={imgBanner1} alt="Slide 1" className='slide' />
-          <ImageWithLoadingEffect src={imgBannerMob1} alt="Slide 1" className='slideMob' />
-        </SplideSlide>
-        <SplideSlide>
-          <ImageWithLoadingEffect src={imgBanner2} alt="Slide 2" className='slide' />
-          <ImageWithLoadingEffect src={imgBannerMob2} alt="Slide 2" className='slideMob' />
-        </SplideSlide>
-        <SplideSlide>
-          <ImageWithLoadingEffect src={imgBanner3} alt="Slide 3" className='slide' />
-          <ImageWithLoadingEffect src={imgBannerMob3} alt="Slide 3" className='slideMob' />
-        </SplideSlide>
-        <SplideSlide>
-          <ImageWithLoadingEffect src={imgBanner4} alt="Slide 4" className='slide' />
-          <ImageWithLoadingEffect src={imgBannerMob4} alt="Slide 4" className='slideMob' />
-        </SplideSlide>
-        <SplideSlide>
-          <ImageWithLoadingEffect src={imgBanner5} alt="Slide 5" className='slide' />
-          <ImageWithLoadingEffect src={imgBannerMob5} alt="Slide 5" className='slideMob' />
-        </SplideSlide>
-      </Splide>
-    </section>
-  );
+    return (
+        <section className="carousel">
+            <Splide
+                options={splideOptions}
+                ref={splideRef}
+                onMouseEnter={() => {
+                    setIsHovered(true);
+                    setAutoplayPaused(true);
+                }}
+                onMouseLeave={() => {
+                    setIsHovered(false);
+                    setTimeout(() => setAutoplayPaused(false), 100);
+                }}
+            >
+                <SplideSlide>
+                    <ImageWithLoadingEffect
+                        src={imgBanner1}
+                        alt="Slide 1"
+                        className="slide"
+                    />
+                    <ImageWithLoadingEffect
+                        src={imgBannerMob1}
+                        alt="Slide 1"
+                        className="slideMob"
+                    />
+                </SplideSlide>
+                <SplideSlide>
+                    <Link to={'/product/992c2ad8-b0ab-45e5-aa56-cc7fcf8bbc4e'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner2}
+                            alt="Slide 2"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob2}
+                            alt="Slide 2"
+                            className="slideMob"
+                        />
+                    </Link>
+                </SplideSlide>
+                <SplideSlide>
+                    <Link to={'/product/3d32b563-c84d-42f9-a6a6-2e26dd7ed9c6'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner3}
+                            alt="Slide 3"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob3}
+                            alt="Slide 3"
+                            className="slideMob"
+                        />
+                    </Link>
+                </SplideSlide>
+                <SplideSlide>
+                    <Link to={'/product/e57e1820-3baf-4c20-81d0-882a44e656f3'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner4}
+                            alt="Slide 4"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob4}
+                            alt="Slide 4"
+                            className="slideMob"
+                        />
+                    </Link>
+                </SplideSlide>
+                <SplideSlide>
+                    <Link to={'/product/b1c098db-bff3-4ed2-b7be-eda75ee14935'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner5}
+                            alt="Slide 5"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob5}
+                            alt="Slide 5"
+                            className="slideMob"
+                        />
+                    </Link>
+                </SplideSlide>
+            </Splide>
+        </section>
+    );
 }

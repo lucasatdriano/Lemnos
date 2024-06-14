@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -23,19 +23,20 @@ $font-items: 'Poppins', Helvetica;
 .searchContainer {
     width: 50%;
     position: relative;
-     
+
     .inputSearch {
         position: relative;
+        height: 2em;
 
         #inputSearch {
             width: 100%;
-            height: 2em;
+            height: 100%;
             border-radius: 20px;
             background-color: $color-bgLight;
             color: $color-fontLight;
             font-family: $font-items;
             text-indent: 20px;
-            font-size: 2.0rem;
+            font-size: 2rem;
             position: relative;
             z-index: 10;
             box-shadow: 2px 2px 8px $color-shadow;
@@ -47,9 +48,10 @@ $font-items: 'Poppins', Helvetica;
             cursor: pointer;
             position: absolute;
             right: 2%;
-            top: 10%;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 11;
-            
+
             .searchIcon {
                 color: $color-fontLight;
                 height: 28px;
@@ -64,7 +66,7 @@ $font-items: 'Poppins', Helvetica;
         font-family: $font-items;
         display: flex;
         flex-direction: column;
-        gap: .1em;
+        gap: 0.1em;
         z-index: 1;
         top: 50%;
         left: 50%;
@@ -105,7 +107,6 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 }
-
 
 @media only screen and (max-width: 1800px) {
     .searchContainer {
@@ -181,7 +182,7 @@ $font-items: 'Poppins', Helvetica;
 
             .itemSearch {
                 flex-direction: column;
-                
+
                 .containerVisual {
                     display: flex;
 

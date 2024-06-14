@@ -10,14 +10,17 @@ export default function MenuSearch() {
     const [products, setProdutos] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [showResults, setShowResults] = useState(false);
-    const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const BRL = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
 
     useEffect(() => {
         async function fetchProdutos() {
-            const data = await getAllProdutos() 
+            const data = await getAllProdutos();
             setProdutos(data);
-          }
-          fetchProdutos();
+        }
+        fetchProdutos();
     }, []);
 
     const handleSearchChange = (event) => {
@@ -30,7 +33,7 @@ export default function MenuSearch() {
             return;
         }
 
-        const filteredResults = products.filter(product =>
+        const filteredResults = products.filter((product) =>
             product.nome.toLowerCase().includes(value.toLowerCase())
         );
 
@@ -70,7 +73,7 @@ export default function MenuSearch() {
             </form>
             {showResults && filteredProducts.length > 0 && (
                 <ul className="searchResults">
-                    {filteredProducts.map(product => (
+                    {filteredProducts.map((product) => (
                         <Link
                             to={`/product/${product.id}`}
                             className="itemSearch"
@@ -78,7 +81,10 @@ export default function MenuSearch() {
                             onClick={() => handleSearchResultClick(product.id)}
                         >
                             <div className="containerVisual">
-                                <img src={product.imagemPrincipal} alt={product.nome} />
+                                <img
+                                    src={product.imagemPrincipal}
+                                    alt={product.nome}
+                                />
                                 <h4>{product.nome}</h4>
                             </div>
                             <p>{BRL.format(product.valorComDesconto)}</p>

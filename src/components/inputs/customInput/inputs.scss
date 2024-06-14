@@ -1,16 +1,16 @@
-$color-primaryLight: #36CEC4;
+$color-primaryLight: #36cec4;
 $color-secundaryLight: #415352;
-$color-terciaryLight: #4ADED6;
-$color-detailsLight: #850E5D;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
 
-$color-primaryDark: #10A88D;
-$color-secundaryDark: #2D3A3A;
-$color-terciaryDark: #f6FEFDCC;
-$color-detailsDark: #C75EA3;
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
 
-$color-bgDark: #2D2D2D;
-$color-bgLight: #F9FBFB;
-$color-fontDark: #F6FEFD;
+$color-bgDark: #2d2d2d;
+$color-bgLight: #f9fbfb;
+$color-fontDark: #f6fefd;
 $color-fontLight: #121717;
 
 $color-shadow: #12171740;
@@ -21,126 +21,126 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .singleInput {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    position: relative;
 
-  input  {
-    background-color: $color-card;
-    border: 2px solid $color-shadow;
-    color: $color-fontLight;
-    font-size: 2.4rem;
-    padding: .5em 1em .3em;
-    max-width: 16em;
-    min-width: 100%;
-    border-radius: 15px;
-    transition: border-color 0.3s ease;
-    cursor: text;
-    font-family: $font-web;
-    box-shadow: 2px 2px 4px $color-shadow;
-    transition: .2s ease-in-out;
-
-    &:disabled {
-      background-color: #eee;
-      opacity: 0.5;
-      cursor: not-allowed; 
-    }
-
-    &:focus {
-      box-shadow: 0px 0px 15px $color-shadow;
-    }
-    
-    &:valid {
-      border: none;
-      box-shadow: 0px 0px 15px $color-primaryDark;
-    }
-
-    &:disabled + label {
-      top: -10px;
-      opacity: 1;
-    }
-
-    &:focus + label {
-      top: -10px;
-      opacity: 1;
-    }
-    
-    &[name=nome] {
-      text-transform: capitalize;
-    }
-    
-    &:valid + label {
-      top: -10px;
-      opacity: 1;
-      color: $color-primaryDark;
-    }
-
-    &:not(:placeholder-shown) + label {
-      top: -10px;
-      opacity: 1;
-    }
-
-    &:placeholder-shown + label {
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: .6;
-    }
-  }
-
-  input[type="file"] + label,
-  input[type="date"] + label {
-    top: -10px;
-    color: $color-fontLight;
-  }
-
-  input[type="file"]:valid + label,
-  input[type="date"]:valid + label {
-    color: $color-primaryDark;
-  }
-
-  label {
-    background: transparent;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 15px;
-    opacity: .6;
-    padding: 0 10px;
-    transition: .2s ease-in-out;
-    cursor: text;
-  }
-}
-
-.dark {
-  .singleInput {
     input {
-      background-color: #e8f1f0a6;
- 
-      &:focus {
-        box-shadow: 0px 0px 15px $color-shadow;
-      }
-      &:valid {
-        border: none;
-        box-shadow: 0px 0px 15px $color-primaryDark;
-      }
-  
-      &:focus + label {
-        color: $color-fontDark;
-      }
-      &:valid + label {
-        color: $color-fontDark;
-      }
+        background-color: $color-card;
+        border: 2px solid $color-shadow;
+        color: $color-fontLight;
+        font-size: 2.4rem;
+        padding: 0.5em 1em 0.3em;
+        max-width: 16em;
+        min-width: 100%;
+        border-radius: 15px;
+        transition: border-color 0.3s ease;
+        cursor: text;
+        font-family: $font-web;
+        box-shadow: 2px 2px 4px $color-shadow;
+        transition: 0.2s ease-in-out;
+
+        &:disabled {
+            background-color: #eee;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &:focus {
+            box-shadow: 0px 0px 15px $color-shadow;
+        }
+
+        &:valid {
+            border: none;
+            box-shadow: 0px 0px 15px $color-primaryDark;
+        }
+
+        &:disabled + label {
+            top: -10px;
+            opacity: 1;
+        }
+
+        &:focus + label {
+            top: -10px;
+            opacity: 1;
+        }
+
+        &[name='nome'] {
+            text-transform: capitalize;
+        }
+
+        &:valid + label {
+            top: -10px;
+            opacity: 1;
+            color: $color-primaryDark;
+        }
+
+        &:not(:placeholder-shown) + label {
+            top: -10px;
+            opacity: 1;
+        }
+
+        &:placeholder-shown + label {
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+        }
     }
-    input[type="file"] + label,
-    input[type="date"] + label {
-      color: $color-fontDark;
+
+    input[type='file'] + label,
+    input[type='date'] + label {
+        top: -10px;
+        color: $color-fontLight;
+    }
+
+    input[type='file']:valid + label,
+    input[type='date']:valid + label {
+        color: $color-primaryDark;
     }
 
     label {
-      background: transparent;
-      color: $color-fontLight;
+        background: transparent;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 15px;
+        opacity: 0.6;
+        padding: 0 10px;
+        transition: 0.2s ease-in-out;
+        cursor: text;
     }
-  }
+}
+
+.dark {
+    .singleInput {
+        input {
+            background-color: #e8f1f0a6;
+
+            &:focus {
+                box-shadow: 0px 0px 15px $color-shadow;
+            }
+            &:valid {
+                border: none;
+                box-shadow: 0px 0px 15px $color-primaryDark;
+            }
+
+            &:focus + label {
+                color: $color-fontDark;
+            }
+            &:valid + label {
+                color: $color-fontDark;
+            }
+        }
+        input[type='file'] + label,
+        input[type='date'] + label {
+            color: $color-fontDark;
+        }
+
+        label {
+            background: transparent;
+            color: $color-fontLight;
+        }
+    }
 }

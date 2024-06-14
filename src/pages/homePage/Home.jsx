@@ -11,83 +11,121 @@ import monitor from '../../assets/deps/imgMonitor.svg';
 import computador from '../../assets/deps/imgPcGamer.svg';
 import portatil from '../../assets/deps/imgNotebookPortatil.svg';
 import perifericos from '../../assets/deps/imgPerifericos.svg';
-import { getAllProdutos } from '../../services/ApiService';
+import { listarProdutosFiltrados } from '../../services/apiProductService';
 
 export default function Home() {
-  const [produtos, setProdutos] = useState([]);
+    const [produtos, setProdutos] = useState([]);
 
-  useEffect(() => { 
-    async function fetchProdutos() {
-      const data = await getAllProdutos() 
-      setProdutos(data);
-    }
-    fetchProdutos();
-  }, []);
+    useEffect(() => {
+        async function fetchProdutos() {
+            const filtro = {
+                categoria: '',
+                subCategoria: '',
+                marca: '',
+                menorPreco: 0,
+                maiorPreco: 50000,
+            };
 
-  const mainProducts = produtos.slice(0, 21);
-  const produtosSemDesconto = mainProducts.filter(produto => produto.desconto == 0);
+            const data = await listarProdutosFiltrados(filtro, 5, 20);
+            setProdutos(data);
+        }
+        fetchProdutos();
+    }, []);
 
-  return (
-    <>
-      <main>
-        <Slide />
+    const produtosSemDesconto = produtos.filter(
+        (produto) => produto.desconto == 0
+    );
 
-        <section className='brands'>
-          <h2>Principais Marcas</h2>
-          <BrandsList />
-        </section>
-        
-        <section className='mainDep'>
-          <h2>Principais Departamentos</h2>
+    return (
+        <>
+            <main>
+                <Slide />
 
-          <div className="containerDeps">
-            <Link to="/productFilter/Computadores" className='gridItem item1'>
-              <img src={computador} alt="imagem filtro computadores" />
-              <h3>Computadores</h3>
-            </Link>
+                <section className="brands">
+                    <h2>Principais Marcas</h2>
+                    <BrandsList />
+                </section>
 
-            <Link to="/productFilter/Notebooks e Portáteis" className='gridItem item2'>
-              <img src={portatil} alt="imagem filtro notebook e portáteis" />
-              <h3>Notebook e Portáteis</h3>
-            </Link>
+                <section className="mainDep">
+                    <h2>Principais Departamentos</h2>
 
-            <Link to="/productFilter/Kits" className='gridItem item3'>
-              <img src={kits} alt="imagem filtro kits" />
-              <h3>Kits</h3>
-            </Link>
+                    <div className="containerDeps">
+                        <Link
+                            to="/productFilter/Computadores"
+                            className="gridItem item1"
+                        >
+                            <img
+                                src={computador}
+                                alt="imagem filtro computadores"
+                            />
+                            <h3>Computadores</h3>
+                        </Link>
 
-            <Link to="/productFilter/Periféricos" className='gridItem item4'>
-              <img src={perifericos} alt="imagem filtro periféricos" />
-              <h3>Periféricos</h3>
-            </Link>
-            
-            <Link to="/productFilter/Monitores" className='gridItem item5'>
-              <img src={monitor} alt="imagem filtro monitores" />
-              <h3>Monitores</h3>
-            </Link>
+                        <Link
+                            to="/productFilter/Notebooks e Portáteis"
+                            className="gridItem item2"
+                        >
+                            <img
+                                src={portatil}
+                                alt="imagem filtro notebook e portáteis"
+                            />
+                            <h3>Notebook e Portáteis</h3>
+                        </Link>
 
-            <Link to="/productFilter/Video Games" className='gridItem item6'>
-              <img src={videoGame} alt="imagem filtro video games" />
-              <h3>Video Games</h3>
-            </Link>
-        
-          </div>
-        </section>
+                        <Link
+                            to="/productFilter/Kits"
+                            className="gridItem item3"
+                        >
+                            <img src={kits} alt="imagem filtro kits" />
+                            <h3>Kits</h3>
+                        </Link>
 
-        <section className='offers'>
-          <h2>Ofertas</h2>
-          <OfferList  />
-        </section>
+                        <Link
+                            to="/productFilter/Periféricos"
+                            className="gridItem item4"
+                        >
+                            <img
+                                src={perifericos}
+                                alt="imagem filtro periféricos"
+                            />
+                            <h3>Periféricos</h3>
+                        </Link>
 
-        <section className='mainProds'>
-          <h2>Principais Produtos</h2>
-          <div className='productsList'>
-            {produtosSemDesconto.map(produto => (
-              <Card key={produto.id} produto={produto} />
-            ))}
-          </div>
-        </section>
-      </main>
-    </>
-  )
+                        <Link
+                            to="/productFilter/Monitores"
+                            className="gridItem item5"
+                        >
+                            <img src={monitor} alt="imagem filtro monitores" />
+                            <h3>Monitores</h3>
+                        </Link>
+
+                        <Link
+                            to="/productFilter/Video Games"
+                            className="gridItem item6"
+                        >
+                            <img
+                                src={videoGame}
+                                alt="imagem filtro video games"
+                            />
+                            <h3>Video Games</h3>
+                        </Link>
+                    </div>
+                </section>
+
+                <section className="offers">
+                    <h2>Ofertas</h2>
+                    <OfferList />
+                </section>
+
+                <section className="mainProds">
+                    <h2>Principais Produtos</h2>
+                    <div className="productsList">
+                        {produtosSemDesconto.map((produto) => (
+                            <Card key={produto.id} produto={produto} />
+                        ))}
+                    </div>
+                </section>
+            </main>
+        </>
+    );
 }
