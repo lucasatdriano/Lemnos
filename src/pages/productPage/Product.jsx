@@ -65,7 +65,7 @@ export default function Product() {
                 setIsFavorite(isFavorited);
             }
         } catch (error) {
-            toast.error("Erro ao setar as informações do produto");
+            toast.error('Erro ao setar as informações do produto');
         } finally {
             setLoading(false);
         }
@@ -149,8 +149,10 @@ export default function Product() {
     return (
         <main className="productContainer">
             <hr />
-            {!product && loading ? (
-                <Loading />
+            {loading ? (
+                <div className="loadingProduct">
+                    <Loading />
+                </div>
             ) : (
                 <section className="containerMain">
                     <section className="productMain">

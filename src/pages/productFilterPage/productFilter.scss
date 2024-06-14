@@ -22,7 +22,14 @@ $font-items: 'Poppins', Helvetica;
 
 .mainFilters {
     display: flex;
-    padding-top: 8em;
+    gap: 1em;
+
+    .hrFilter {
+        height: 100svh;
+        width: 3px;
+        border: none;
+        background-color: $color-primaryLight;
+    }
 
     .product-filter-container {
         display: flex;
@@ -63,16 +70,9 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 
-    .hrFilter {
-        height: 100%;
-        width: 3px;
-        border: none;
-        background-color: $color-primaryLight;
-    }
-
     .filtered-data-container {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         gap: 3em;
         padding: 0 2em 0 0;
         width: 100%;
@@ -129,6 +129,10 @@ $font-items: 'Poppins', Helvetica;
             justify-content: center;
             flex-wrap: wrap;
             gap: 2em;
+        }
+
+        .loadingProducts {
+            height: 10em;
         }
     }
 }

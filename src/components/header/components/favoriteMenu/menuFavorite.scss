@@ -79,7 +79,6 @@ $font-items: 'Poppins', Helvetica;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            text-align: center;
             background: $color-card;
             margin: 3em auto;
             width: 90%;
@@ -131,7 +130,7 @@ $font-items: 'Poppins', Helvetica;
             gap: 1em;
 
             .itemFav {
-                width: 90%;
+                width: 80%;
                 height: 17em;
                 padding: 0.25em;
                 position: relative;
@@ -180,13 +179,12 @@ $font-items: 'Poppins', Helvetica;
                     }
 
                     .productDetails {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 0.5em;
+                        gap: 2.5em;
                         width: 65%;
 
                         .productName {
-                            font-size: 1.8rem;
+                            font-size: 2.4rem;
+                            margin-bottom: 0.5em;
                         }
 
                         .offerPrice {
@@ -200,8 +198,6 @@ $font-items: 'Poppins', Helvetica;
                         }
 
                         .productPrice {
-                            position: absolute;
-                            bottom: 6em;
                             font-size: 1.4rem;
                             font-weight: 500;
                             line-height: 1.2;
@@ -210,6 +206,14 @@ $font-items: 'Poppins', Helvetica;
                                 font-weight: 700;
                                 color: $color-primaryLight;
                                 font-size: 3.4rem;
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        .productDetails {
+                            .productName {
+                                margin-bottom: 0.5em;
                             }
                         }
                     }
@@ -355,14 +359,6 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
-        }
-    }
-}
-
-@media only screen and (max-width: 1400px) {
-    .modal {
-        .menuFavorite {
-            width: 50%;
         }
     }
 }

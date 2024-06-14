@@ -15,7 +15,6 @@ export default function UpdateProductModal({ onUpdate, onSelect, onClose }) {
     const [search, setSearch] = useState('');
 
     const applyFilters = async () => {
-        // setLoading(true);
         try {
             const filtro = {
                 nome: search,

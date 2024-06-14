@@ -31,6 +31,11 @@ $font-items: 'Poppins', Helvetica;
         border: 2px solid $color-primaryLight;
     }
 
+    .loadingProduct {
+        width: 100vw;
+        height: 90svh;
+    }
+
     .containerMain {
         display: flex;
         flex-direction: column;
@@ -283,12 +288,6 @@ $font-items: 'Poppins', Helvetica;
                     font-size: clamp(2rem, 1rem + 2vw, 2.6rem);
                 }
             }
-        }
-    }
-
-    .toastLogin {
-        button {
-            padding: 2em;
         }
     }
 }

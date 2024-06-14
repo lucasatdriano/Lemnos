@@ -57,18 +57,16 @@ export default function Card({ produto }) {
         }
     }
 
-    const handleAddToFavorites = async () => {
+    const handleAddToFavorites = async (produto, e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (AuthService.isLoggedIn()) {
             try {
                 console.log('Adicionando favorito para o produto:', produto.id);
-                await adicionarFavorito(produto.id);
-                toast.success('Produto adicionado aos favoritos!');
+                await adicionarFavorito(produto);
                 setIsFavorite(true);
+                toast.success('Produto adicionado aos favoritos!');
             } catch (error) {
-                console.error(
-                    'Erro ao adicionar produto aos favoritos:',
-                    error
-                );
                 toast.error('Erro ao adicionar produto aos favoritos.');
             }
         } else {
@@ -79,20 +77,22 @@ export default function Card({ produto }) {
         }
     };
 
-    const handleRemoveToFavorites = async () => {
+    const handleRemoveFavorite = async (produto, e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (AuthService.isLoggedIn()) {
             try {
-                console.log('Removendo favorito para o produto:', produto.id);
-                await desfavoritarProduto(produto.id);
-                toast.success('Produto removido dos favoritos');
-                setIsFavorite(false);
+                const success = await desfavoritarProduto(produto);
+                if (success) {
+                    setIsFavorite(false);
+                    // fetchFavorites();
+                }
             } catch (error) {
-                console.error('Erro ao remover produto dos favoritos:', error);
                 toast.error('Erro ao remover produto dos favoritos.');
             }
         } else {
             toast.warning(
-                'Você precisa estar logado para remover produtos dos favoritos.'
+                'Você precisa estar logado para adicionar produtos aos favoritos.'
             );
             navigate('/login');
         }
@@ -114,12 +114,16 @@ export default function Card({ produto }) {
                         {isFavorite ? (
                             <MdFavorite
                                 className="iconFav"
-                                onClick={handleRemoveToFavorites}
+                                onClick={(e) =>
+                                    handleRemoveFavorite(produto, e)
+                                }
                             />
                         ) : (
                             <MdFavoriteBorder
                                 className="iconFav"
-                                onClick={handleAddToFavorites}
+                                onClick={(e) =>
+                                    handleAddToFavorites(produto, e)
+                                }
                             />
                         )}
                         <img

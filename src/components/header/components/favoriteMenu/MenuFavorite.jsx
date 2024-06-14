@@ -5,11 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../../../../services/authService';
 import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import { toast } from 'react-toastify';
-import { IoClose } from "react-icons/io5";
+import { IoClose } from 'react-icons/io5';
 import { MdFavorite } from 'react-icons/md';
 import { getProdutoById } from '../../../../services/ApiService';
 import { Link, useNavigate } from 'react-router-dom';
-import { listarProdutosFavoritos, adicionarProdutoCarrinho, desfavoritarProduto } from '../../../../services/apiProductService';
+import {
+    listarProdutosFavoritos,
+    adicionarProdutoCarrinho,
+    desfavoritarProduto,
+} from '../../../../services/apiProductService';
 import React, { useState, useEffect } from 'react';
 import Loading from '../../../loading/Loading';
 
@@ -130,10 +134,15 @@ export default function MenuFavorite({ onClose }) {
                                             alt={favorite.nome}
                                             className="productImage"
                                         />
-                                        <div className='containerInfosFav'>
-                                            <MdFavorite 
-                                                className='iconFav'  
-                                                onClick={(e) => handleRemoveFavorite(favorite, e) } 
+                                        <div className="containerInfosFav">
+                                            <MdFavorite
+                                                className="iconFav"
+                                                onClick={(e) =>
+                                                    handleRemoveFavorite(
+                                                        favorite,
+                                                        e
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div className="productDetails">

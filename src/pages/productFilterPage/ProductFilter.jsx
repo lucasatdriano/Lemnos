@@ -1,22 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
-import { useState, useEffect } from 'react';
-import { listarProdutosFiltrados } from '../../services/apiProductService'; 
+import { useState, useEffect, useRef } from 'react';
+import { listarProdutosFiltrados } from '../../services/apiProductService';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './productFilter.scss';
 
 const brands = [
+    'Acer',
     'AMD',
-    'Dell',
-    'Intel',
     'Apple',
+    'Asus',
+    'Dell',
+    'Gigabyte',
+    'Logitech',
+    'Intel',
+    'JBL',
+    'Lenovo',
     'LG',
-    'Nvidia',
+    'Microsoft',
+    'NVIDIA',
     'Philips',
     'Positivo',
     'Samsung',
     'Sony',
+    'Xiaomi',
 ];
 
 const categorias = [
@@ -86,6 +95,7 @@ export default function ProductFilter() {
     const searchParams = new URLSearchParams(location.search);
     const search = searchParams.get('search') || '';
     const [selectedBrand, setSelectedBrand] = useState('');
+    const [selectedEvaluation, setSelectedEvaluation] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(category || '');
     const [selectedSubCategory, setSelectedSubCategory] = useState('');
     const [minPrice, setMinPrice] = useState(0);
@@ -108,6 +118,7 @@ export default function ProductFilter() {
                 marca: selectedBrand ?? null,
                 menorPreco: minPrice ?? 0,
                 maiorPreco: maxPrice ?? 50000,
+                avaliacao: selectedEvaluation ?? null,
             };
 
             const produtosFiltrados = await listarProdutosFiltrados(
@@ -123,7 +134,7 @@ export default function ProductFilter() {
                     ...produtosFiltrados,
                 ]);
             }
-            setHasMore(produtosFiltrados.length > 0);
+            setHasMore(produtosFiltrados.length === 20);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
         } finally {
@@ -145,7 +156,7 @@ export default function ProductFilter() {
     useEffect(() => {
         const handleObserver = (entries) => {
             const target = entries[0];
-            if (target.isIntersecting && hasMore) {
+            if (target.isIntersecting && hasMore && !loading) {
                 setPage((prev) => prev + 1);
             }
         };
@@ -160,7 +171,7 @@ export default function ProductFilter() {
                 observer.current.unobserve(endOfPageRef.current);
             }
         };
-    }, [hasMore]);
+    }, [hasMore, loading]);
 
     useEffect(() => {
         if (page > 0) {
@@ -173,6 +184,7 @@ export default function ProductFilter() {
         setSelectedSubCategory('');
         setMinPrice(0);
         setMaxPrice(50000);
+        setSelectedEvaluation('');
         setSearchTerm('');
         setSelectedCategory('');
         setPage(0);
@@ -238,11 +250,23 @@ export default function ProductFilter() {
                     setMinValue={setMinPrice}
                     setMaxValue={setMaxPrice}
                 />
+
+                <select
+                    value={selectedEvaluation}
+                    onChange={(e) => setSelectedEvaluation(e.target.value)}
+                >
+                    <option value="">Qualquer Nota</option>
+                    <option value={1}>1 estrela</option>
+                    <option value={2}>2 estrela</option>
+                    <option value={3}>3 estrela</option>
+                    <option value={4}>4 estrela</option>
+                    <option value={5}>5 estrela</option>
+                </select>
             </section>
 
-            <section className="filtered-data-container">
-                <hr className="hrFilter" />
+            <hr className="hrFilter" />
 
+            <section className="filtered-data-container">
                 {loading && page === 0 ? (
                     <Loading />
                 ) : (
@@ -274,7 +298,11 @@ export default function ProductFilter() {
                                         />
                                     ))}
                                 </div>
-                                {loading && page > 0 && <Loading />}
+                                {loading && (
+                                    <div className="loadingProducts">
+                                        <Loading />
+                                    </div>
+                                )}
                                 <div
                                     ref={endOfPageRef}
                                     className="end-of-page"

@@ -15,6 +15,10 @@ export default function DoubleInputRange({
     setMinValue,
     setMaxValue,
 }) {
+    const BRL = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
     const [values, setValues] = useState([minValue, maxValue]);
 
     useEffect(() => {
@@ -126,11 +130,10 @@ export default function DoubleInputRange({
                 <div className="inputBox">
                     <div className="minBox">
                         <div className="inputWrap">
-                            <span className="inputAddon">R$</span>
                             <input
                                 type="text"
                                 className="inputField minInput"
-                                value={values[0]}
+                                value={BRL.format(values[0])}
                                 onChange={handleMinInputChange}
                                 onBlur={handleMinInputBlur}
                                 inputMode="numeric"
@@ -142,11 +145,10 @@ export default function DoubleInputRange({
                     <div className="maxBox">
                         <p>ATÉ</p>
                         <div className="inputWrap">
-                            <span className="inputAddon">R$</span>
                             <input
                                 type="text"
                                 className="inputField maxInput"
-                                value={values[1]}
+                                value={BRL.format(values[1])}
                                 onChange={handleMaxInputChange}
                                 onBlur={handleMaxInputBlur}
                                 inputMode="numeric"

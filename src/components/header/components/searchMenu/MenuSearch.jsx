@@ -1,58 +1,61 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
-import { getAllProdutos } from '../../../../services/ApiService';
+import { listarProdutosFiltrados } from '../../../../services/apiProductService';
 
 export default function MenuSearch() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-    const [products, setProdutos] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [produtos, setProdutos] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const BRL = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
     });
 
+    async function fetchProdutos() {
+        const filtro = {
+            nome: searchTerm ?? null,
+            categoria: null,
+            subCategoria: null,
+            marca: null,
+            menorPreco: 0,
+            maiorPreco: 50000,
+            avaliacao: null,
+        };
+
+        const data = await listarProdutosFiltrados(filtro, 0, 5);
+        setProdutos(data);
+    }
+
     useEffect(() => {
-        async function fetchProdutos() {
-            const data = await getAllProdutos();
-            setProdutos(data);
+        if (searchTerm.trim() !== '') {
+            fetchProdutos();
+            setShowResults(true);
+        } else {
+            setProdutos([]);
+            setShowResults(false);
         }
-        fetchProdutos();
-    }, []);
+    }, [searchTerm]);
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
-
-        if (value.trim() === '') {
-            setFilteredProducts([]);
-            setShowResults(false);
-            return;
-        }
-
-        const filteredResults = products.filter((product) =>
-            product.nome.toLowerCase().includes(value.toLowerCase())
-        );
-
-        setFilteredProducts(filteredResults);
-        setShowResults(true);
     };
 
     const handleSearch = (e) => {
-        console.log(searchTerm);
         e.preventDefault();
         navigate(`/productFilter?search=${searchTerm}`);
-        setFilteredProducts([]);
+        setProdutos([]);
         setShowResults(false);
     };
 
     const handleSearchResultClick = (productId) => {
         navigate(`/product/${productId}`);
         setSearchTerm('');
-        setFilteredProducts([]);
+        setProdutos([]);
         setShowResults(false);
     };
 
@@ -64,6 +67,7 @@ export default function MenuSearch() {
                     placeholder="Pesquisar..."
                     name="search"
                     id="inputSearch"
+                    autoComplete="off"
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
@@ -71,9 +75,9 @@ export default function MenuSearch() {
                     <RiSearch2Line className="searchIcon" />
                 </button>
             </form>
-            {showResults && filteredProducts.length > 0 && (
+            {showResults && produtos.length > 0 && (
                 <ul className="searchResults">
-                    {filteredProducts.map((product) => (
+                    {produtos.map((product) => (
                         <Link
                             to={`/product/${product.id}`}
                             className="itemSearch"

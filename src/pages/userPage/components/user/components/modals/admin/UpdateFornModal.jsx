@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
 import { IoClose } from 'react-icons/io5';
 import { RiSearch2Line } from 'react-icons/ri';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
@@ -56,14 +56,3 @@ export default function UpdateFornModal({ fornecedores, onSelect, onClose }) {
         </div>
     );
 }
-
-UpdateFornModal.propTypes = {
-    fornecedores: PropTypes.arrayOf(
-        PropTypes.shape({
-            nome: PropTypes.string.isRequired,
-            email: PropTypes.string.isRequired,
-        })
-    ).isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-};

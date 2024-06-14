@@ -3,8 +3,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from './authService';
 
-//const baseUri = "https://lemnos-server.up.railway.app/api";
-const baseUri = "http://localhost:8080/api";
+const baseUri = 'https://lemnos-server.up.railway.app/api';
+// const baseUri = "http://localhost:8080/api";
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -19,6 +19,7 @@ export async function listarProdutosFiltrados(filtro, page, size) {
                 marca: filtro.marca,
                 menorPreco: filtro.menorPreco,
                 maiorPreco: filtro.maiorPreco,
+                avaliacao: filtro.avaliacao,
                 page: page,
                 size: size,
             },
@@ -115,16 +116,16 @@ export async function desfavoritarProduto(produto) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: "DELETE",
-            url: "/produto/fav",
+            method: 'DELETE',
+            url: '/produto/fav',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': AuthService.getToken()
+                Authorization: AuthService.getToken(),
             },
             params: {
-                id_prod: produto.id
+                id_prod: produto.id,
             },
-            timeout: 10000
+            timeout: 10000,
         });
 
         if (response.status !== 200) {
@@ -132,7 +133,6 @@ export async function desfavoritarProduto(produto) {
         }
 
         return true;
-
     } catch (error) {
         toast.error(error);
         return false;
