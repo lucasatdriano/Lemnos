@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Card from '../../components/card/Card';
-import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
-import './productFilter.scss';
-import { listarProdutosFiltrados } from '../../services/apiProductService';
 import Loading from '../../components/loading/Loading';
+import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';import Loading from '../../components/loading/Loading';
+import { useState, useEffect } from 'react';
+import { listarProdutosFiltrados } from '../../services/apiProductService'; 
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import './productFilter.scss';
 
 const brands = [
     'AMD',

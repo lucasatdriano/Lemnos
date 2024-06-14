@@ -42,6 +42,7 @@ export default function MenuSearch() {
     };
 
     const handleSearch = (e) => {
+        console.log(searchTerm);
         e.preventDefault();
         navigate(`/productFilter?search=${searchTerm}`);
         setFilteredProducts([]);

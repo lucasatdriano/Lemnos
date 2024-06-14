@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from './authService';
 
-const baseUri = 'https://lemnos-server.up.railway.app/api';
+//const baseUri = "https://lemnos-server.up.railway.app/api";
+const baseUri = "http://localhost:8080/api";
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -111,37 +112,30 @@ export async function adicionarFavorito(produto) {
 }
 
 export async function desfavoritarProduto(produto) {
-    if (AuthService.isLoggedIn()) {
-        try {
-            const response = await axios({
-                baseURL: baseUri,
-                method: 'DELETE',
-                url: '/produto/fav',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    Authorization: AuthService.getToken(),
-                },
-                params: {
-                    id_prod: produto.id,
-                },
-                timeout: 10000,
-            });
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "DELETE",
+            url: "/produto/fav",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': AuthService.getToken()
+            },
+            params: {
+                id_prod: produto.id
+            },
+            timeout: 10000
+        });
 
-            if (response.status !== 200) {
-                throw new Error('Erro ao remover favorito.');
-            }
-
-            return true;
-        } catch (error) {
-            if (
-                error.response &&
-                error.response.data &&
-                error.response.data.error
-            ) {
-                toast.error(error.response.data.error);
-            }
-            throw error;
+        if (response.status !== 200) {
+            throw new Error('Erro ao remover favorito.');
         }
+
+        return true;
+
+    } catch (error) {
+        toast.error(error);
+        return false;
     }
 }
 

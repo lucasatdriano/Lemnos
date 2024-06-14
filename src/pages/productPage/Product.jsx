@@ -1,7 +1,10 @@
 import './product.scss';
+import Loading from '../../components/loading/Loading';
 import OfferList from '../../components/lists/OfferList';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import AuthService from '../../services/authService';
+import { toast } from 'react-toastify';
+import { getProdutoById } from '../../services/ApiService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import {
@@ -14,7 +17,6 @@ import {
 import { toast } from 'react-toastify';
 import { getProdutoById } from '../../services/ApiService';
 import React, { useState, useEffect } from 'react';
-import Loading from '../../components/loading/Loading';
 
 export default function Product() {
     const { id } = useParams();
@@ -24,10 +26,10 @@ export default function Product() {
         currency: 'BRL',
     });
     const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(false);
     const [mainImage, setMainImage] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
     const [productRating, setProductRating] = useState(0);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -64,6 +66,8 @@ export default function Product() {
                 );
                 setIsFavorite(isFavorited);
             }
+        } catch (error) {
+            toast.error("Erro ao setar as informações do produto");
         } finally {
             setLoading(false);
         }
