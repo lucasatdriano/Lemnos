@@ -68,7 +68,7 @@ export async function listarProdutosFavoritos() {
                 error.response.data &&
                 error.response.data.error
             ) {
-                toast.error(error.response.data.error);
+                toast.error(error.response.data.error); // aq q tá o erro
             }
             throw error;
         }

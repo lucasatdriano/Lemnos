@@ -1,4 +1,3 @@
-import React from 'react';
 import logoHorizontal from '../../assets/imgLemnos/logoHorizontalClaro.svg';
 import Infos from './components/infos/Infos';
 import ToolTip from '../tooltip/ToolTip';
@@ -67,22 +66,38 @@ export default function Footer() {
                 <div className="iconsNav">
                     <div className="icons">
                         <ToolTip message="Linkedin">
-                            <a href="">
+                            <a
+                                href="https://www.linkedin.com/in/lemnos-company-b73885313?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <RiLinkedinFill className="icon" />
                             </a>
                         </ToolTip>
                         <ToolTip message="Instagram">
-                            <a href="">
+                            <a
+                                href="https://www.instagram.com/lemnos_co?igsh=MTZkc2F3eGJ5MW12Ng=="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <RiInstagramFill className="icon" />
                             </a>
                         </ToolTip>
                         <ToolTip message="Twitter">
-                            <a href="">
+                            <a
+                                href="https://x.com/lemnos_co"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <RiTwitterFill className="icon" />
                             </a>
                         </ToolTip>
                         <ToolTip message="Facebook">
-                            <a href="">
+                            <a
+                                href="https://www.facebook.com/profile.php?id=61561120856036&mibextid=ZbWKwL"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <RiFacebookFill className="icon" />
                             </a>
                         </ToolTip>
@@ -94,7 +109,11 @@ export default function Footer() {
             <div className="authorship">
                 <small>
                     © 2024 Lemnos - Todos os Direitos Reservados. - Por{' '}
-                    <a href="https://techverse-co.vercel.app" target="_blank">
+                    <a
+                        href="https://techverse-co.vercel.app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         TechVerse
                     </a>
                 </small>

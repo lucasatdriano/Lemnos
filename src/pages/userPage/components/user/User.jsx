@@ -44,6 +44,7 @@ export default function User({ onLogout }) {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showEnderecoModal, setShowEnderecoModal] = useState(false);
     const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
+    const [history, setHistory] = useState(false);
     const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
         useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
@@ -97,8 +98,11 @@ export default function User({ onLogout }) {
         setIsEditing((prevIsEditing) => !prevIsEditing);
     };
 
-    const handleSaveChanges = () => {
-        console.log('Dados atualizados:', form);
+    const handleViewHistory = () => {
+        setHistory(false);
+    };
+    const handleViewEndereco = () => {
+        setHistory(true);
     };
 
     const handleShowModal = (modalName) => {
@@ -170,8 +174,8 @@ export default function User({ onLogout }) {
         console.log('Nova senha:', newPassword);
     };
 
-    const handleEnderecoSave = (enderecoData) => {
-        console.log('Endereço salvo:', enderecoData);
+    const handleSaveChanges = () => {
+        console.log('Dados atualizados:', form);
     };
 
     return (
@@ -256,15 +260,36 @@ export default function User({ onLogout }) {
             <hr />
             <section>
                 {AuthService.getRole() === 'CLIENTE' ? (
-                    <>
-                        <HistoricoCompras compras={historicoExemplo} />
-                        <button
-                            type="button"
-                            onClick={() => handleShowModal('endereco')}
-                        >
-                            Adicionar Endereço
-                        </button>
-                    </>
+                    <div className="clientePage">
+                        <div className="selectBtn">
+                            <button
+                                type="button"
+                                className="btnView"
+                                onClick={handleViewHistory}
+                            >
+                                Histórico
+                            </button>
+                            <button
+                                type="button"
+                                className="btnView"
+                                onClick={handleViewEndereco}
+                            >
+                                Endereços
+                            </button>
+                        </div>
+                        {history ? (
+                            <button
+                                type="button"
+                                onClick={() => handleShowModal('endereco')}
+                            >
+                                Adicionar Endereço
+                            </button>
+                        ) : (
+                            <div className="historyOrders">
+                                <HistoricoCompras compras={historicoExemplo} />
+                            </div>
+                        )}
+                    </div>
                 ) : AuthService.getRole() === 'ADMIN' ? (
                     <div className="adminPage">
                         <button
@@ -317,7 +342,7 @@ export default function User({ onLogout }) {
 
             {showEnderecoModal && (
                 <EnderecoModal
-                    onSave={handleEnderecoSave}
+                    // onSave={handleEnderecoSave}
                     onClose={() => handleCloseModal('endereco')}
                 />
             )}

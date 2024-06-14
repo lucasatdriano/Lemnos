@@ -15,6 +15,7 @@ import imgBannerMob3 from '../../../../assets/banners/bannerMob3.svg';
 import imgBannerMob4 from '../../../../assets/banners/bannerMob4.svg';
 import imgBannerMob5 from '../../../../assets/banners/bannerMob5.svg';
 import './carousel.scss';
+import { Link } from 'react-router-dom';
 
 const ImageWithLoadingEffect = ({ src, alt, className }) => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -97,52 +98,60 @@ export default function Slide() {
                     />
                 </SplideSlide>
                 <SplideSlide>
-                    <ImageWithLoadingEffect
-                        src={imgBanner2}
-                        alt="Slide 2"
-                        className="slide"
-                    />
-                    <ImageWithLoadingEffect
-                        src={imgBannerMob2}
-                        alt="Slide 2"
-                        className="slideMob"
-                    />
+                    <Link to={'/product/992c2ad8-b0ab-45e5-aa56-cc7fcf8bbc4e'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner2}
+                            alt="Slide 2"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob2}
+                            alt="Slide 2"
+                            className="slideMob"
+                        />
+                    </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <ImageWithLoadingEffect
-                        src={imgBanner3}
-                        alt="Slide 3"
-                        className="slide"
-                    />
-                    <ImageWithLoadingEffect
-                        src={imgBannerMob3}
-                        alt="Slide 3"
-                        className="slideMob"
-                    />
+                    <Link to={'/product/3d32b563-c84d-42f9-a6a6-2e26dd7ed9c6'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner3}
+                            alt="Slide 3"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob3}
+                            alt="Slide 3"
+                            className="slideMob"
+                        />
+                    </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <ImageWithLoadingEffect
-                        src={imgBanner4}
-                        alt="Slide 4"
-                        className="slide"
-                    />
-                    <ImageWithLoadingEffect
-                        src={imgBannerMob4}
-                        alt="Slide 4"
-                        className="slideMob"
-                    />
+                    <Link to={'/product/e57e1820-3baf-4c20-81d0-882a44e656f3'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner4}
+                            alt="Slide 4"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob4}
+                            alt="Slide 4"
+                            className="slideMob"
+                        />
+                    </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <ImageWithLoadingEffect
-                        src={imgBanner5}
-                        alt="Slide 5"
-                        className="slide"
-                    />
-                    <ImageWithLoadingEffect
-                        src={imgBannerMob5}
-                        alt="Slide 5"
-                        className="slideMob"
-                    />
+                    <Link to={'/product/b1c098db-bff3-4ed2-b7be-eda75ee14935'}>
+                        <ImageWithLoadingEffect
+                            src={imgBanner5}
+                            alt="Slide 5"
+                            className="slide"
+                        />
+                        <ImageWithLoadingEffect
+                            src={imgBannerMob5}
+                            alt="Slide 5"
+                            className="slideMob"
+                        />
+                    </Link>
                 </SplideSlide>
             </Splide>
         </section>

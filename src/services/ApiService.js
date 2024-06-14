@@ -39,7 +39,7 @@ export async function cadastrarUsuario(usuario) {
     }
 }
 
-export async function login(usuario) {
+export async function login(usuario, navigate) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -55,13 +55,24 @@ export async function login(usuario) {
             timeout: 10000,
         });
 
-        if (response.status != 200) {
+        if (response.status !== 200) {
             throw new Error('Erro ao fazer login do usuário.');
         }
+
         AuthService.setToken(response.data.token);
+
+        setTimeout(
+            () => {
+                AuthService.logout();
+                navigate('/login');
+            },
+            5 * 60 * 1000
+        );
+
         return true;
     } catch (error) {
-        console.log(error);
+        console.error('Erro ao fazer login:', error);
+        return false;
     }
 }
 
@@ -659,7 +670,7 @@ export async function getCliente() {
             error.response.data &&
             error.response.data.error
         ) {
-            console.log('AAAAAAA', error.response.data.error);
+            console.log(error.response.data.error);
         } else {
             toast.error('Erro ao pegar dados do usuário');
         }

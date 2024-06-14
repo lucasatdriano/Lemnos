@@ -399,6 +399,7 @@ export default function Cart() {
                             <a
                                 href="https://buscacepinter.correios.com.br/app/endereco/index.php"
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="SearchCep"
                             >
                                 Não sei meu CEP

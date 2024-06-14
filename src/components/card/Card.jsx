@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './card.scss';
 import './cardOffer.scss';
@@ -7,7 +6,6 @@ import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { auth } from '../../services/firebaseConfig';
 import AuthService from '../../services/authService';
 import {
     adicionarFavorito,
@@ -26,16 +24,16 @@ export default function Card({ produto }) {
 
     useEffect(() => {
         const setInfo = async () => {
-            try {
-                if (AuthService.isLoggedIn()) {
+            if (AuthService.isLoggedIn()) {
+                try {
                     const favorites = await listarProdutosFavoritos();
                     const isFavorited = favorites.some(
                         (fav) => fav.id === produto.id
                     );
                     setIsFavorite(isFavorited);
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
             }
         };
 

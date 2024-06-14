@@ -11,8 +11,10 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../../../../services/firebaseConfig';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { login, sendFirebaseToken } from '../../../../services/ApiService';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
+    const navigate = useNavigate();
     const [form, setForm] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
@@ -42,15 +44,17 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                const loginSuccess = await login(form);
+                const loginSuccess = await login(form, navigate);
 
                 if (loginSuccess) {
                     onLogin();
                     toast.success('Usuário logado');
+                } else {
+                    toast.warning('Usuário não cadastrado.');
                 }
-                toast.warning('Usuário não cadastrado.');
             } catch (error) {
                 console.error('Error during login:', error.code, error.message);
+                toast.error('Erro ao fazer login, tente novamente.');
             }
         }
     };
