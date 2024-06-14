@@ -14,8 +14,6 @@ import {
     desfavoritarProduto,
     listarProdutosFavoritos,
 } from '../../services/apiProductService';
-import { toast } from 'react-toastify';
-import { getProdutoById } from '../../services/ApiService';
 import React, { useState, useEffect } from 'react';
 
 export default function Product() {
