@@ -1,6 +1,6 @@
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
-import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';import Loading from '../../components/loading/Loading';
+import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import { useState, useEffect } from 'react';
 import { listarProdutosFiltrados } from '../../services/apiProductService'; 
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
