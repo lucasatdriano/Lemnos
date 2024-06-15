@@ -320,7 +320,7 @@ $font-items: 'Poppins', Helvetica;
             .listaFavoritos {
                 .itemFav {
                     background-color: #72757478;
-                    box-shadow: 2px 2px 8px $color-shadow;
+                    box-shadow: 0 0 15px #141414a8;
 
                     .favLink {
                         color: $color-fontDark;

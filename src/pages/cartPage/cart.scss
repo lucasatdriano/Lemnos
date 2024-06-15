@@ -437,7 +437,7 @@ main {
         .containerMain {
             .containerCart {
                 .emptyCartMessage {
-                    box-shadow: 0 0 8px $color-card;
+                    box-shadow: 0 0 15px #141414a8;
 
                     .btnBackBuy {
                         background: $color-primaryDark;
@@ -447,7 +447,7 @@ main {
 
                 .listCart {
                     .order {
-                        box-shadow: 2px 2px 5px $color-card;
+                        box-shadow: 0 0 15px #141414a8;
                         background-color: $color-secundaryDark;
 
                         hr {
@@ -458,7 +458,7 @@ main {
 
                 .cleanCart {
                     background: $color-secundaryLight;
-                    box-shadow: 2px 2px 5px $color-card;
+                    box-shadow: 0 0 15px #141414a8;
 
                     &:hover {
                         filter: brightness(0.9);
@@ -471,7 +471,7 @@ main {
                 }
 
                 .delivery {
-                    box-shadow: 2px 2px 5px $color-card;
+                    box-shadow: 0 0 15px #141414a8;
                     background-color: $color-secundaryDark;
 
                     hr {
@@ -512,7 +512,7 @@ main {
             }
 
             .resumeBuy {
-                box-shadow: 2px 2px 5px $color-card;
+                box-shadow: 0 0 15px #141414a8;
                 background-color: $color-secundaryDark;
 
                 .hrResume {

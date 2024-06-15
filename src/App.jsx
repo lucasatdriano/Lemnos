@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './global.scss';
 import Header from './components/header/Header';
 import BackToTopButton from './components/backToTop/BackToTop';
 import Footer from './components/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AnimatedRoutes from './AnimatedRoutes';
 
 export default function App() {
     const [theme, setTheme] = useState('light');
@@ -23,7 +24,7 @@ export default function App() {
         <>
             <section className={`${theme}`}>
                 <Header toggleTheme={toggleTheme} />
-                <Outlet />
+                <AnimatedRoutes />
                 <BackToTopButton />
                 <ToastContainer position="bottom-right" />
                 <Footer />

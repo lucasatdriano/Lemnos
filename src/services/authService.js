@@ -10,9 +10,14 @@ const AuthService = {
     },
     logout: () => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
     },
     isLoggedIn: () => {
         return !!localStorage.getItem('authToken');
+    },
+    isLoggedInWithGoogle: () => {
+        return !!localStorage.getItem('token');
     },
     setRole: (role) => {
         localStorage.setItem('role', role);

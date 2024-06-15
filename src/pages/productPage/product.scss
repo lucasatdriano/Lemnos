@@ -339,12 +339,12 @@ $font-items: 'Poppins', Helvetica;
                 .containerImages {
                     .imageMain {
                         filter: drop-shadow(4px 4px 6px #4b4c4c78);
-                        box-shadow: 4px 4px 8px #4b4c4c78;
+                        box-shadow: 0 0 15px #141414a8;
                     }
 
                     .optionsImages {
                         img {
-                            box-shadow: 4px 4px 8px #4b4c4c78;
+                            box-shadow: 0 0 15px #141414a8;
                         }
                     }
                 }
@@ -352,7 +352,7 @@ $font-items: 'Poppins', Helvetica;
                 .containerInfos {
                     .iconFav {
                         color: $color-primaryDark;
-                        filter: drop-shadow(2px 2px 4px $color-card);
+                        filter: drop-shadow(0 0 15px #141414a8);
                     }
 
                     .priceOrigin {
@@ -363,7 +363,7 @@ $font-items: 'Poppins', Helvetica;
                     .productPrice {
                         span {
                             color: $color-primaryDark;
-                            text-shadow: 3px 3px 4px $color-card;
+                            text-shadow: 3px 3px 4px #141414a8;
                         }
                     }
 
@@ -375,7 +375,7 @@ $font-items: 'Poppins', Helvetica;
 
                     .addCart {
                         background: $color-primaryDark;
-                        box-shadow: 4px 4px 10px $color-card;
+                        box-shadow: 0 0 15px #141414a8;
 
                         &:hover {
                             filter: brightness(1.1);
@@ -386,7 +386,7 @@ $font-items: 'Poppins', Helvetica;
             }
             .containerDetails {
                 .containerSpecifications {
-                    box-shadow: 0 0 15px $color-card;
+                    box-shadow: 0 0 15px #141414a8;
                 }
             }
         }

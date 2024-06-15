@@ -82,37 +82,13 @@ $font-items: 'Poppins', Helvetica;
         .rangeSlider {
             background: $color-secundaryDark;
 
-            .sliderTrack {
-                background: $color-primaryDark;
-            }
-
-            .minValue,
-            .maxValue {
-                &::-webkit-slider-thumb {
-                    border: 2px solid #7dccc7;
-                    background: #7dccc7;
-                    box-shadow: 0 0 5px $color-card;
-                }
-
-                &::-moz-range-thumb {
-                    border: 2px solid #7dccc7;
-                    background: #7dccc7;
-                    box-shadow: 0 0 5px $color-card;
-                }
-            }
-
             .inputBox {
                 .minBox,
                 .maxBox {
                     .inputWrap {
-                        .inputAddon {
-                            border: 1px solid #9d9d9e;
-                            box-shadow: 1px 1px 8px $color-card;
-                        }
-
                         .inputField {
                             border: 1px solid #9d9d9e;
-                            box-shadow: 1px 1px 8px $color-card;
+                            box-shadow: 0 0 15px #14141454;
 
                             &:focus {
                                 border-left: 1px solid #2a2a2b;

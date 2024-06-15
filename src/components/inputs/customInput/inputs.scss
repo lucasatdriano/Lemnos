@@ -89,13 +89,11 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 
-    input[type='file'] + label,
     input[type='date'] + label {
         top: -10px;
         color: $color-fontLight;
     }
 
-    input[type='file']:valid + label,
     input[type='date']:valid + label {
         color: $color-primaryDark;
     }
@@ -119,7 +117,7 @@ $font-items: 'Poppins', Helvetica;
             background-color: #e8f1f0a6;
 
             &:focus {
-                box-shadow: 0px 0px 15px $color-shadow;
+                box-shadow: 0 0 15px #141414a8;
             }
             &:valid {
                 border: none;
@@ -127,20 +125,20 @@ $font-items: 'Poppins', Helvetica;
             }
 
             &:focus + label {
-                color: $color-fontDark;
+                color: #f6fefd86;
             }
             &:valid + label {
-                color: $color-fontDark;
+                color: #f6fefd86;
             }
         }
-        input[type='file'] + label,
+
         input[type='date'] + label {
-            color: $color-fontDark;
+            color: #bec7c693;
         }
 
         label {
             background: transparent;
-            color: $color-fontLight;
+            color: #bec7c693;
         }
     }
 }

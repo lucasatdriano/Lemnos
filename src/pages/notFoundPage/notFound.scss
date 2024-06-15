@@ -85,7 +85,7 @@ $font-items: 'Poppins', Helvetica;
 
 .dark {
     .notFound {
-        filter: drop-shadow(2px 2px 10px $color-card);
+        filter: drop-shadow(2px 2px 10px #141414a8);
 
         .iconError {
             color: $color-primaryDark;
@@ -94,7 +94,7 @@ $font-items: 'Poppins', Helvetica;
 
     .btnHome {
         box-shadow: 4px 4px 30px #2a3737ee;
-        background-color: $color-secundaryDark;
+        background-color: $color-secundaryLight;
         color: $color-fontDark;
     }
 }

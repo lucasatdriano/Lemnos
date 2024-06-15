@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './user.scss';
@@ -19,7 +20,6 @@ import { MdLogout } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import {
-    cadastrarFuncionario,
     getCliente,
     getFuncionarioByToken,
 } from '../../../../services/ApiService';
@@ -37,7 +37,9 @@ const historicoExemplo = [
     { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
 ];
 
-export default function User({ onLogout }) {
+export default function User({ onLogout, clearUserImg }) {
+    const [userImg, setUserImg] = useState(UserImg);
+    const [username, setUsername] = useState('');
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
@@ -49,7 +51,6 @@ export default function User({ onLogout }) {
         useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
     const [form, setForm] = useState({ name: '', email: '' });
-    const [username, setUsername] = useState('');
     const [errors, setErrors] = useState({ cpf: false });
 
     useEffect(() => {
@@ -69,6 +70,12 @@ export default function User({ onLogout }) {
         fetchUsuario();
     }, []);
 
+    useEffect(() => {
+        return () => {
+            setUserImg(UserImg);
+        };
+    }, [clearUserImg]);
+
     async function fetchUsuario() {
         try {
             const usuario =
@@ -78,6 +85,18 @@ export default function User({ onLogout }) {
 
             setForm({ name: usuario.nome, email: usuario.email });
             setUsername(usuario.nome.split(' ')[0]);
+
+            if (AuthService.isLoggedInWithGoogle()) {
+                const currentUser = auth.currentUser;
+                if (
+                    currentUser &&
+                    currentUser.providerData.some(
+                        (provider) => provider.providerId === 'google.com'
+                    )
+                ) {
+                    setUserImg(currentUser.photoURL);
+                }
+            }
         } catch (error) {
             toast.error('Erro ao obter os dados do Usuário');
             navigate('/login');
@@ -183,7 +202,7 @@ export default function User({ onLogout }) {
             <section>
                 <div className="userData">
                     <div className="user">
-                        <img src={UserImg} alt="user" />
+                        <img src={userImg} alt="user" />
                         <h3>{username}</h3>
                     </div>
                     <div className="configUser">

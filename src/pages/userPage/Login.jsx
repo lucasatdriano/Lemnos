@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './login.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import User from './components/user/User';
@@ -12,6 +13,7 @@ export default function Login() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(true);
     const logoutTimerRef = useRef(null);
+    const [clearUserImgFlag, setClearUserImgFlag] = useState(false);
 
     useEffect(() => {
         if (AuthService.isLoggedIn()) {
@@ -61,6 +63,7 @@ export default function Login() {
     const handleLogout = () => {
         AuthService.logout();
         setLoggedIn(false);
+        setClearUserImgFlag(!clearUserImgFlag); // Altera a flag para limpar userImg
     };
 
     const handleRegistrationForm = () => {
@@ -99,7 +102,7 @@ export default function Login() {
     return (
         <main className="container">
             {loggedIn ? (
-                <User onLogout={handleLogout} />
+                <User onLogout={handleLogout} clearUserImg={clearUserImgFlag} />
             ) : (
                 <div className="loginScreen">
                     {showLoginForm ? (

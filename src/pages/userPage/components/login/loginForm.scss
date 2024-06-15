@@ -160,12 +160,12 @@ $font-items: 'Poppins', Helvetica;
 .dark {
     .login-form-container {
         background-color: #72757478;
-        box-shadow: 4px 4px 8px #4b4c4c78;
+        box-shadow: 0 0 15px #141414a8;
 
         .loginCredencial {
             .btnCredencials {
                 button {
-                    box-shadow: 4px 4px 4px $color-shadow;
+                    box-shadow: 2px 2px 6px $color-shadow;
                 }
             }
         }
@@ -183,7 +183,7 @@ $font-items: 'Poppins', Helvetica;
                 button {
                     background-color: $color-primaryDark;
                     color: $color-fontDark;
-                    box-shadow: 2px 2px 4px $color-shadow;
+                    box-shadow: 2px 2px 8px $color-shadow;
                 }
             }
         }

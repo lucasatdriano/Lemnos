@@ -304,6 +304,10 @@ $font-items: 'Poppins', Helvetica;
                     box-shadow: 2px 2px 4px $color-shadow;
                     transition: 0.2s ease;
 
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+
                     &.open {
                         background-color: $color-bgLight;
                         top: 40px;
@@ -401,7 +405,7 @@ $font-items: 'Poppins', Helvetica;
 .dark {
     .userContainer {
         background-color: #72757478;
-        box-shadow: 4px 4px 8px #4b4c4c78;
+        box-shadow: 0 0 15px #141414a8;
 
         .userData {
             .user {
@@ -442,7 +446,7 @@ $font-items: 'Poppins', Helvetica;
             .modalFornecedor {
                 p {
                     .dropdown {
-                        box-shadow: 2px 2px 4px $color-shadow;
+                        box-shadow: 0 0 15px #141414a8;
 
                         &.open {
                             background: #383737;
@@ -483,7 +487,7 @@ $font-items: 'Poppins', Helvetica;
             }
 
             &:hover {
-                box-shadow: 0 0 10px $color-primaryDark;
+                box-shadow: 0 0 15px $color-primaryDark;
             }
         }
     }
@@ -570,19 +574,6 @@ $font-items: 'Poppins', Helvetica;
                         .dropdown-estado {
                             padding: 5px 0;
                             font-size: 1.6rem;
-                        }
-
-                        .dropdown-situacao {
-                            padding: 10px 0;
-                            font-size: 1.8rem;
-
-                            &:last-child {
-                                cursor: pointer;
-
-                                &:hover {
-                                    filter: brightness(0.9);
-                                }
-                            }
                         }
                     }
 
