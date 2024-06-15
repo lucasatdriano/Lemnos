@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
@@ -118,7 +117,9 @@ export default function ProductFilter() {
                 marca: selectedBrand ?? null,
                 menorPreco: minPrice ?? 0,
                 maiorPreco: maxPrice ?? 50000,
-                avaliacao: selectedEvaluation ?? null,
+                avaliacao: selectedEvaluation
+                    ? parseInt(selectedEvaluation, 10)
+                    : null,
             };
 
             const produtosFiltrados = await listarProdutosFiltrados(
@@ -151,6 +152,7 @@ export default function ProductFilter() {
         minPrice,
         maxPrice,
         searchTerm,
+        selectedEvaluation,
     ]);
 
     useEffect(() => {
@@ -256,11 +258,11 @@ export default function ProductFilter() {
                     onChange={(e) => setSelectedEvaluation(e.target.value)}
                 >
                     <option value="">Qualquer Nota</option>
-                    <option value={1}>1 estrela</option>
-                    <option value={2}>2 estrela</option>
-                    <option value={3}>3 estrela</option>
-                    <option value={4}>4 estrela</option>
-                    <option value={5}>5 estrela</option>
+                    <option value="1">1 estrela</option>
+                    <option value="2">2 estrelas</option>
+                    <option value="3">3 estrelas</option>
+                    <option value="4">4 estrelas</option>
+                    <option value="5">5 estrelas</option>
                 </select>
             </section>
 

@@ -49,13 +49,13 @@ footer {
 
             li {
                 a {
-                    color: $color-fontDark;
+                    color: #f6fefd9f;
                     font-size: clamp(1.8rem, 1.8rem + 1vw, 2.2rem);
                     margin: 0 0 2px 5px;
-                    transition: 0.5s ease;
+                    transition: 0.2s ease;
 
                     &:hover {
-                        border-bottom: 1.5px solid $color-fontDark;
+                        color: $color-fontDark;
                     }
                 }
             }

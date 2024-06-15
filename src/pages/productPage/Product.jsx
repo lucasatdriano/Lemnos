@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './product.scss';
 import Loading from '../../components/loading/Loading';
 import OfferList from '../../components/lists/OfferList';
@@ -56,7 +57,7 @@ export default function Product() {
         setLoading(true);
         try {
             setMainImage(product.imagemPrincipal);
-            setProductRating(product.avaliacao);
+            setProductRating(Math.ceil(product.avaliacao)); // Arredonda para cima
             if (AuthService.isLoggedIn()) {
                 const favorites = await listarProdutosFavoritos();
                 const isFavorited = favorites.some(
@@ -194,7 +195,7 @@ export default function Product() {
                             <div className="sectionIcons">
                                 <div className="rating">
                                     <p className="productNote">
-                                        ({product.avaliacao})
+                                        ({Math.ceil(product.avaliacao)})
                                     </p>
                                     {[1, 2, 3, 4, 5].reverse().map((index) => (
                                         <React.Fragment key={index}>
@@ -204,7 +205,8 @@ export default function Product() {
                                                 name={`star-rating-${id}`}
                                                 value={index}
                                                 checked={
-                                                    index === productRating
+                                                    index ===
+                                                    Math.ceil(productRating)
                                                 }
                                                 onChange={() =>
                                                     handleProductRating(index)
@@ -215,7 +217,8 @@ export default function Product() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
                                                     className={
-                                                        index <= productRating
+                                                        index <=
+                                                        Math.ceil(productRating)
                                                             ? 'filled'
                                                             : ''
                                                     }

@@ -62,10 +62,12 @@ export default function Card({ produto }) {
         e.stopPropagation();
         if (AuthService.isLoggedIn()) {
             try {
-                console.log('Adicionando favorito para o produto:', produto.id);
                 await adicionarFavorito(produto);
-                setIsFavorite(true);
-                toast.success('Produto adicionado aos favoritos!');
+                const success = await adicionarFavorito(produto);
+                if (success) {
+                    setIsFavorite(true);
+                    toast.success('Produto adicionado aos favoritos!');
+                }
             } catch (error) {
                 toast.error('Erro ao adicionar produto aos favoritos.');
             }
@@ -85,7 +87,7 @@ export default function Card({ produto }) {
                 const success = await desfavoritarProduto(produto);
                 if (success) {
                     setIsFavorite(false);
-                    // fetchFavorites();
+                    toast.success('Produto removido dos favoritos!');
                 }
             } catch (error) {
                 toast.error('Erro ao remover produto dos favoritos.');
@@ -181,7 +183,7 @@ export default function Card({ produto }) {
                         Adicionar ao Carrinho
                         <img
                             src={iconAddCart}
-                            alt="icon add Cart"
+                            alt="icone adicionar carrinho"
                             className="iconAdd"
                         />
                     </button>
