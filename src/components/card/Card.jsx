@@ -24,7 +24,10 @@ export default function Card({ produto }) {
 
     useEffect(() => {
         const setInfo = async () => {
-            if (AuthService.isLoggedIn()) {
+            if (
+                AuthService.isLoggedIn() &&
+                AuthService.getRole() == 'CLIENTE'
+            ) {
                 try {
                     const favorites = await listarProdutosFavoritos();
                     const isFavorited = favorites.some(
@@ -60,7 +63,7 @@ export default function Card({ produto }) {
     const handleAddToFavorites = async (produto, e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (AuthService.isLoggedIn()) {
+        if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
             try {
                 await adicionarFavorito(produto);
                 const success = await adicionarFavorito(produto);
@@ -82,7 +85,7 @@ export default function Card({ produto }) {
     const handleRemoveFavorite = async (produto, e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (AuthService.isLoggedIn()) {
+        if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
             try {
                 const success = await desfavoritarProduto(produto);
                 if (success) {

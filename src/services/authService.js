@@ -8,10 +8,17 @@ const AuthService = {
     setGoogleToken: (token) => {
         localStorage.setItem('token', token);
     },
+    setGoogleProfilePhoto: (photoURL) => {
+        localStorage.setItem('googleProfilePhoto', photoURL);
+    },
+    getGoogleProfilePhoto: () => {
+        return localStorage.getItem('googleProfilePhoto');
+    },
     logout: () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('token');
         localStorage.removeItem('role');
+        localStorage.removeItem('googleProfilePhoto');
     },
     isLoggedIn: () => {
         return !!localStorage.getItem('authToken');

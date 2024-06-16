@@ -57,8 +57,11 @@ export default function Product() {
         setLoading(true);
         try {
             setMainImage(product.imagemPrincipal);
-            setProductRating(Math.ceil(product.avaliacao)); // Arredonda para cima
-            if (AuthService.isLoggedIn()) {
+            setProductRating(Math.ceil(product.avaliacao));
+            if (
+                AuthService.isLoggedIn() &&
+                AuthService.getRole() == 'CLIENTE'
+            ) {
                 const favorites = await listarProdutosFavoritos();
                 const isFavorited = favorites.some(
                     (fav) => fav.id === product.id
@@ -113,7 +116,7 @@ export default function Product() {
     };
 
     const handleRemoveToFavorites = async () => {
-        if (AuthService.isLoggedIn()) {
+        if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
             try {
                 await desfavoritarProduto(product);
                 toast.success('Produto removido dos favoritos');

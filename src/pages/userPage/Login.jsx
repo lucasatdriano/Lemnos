@@ -63,7 +63,7 @@ export default function Login() {
     const handleLogout = () => {
         AuthService.logout();
         setLoggedIn(false);
-        setClearUserImgFlag(!clearUserImgFlag); // Altera a flag para limpar userImg
+        setClearUserImgFlag(!clearUserImgFlag);
     };
 
     const handleRegistrationForm = () => {

@@ -204,7 +204,7 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                         onClick={toggleTheme}
                         name="chk"
                     />
-                    <label htmlFor="chk" className="label">
+                    <label htmlFor="chk" id="labelTheme">
                         <RiSunLine className="iconSun" />
                         <RiMoonLine className="iconMoon" />
                         <div className="ball"></div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -24,6 +25,8 @@ import {
     getFuncionarioByToken,
 } from '../../../../services/ApiService';
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUserImg } from '../../../../actions/userActions';
 
 const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -37,8 +40,7 @@ const historicoExemplo = [
     { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
 ];
 
-export default function User({ onLogout, clearUserImg }) {
-    const [userImg, setUserImg] = useState(UserImg);
+const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
@@ -68,18 +70,22 @@ export default function User({ onLogout, clearUserImg }) {
 
     useEffect(() => {
         fetchUsuario();
-    }, []);
+    }, [clearUserImg]);
 
     useEffect(() => {
-        return () => {
+        const storedPhotoURL = localStorage.getItem('userImg');
+        if (storedPhotoURL) {
+            setUserImg(storedPhotoURL);
+        } else {
+            // Carregar a imagem padrão ou inicial
             setUserImg(UserImg);
-        };
-    }, [clearUserImg]);
+        }
+    }, [setUserImg]);
 
     async function fetchUsuario() {
         try {
             const usuario =
-                AuthService.getRole() == 'CLIENTE'
+                AuthService.getRole() === 'CLIENTE'
                     ? await getCliente()
                     : await getFuncionarioByToken();
 
@@ -94,8 +100,13 @@ export default function User({ onLogout, clearUserImg }) {
                         (provider) => provider.providerId === 'google.com'
                     )
                 ) {
-                    setUserImg(currentUser.photoURL);
+                    const photoURL = currentUser.photoURL;
+                    AuthService.setGoogleProfilePhoto(photoURL);
+                    setUserImg(photoURL);
                 }
+            } else {
+                const storedPhotoURL = AuthService.getGoogleProfilePhoto();
+                setUserImg(storedPhotoURL || UserImg);
             }
         } catch (error) {
             toast.error('Erro ao obter os dados do Usuário');
@@ -387,4 +398,16 @@ export default function User({ onLogout, clearUserImg }) {
             )}
         </section>
     );
-}
+};
+
+// Mapeamento do estado e das ações do Redux
+const mapStateToProps = (state) => ({
+    userImg: state.user.userImg,
+});
+
+const mapDispatchToProps = {
+    setUserImg,
+};
+
+// Conectar o componente ao Redux
+export default connect(mapStateToProps, mapDispatchToProps)(User);
