@@ -36,7 +36,7 @@ main {
         }
 
         h3 {
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             font-family: $font-title;
         }
     }
@@ -46,9 +46,44 @@ main {
         border: 2px solid $color-primaryLight;
     }
 
-    .loadingDelivery {
+    .statusOrder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin: 0 auto 1em;
         width: calc(90vw + 1em);
+        height: 3em;
+        gap: 1em;
+        background: transparent;
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: .5em;
+
+            .iconStatus {
+                width: 24px;
+                height: 24px;
+                color: $color-primaryLight;
+            }
+
+            p {
+                font-size: 2rem;
+                color: $color-primaryLight;
+            }
+        }
+
+
+        span {
+            height: 3px;
+            width: 3em;
+            background: $color-primaryLight;
+        }
+    }
+
+    .loadingDelivery {
+        margin: 0 auto 1em;
+        width: calc(90vw);
         height: 10em;
         background: $color-bgLight;
         border-radius: 15px;
@@ -80,7 +115,7 @@ main {
 
                     .titleData {
                         margin-left: 2em;
-                        font-size: 2rem;
+                        font-size: 2.2rem;
                     }
 
                     p {
@@ -146,6 +181,7 @@ main {
                 .delivery {
                     .dataDelivery {
                         display: flex;
+                        align-items: center;
                         justify-content: space-between;
                         padding: 1em;
                         font-size: 2.4rem;
@@ -172,11 +208,10 @@ main {
             display: flex;
             font-family: $font-items;
             flex-direction: column;
-            gap: 1em;
 
             .lineOrder {
-                padding: 0.5em 1em;
-                font-size: 2rem;
+                padding: .5em 1em;
+                font-size: 2.4rem;
                 display: flex;
                 justify-content: space-between;
 
@@ -195,7 +230,11 @@ main {
             }
 
             .confirmOrder {
+                font-family: $font-title;
                 position: absolute;
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: 2.4rem;
                 bottom: 0;
                 border: none;
                 outline: none;
@@ -205,6 +244,7 @@ main {
                 flex-grow: 1;
                 padding: 1em;
                 border-radius: 0 0 15px 15px;
+                cursor: pointer;
                 background: $color-primaryLight;
             }
         }

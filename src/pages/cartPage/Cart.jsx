@@ -370,7 +370,7 @@ export default function Cart() {
                             className="endOrder"
                             onClick={() => finalizarPedido()}
                         >
-                            Finalizar Pedido
+                            Ir para o Pagamento
                         </button>
                     </div>
 

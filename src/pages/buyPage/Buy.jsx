@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BsTruck } from 'react-icons/bs';
+import { FaCheckCircle } from "react-icons/fa";
+import { FaCreditCard } from "react-icons/fa6";
 import { PiFileMagnifyingGlass } from 'react-icons/pi';
+import { IoCart } from "react-icons/io5";
 import ModalCompleted from './components/ModalCompleted';
 import './buy.scss';
 
@@ -20,6 +23,22 @@ export default function BuyPage() {
     return (
         <>
             <main>
+                <div className="statusOrder">
+                    <div className='status'>
+                        <IoCart className="iconStatus" />
+                        <p>Carrinho</p>
+                    </div>
+                    <span></span>
+                    <div className='status'>
+                        <FaCreditCard className="iconStatus" />
+                        <p>Pagamento</p>
+                    </div>
+                    <span></span>
+                    <div className='status'>
+                        <FaCheckCircle className="iconStatus" />
+                        <p>Confirmação</p>
+                    </div>
+                </div>
                 <div className="loadingDelivery"></div>
                 <section className="sectionOrder">
                     <div className="divOrder">
@@ -122,7 +141,7 @@ export default function BuyPage() {
                                 <p>Boleto</p>
                             </div>
                             <hr className="hrResume" />
-                            <h2>{BRL.format(570)}</h2>
+                            <h2>{BRL.format(596)}</h2>
                             <button
                                 type="button"
                                 onClick={handleOpenModal}

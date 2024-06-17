@@ -261,29 +261,19 @@ export default function ProductFilter() {
                 >
                     <option value="">Qualquer Nota</option>
                     <option value="1">
-                        <IoStar className="iconStar" />
+                        ⭐
                     </option>
                     <option value="2">
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
+                        ⭐⭐
                     </option>
                     <option value="3">
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
+                        ⭐⭐⭐
                     </option>
                     <option value="4">
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
+                        ⭐⭐⭐⭐
                     </option>
                     <option value="5">
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
-                        <IoStar className="iconStar" />
+                        ⭐⭐⭐⭐⭐
                     </option>
                 </select>
             </section>
