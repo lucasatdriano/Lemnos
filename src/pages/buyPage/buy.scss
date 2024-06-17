@@ -1,0 +1,212 @@
+$color-primaryLight: #36cec4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
+
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
+
+$color-bgLight: #f9fbfb;
+$color-bgDark: #2d2d2d;
+$color-fontDark: #f6fefd;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+main {
+    width: 90vw;
+    margin: auto;
+
+    .titleContainers {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        padding: 0.5em 1em;
+
+        .iconOrder {
+            width: 42px;
+            height: 42px;
+        }
+
+        h3 {
+            font-size: 2.4rem;
+            font-family: $font-title;
+        }
+    }
+
+    .hrTitle {
+        width: 100%;
+        border: 2px solid $color-primaryLight;
+    }
+
+    .loadingDelivery {
+        margin: 0 auto 1em;
+        width: calc(90vw + 1em);
+        height: 10em;
+        background: $color-bgLight;
+        border-radius: 15px;
+        box-shadow: 4px 4px 15px $color-shadow;
+    }
+
+    .sectionOrder {
+        width: 90vw;
+        display: flex;
+        gap: 1em;
+
+        .divOrder {
+            width: 65vw;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+
+            .personalData {
+                background: $color-bgLight;
+                box-shadow: 4px 4px 15px $color-shadow;
+                border-radius: 15px;
+                overflow: hidden;
+
+                .dataContainer {
+                    padding: 1em;
+                    height: 90%;
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr;
+
+                    .titleData {
+                        margin-left: 2em;
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        font-size: 1.8rem;
+                    }
+
+                    .dataEnd {
+                        padding: 1em 1em 0;
+                        display: grid;
+                        gap: 0.5em;
+                        grid-template-columns: 1fr 1fr;
+                        grid-template-rows: 1fr 1fr 1fr 1fr;
+                    }
+
+                    .dataPerson {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5em;
+                        padding: 1em 1em 0;
+                    }
+
+                    .hrData {
+                        margin-top: -15px;
+                        width: 0;
+                        height: 100%;
+                        border: 2px solid $color-primaryLight;
+                    }
+                }
+            }
+
+            .shippingCart {
+                background: $color-bgLight;
+                box-shadow: 4px 4px 15px $color-shadow;
+                border-radius: 15px;
+                font-family: $font-items;
+
+                .cart {
+                    ul {
+                        padding: 1.5em;
+
+                        li {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 0 1em 1em;
+                            font-size: 2rem;
+
+                            .dataProduct {
+                                display: flex;
+                                align-items: center;
+                                gap: 1em;
+
+                                img {
+                                    width: 12em;
+                                    height: 8em;
+                                    border: 1px solid #000;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .delivery {
+                    .dataDelivery {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 1em;
+                        font-size: 2.4rem;
+
+                        span {
+                            color: $color-detailsLight;
+                        }
+
+                        .term {
+                            text-indent: 1.5em;
+                        }
+                    }
+                }
+            }
+        }
+
+        .orderSummary {
+            width: 25vw;
+            max-height: 30em;
+            position: relative;
+            background: $color-bgLight;
+            box-shadow: 4px 4px 15px $color-shadow;
+            border-radius: 15px;
+            display: flex;
+            font-family: $font-items;
+            flex-direction: column;
+            gap: 1em;
+
+            .lineOrder {
+                padding: 0.5em 1em;
+                font-size: 2rem;
+                display: flex;
+                justify-content: space-between;
+
+                .discount {
+                    color: $color-detailsLight;
+                }
+            }
+
+            h2 {
+                position: absolute;
+                top: 70%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 4rem;
+                color: $color-primaryLight;
+            }
+
+            .confirmOrder {
+                position: absolute;
+                bottom: 0;
+                border: none;
+                outline: none;
+                font-size: 2rem;
+                margin-top: 1em;
+                width: 100%;
+                flex-grow: 1;
+                padding: 1em;
+                border-radius: 0 0 15px 15px;
+                background: $color-primaryLight;
+            }
+        }
+    }
+}

@@ -493,6 +493,41 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
+@media only screen and (max-width: 1300px) {
+    .userContainer {
+        max-width: 90vw;
+        flex-direction: column;
+
+        hr {
+            height: 0;
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        .clientePage {
+            .selectBtn {
+                button {
+                    width: 50%;
+
+                    &:last-child {
+                        border-radius: 0;
+                        border-left: 2px solid #f3faf9de;
+                    }
+
+                    &:hover {
+                        filter: brightness(0.9);
+                    }
+                }
+            }
+        }
+
+        .adminPage,
+        .funcionarioPage {
+            flex-direction: row;
+        }
+    }
+}
+
 @media only screen and (max-width: 900px) {
     .userContainer {
         .modal {
@@ -593,8 +628,10 @@ $font-items: 'Poppins', Helvetica;
     }
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 650px) {
     .userContainer {
+        min-width: 90vw;
+
         .userData {
             padding: 0 2em;
 
@@ -623,10 +660,6 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
-        .adminPage {
-            grid-template-columns: 1fr;
-        }
-
         .modal {
             .containerModal {
                 .listItens {
@@ -641,6 +674,37 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .userContainer {
+        hr {
+            height: 0;
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        .clientePage {
+            .selectBtn {
+                button {
+                    font-size: 2.2rem;
+                    &:last-child {
+                        border-radius: 0;
+                        border-left: 2px solid #f3faf9de;
+                    }
+
+                    &:hover {
+                        filter: brightness(0.9);
+                    }
+                }
+            }
+        }
+
+        .adminPage,
+        .funcionarioPage {
+            flex-direction: row;
         }
     }
 }

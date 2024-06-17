@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './header.scss';
 import MenuDep from './components/menuDep/MenuDep';
 import MenuSearch from './components/searchMenu/MenuSearch';

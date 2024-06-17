@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import { useState, useEffect, useRef } from 'react';
 import { listarProdutosFiltrados } from '../../services/apiProductService';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { IoStar } from 'react-icons/io5';
 import './productFilter.scss';
 
 const brands = [
@@ -258,11 +260,31 @@ export default function ProductFilter() {
                     onChange={(e) => setSelectedEvaluation(e.target.value)}
                 >
                     <option value="">Qualquer Nota</option>
-                    <option value="1">1 estrela</option>
-                    <option value="2">2 estrelas</option>
-                    <option value="3">3 estrelas</option>
-                    <option value="4">4 estrelas</option>
-                    <option value="5">5 estrelas</option>
+                    <option value="1">
+                        <IoStar className="iconStar" />
+                    </option>
+                    <option value="2">
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                    </option>
+                    <option value="3">
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                    </option>
+                    <option value="4">
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                    </option>
+                    <option value="5">
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                        <IoStar className="iconStar" />
+                    </option>
                 </select>
             </section>
 

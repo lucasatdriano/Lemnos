@@ -95,6 +95,8 @@ $font-items: 'Poppins', Helvetica;
             }
 
             .offerPriceDescont {
+                position: absolute;
+                bottom: 55px;
                 font-size: 1.4rem;
                 font-weight: 500;
                 line-height: 1.2;
@@ -148,7 +150,7 @@ $font-items: 'Poppins', Helvetica;
                 }
 
                 .offerPriceDescont {
-                    margin-top: -24px;
+                    bottom: 70px;
                 }
             }
             .btnAdd {
@@ -203,13 +205,18 @@ $font-items: 'Poppins', Helvetica;
 
             .offerDetails {
                 height: 17em;
+
                 .offerName {
-                    margin-bottom: 0em;
+                    margin-bottom: 5px;
                 }
 
-                .btnAdd {
-                    bottom: 0;
+                .offerPriceDescont {
+                    bottom: 80px;
                 }
+            }
+
+            .btnAdd {
+                bottom: 0;
             }
 
             &:hover {
@@ -221,7 +228,7 @@ $font-items: 'Poppins', Helvetica;
                     }
 
                     .offerPriceDescont {
-                        margin-top: 0px;
+                        bottom: 80px;
                     }
                 }
             }
