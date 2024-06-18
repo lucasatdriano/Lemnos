@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -197,11 +198,8 @@ export default function Cart() {
                 toast.warning('Por favor, selecione uma opção de entrega.');
                 cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
             } else {
-                await apagarCarrinho();
                 setShowOptions(false);
-                setDeliveryOption('');
-                setCep('');
-                toast.success('Compra finalizada com sucesso!');
+                navigate('/payment');
             }
         } catch (error) {
             console.error('Erro ao finalizar pedido:', error);
@@ -374,7 +372,7 @@ export default function Cart() {
                         </button>
                     </div>
 
-                    <div className={`delivery ${isLoading ? 'loading' : ''}`}>
+                    <div className="delivery">
                         <h4>Calcular Entrega</h4>
                         <hr className="hrDelivery" />
                         <div className="inputCep">

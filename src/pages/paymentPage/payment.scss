@@ -1,0 +1,282 @@
+$color-primaryLight: #36cec4;
+$color-secundaryLight: #415352;
+$color-terciaryLight: #4aded6;
+$color-detailsLight: #850e5d;
+
+$color-primaryDark: #10a88d;
+$color-secundaryDark: #2d3a3a;
+$color-terciaryDark: #f6fefdcc;
+$color-detailsDark: #c75ea3;
+
+$color-bgLight: #f9fbfb;
+$color-bgDark: #2d2d2d;
+$color-fontDark: #f6fefd;
+$color-fontLight: #121717;
+
+$color-shadow: #12171740;
+$color-card: #f6fefd4d;
+
+$font-title: 'Merriweather Sans', sans-serif;
+$font-web: 'Roboto Flex', Arial;
+$font-items: 'Poppins', Helvetica;
+
+main {
+    .titleContainers {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        padding: 0.5em 1em;
+
+        .iconOrder {
+            width: 42px;
+            height: 42px;
+        }
+
+        h3 {
+            font-size: 2.6rem;
+            font-family: $font-title;
+        }
+    }
+
+    .hrTitle {
+        width: 100%;
+        border: 2px solid $color-primaryLight;
+    }
+
+    .statusOrder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1em;
+        width: calc(90vw);
+        height: 3em;
+        gap: 1em;
+        background: transparent;
+
+        .waitingStatus {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+
+            .iconStatus {
+                width: 24px;
+                height: 24px;
+                color: gray;
+            }
+
+            p {
+                font-size: 2rem;
+                color: gray;
+            }
+        }
+
+        .spanWaiting {
+            height: 3px;
+            width: 3em;
+            background: #acaaaa;
+        }
+    }
+
+    .sectionPayment {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        width: 95vw;
+        gap: 3em;
+
+        .containerOptionsPay {
+            max-height: 35em;
+            display: flex;
+            background: $color-bgLight;
+            box-shadow: 0 0 10px $color-shadow;
+            padding: 3em 2em 0;
+            border-radius: 15px;
+            position: relative;
+            gap: 2em;
+            text-align: center;
+
+            .titlePay {
+                font-family: $font-title;
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 2rem;
+            }
+
+            .optionPay {
+                width: 15vw;
+                height: 30em;
+                background: $color-bgLight;
+                border-radius: 15px;
+                position: relative;
+
+                input[type='radio'] {
+                    appearance: none;
+
+                    &:checked ~ label {
+                        box-shadow: 0 0 10px $color-primaryLight;
+                        border: 1px solid $color-primaryLight;
+                    }
+                }
+
+                label {
+                    font-family: $font-items;
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    gap: 2em;
+                    padding: 2em;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 15px;
+                    position: absolute;
+                    box-shadow: 0 0 10px $color-shadow;
+                    left: 50%;
+                    top: 0;
+                    transform: translateX(-50%);
+                    transition: 0.2s ease;
+                    cursor: pointer;
+
+                    .iconPayment {
+                        width: 100%;
+                        height: 50%;
+                        max-width: 196px;
+                        max-height: 196px;
+                    }
+
+                    h3 {
+                        font-size: 3rem;
+                    }
+
+                    p {
+                        font-size: 2rem;
+
+                        span {
+                            font-weight: 600;
+                            color: $color-primaryLight;
+                            font-size: 2.8rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .orderSummary {
+            width: 25vw;
+            height: 25em;
+            position: relative;
+            background: $color-bgLight;
+            box-shadow: 4px 4px 15px $color-shadow;
+            border-radius: 15px;
+            display: flex;
+            font-family: $font-items;
+            flex-direction: column;
+
+            .lineOrder {
+                padding: 0.5em 1em;
+                font-size: 2.4rem;
+                display: flex;
+                justify-content: space-between;
+
+                .discount {
+                    color: $color-detailsLight;
+                }
+            }
+
+            h2 {
+                position: absolute;
+                top: 65%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 4rem;
+                color: $color-primaryLight;
+            }
+
+            .confirmOrder {
+                font-family: $font-title;
+                position: absolute;
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: 2.4rem;
+                bottom: 0;
+                border: none;
+                outline: none;
+                font-size: 2rem;
+                margin-top: 1em;
+                width: 100%;
+                flex-grow: 1;
+                padding: 1em;
+                border-radius: 0 0 15px 15px;
+                cursor: pointer;
+                background: $color-primaryLight;
+                transition: 0.3s ease;
+
+                &:hover {
+                    filter: brightness(0.95);
+                    box-shadow: 0 0 10px #4e8581;
+                }
+            }
+        }
+
+        .registrationCPF {
+            margin-top: 1em;
+            padding: 1em 0;
+            background: $color-bgLight;
+            border-radius: 15px;
+            box-shadow: 0 0 10px $color-shadow;
+
+            h4 {
+                padding: 0 1em;
+                font-size: 2.6rem;
+            }
+
+            .hrCPF {
+                border: 2px solid $color-primaryLight;
+            }
+
+            .inputCpf {
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                align-items: center;
+                margin: 1.5em auto 0;
+                width: clamp(15em, 50% + 50%, 90%);
+
+                input {
+                    height: 2.5em;
+                    width: 100%;
+                    border-radius: 10px;
+                    text-indent: 10px;
+                    font-size: 2rem;
+                    font-weight: 600;
+                    font-family: $font-items;
+                    background: $color-bgLight;
+                    color: $color-fontLight;
+                    box-shadow: 0 0 10px $color-shadow;
+                }
+
+                .saveCpf {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5em;
+                    font-size: clamp(2rem, 1rem + 1vw, 2.2rem);
+                    padding: 0.5em 1em;
+                    border: 1px solid $color-primaryLight;
+                    background-color: $color-primaryLight;
+                    color: $color-fontLight;
+                    font-family: $font-items;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: 0.3s ease;
+
+                    &:hover {
+                        filter: brightness(0.95);
+                        box-shadow: 0 0 10px #4e8581;
+                    }
+                }
+            }
+        }
+    }
+}

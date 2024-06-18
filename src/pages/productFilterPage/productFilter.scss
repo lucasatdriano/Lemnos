@@ -22,6 +22,9 @@ $font-items: 'Poppins', Helvetica;
 
 .mainFilters {
     display: flex;
+    margin: auto;
+    padding-top: 8em;
+    width: 95vw;
     gap: 1em;
 
     .hrFilter {

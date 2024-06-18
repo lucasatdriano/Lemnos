@@ -320,7 +320,7 @@ export async function listarPedido(pedido) {
         });
 
         if (response.status !== 200) {
-            throw new Error('Erro ao apagar carrinho.');
+            throw new Error('Erro ao listar pedido.');
         }
 
         return response.data;
@@ -332,7 +332,7 @@ export async function listarPedido(pedido) {
         ) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao apagar carrinho.');
+            toast.error('Erro ao listar pedido.');
         }
         throw error;
     }
@@ -351,7 +351,7 @@ export async function novoPedido(pedido) {
         });
 
         if (response.status !== 200) {
-            throw new Error('Erro ao apagar carrinho.');
+            throw new Error('Erro ao adicionar método de pagamento.');
         }
 
         return response.data;
@@ -362,8 +362,6 @@ export async function novoPedido(pedido) {
             error.response.data.error
         ) {
             toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao apagar carrinho.');
         }
         throw error;
     }

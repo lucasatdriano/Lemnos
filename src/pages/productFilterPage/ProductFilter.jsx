@@ -5,7 +5,6 @@ import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import { useState, useEffect, useRef } from 'react';
 import { listarProdutosFiltrados } from '../../services/apiProductService';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { IoStar } from 'react-icons/io5';
 import './productFilter.scss';
 
 const brands = [
@@ -208,7 +207,7 @@ export default function ProductFilter() {
     };
 
     return (
-        <main className="mainFilters">
+        <section className="mainFilters">
             <section className="product-filter-container">
                 <select
                     value={selectedCategory}
@@ -260,21 +259,11 @@ export default function ProductFilter() {
                     onChange={(e) => setSelectedEvaluation(e.target.value)}
                 >
                     <option value="">Qualquer Nota</option>
-                    <option value="1">
-                        ⭐
-                    </option>
-                    <option value="2">
-                        ⭐⭐
-                    </option>
-                    <option value="3">
-                        ⭐⭐⭐
-                    </option>
-                    <option value="4">
-                        ⭐⭐⭐⭐
-                    </option>
-                    <option value="5">
-                        ⭐⭐⭐⭐⭐
-                    </option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                 </select>
             </section>
 
@@ -326,6 +315,6 @@ export default function ProductFilter() {
                     </>
                 )}
             </section>
-        </main>
+        </section>
     );
 }

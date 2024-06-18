@@ -1,20 +1,73 @@
-import { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BsTruck } from 'react-icons/bs';
-import { FaCheckCircle } from "react-icons/fa";
-import { FaCreditCard } from "react-icons/fa6";
+import { FaCheckCircle } from 'react-icons/fa';
+import { FaCreditCard } from 'react-icons/fa6';
 import { PiFileMagnifyingGlass } from 'react-icons/pi';
-import { IoCart } from "react-icons/io5";
+import { IoCart } from 'react-icons/io5';
 import ModalCompleted from './components/ModalCompleted';
 import './buy.scss';
+import AuthService from '../../services/authService';
+import { listarCarrinho } from '../../services/apiProductService';
+import { getCliente, getProdutoById } from '../../services/ApiService';
+
+const BRL = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+});
 
 export default function BuyPage() {
-    const BRL = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
     const [isModalCompleted, setIsModalCompleted] = useState(false);
+    const [pedido, setPedido] = useState(null);
+    const [carrinho, setCarrinho] = useState([]);
+    const [cliente, setCliente] = useState({});
+    const [clienteEndereco, setClienteEndereco] = useState({});
+    const [valorCompra, setValorCompra] = useState(0);
+    const [desconto, setDesconto] = useState(0);
+
+    async function fetchPedido() {
+        try {
+            if (AuthService.isLoggedIn()) {
+                const pedidoResponse = await listarCarrinho();
+                const clienteResponse = await getCliente();
+
+                setValorCompra(pedidoResponse.valorTotal);
+                setPedido(pedidoResponse);
+                setCliente(clienteResponse || {});
+                setClienteEndereco(clienteResponse.endereco || {});
+
+                if (
+                    pedidoResponse &&
+                    Array.isArray(pedidoResponse.itens) &&
+                    pedidoResponse.itens.length > 0
+                ) {
+                    const carrinhoDetalhado = await Promise.all(
+                        pedidoResponse.itens.map(async (item) => {
+                            const detalhesProduto = await getProdutoById(
+                                item.id
+                            );
+                            return { ...item, ...detalhesProduto };
+                        })
+                    );
+                    setCarrinho(
+                        Array.isArray(carrinhoDetalhado)
+                            ? carrinhoDetalhado
+                            : []
+                    );
+                } else {
+                    setCarrinho([]);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao obter itens do pedido:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchPedido();
+    }, []);
 
     const handleOpenModal = () => {
         setIsModalCompleted(!isModalCompleted);
@@ -24,17 +77,17 @@ export default function BuyPage() {
         <>
             <main>
                 <div className="statusOrder">
-                    <div className='status'>
+                    <div className="status">
                         <IoCart className="iconStatus" />
                         <p>Carrinho</p>
                     </div>
                     <span></span>
-                    <div className='status'>
+                    <div className="status">
                         <FaCreditCard className="iconStatus" />
                         <p>Pagamento</p>
                     </div>
                     <span></span>
-                    <div className='status'>
+                    <div className="status">
                         <FaCheckCircle className="iconStatus" />
                         <p>Confirmação</p>
                     </div>
@@ -54,22 +107,40 @@ export default function BuyPage() {
                                         Dados Pessoais
                                     </h4>
                                     <div className="dataPerson">
-                                        <p>Nome:</p>
-                                        <p>CPF:</p>
-                                        <p>Email:</p>
+                                        <p>Nome: {cliente.nome || ''}</p>
+                                        <p>CPF: {cliente.cpf || ''}</p>
+                                        <p>Email: {cliente.email || ''}</p>
                                     </div>
                                 </div>
                                 <hr className="hrData" />
                                 <div>
                                     <h4 className="titleData">Endereço</h4>
                                     <div className="dataEnd">
-                                        <p>CEP:</p>
-                                        <p>Logradouro:</p>
-                                        <p>Estado:</p>
-                                        <p>Bairro:</p>
-                                        <p>Cidade:</p>
-                                        <p>Número:</p>
-                                        <p>Complemento:</p>
+                                        <p>CEP: {clienteEndereco.cep || ''}</p>
+                                        <p>
+                                            Logradouro:{' '}
+                                            {clienteEndereco.logradouro || ''}
+                                        </p>
+                                        <p>
+                                            Estado:{' '}
+                                            {clienteEndereco.estado || ''}
+                                        </p>
+                                        <p>
+                                            Bairro:{' '}
+                                            {clienteEndereco.bairro || ''}
+                                        </p>
+                                        <p>
+                                            Cidade:{' '}
+                                            {clienteEndereco.cidade || ''}
+                                        </p>
+                                        <p>
+                                            Número:{' '}
+                                            {clienteEndereco.numero || ''}
+                                        </p>
+                                        <p>
+                                            Complemento:{' '}
+                                            {clienteEndereco.complemento || ''}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -82,14 +153,19 @@ export default function BuyPage() {
                                 </div>
                                 <hr className="hrTitle" />
                                 <ul>
-                                    <li>
-                                        <div className="dataProduct">
-                                            <img src="" alt="" />
-                                            <p>Nome do Produto</p>
-                                        </div>
-                                        <p>1</p>
-                                        <p>{BRL.format(600)}</p>
-                                    </li>
+                                    {carrinho.map((item, index) => (
+                                        <li key={index}>
+                                            <div className="dataProduct">
+                                                <img
+                                                    src={item.imagem}
+                                                    alt={item.nome}
+                                                />
+                                                <p>{item.nome}</p>
+                                            </div>
+                                            <p>{item.quantidade}</p>
+                                            <p>{BRL.format(item.preco)}</p>
+                                        </li>
+                                    ))}
                                     <hr />
                                 </ul>
                             </div>
@@ -123,12 +199,14 @@ export default function BuyPage() {
                         <div className="dataResume">
                             <div className="lineOrder">
                                 <p>Valor do Produto:</p>
-                                <p>{BRL.format(600)}</p>
+                                <p>{BRL.format(valorCompra)}</p>
                             </div>
                             <hr className="hrResume" />
                             <div className="lineOrder">
                                 <p>Desconto:</p>
-                                <p className="discount">-{BRL.format(30)}</p>
+                                <p className="discount">
+                                    -{BRL.format(desconto)}
+                                </p>
                             </div>
                             <hr className="hrResume" />
                             <div className="lineOrder">
@@ -141,7 +219,7 @@ export default function BuyPage() {
                                 <p>Boleto</p>
                             </div>
                             <hr className="hrResume" />
-                            <h2>{BRL.format(596)}</h2>
+                            <h2>{BRL.format(valorCompra - desconto + 26)}</h2>
                             <button
                                 type="button"
                                 onClick={handleOpenModal}

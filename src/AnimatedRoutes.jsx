@@ -7,6 +7,7 @@ import Product from './pages/productPage/Product';
 import ProductFilter from './pages/productFilterPage/ProductFilter';
 import Cart from './pages/cartPage/Cart';
 import BuyPage from './pages/buyPage/Buy';
+import PaymentPage from './pages/paymentPage/Payment';
 import NotFound from './pages/notFoundPage/NotFound';
 
 const AnimatedRoutes = () => {
@@ -31,6 +32,7 @@ const AnimatedRoutes = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/buy" element={<BuyPage />} />
+                    <Route path="/payment" element={<PaymentPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </CSSTransition>

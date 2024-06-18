@@ -6,6 +6,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { auth, googleProvider } from '../../../../services/firebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
+import { sendFirebaseToken } from '../../../../services/ApiService';
 
 export default function RegistrationForm({
     onLogin,
