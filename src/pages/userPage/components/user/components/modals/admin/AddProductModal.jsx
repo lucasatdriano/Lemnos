@@ -148,10 +148,7 @@ export default function ProdutoModal({ onClose }) {
     };
 
     const handleProdutoListToggle = () => {
-        if (!isProdutoListOpen) {
-            setIsProdutoListOpen(true);
-            toast.success('2');
-        }
+        setIsProdutoListOpen(!isProdutoListOpen);
     };
 
     const selectProduto = async (produtos) => {

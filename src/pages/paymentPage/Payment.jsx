@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { PiFileMagnifyingGlass } from 'react-icons/pi';
@@ -7,7 +5,7 @@ import { FaBarcode, FaCreditCard, FaRegCreditCard } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
 import { BsQrCodeScan } from 'react-icons/bs';
 import './payment.scss';
-import { cadastrarUsuario } from '../../services/ApiService';
+import { cadastrarUsuario, getCliente, updateCliente } from '../../services/ApiService';
 import { toast } from 'react-toastify';
 import { listarCarrinho, novoPedido } from '../../services/apiProductService';
 import { useNavigate } from 'react-router-dom';
@@ -24,15 +22,22 @@ export default function PaymentPage() {
     const [isCpfRegistered, setIsCpfRegistered] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [paymentMethodName, setPaymentMethodName] = useState('');
-    const [pagamento, setPagamento] = useState([]);
     const [valorCompra, setValorCompra] = useState('');
+    const [cliente, setCliente] = useState([])
     const [desconto, setDesconto] = useState(0);
 
     async function fetchPagamento() {
         try {
             if (AuthService.isLoggedIn()) {
                 const response = await listarCarrinho();
+                const clienteResponse = await getCliente();
+
+                setCliente(clienteResponse);
                 setValorCompra(response.valorTotal);
+
+                if (clienteResponse.cpf && clienteResponse.cpf !== '') {
+                    setIsCpfRegistered(true);
+                }
             }
         } catch (error) {
             console.error('Erro ao obter itens do carrinho:', error);
@@ -69,7 +74,7 @@ export default function PaymentPage() {
         };
 
         try {
-            const success = await cadastrarUsuario(usuario);
+            const success = await updateCliente(usuario);
             if (success) {
                 setIsCpfRegistered(true);
                 toast.success('CPF cadastrado com sucesso!');
@@ -257,28 +262,30 @@ export default function PaymentPage() {
                             </div>
                         </div>
 
-                        <div className="registrationCPF">
-                            <h4>Cadastrar CPF</h4>
-                            <hr className="hrCPF" />
-                            <div className="inputCpf">
-                                <input
-                                    type="text"
-                                    placeholder="Digite seu CPF"
-                                    value={cpf}
-                                    onChange={handleCpfChange}
-                                    maxLength={14}
-                                    inputMode="numeric"
-                                    pattern="\d{3}.?\d{3}.?\d{3}-?\d{2}"
-                                />
-                                <button
-                                    type="button"
-                                    className="saveCpf"
-                                    onClick={handleSaveCpf}
-                                >
-                                    Salvar
-                                </button>
+                        {!isCpfRegistered && (
+                            <div className="registrationCPF">
+                                <h4>Cadastrar CPF</h4>
+                                <hr className="hrCPF" />
+                                <div className="inputCpf">
+                                    <input
+                                        type="text"
+                                        placeholder="Digite seu CPF"
+                                        value={cpf}
+                                        onChange={handleCpfChange}
+                                        maxLength={14}
+                                        inputMode="numeric"
+                                        pattern="\d{3}.?\d{3}.?\d{3}-?\d{2}"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="saveCpf"
+                                        onClick={handleSaveCpf}
+                                    >
+                                        Salvar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </section>
             </main>

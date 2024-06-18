@@ -240,6 +240,7 @@ export async function updateCliente(cliente) {
             data: {
                 nome: cliente.nome,
                 senha: cliente.senha,
+                cpf: cliente.cpf,
             },
             timeout: 10000,
         });

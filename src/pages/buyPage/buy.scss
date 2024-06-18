@@ -166,9 +166,9 @@ main {
                                 gap: 1em;
 
                                 img {
+                                    object-fit: contain;
                                     width: 12em;
                                     height: 8em;
-                                    border: 1px solid #000;
                                 }
                             }
                         }
@@ -243,6 +243,214 @@ main {
                 border-radius: 0 0 15px 15px;
                 cursor: pointer;
                 background: $color-primaryLight;
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 1600px) {
+    main {
+        .statusOrder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1em;
+            width: calc(90vw + 1em);
+            height: 3em;
+            gap: 1em;
+            background: transparent;
+    
+            .status {
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+    
+                .iconStatus {
+                    width: 24px;
+                    height: 24px;
+                    color: $color-primaryLight;
+                }
+    
+                p {
+                    font-size: 2rem;
+                    color: $color-primaryLight;
+                }
+            }
+    
+            span {
+                height: 3px;
+                width: 3em;
+                background: $color-primaryLight;
+            }
+        }
+    
+        .loadingDelivery {
+            margin: 0 auto 1em;
+            width: calc(90vw);
+            height: 10em;
+            background: $color-bgLight;
+            border-radius: 15px;
+            box-shadow: 4px 4px 15px $color-shadow;
+        }
+    
+        .sectionOrder {
+            align-items: center;
+            flex-direction: column;
+            gap: 1em;
+    
+            .divOrder {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+    
+                .personalData {
+                    background: $color-bgLight;
+                    box-shadow: 4px 4px 15px $color-shadow;
+                    border-radius: 15px;
+                    overflow: hidden;
+    
+                    .dataContainer {
+                        padding: 1em;
+                        height: 90%;
+                        display: grid;
+                        grid-template-columns: 1fr auto 1.5fr;
+    
+                        .titleData {
+                            margin-left: 2em;
+                            font-size: 2.2rem;
+                        }
+    
+                        p {
+                            font-size: 1.8rem;
+                        }
+    
+                        .dataEnd {
+                            padding: 1em 1em 0;
+                            display: grid;
+                            gap: 0.5em;
+                            grid-template-columns: 1fr 1fr;
+                            grid-template-rows: 1fr 1fr 1fr 1fr;
+                        }
+    
+                        .dataPerson {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 0.5em;
+                            padding: 1em 1em 0;
+                        }
+    
+                        .hrData {
+                            margin-top: -15px;
+                            width: 0;
+                            height: 100%;
+                            border: 2px solid $color-primaryLight;
+                        }
+                    }
+                }
+    
+                .shippingCart {
+                    background: $color-bgLight;
+                    box-shadow: 4px 4px 15px $color-shadow;
+                    border-radius: 15px;
+                    font-family: $font-items;
+    
+                    .cart {
+                        ul {
+                            padding: 1.5em;
+    
+                            li {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 0 1em 1em;
+                                font-size: 2rem;
+    
+                                .dataProduct {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 1em;
+    
+                                    img {
+                                        object-fit: contain;
+                                        width: 12em;
+                                        height: 8em;
+                                    }
+                                }
+                            }
+                        }
+                    }
+    
+                    .delivery {
+                        .dataDelivery {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 1em;
+                            font-size: 2.4rem;
+    
+                            span {
+                                color: $color-detailsLight;
+                            }
+    
+                            .term {
+                                text-indent: 1.5em;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .orderSummary {
+                width: 60vw;
+                height: 30em;
+                position: relative;
+                background: $color-bgLight;
+                box-shadow: 4px 4px 15px $color-shadow;
+                border-radius: 15px;
+                display: flex;
+                font-family: $font-items;
+                flex-direction: column;
+    
+                .lineOrder {
+                    padding: 0.5em 1em;
+                    font-size: 2.4rem;
+                    display: flex;
+                    justify-content: space-between;
+    
+                    .discount {
+                        color: $color-detailsLight;
+                    }
+                }
+    
+                h2 {
+                    position: absolute;
+                    top: 70%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    font-size: 4rem;
+                    color: $color-primaryLight;
+                }
+    
+                .confirmOrder {
+                    font-family: $font-title;
+                    position: absolute;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    font-size: 2.4rem;
+                    bottom: 0;
+                    border: none;
+                    outline: none;
+                    font-size: 2rem;
+                    margin-top: 1em;
+                    width: 100%;
+                    flex-grow: 1;
+                    padding: 1em;
+                    border-radius: 0 0 15px 15px;
+                    cursor: pointer;
+                    background: $color-primaryLight;
+                }
             }
         }
     }

@@ -20,7 +20,7 @@ const BRL = new Intl.NumberFormat('pt-BR', {
 
 export default function BuyPage() {
     const [isModalCompleted, setIsModalCompleted] = useState(false);
-    const [pedido, setPedido] = useState(null);
+    const [pedido, setPedido] = useState([]);
     const [carrinho, setCarrinho] = useState([]);
     const [cliente, setCliente] = useState({});
     const [clienteEndereco, setClienteEndereco] = useState({});
@@ -33,32 +33,32 @@ export default function BuyPage() {
                 const pedidoResponse = await listarCarrinho();
                 const clienteResponse = await getCliente();
 
+                
                 setValorCompra(pedidoResponse.valorTotal);
-                setPedido(pedidoResponse);
+                setPedido(pedidoResponse || []);
                 setCliente(clienteResponse || {});
                 setClienteEndereco(clienteResponse.endereco || {});
-
-                if (
-                    pedidoResponse &&
-                    Array.isArray(pedidoResponse.itens) &&
-                    pedidoResponse.itens.length > 0
-                ) {
-                    const carrinhoDetalhado = await Promise.all(
-                        pedidoResponse.itens.map(async (item) => {
-                            const detalhesProduto = await getProdutoById(
-                                item.id
-                            );
-                            return { ...item, ...detalhesProduto };
-                        })
-                    );
-                    setCarrinho(
-                        Array.isArray(carrinhoDetalhado)
-                            ? carrinhoDetalhado
-                            : []
-                    );
-                } else {
+                
+                console.log(clienteResponse);
+                console.log(pedidoResponse);
+                
+                if (pedidoResponse.length === 0) {
                     setCarrinho([]);
+                    return;
                 }
+                const carrinhoDetalhado = await Promise.all(
+                    pedidoResponse.produtos.map(async (produto) => {
+                        const detalhesProduto = await getProdutoById(
+                            produto.id
+                        );
+                        return { ...produto, ...detalhesProduto };
+                    })
+                );
+                setCarrinho(
+                    Array.isArray(carrinhoDetalhado)
+                        ? carrinhoDetalhado
+                        : []
+                );
             }
         } catch (error) {
             console.error('Erro ao obter itens do pedido:', error);
@@ -153,20 +153,19 @@ export default function BuyPage() {
                                 </div>
                                 <hr className="hrTitle" />
                                 <ul>
-                                    {carrinho.map((item, index) => (
+                                    {carrinho.map((produto, index) => (
                                         <li key={index}>
                                             <div className="dataProduct">
                                                 <img
-                                                    src={item.imagem}
-                                                    alt={item.nome}
+                                                    src={produto.imagemPrincipal}
+                                                    alt={produto.nome}
                                                 />
-                                                <p>{item.nome}</p>
+                                                <p>{produto.nome}</p>
                                             </div>
-                                            <p>{item.quantidade}</p>
-                                            <p>{BRL.format(item.preco)}</p>
+                                            <p>{produto.qntdProduto}</p>
+                                            <p>{BRL.format(produto.valorTotal)}</p>
                                         </li>
                                     ))}
-                                    <hr />
                                 </ul>
                             </div>
                             <div className="delivery">
