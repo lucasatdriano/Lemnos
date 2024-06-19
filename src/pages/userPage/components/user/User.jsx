@@ -24,7 +24,7 @@ import { setUserImg } from '../../../../actions/userActions';
 import { getCliente, updateCliente } from '../../../../services/ClienteService';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getFuncionarioByToken } from '../../../../services/FuncionarioService';
+import { getFuncionarioByToken, updateFuncionario } from '../../../../services/FuncionarioService';
 
 const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -200,10 +200,19 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     };
 
     const handleSaveChanges = async () => {
-        const cliente = {
-            nome: form.name
+        const usuario = {
+            nome: form.name,
+            email: form.email
         }
-        await updateCliente(cliente);
+        console.log("0");
+        if(AuthService.getRole() === 'CLIENTE') {
+            console.log("1");
+            await updateCliente(usuario);
+        } else {
+            console.log("2");
+            console.log(usuario);
+            await updateFuncionario(usuario);
+        }
         setIsEditing(!isEditing);
         toast.success('Dados atualizados!');
     };
