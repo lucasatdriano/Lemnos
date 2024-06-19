@@ -149,8 +149,7 @@ export default function BuyPage() {
                                 <table className="dataProduct">
                                     <thead>
                                         <tr>
-                                            <th>Imagem</th>
-                                            <th>Nome</th>
+                                            <th colSpan={2}>Produto</th>
                                             <th>Quantidade</th>
                                             <th>Preço</th>
                                         </tr>
@@ -181,20 +180,19 @@ export default function BuyPage() {
                                 </table>
                             </div>
                             <div className="delivery">
-                                <hr className="hrTitle" />
                                 <div className="titleContainers">
                                     <BsTruck className="iconOrder" />
                                     <h3>Frete</h3>
                                 </div>
                                 <hr className="hrTitle" />
                                 <div className="dataDelivery">
-                                    <p>
+                                    <div>
                                         Sedex:{' '}
                                         <span>Chegará até 23/06/2024</span>
                                         <p className="term">
                                             Prazo de entrega: em até 7 dias.
                                         </p>
-                                    </p>
+                                    </div>
                                     <p>{BRL.format(26)}</p>
                                 </div>
                             </div>

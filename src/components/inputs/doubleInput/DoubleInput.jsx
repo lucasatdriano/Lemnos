@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './doubleInput.scss';
 
 const STEP = 50;

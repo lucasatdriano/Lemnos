@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { MdDelete } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from 'react-icons/fa6';

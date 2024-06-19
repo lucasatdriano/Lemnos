@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './login.scss';
-import 'react-toastify/dist/ReactToastify.css';
 import User from './components/user/User';
 import LoginForm from './components/login/LoginForm';
 import AuthService from '../../services/authService';
@@ -40,7 +39,7 @@ export default function Login() {
                     'Sessão expirada. Por Favor, Cadastre-se novamente!'
                 );
             },
-            5 * 60 * 1000
+            10 * 60 * 1000
         );
     };
 

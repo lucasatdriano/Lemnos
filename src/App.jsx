@@ -1,11 +1,11 @@
+import './global.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './global.scss';
+import { ToastContainer } from 'react-toastify';
 import Header from './components/header/Header';
 import BackToTopButton from './components/backToTop/BackToTop';
 import Footer from './components/footer/Footer';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import AnimatedRoutes from './AnimatedRoutes';
 
 export default function App() {
@@ -17,12 +17,13 @@ export default function App() {
     }, [pathname]);
 
     const toggleTheme = () => {
+        localStorage.setItem('theme', theme);
         setTheme(theme === 'light' ? 'dark' : 'light');
     };
 
     return (
         <>
-            <section className={`${theme}`}>
+            <section className={`${localStorage.getItem('theme')}`}>
                 <Header toggleTheme={toggleTheme} />
                 <AnimatedRoutes />
                 <BackToTopButton />

@@ -3,7 +3,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './user.scss';
-import 'react-toastify/dist/ReactToastify.css';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import ToolTip from '../../../../components/tooltip/ToolTip';
 import EmailModal from './components/modals/EmailModal';
@@ -287,7 +286,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                 </div>
             </section>
 
-            <hr />
+            <hr className='hrSeparate'/>
             <section>
                 {AuthService.getRole() === 'CLIENTE' ? (
                     <div className="clientePage">

@@ -100,8 +100,8 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
-
-    hr {
+    
+    .hrSeparate {
         width: 0;
         height: 104.5%;
         border: 1.5px solid $color-primaryLight;
@@ -114,6 +114,8 @@ $font-items: 'Poppins', Helvetica;
         flex-direction: column;
         align-items: center;
         gap: 1em;
+
+    
 
         .selectBtn {
             width: 100%;
@@ -430,6 +432,16 @@ $font-items: 'Poppins', Helvetica;
             border: 1.5px solid $color-primaryDark;
         }
 
+        .clientePage {
+            .selectBtn {
+                button {
+                    &:last-child {
+                        border-left: 2px solid #72757478;
+                    }
+                }
+            }
+        }
+
         .modal {
             .containerModal {
                 background: #383737;
@@ -488,7 +500,7 @@ $font-items: 'Poppins', Helvetica;
             }
 
             &:hover {
-                box-shadow: 0 0 15px $color-primaryDark;
+                box-shadow: 0 0 10px $color-primaryDark;
             }
         }
     }
@@ -499,10 +511,8 @@ $font-items: 'Poppins', Helvetica;
         max-width: 90vw;
         flex-direction: column;
 
-        hr {
-            height: 0;
-            width: 100%;
-            margin-bottom: 1em;
+        .hrSeparate {
+            display: none;
         }
 
         .clientePage {
@@ -524,7 +534,7 @@ $font-items: 'Poppins', Helvetica;
 
         .adminPage,
         .funcionarioPage {
-            flex-direction: row;
+            flex-direction: column;
         }
     }
 }
@@ -701,11 +711,6 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
-        }
-
-        .adminPage,
-        .funcionarioPage {
-            flex-direction: row;
         }
     }
 }

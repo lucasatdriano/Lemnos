@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './loginForm.scss';
-import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../../../../services/authService';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import { toast } from 'react-toastify';
