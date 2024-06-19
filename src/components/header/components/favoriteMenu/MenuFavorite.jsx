@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import './menuFavorite.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '../../../../services/AuthService';
 import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
@@ -16,6 +15,7 @@ import {
 } from '../../../../services/UsuarioProdutoService';
 import React, { useState, useEffect } from 'react';
 import Loading from '../../../loading/Loading';
+import AuthService from '../../../../services/AuthService';
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
