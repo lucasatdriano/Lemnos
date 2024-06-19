@@ -3,10 +3,10 @@ import './login.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import User from './components/user/User';
 import LoginForm from './components/login/LoginForm';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 import RegistrationForm from './components/registration/RegistrationForm';
 import { toast } from 'react-toastify';
-import { cadastrarUsuario } from '../../services/ApiService';
+import { cadastrarUsuario } from '../../services/ClienteService';
 import { useState, useEffect, useRef } from 'react';
 
 export default function Login() {

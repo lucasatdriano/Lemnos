@@ -15,9 +15,10 @@ import {
     apagarCarrinho,
     listarCarrinho,
     removerProdutoCarrinho,
-} from '../../services/apiProductService';
-import { getProdutoById, verificarCep } from '../../services/ApiService';
-import AuthService from '../../services/authService';
+} from '../../services/UsuarioProdutoService';
+import { verificarCep } from '../../services/EnderecoService';
+import { getProdutoById } from '../../services/ProdutoService';
+import AuthService from '../../services/AuthService';
 import Loading from '../../components/loading/Loading';
 
 export default function Cart() {

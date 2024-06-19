@@ -2,15 +2,15 @@
 /* eslint-disable react/prop-types */
 import './loginForm.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '../../../../services/authService';
+import AuthService from '../../../../services/AuthService';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../../../../services/firebaseConfig';
+import { auth, googleProvider } from '../../../../services/configurations/FirebaseConfig';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { login, sendFirebaseToken } from '../../../../services/ApiService';
+import { login, loginFirebase } from '../../../../services/LoginService';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
@@ -63,7 +63,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const googleToken = result.user.accessToken;
-            const loginSuccess = await sendFirebaseToken(googleToken);
+            const loginSuccess = await loginFirebase(googleToken);
 
             if (AuthService.isLoggedIn() && loginSuccess) {
                 onLogin();

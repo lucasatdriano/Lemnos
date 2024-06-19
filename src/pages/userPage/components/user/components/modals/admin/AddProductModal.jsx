@@ -12,7 +12,7 @@ import {
     cadastrarProduto,
     getProdutoById,
     updateProduto,
-} from '../../../../../../../services/ApiService';
+} from '../../../../../../../services/ProdutoService';
 const categorias = [
     'Casa Inteligente',
     'Computadores',
@@ -148,7 +148,10 @@ export default function ProdutoModal({ onClose }) {
     };
 
     const handleProdutoListToggle = () => {
-        setIsProdutoListOpen(!isProdutoListOpen);
+        if (!isProdutoListOpen) {
+            setIsProdutoListOpen(true);
+            toast.success('2');
+        }
     };
 
     const selectProduto = async (produtos) => {

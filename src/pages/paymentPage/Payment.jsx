@@ -8,14 +8,13 @@ import { IoCart } from 'react-icons/io5';
 import { BsQrCodeScan } from 'react-icons/bs';
 import './payment.scss';
 import {
-    cadastrarUsuario,
     getCliente,
     updateCliente,
-} from '../../services/ApiService';
+} from '../../services/ClienteService';
 import { toast } from 'react-toastify';
-import { listarCarrinho, novoPedido } from '../../services/apiProductService';
+import { listarCarrinho, novoPedido } from '../../services/UsuarioProdutoService';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',

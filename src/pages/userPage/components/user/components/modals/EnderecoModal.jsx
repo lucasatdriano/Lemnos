@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomInput from '../../../../../../components/inputs/customInput/Inputs';
 import { IoClose } from 'react-icons/io5';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
@@ -69,6 +69,12 @@ export default function EnderecoModal({ onSave, onClose }) {
     const [errors, setErrors] = useState({});
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        if(form.cep.length == 9) {
+            
+        }
+    }, [form.cep])
 
     const handleChange = (name, value) => {
         setForm({ ...form, [name]: value });

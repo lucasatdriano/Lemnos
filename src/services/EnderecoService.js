@@ -1,0 +1,129 @@
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import AuthService from './AuthService';
+import { toast } from 'react-toastify';
+import { baseUri } from './configurations/ServiceConfig';
+
+export async function verificarCep(cep) {
+    try {
+        const response = await axios.get(
+            `https://viacep.com.br/ws/${cep}/json/`
+        );
+        if (response.data.erro) {
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Erro ao verificar o CEP:', error);
+        return false;
+    }
+}
+
+export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'POST',
+            url: `/endereco`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            data: {
+                email: emailEntidade,
+                cep: endereco.cep,
+                numeroLogradouro: endereco.numLogradouro,
+                complemento: endereco.complemento,
+                entidade: tipoEntidade,
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 201) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'PUT',
+            url: '/endereco',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            data: {
+                email: emailEntidade,
+                cep: endereco.cep,
+                numeroLogradouro: endereco.numLogradouro,
+                complemento: endereco.complemento,
+                entidade: TipoEntidade,
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
+export async function excluirEndereco(emailEntidade, endereco, entidade) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'DELETE',
+            url: '/endereco',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            params: {
+                email: emailEntidade,
+                cep: endereco.cep,
+                e: entidade,
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200 && response.status != 204) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}

@@ -9,9 +9,10 @@ import { PiFileMagnifyingGlass } from 'react-icons/pi';
 import { IoCart } from 'react-icons/io5';
 import ModalCompleted from './components/ModalCompleted';
 import './buy.scss';
-import AuthService from '../../services/authService';
-import { listarCarrinho } from '../../services/apiProductService';
-import { getCliente, getProdutoById } from '../../services/ApiService';
+import AuthService from '../../services/AuthService';
+import { listarCarrinho } from '../../services/UsuarioProdutoService';
+import { getCliente } from '../../services/ClienteService';
+import { getProdutoById } from '../../services/ProdutoService';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',

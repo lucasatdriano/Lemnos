@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
-import { listarProdutosFiltrados } from '../../../../services/apiProductService';
+import { listarProdutosFiltrados } from '../../../../services/ProdutoService';
 
 export default function MenuSearch() {
     const navigate = useNavigate();
