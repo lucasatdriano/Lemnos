@@ -33,15 +33,11 @@ export default function BuyPage() {
                 const pedidoResponse = await listarCarrinho();
                 const clienteResponse = await getCliente();
 
-                
                 setValorCompra(pedidoResponse.valorTotal);
                 setPedido(pedidoResponse || []);
                 setCliente(clienteResponse || {});
                 setClienteEndereco(clienteResponse.endereco || {});
-                
-                console.log(clienteResponse);
-                console.log(pedidoResponse);
-                
+
                 if (pedidoResponse.length === 0) {
                     setCarrinho([]);
                     return;
@@ -55,9 +51,7 @@ export default function BuyPage() {
                     })
                 );
                 setCarrinho(
-                    Array.isArray(carrinhoDetalhado)
-                        ? carrinhoDetalhado
-                        : []
+                    Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []
                 );
             }
         } catch (error) {
@@ -113,7 +107,7 @@ export default function BuyPage() {
                                     </div>
                                 </div>
                                 <hr className="hrData" />
-                                <div>
+                                <div className="enderecoContainer">
                                     <h4 className="titleData">Endereço</h4>
                                     <div className="dataEnd">
                                         <p>CEP: {clienteEndereco.cep || ''}</p>
@@ -152,21 +146,39 @@ export default function BuyPage() {
                                     <h3>Carrinho</h3>
                                 </div>
                                 <hr className="hrTitle" />
-                                <ul>
-                                    {carrinho.map((produto, index) => (
-                                        <li key={index}>
-                                            <div className="dataProduct">
-                                                <img
-                                                    src={produto.imagemPrincipal}
-                                                    alt={produto.nome}
-                                                />
-                                                <p>{produto.nome}</p>
-                                            </div>
-                                            <p>{produto.qntdProduto}</p>
-                                            <p>{BRL.format(produto.valorTotal)}</p>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <table className="dataProduct">
+                                    <thead>
+                                        <tr>
+                                            <th>Imagem</th>
+                                            <th>Nome</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {carrinho.map((produto, index) => (
+                                            <tr key={index}>
+                                                <td>
+                                                    <img
+                                                        src={
+                                                            produto.imagemPrincipal
+                                                        }
+                                                        alt={produto.nome}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <p>{produto.nome}</p>
+                                                </td>
+                                                <td>{produto.qntdProduto}</td>
+                                                <td>
+                                                    {BRL.format(
+                                                        produto.valorTotal
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                             <div className="delivery">
                                 <hr className="hrTitle" />

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { PiFileMagnifyingGlass } from 'react-icons/pi';
@@ -5,7 +7,11 @@ import { FaBarcode, FaCreditCard, FaRegCreditCard } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
 import { BsQrCodeScan } from 'react-icons/bs';
 import './payment.scss';
-import { cadastrarUsuario, getCliente, updateCliente } from '../../services/ApiService';
+import {
+    cadastrarUsuario,
+    getCliente,
+    updateCliente,
+} from '../../services/ApiService';
 import { toast } from 'react-toastify';
 import { listarCarrinho, novoPedido } from '../../services/apiProductService';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +29,7 @@ export default function PaymentPage() {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [paymentMethodName, setPaymentMethodName] = useState('');
     const [valorCompra, setValorCompra] = useState('');
-    const [cliente, setCliente] = useState([])
+    const [cliente, setCliente] = useState([]);
     const [desconto, setDesconto] = useState(0);
 
     async function fetchPagamento() {
@@ -139,7 +145,7 @@ export default function PaymentPage() {
     return (
         <>
             <main>
-                <div className="statusOrder">
+                <div className="statusPay">
                     <div className="status">
                         <IoCart className="iconStatus" />
                         <p>Carrinho</p>

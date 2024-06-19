@@ -68,3 +68,29 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 }
+
+.dark {
+    .modal {
+        .containerModal {
+            background-color: $color-bgDark;
+
+            .hrComplete {
+                border: 2px solid $color-primaryDark;
+            }
+
+            .iconCheck {
+                color: #17c017;
+            }
+
+            .btnBuy {
+                background: $color-primaryDark;
+                box-shadow: 4px 4px 10px #141414a8;
+
+                &:hover {
+                    filter: brightness(1.1);
+                    box-shadow: 4px 4px 20px #141414a8;
+                }
+            }
+        }
+    }
+}

@@ -43,7 +43,7 @@ main {
         border: 2px solid $color-primaryLight;
     }
 
-    .statusOrder {
+    .statusPay {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -52,6 +52,29 @@ main {
         height: 3em;
         gap: 1em;
         background: transparent;
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+
+            .iconStatus {
+                width: 24px;
+                height: 24px;
+                color: $color-primaryLight;
+            }
+
+            p {
+                font-size: 2rem;
+                color: $color-primaryLight;
+            }
+        }
+
+        span {
+            height: 3px;
+            width: 3em;
+            background: $color-primaryLight;
+        }
 
         .waitingStatus {
             display: flex;
@@ -80,8 +103,7 @@ main {
     .sectionPayment {
         display: flex;
         justify-content: center;
-        margin: auto;
-        width: 95vw;
+        width: 100vw;
         gap: 3em;
 
         .containerOptionsPay {
@@ -89,13 +111,14 @@ main {
             display: flex;
             background: $color-bgLight;
             box-shadow: 0 0 10px $color-shadow;
-            padding: 3em 2em 0;
+            padding: 3em 2em 2em;
             border-radius: 15px;
             position: relative;
             gap: 2em;
             text-align: center;
 
             .titlePay {
+                white-space: nowrap;
                 font-family: $font-title;
                 position: absolute;
                 top: 10px;
@@ -164,6 +187,7 @@ main {
 
         .orderSummary {
             width: 25vw;
+            min-width: 28em;
             height: 25em;
             position: relative;
             background: $color-bgLight;
@@ -177,6 +201,7 @@ main {
                 padding: 0.5em 1em;
                 font-size: 2.4rem;
                 display: flex;
+                align-items: center;
                 justify-content: space-between;
 
                 .discount {
@@ -275,6 +300,220 @@ main {
                         filter: brightness(0.95);
                         box-shadow: 0 0 10px #4e8581;
                     }
+                }
+            }
+        }
+    }
+}
+
+.dark {
+    main {
+        .hrTitle {
+            border: 2px solid $color-primaryDark;
+        }
+
+        .statusPay {
+            .status {
+                .iconStatus {
+                    color: $color-primaryDark;
+                }
+
+                p {
+                    color: $color-primaryDark;
+                }
+            }
+
+            span {
+                background: $color-primaryDark;
+            }
+
+            .spanWaiting {
+                background: #8d8a8a;
+            }
+        }
+
+        .sectionPayment {
+            .containerOptionsPay {
+                background: #72757478;
+                box-shadow: 0 0 15px #141414a8;
+
+                .optionPay {
+                    background-color: #72757478;
+
+                    input[type='radio'] {
+                        &:checked ~ label {
+                            box-shadow: 0 0 10px $color-primaryDark;
+                            border: 1px solid $color-primaryDark;
+                        }
+                    }
+
+                    label {
+                        box-shadow: 0 0 1px #141414a8;
+
+                        p {
+                            span {
+                                color: $color-primaryDark;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .orderSummary {
+                background-color: #72757478;
+                box-shadow: 0 0 15px #141414a8;
+
+                .lineOrder {
+                    .discount {
+                        color: $color-detailsDark;
+                    }
+                }
+
+                h2 {
+                    color: $color-primaryDark;
+                }
+
+                .confirmOrder {
+                    background: $color-primaryDark;
+
+                    &:hover {
+                        filter: brightness(0.9);
+                        box-shadow: 0 0 10px #4e8581;
+                    }
+                }
+            }
+
+            .registrationCPF {
+                background-color: #72757478;
+                box-shadow: 0 0 15px #141414a8;
+
+                .hrCPF {
+                    border: 2px solid $color-primaryDark;
+                }
+
+                .inputCpf {
+                    input {
+                        box-shadow: 0 0 15px #141414a8;
+                    }
+
+                    .saveCpf {
+                        border: 1px solid $color-primaryDark;
+                        background-color: $color-primaryDark;
+
+                        &:hover {
+                            filter: brightness(0.9);
+                            box-shadow: 0 0 10px #4e8581;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1320px) {
+    main {
+        .sectionPayment {
+            flex-direction: column;
+            align-items: center;
+            gap: 2em;
+
+            .containerOptionsPay {
+                .optionPay {
+                    min-width: 15em;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    main {
+        .sectionPayment {
+            .containerOptionsPay {
+                width: 90vw;
+                flex-direction: column;
+
+                .optionPay {
+                    width: 100%;
+
+                    label {
+                        flex-direction: row;
+                        justify-content: space-between;
+
+                        .iconPayment {
+                            width: 100%;
+                            height: 100%;
+                            max-width: 100px;
+                            max-height: 100px;
+                        }
+
+                        h3 {
+                            font-size: 2.6rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    main {
+        .statusPay {
+            display: none;
+        }
+
+        .sectionPayment {
+            width: 100vw;
+
+            .containerOptionsPay {
+                max-height: 200svh;
+                padding: 5em 2em 2em;
+
+                .titlePay {
+                    white-space: wrap;
+                    width: 300px;
+                }
+
+                .optionPay {
+                    width: 100%;
+                    height: 25em;
+
+                    label {
+                        flex-direction: column;
+
+                        .iconPayment {
+                            width: 100%;
+                            height: 100%;
+                            min-width: 100px;
+                            min-height: 100px;
+                        }
+                    }
+                }
+            }
+
+            .orderSummary {
+                width: 90vw;
+                min-width: 0;
+                height: 25em;
+
+                .lineOrder {
+                    font-size: clamp(2.2rem, 1rem + 1vw, 2.4rem);
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    main {
+        .sectionPayment {
+            .orderSummary {
+                height: 30em;
+
+                h2 {
+                    top: 70%;
                 }
             }
         }
