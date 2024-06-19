@@ -19,6 +19,39 @@ export async function verificarCep(cep) {
     }
 }
 
+export async function getEnderecoFromCep(cep){
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'GET',
+            url: `/endereco`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            params: {
+                cep: cep
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200) {
+            return false;
+        }
+
+        return response.data;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        }
+        return false;
+    }
+}
+
 export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
     try {
         const response = await axios({
@@ -32,7 +65,7 @@ export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
             data: {
                 email: emailEntidade,
                 cep: endereco.cep,
-                numeroLogradouro: endereco.numLogradouro,
+                numeroLogradouro: endereco.nLogradouro,
                 complemento: endereco.complemento,
                 entidade: tipoEntidade,
             },
@@ -40,7 +73,7 @@ export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
         });
 
         if (response.status != 201) {
-            return false;
+            return response.data;
         }
 
         return true;

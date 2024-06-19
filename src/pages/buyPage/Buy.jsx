@@ -37,7 +37,7 @@ export default function BuyPage() {
                 setValorCompra(pedidoResponse.valorTotal);
                 setPedido(pedidoResponse || []);
                 setCliente(clienteResponse || {});
-                setClienteEndereco(clienteResponse.endereco || {});
+                setClienteEndereco(clienteResponse.enderecos[0] || {});
 
                 if (pedidoResponse.length === 0) {
                     setCarrinho([]);
@@ -118,7 +118,7 @@ export default function BuyPage() {
                                         </p>
                                         <p>
                                             Estado:{' '}
-                                            {clienteEndereco.estado || ''}
+                                            {clienteEndereco.uf || ''}
                                         </p>
                                         <p>
                                             Bairro:{' '}
@@ -130,7 +130,7 @@ export default function BuyPage() {
                                         </p>
                                         <p>
                                             Número:{' '}
-                                            {clienteEndereco.numero || ''}
+                                            {clienteEndereco.numeroLogradouro || ''}
                                         </p>
                                         <p>
                                             Complemento:{' '}

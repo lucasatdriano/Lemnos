@@ -25,7 +25,6 @@ export default function MenuFavorite({ onClose }) {
     });
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [removingIndex, setRemovingIndex] = useState(null);
 
     useEffect(() => {
         fetchFavorites();
