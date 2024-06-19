@@ -6,7 +6,7 @@ import './user.scss';
 import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
 import ToolTip from '../../../../components/tooltip/ToolTip';
 import EmailModal from './components/modals/EmailModal';
-import AuthService from '../../../../services/authService';
+import AuthService from '../../../../services/AuthService';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import PasswordModal from './components/modals/PasswordModal';
 import EnderecoModal from './components/modals/EnderecoModal';
@@ -14,18 +14,16 @@ import AddProdutoModal from './components/modals/admin/AddProductModal';
 import HistoricoCompras from './components/history/History';
 import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
-import { auth } from '../../../../services/firebaseConfig';
+import { auth } from '../../../../services/configurations/FirebaseConfig';
 import { toast } from 'react-toastify';
+import { connect } from 'react-redux';
 import { MdLogout } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import {
-    getCliente,
-    getFuncionarioByToken,
-} from '../../../../services/ApiService';
-import { useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { setUserImg } from '../../../../actions/userActions';
+import { getCliente, updateCliente } from '../../../../services/ClienteService';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { getFuncionarioByToken } from '../../../../services/FuncionarioService';
 
 const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -47,7 +45,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showEnderecoModal, setShowEnderecoModal] = useState(false);
     const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
-    const [history, setHistory] = useState(false);
+    const [endereco, setEndereco] = useState(true);
     const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
         useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
@@ -114,7 +112,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         }
     }
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
         if (name === 'name') {
@@ -128,10 +126,11 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     };
 
     const handleViewHistory = () => {
-        setHistory(false);
+        setEndereco(false);
     };
+    
     const handleViewEndereco = () => {
-        setHistory(true);
+        setEndereco(true);
     };
 
     const handleShowModal = (modalName) => {
@@ -199,12 +198,13 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         htmlTag.classList.remove('modalOpen');
     };
 
-    const handlePasswordSave = (newPassword) => {
-        console.log('Nova senha:', newPassword);
-    };
-
-    const handleSaveChanges = () => {
-        console.log('Dados atualizados:', form);
+    const handleSaveChanges = async () => {
+        const cliente = {
+            nome: form.name
+        }
+        await updateCliente(cliente);
+        setIsEditing(!isEditing);
+        toast.success('Dados atualizados!');
     };
 
     return (
@@ -269,13 +269,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                         <div className="updateButtons">
                             <button
                                 type="button"
-                                onClick={() => handleShowModal('password')}
-                                disabled={!isEditing}
-                            >
-                                Alterar Senha
-                            </button>
-                            <button
-                                type="button"
                                 onClick={handleSaveChanges}
                                 disabled={!isEditing}
                             >
@@ -294,19 +287,19 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                             <button
                                 type="button"
                                 className="btnView"
-                                onClick={handleViewHistory}
-                            >
-                                Histórico
-                            </button>
-                            <button
-                                type="button"
-                                className="btnView"
                                 onClick={handleViewEndereco}
                             >
                                 Endereços
                             </button>
+                            <button
+                                type="button"
+                                className="btnView"
+                                onClick={handleViewHistory}
+                            >
+                                Pedido
+                            </button>
                         </div>
-                        {history ? (
+                        {endereco ? (
                             <button
                                 type="button"
                                 onClick={() => handleShowModal('endereco')}

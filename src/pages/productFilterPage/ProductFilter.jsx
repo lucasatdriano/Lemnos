@@ -3,7 +3,7 @@ import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
 import { useState, useEffect, useRef } from 'react';
-import { listarProdutosFiltrados } from '../../services/apiProductService';
+import { listarProdutosFiltrados } from '../../services/ProdutoService';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './productFilter.scss';
 
@@ -126,7 +126,7 @@ export default function ProductFilter() {
             const produtosFiltrados = await listarProdutosFiltrados(
                 filtro,
                 pageToLoad,
-                20
+                24
             );
             if (pageToLoad === 0) {
                 setFilteredData(produtosFiltrados);
@@ -136,7 +136,7 @@ export default function ProductFilter() {
                     ...produtosFiltrados,
                 ]);
             }
-            setHasMore(produtosFiltrados.length === 20);
+            setHasMore(produtosFiltrados.length === 24);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
         } finally {

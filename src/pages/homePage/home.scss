@@ -22,7 +22,6 @@ main {
     font-family: $font-title;
 
     .mainDep {
-        width: 90%;
         margin: 1em auto;
 
         .containerDeps {
@@ -73,7 +72,6 @@ main {
     }
 
     .mainProds {
-        width: 90%;
         margin: 0 auto;
         height: auto;
         padding-top: 1em;
@@ -81,7 +79,7 @@ main {
         .productsList {
             display: grid;
             place-items: center;
-            grid-template-columns: repeat(5, minmax(100px, 1fr));
+            grid-template-columns: repeat(6, minmax(100px, 1fr));
             grid-template-rows: 1fr 1fr;
             gap: 2em;
             height: auto;
@@ -90,7 +88,6 @@ main {
     }
 
     .brands {
-        width: 90%;
         margin: 2em auto 0;
         height: auto;
         padding-top: 1em;

@@ -1,20 +1,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './menuFavorite.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../../../../services/authService';
 import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
 import { MdFavorite } from 'react-icons/md';
-import { getProdutoById } from '../../../../services/ApiService';
+import { getProdutoById } from '../../../../services/ProdutoService';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     listarProdutosFavoritos,
     adicionarProdutoCarrinho,
     desfavoritarProduto,
-} from '../../../../services/apiProductService';
+} from '../../../../services/UsuarioProdutoService';
 import React, { useState, useEffect } from 'react';
 import Loading from '../../../loading/Loading';
+import AuthService from '../../../../services/AuthService';
 
 export default function MenuFavorite({ onClose }) {
     const navigate = useNavigate();
@@ -24,7 +26,6 @@ export default function MenuFavorite({ onClose }) {
     });
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [removingIndex, setRemovingIndex] = useState(null);
 
     useEffect(() => {
         fetchFavorites();

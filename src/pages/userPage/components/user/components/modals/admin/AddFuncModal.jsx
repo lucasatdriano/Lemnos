@@ -6,15 +6,17 @@ import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import {
-    cadastrarFuncionario,
     cadastrarEndereco,
     verificarCep,
+    updateEndereco
+} from '../../../../../../../services/EnderecoService';
+import {
+    cadastrarFuncionario,
     updateFuncionario,
-    updateEndereco,
     excluirFuncionario,
     getFuncionarios,
     getFuncionarioByEmail,
-} from '../../../../../../../services/ApiService';
+} from '../../../../../../../services/FuncionarioService';
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onClose, tipoEntidade }) {

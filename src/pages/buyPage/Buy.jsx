@@ -9,9 +9,10 @@ import { PiFileMagnifyingGlass } from 'react-icons/pi';
 import { IoCart } from 'react-icons/io5';
 import ModalCompleted from './components/ModalCompleted';
 import './buy.scss';
-import AuthService from '../../services/authService';
-import { listarCarrinho } from '../../services/apiProductService';
-import { getCliente, getProdutoById } from '../../services/ApiService';
+import AuthService from '../../services/AuthService';
+import { listarCarrinho } from '../../services/UsuarioProdutoService';
+import { getCliente } from '../../services/ClienteService';
+import { getProdutoById } from '../../services/ProdutoService';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -36,7 +37,7 @@ export default function BuyPage() {
                 setValorCompra(pedidoResponse.valorTotal);
                 setPedido(pedidoResponse || []);
                 setCliente(clienteResponse || {});
-                setClienteEndereco(clienteResponse.endereco || {});
+                setClienteEndereco(clienteResponse.enderecos[0] || {});
 
                 if (pedidoResponse.length === 0) {
                     setCarrinho([]);
@@ -117,7 +118,7 @@ export default function BuyPage() {
                                         </p>
                                         <p>
                                             Estado:{' '}
-                                            {clienteEndereco.estado || ''}
+                                            {clienteEndereco.uf || ''}
                                         </p>
                                         <p>
                                             Bairro:{' '}
@@ -129,7 +130,7 @@ export default function BuyPage() {
                                         </p>
                                         <p>
                                             Número:{' '}
-                                            {clienteEndereco.numero || ''}
+                                            {clienteEndereco.numeroLogradouro || ''}
                                         </p>
                                         <p>
                                             Complemento:{' '}

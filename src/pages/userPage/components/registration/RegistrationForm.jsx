@@ -4,9 +4,9 @@ import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './registrationForm.scss';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { auth, googleProvider } from '../../../../services/firebaseConfig';
+import { auth, googleProvider } from '../../../../services/configurations/FirebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
-import { sendFirebaseToken } from '../../../../services/ApiService';
+import { loginFirebase } from '../../../../services/LoginService';
 
 export default function RegistrationForm({
     onLogin,
@@ -85,7 +85,7 @@ export default function RegistrationForm({
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const token = result.user.accessToken;
-            const resultLogin = await sendFirebaseToken(token);
+            const resultLogin = await loginFirebase(token);
 
             if (resultLogin) {
                 onLogin({

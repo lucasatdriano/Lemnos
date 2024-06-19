@@ -6,13 +6,13 @@ import iconAddCart from '../../assets/icons/iconAddCart.svg';
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 import {
     adicionarFavorito,
     adicionarProdutoCarrinho,
     desfavoritarProduto,
     listarProdutosFavoritos,
-} from '../../services/apiProductService';
+} from '../../services/UsuarioProdutoService';
 
 export default function Card({ produto }) {
     const navigate = useNavigate();

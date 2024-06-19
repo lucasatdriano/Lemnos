@@ -3,9 +3,9 @@ import './product.scss';
 import Loading from '../../components/loading/Loading';
 import OfferList from '../../components/lists/OfferList';
 import iconAddCart from '../../assets/icons/iconAddCart.svg';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
-import { getProdutoById } from '../../services/ApiService';
+import { getProdutoById } from '../../services/ProdutoService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import {
@@ -14,7 +14,7 @@ import {
     avaliarProduto,
     desfavoritarProduto,
     listarProdutosFavoritos,
-} from '../../services/apiProductService';
+} from '../../services/UsuarioProdutoService';
 import React, { useState, useEffect } from 'react';
 
 export default function Product() {

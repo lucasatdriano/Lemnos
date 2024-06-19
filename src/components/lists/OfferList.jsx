@@ -3,7 +3,7 @@ import Card from '../card/Card';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import './offerList.scss';
-import { getAllProdutos } from '../../services/ApiService';
+import { getAllProdutos } from '../../services/ProdutoService';
 import Loading from '../loading/Loading';
 
 export default function OfferList() {
