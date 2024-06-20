@@ -7,14 +7,15 @@ import { FaBarcode, FaCreditCard, FaRegCreditCard } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
 import { BsQrCodeScan } from 'react-icons/bs';
 import './payment.scss';
-import {
-    getCliente,
-    updateCliente,
-} from '../../services/ClienteService';
+import { getCliente, updateCliente } from '../../services/ClienteService';
 import { toast } from 'react-toastify';
-import { listarCarrinho, novoPedido } from '../../services/UsuarioProdutoService';
+import {
+    listarCarrinho,
+    novoPedido,
+} from '../../services/UsuarioProdutoService';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
+import { useSelector } from 'react-redux';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -30,6 +31,9 @@ export default function PaymentPage() {
     const [valorCompra, setValorCompra] = useState('');
     const [cliente, setCliente] = useState([]);
     const [desconto, setDesconto] = useState(0);
+    const { deliveryOption, priceDelivery } = useSelector(
+        (state) => state.delivery
+    );
 
     async function fetchPagamento() {
         try {
@@ -252,11 +256,20 @@ export default function PaymentPage() {
                                 </div>
                                 <hr className="hrResume" />
                                 <div className="lineOrder">
+                                    <p>Frete:</p>
+                                    <p>{BRL.format(priceDelivery)}</p>
+                                </div>
+                                <hr className="hrResume" />
+                                <div className="lineOrder">
                                     <p>Forma de Pagamento:</p>
                                     <p>{paymentMethodName}</p>
                                 </div>
                                 <hr className="hrResume" />
-                                <h2>{BRL.format(valorCompra - desconto)}</h2>
+                                <h2>
+                                    {BRL.format(
+                                        valorCompra - desconto + priceDelivery
+                                    )}
+                                </h2>
                                 <button
                                     type="button"
                                     className="confirmOrder"

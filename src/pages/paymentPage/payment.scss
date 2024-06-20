@@ -103,7 +103,7 @@ main {
     .sectionPayment {
         display: flex;
         justify-content: center;
-        width: 100vw;
+        width: 100%;
         gap: 3em;
 
         .containerOptionsPay {
@@ -188,7 +188,7 @@ main {
         .orderSummary {
             width: 25vw;
             min-width: 28em;
-            height: 25em;
+            height: 30em;
             position: relative;
             background: $color-bgLight;
             box-shadow: 4px 4px 15px $color-shadow;
@@ -211,7 +211,7 @@ main {
 
             h2 {
                 position: absolute;
-                top: 65%;
+                top: 70%;
                 left: 50%;
                 transform: translateX(-50%);
                 font-size: 4rem;
@@ -465,8 +465,6 @@ main {
         }
 
         .sectionPayment {
-            width: 100vw;
-
             .containerOptionsPay {
                 max-height: 200svh;
                 padding: 5em 2em 2em;
@@ -496,7 +494,6 @@ main {
             .orderSummary {
                 width: 90vw;
                 min-width: 0;
-                height: 25em;
 
                 .lineOrder {
                     font-size: clamp(2.2rem, 1rem + 1vw, 2.4rem);
@@ -510,7 +507,7 @@ main {
     main {
         .sectionPayment {
             .orderSummary {
-                height: 30em;
+                height: 35em;
 
                 h2 {
                     top: 70%;

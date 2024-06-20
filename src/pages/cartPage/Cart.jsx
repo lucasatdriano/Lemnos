@@ -17,23 +17,31 @@ import {
 } from '../../services/UsuarioProdutoService';
 import { verificarCep } from '../../services/EnderecoService';
 import { getProdutoById } from '../../services/ProdutoService';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import Loading from '../../components/loading/Loading';
+import { setFreteInfo } from '../../store/actions/freteActions';
+
+const BRL = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+});
 
 export default function Cart() {
     const navigate = useNavigate();
-    const BRL = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
     const [cep, setCep] = useState('');
     const [showOptions, setShowOptions] = useState(false);
-    const [deliveryOption, setDeliveryOption] = useState('');
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
     const [carrinho, setCarrinho] = useState([]);
     const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
+    const frete = useSelector((state) => state.frete);
+
+    useEffect(() => {
+        fetchCarrinho();
+    }, []);
 
     async function fetchCarrinho() {
         setIsLoading(true);
@@ -64,27 +72,25 @@ export default function Cart() {
         }
     }
 
-    useEffect(() => {
-        fetchCarrinho();
-    }, [AuthService.isLoggedIn()]);
+    const addDaysToDate = (days) => {
+        const result = new Date();
+        result.setDate(result.getDate() + days);
+        const day = String(result.getDate()).padStart(2, '0');
+        const month = String(result.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+        const year = result.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
-    let priceDelivery = 0;
-    switch (deliveryOption) {
-        case 'sedex':
-            priceDelivery = 26.99;
-            break;
-        case 'jadlog':
-            priceDelivery = 32.99;
-            break;
-        case 'express':
-            priceDelivery = 45.99;
-            break;
-        default:
-            priceDelivery = 0;
-    }
-
-    const handleDeliveryOptionChange = (option) => {
-        setDeliveryOption(option);
+    const handleDeliveryOptionChange = (option, price, term) => {
+        const estimatedDeliveryDate = addDaysToDate(term);
+        dispatch(
+            setFreteInfo({
+                metodo: option,
+                custo: price,
+                dataEstimadaEnvio: estimatedDeliveryDate,
+                prazoEntrega: term,
+            })
+        );
     };
 
     const handleCepChange = (event) => {
@@ -134,7 +140,8 @@ export default function Cart() {
     };
 
     const calcularTotal = () => {
-        return calcularSubTotal() + priceDelivery;
+        const { custo } = frete;
+        return calcularSubTotal() + custo;
     };
 
     const diminuirQuantidadeCarrinho = async (produtoId) => {
@@ -194,7 +201,7 @@ export default function Cart() {
             } else if (cep.length !== 9) {
                 toast.warning('Por favor, adicione o seu CEP para prosseguir.');
                 cepInputRef.current.focus();
-            } else if (deliveryOption === '') {
+            } else if (frete.metodo === '') {
                 toast.warning('Por favor, selecione uma opção de entrega.');
                 cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
             } else {
@@ -326,7 +333,7 @@ export default function Cart() {
                         </div>
                         <div className="values">
                             <p>Entrega:</p>
-                            <p>{BRL.format(priceDelivery)}</p>
+                            <p>{BRL.format(frete.custo)}</p>
                         </div>
                         <hr className="hrTotal" />
                         <div className="values">
@@ -414,7 +421,9 @@ export default function Cart() {
                                             className="rbDelivery"
                                             onClick={() =>
                                                 handleDeliveryOptionChange(
-                                                    'sedex'
+                                                    'Sedex',
+                                                    26.99,
+                                                    7
                                                 )
                                             }
                                         />
@@ -425,9 +434,7 @@ export default function Cart() {
                                         className="labelOp"
                                     >
                                         <strong>Sedex:</strong>
-                                        <p>
-                                            Prazo de entrega: até 7 dias úteis
-                                        </p>
+                                        <p>Prazo de entrega: em até 7 dias</p>
                                     </label>
                                     <strong>{BRL.format(26.99)}</strong>
                                 </div>
@@ -440,7 +447,9 @@ export default function Cart() {
                                             className="rbDelivery"
                                             onClick={() =>
                                                 handleDeliveryOptionChange(
-                                                    'jadlog'
+                                                    'Jadlog',
+                                                    32.99,
+                                                    15
                                                 )
                                             }
                                         />
@@ -451,9 +460,7 @@ export default function Cart() {
                                         className="labelOp"
                                     >
                                         <strong>JadLog:</strong>
-                                        <p>
-                                            Prazo de entrega: até 5 dias úteis
-                                        </p>
+                                        <p>Prazo de entrega: em até 15 dias</p>
                                     </label>
                                     <strong>{BRL.format(32.99)}</strong>
                                 </div>
@@ -466,7 +473,9 @@ export default function Cart() {
                                             className="rbDelivery"
                                             onClick={() =>
                                                 handleDeliveryOptionChange(
-                                                    'express'
+                                                    'Express',
+                                                    45.99,
+                                                    12
                                                 )
                                             }
                                         />
@@ -477,9 +486,7 @@ export default function Cart() {
                                         className="labelOp"
                                     >
                                         <strong>Express:</strong>
-                                        <p>
-                                            Prazo de entrega: até 12 dias úteis
-                                        </p>
+                                        <p>Prazo de entrega: em até 12 dias</p>
                                     </label>
                                     <strong>{BRL.format(45.99)}</strong>
                                 </div>

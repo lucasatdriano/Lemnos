@@ -221,14 +221,14 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
+        .hrFilter {
+            height: 3px;
+            width: 100%;
+        }
+
         .filtered-data-container {
             flex-direction: column;
             padding: 0 2em 0;
-
-            .hrFilter {
-                height: 3px;
-                width: 100%;
-            }
         }
     }
 }

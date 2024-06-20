@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { MdLogout } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
-import { setUserImg } from '../../../../actions/userActions';
+import { setUserImg } from '../../../../store/actions/userActions';
 import { getCliente, updateCliente } from '../../../../services/ClienteService';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -74,7 +74,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         if (storedPhotoURL) {
             setUserImg(storedPhotoURL);
         } else {
-            // Carregar a imagem padrão ou inicial
             setUserImg(UserImg);
         }
     }, [setUserImg]);
@@ -112,7 +111,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         }
     }
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
         if (name === 'name') {
@@ -128,7 +127,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const handleViewHistory = () => {
         setEndereco(false);
     };
-    
+
     const handleViewEndereco = () => {
         setEndereco(true);
     };
@@ -200,8 +199,8 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     const handleSaveChanges = async () => {
         const cliente = {
-            nome: form.name
-        }
+            nome: form.name,
+        };
         await updateCliente(cliente);
         setIsEditing(!isEditing);
         toast.success('Dados atualizados!');
@@ -279,7 +278,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                 </div>
             </section>
 
-            <hr className='hrSeparate'/>
+            <hr className="hrSeparate" />
             <section>
                 {AuthService.getRole() === 'CLIENTE' ? (
                     <div className="clientePage">
@@ -350,17 +349,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     </div>
                 )}
             </section>
-
-            {showEmailModal && (
-                <EmailModal onClose={() => handleCloseModal('email')} />
-            )}
-
-            {showPasswordModal && (
-                <PasswordModal
-                    onSave={handlePasswordSave}
-                    onClose={() => handleCloseModal('password')}
-                />
-            )}
 
             {showEnderecoModal && (
                 <EnderecoModal

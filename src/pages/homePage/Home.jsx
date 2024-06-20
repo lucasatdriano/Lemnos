@@ -26,8 +26,7 @@ export default function Home() {
                 maiorPreco: 50000,
             };
 
-            const data = await listarProdutosFiltrados(filtro, 3, 24);  
-            console.log(data);
+            const data = await listarProdutosFiltrados(filtro, 3, 24);
             setProdutos(data);
         }
         fetchProdutos();

@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
-import './header.scss';
+import { Link } from 'react-router-dom';
+import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 import MenuDep from './components/menuDep/MenuDep';
 import MenuSearch from './components/searchMenu/MenuSearch';
 import MenuFavorite from './components/favoriteMenu/MenuFavorite';
-import { Link } from 'react-router-dom';
-import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from 'react-icons/ri';
+import AuthService from '../../services/AuthService';
+import './header.scss';
 
 // eslint-disable-next-line react/prop-types
 export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
     const [showFavoriteMenu, setShowFavoriteMenu] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        AuthService.isLoggedIn() || AuthService.isLoggedInWithGoogle()
+    );
+
+    const userImg = useSelector(
+        (state) => state.user.userImg || AuthService.getGoogleProfilePhoto()
+    );
 
     const handleShowMenuFav = () => {
         setShowFavoriteMenu(true);
@@ -36,6 +45,18 @@ export default function Header({ toggleTheme }) {
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleAuthChange = (loggedIn) => {
+            setIsLoggedIn(loggedIn);
+        };
+
+        AuthService.subscribe(handleAuthChange);
+
+        return () => {
+            AuthService.unsubscribe(handleAuthChange);
         };
     }, []);
 
@@ -71,7 +92,11 @@ export default function Header({ toggleTheme }) {
                         <RiHeartLine className="favIcon" />
                     </a>
                     <Link to="/login">
-                        <RiUser3Line className="userIcon" />
+                        {userImg && isLoggedIn ? (
+                            <img src={userImg} alt="User" className="userImg" />
+                        ) : (
+                            <RiUser3Line className="userIcon" />
+                        )}
                     </Link>
                     <Link to="/cart">
                         <RiShoppingCartLine className="cartIcon" />

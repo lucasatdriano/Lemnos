@@ -1,35 +1,62 @@
 const AuthService = {
-    getToken: () => {
+    subscribers: [],
+
+    getToken() {
         return localStorage.getItem('authToken');
     },
-    setToken: (token) => {
+
+    setToken(token) {
         localStorage.setItem('authToken', token);
+        this.notifySubscribers();
     },
-    setGoogleToken: (token) => {
+
+    setGoogleToken(token) {
         localStorage.setItem('token', token);
+        this.notifySubscribers();
     },
-    setGoogleProfilePhoto: (photoURL) => {
+
+    setGoogleProfilePhoto(photoURL) {
         localStorage.setItem('googleProfilePhoto', photoURL);
     },
-    getGoogleProfilePhoto: () => {
+
+    getGoogleProfilePhoto() {
         return localStorage.getItem('googleProfilePhoto');
     },
-    logout: () => {
+
+    logout() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('token');
         localStorage.removeItem('role');
         localStorage.removeItem('googleProfilePhoto');
+        this.notifySubscribers();
     },
-    isLoggedIn: () => {
+
+    isLoggedIn() {
         return !!localStorage.getItem('authToken');
     },
-    isLoggedInWithGoogle: () => {
+
+    isLoggedInWithGoogle() {
         return !!localStorage.getItem('token');
     },
-    setRole: (role) => {
+
+    subscribe(callback) {
+        this.subscribers.push(callback);
+    },
+
+    unsubscribe(callback) {
+        this.subscribers = this.subscribers.filter((sub) => sub !== callback);
+    },
+
+    notifySubscribers() {
+        const isLoggedIn = this.isLoggedIn() || this.isLoggedInWithGoogle();
+        this.subscribers.forEach((callback) => callback(isLoggedIn));
+    },
+
+    setRole(role) {
         localStorage.setItem('role', role);
     },
-    getRole: () => {
+
+    getRole() {
         return localStorage.getItem('role');
     },
 };

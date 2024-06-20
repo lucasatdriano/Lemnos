@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from './authService';
+import AuthService from './AuthService';
 
 const baseUri = 'https://lemnos-server.up.railway.app/api';
 // const baseUri = "http://localhost:8080/api";

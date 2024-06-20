@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './menuFavorite.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '../../../../services/authService';
-import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
 import { MdFavorite } from 'react-icons/md';
@@ -14,7 +11,8 @@ import {
     adicionarProdutoCarrinho,
     desfavoritarProduto,
 } from '../../../../services/UsuarioProdutoService';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import iconAddCart from '../../../../assets/icons/iconAddCart.svg';
 import Loading from '../../../loading/Loading';
 import AuthService from '../../../../services/AuthService';
 

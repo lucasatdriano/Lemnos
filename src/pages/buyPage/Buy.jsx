@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { MdInfoOutline } from 'react-icons/md';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BsTruck } from 'react-icons/bs';
@@ -28,6 +29,8 @@ export default function BuyPage() {
     const [valorCompra, setValorCompra] = useState(0);
     const [desconto, setDesconto] = useState(0);
 
+    const frete = useSelector((state) => state.frete);
+
     async function fetchPedido() {
         try {
             if (AuthService.isLoggedIn()) {
@@ -54,6 +57,8 @@ export default function BuyPage() {
                 setCarrinho(
                     Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []
                 );
+
+                console.log(frete);
             }
         } catch (error) {
             console.error('Erro ao obter itens do pedido:', error);
@@ -117,8 +122,7 @@ export default function BuyPage() {
                                             {clienteEndereco.logradouro || ''}
                                         </p>
                                         <p>
-                                            Estado:{' '}
-                                            {clienteEndereco.uf || ''}
+                                            Estado: {clienteEndereco.uf || ''}
                                         </p>
                                         <p>
                                             Bairro:{' '}
@@ -130,7 +134,8 @@ export default function BuyPage() {
                                         </p>
                                         <p>
                                             Número:{' '}
-                                            {clienteEndereco.numeroLogradouro || ''}
+                                            {clienteEndereco.numeroLogradouro ||
+                                                ''}
                                         </p>
                                         <p>
                                             Complemento:{' '}
@@ -188,60 +193,72 @@ export default function BuyPage() {
                                 <hr className="hrTitle" />
                                 <div className="dataDelivery">
                                     <div>
-                                        Sedex:{' '}
-                                        <span>Chegará até 23/06/2024</span>
+                                        <p>
+                                            {frete.metodo}:{' '}
+                                            <span>
+                                                Chegará até{' '}
+                                                {frete.dataEstimadaEnvio}
+                                            </span>
+                                        </p>
                                         <p className="term">
-                                            Prazo de entrega: em até 7 dias.
+                                            Prazo de entrega:{' '}
+                                            {frete.prazoEntrega}.
                                         </p>
                                     </div>
-                                    <p>{BRL.format(26)}</p>
+                                    <p>{BRL.format(frete.custo)}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="orderSummary">
-                        <div className="titleContainers">
-                            <PiFileMagnifyingGlass className="iconOrder" />
-                            <h3>Resumo</h3>
-                        </div>
-                        <hr className="hrTitle" />
-                        <div className="dataResume">
-                            <div className="lineOrder">
-                                <p>Valor do Produto:</p>
-                                <p>{BRL.format(valorCompra)}</p>
+                        <div className="orderSummary">
+                            <div className="titleContainers">
+                                <PiFileMagnifyingGlass className="iconOrder" />
+                                <h3>Resumo</h3>
                             </div>
-                            <hr className="hrResume" />
-                            <div className="lineOrder">
-                                <p>Desconto:</p>
-                                <p className="discount">
-                                    -{BRL.format(desconto)}
-                                </p>
+                            <hr className="hrTitle" />
+                            <div className="dataResume">
+                                <div className="lineOrder">
+                                    <p>Valor do Produto:</p>
+                                    <p>{BRL.format(valorCompra)}</p>
+                                </div>
+                                <hr className="hrResume" />
+                                <div className="lineOrder">
+                                    <p>Desconto:</p>
+                                    <p className="discount">
+                                        -{BRL.format(desconto)}
+                                    </p>
+                                </div>
+                                <hr className="hrResume" />
+                                <div className="lineOrder">
+                                    <p>Frete:</p>
+                                    <p>{BRL.format(frete.custo)}</p>
+                                </div>
+                                <hr className="hrResume" />
+                                <div className="lineOrder">
+                                    <p>Forma de Pagamento:</p>
+                                    <p>Boleto</p>
+                                </div>
+                                <hr className="hrResume" />
+                                <h2>
+                                    {BRL.format(
+                                        valorCompra - desconto + frete.custo
+                                    )}
+                                </h2>
+                                <button
+                                    type="button"
+                                    onClick={handleOpenModal}
+                                    className="confirmOrder"
+                                >
+                                    Confirmar Pedido
+                                </button>
                             </div>
-                            <hr className="hrResume" />
-                            <div className="lineOrder">
-                                <p>Frete:</p>
-                                <p>{BRL.format(26)}</p>
-                            </div>
-                            <hr className="hrResume" />
-                            <div className="lineOrder">
-                                <p>Forma de Pagamento:</p>
-                                <p>Boleto</p>
-                            </div>
-                            <hr className="hrResume" />
-                            <h2>{BRL.format(valorCompra - desconto + 26)}</h2>
-                            <button
-                                type="button"
-                                onClick={handleOpenModal}
-                                className="confirmOrder"
-                            >
-                                Finalizar Pedido
-                            </button>
                         </div>
                     </div>
                 </section>
             </main>
-            {isModalCompleted && <ModalCompleted onClose={handleOpenModal} />}
+            {isModalCompleted && (
+                <ModalCompleted onClose={() => setIsModalCompleted(false)} />
+            )}
         </>
     );
 }
