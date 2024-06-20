@@ -43,23 +43,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
     const [isFuncionarioListOpen, setIsFuncionarioListOpen] = useState(false);
     const [isFuncionarioLoaded, setIsFuncionarioLoaded] = useState(false);
     const [selectedFunc, setSelectedFunc] = useState(null);
-    const [funcionarios, setFuncionarios] = useState([]);
 
-    const handleFuncionarioListToggle = async () => {
-        if (!isFuncionarioListOpen) {
-            try {
-                const data = await getFuncionarios();
-                setFuncionarios(data);
-                setSelectedFunc(null);
-                setIsFuncionarioListOpen(true);
-                setForm(initialFormState);
-            } catch (error) {
-                console.error('Erro ao listar funcionários:', error);
-                throw error;
-            }
-        } else {
-            setIsFuncionarioListOpen(false);
-        }
+    const handleFuncionarioListToggle = () => {
+        setIsFuncionarioListOpen(!isFuncionarioListOpen);
     };
 
     const selectFuncionario = async (email) => {
@@ -559,7 +545,6 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
             </div>
             {isFuncionarioListOpen && (
                 <UpdateFuncModal
-                    funcionarios={funcionarios}
                     onSelect={selectFuncionario}
                     onClose={handleFuncionarioListToggle}
                 />

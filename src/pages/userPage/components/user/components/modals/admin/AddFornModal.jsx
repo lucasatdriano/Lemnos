@@ -33,23 +33,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
     const [errors, setErrors] = useState({});
     const [isFornecedorListOpen, setIsFornecedorListOpen] = useState(false);
     const [selectedForn, setSelectedForn] = useState(null);
-    const [fornecedores, setFornecedores] = useState([]);
 
-    const handleFornecedorListToggle = async () => {
-        if (!isFornecedorListOpen) {
-            try {
-                const data = await getFornecedores();
-                setFornecedores(data);
-                setSelectedForn(null);
-                setForm(initialFormState);
-                setIsFornecedorListOpen(true);
-            } catch (error) {
-                console.error('Erro ao listar fornecedor:', error);
-                throw error;
-            }
-        } else {
-            setIsFornecedorListOpen(false);
-        }
+    const handleFornecedorListToggle = () => {
+        setIsFornecedorListOpen(!isFornecedorListOpen);
     };
 
     const selectFornecedor = async (email) => {
@@ -397,7 +383,6 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
             </div>
             {isFornecedorListOpen && (
                 <UpdateFornModal
-                    fornecedores={fornecedores}
                     onSelect={selectFornecedor}
                     onClose={handleFornecedorListToggle}
                 />

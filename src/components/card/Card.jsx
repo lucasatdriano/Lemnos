@@ -63,13 +63,19 @@ export default function Card({ produto }) {
     const handleAddToFavorites = async (produto, e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
-            try {
-                await adicionarFavorito(produto);
-                setIsFavorite(true);
-                toast.success('Produto adicionado aos favoritos!');
-            } catch (error) {
-                console.log('Erro ao adicionar produto aos favoritos.');
+        if (AuthService.isLoggedIn()) {
+            if(AuthService.getRole() == 'CLIENTE') {
+                try {
+                    await adicionarFavorito(produto);
+                    setIsFavorite(true);
+                    toast.success('Produto adicionado aos favoritos!');
+                } catch (error) {
+                    console.log('Erro ao adicionar produto aos favoritos.');
+                }
+            } else {
+                toast.warning(
+                    'Usuário não permitido adicionar produtos aos favoritos.'
+                );
             }
         } else {
             toast.warning(
