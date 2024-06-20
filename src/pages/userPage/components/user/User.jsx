@@ -202,19 +202,13 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
             nome: form.name,
             email: form.email
         }
-        console.log("0");
+
         if(AuthService.getRole() === 'CLIENTE') {
-            console.log("1");
             await updateCliente(usuario);
         } else {
-            console.log("2");
-            console.log(usuario);
             await updateFuncionario(usuario);
         }
-        const cliente = {
-            nome: form.name,
-        };
-        await updateCliente(cliente);
+
         setIsEditing(!isEditing);
         toast.success('Dados atualizados!');
     };
