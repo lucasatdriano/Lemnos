@@ -115,8 +115,6 @@ $font-items: 'Poppins', Helvetica;
         align-items: center;
         gap: 1em;
 
-    
-
         .selectBtn {
             width: 100%;
             display: flex;
@@ -369,7 +367,7 @@ $font-items: 'Poppins', Helvetica;
         justify-content: center;
         gap: 0.5em;
         font-size: 2.2rem;
-        width: clamp(8em, 8em + 10vw, 15em);
+        // width: clamp(8em, 8em + 10vw, 15em);
         padding: 0.5em 1em;
         border: none;
         border-radius: 5px;

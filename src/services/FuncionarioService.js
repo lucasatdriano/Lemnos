@@ -11,7 +11,7 @@ export async function getFuncionarioByToken() {
             url: `/funcionario/me`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -128,13 +128,7 @@ export async function updateFuncionario(funcionario) {
 
         return true;
     } catch (error) {
-        if (
-            error.response &&
-            error.response.data &&
-            error.response.data.error
-        ) {
-            toast.error(error.response.data.error);
-        }
+        console.log(error)
         return false;
     }
 }

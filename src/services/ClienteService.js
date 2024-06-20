@@ -91,13 +91,7 @@ export async function updateCliente(cliente) {
 
         return true;
     } catch (error) {
-        if (
-            error.response &&
-            error.response.data &&
-            error.response.data.error
-        ) {
-            toast.error(error.response.data.error);
-        }
+        console.log(error)
         return false;
     }
 }

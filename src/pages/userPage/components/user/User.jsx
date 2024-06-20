@@ -41,16 +41,27 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
-    const [showEmailModal, setShowEmailModal] = useState(false);
-    const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showEnderecoModal, setShowEnderecoModal] = useState(false);
-    const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
     const [endereco, setEndereco] = useState(true);
+    const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
     const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
         useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
-    const [form, setForm] = useState({ name: '', email: '' });
-    const [errors, setErrors] = useState({ cpf: false });
+    const [form, setForm] = useState(
+        { 
+            nome: '', 
+            email: '', 
+            enderecos: {                                   
+                cep: '',
+                logradouro: '',
+                estado: '',
+                bairro: ' ',
+                cidade: '',
+                numero: '',
+                complemento:'',
+            }
+        }
+    );
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -85,7 +96,19 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     ? await getCliente()
                     : await getFuncionarioByToken();
 
-            setForm({ name: usuario.nome, email: usuario.email });
+            setForm({ 
+                nome: usuario.nome, 
+                email: usuario.email,
+                enderecos: {                                   
+                    cep: usuario.enderecos[0].cep,
+                    logradouro: usuario.enderecos[0].logradouro,
+                    estado: usuario.enderecos[0].uf,
+                    bairro: usuario.enderecos[0].bairro,
+                    cidade: usuario.enderecos[0].cidade,
+                    numero: usuario.enderecos[0].numeroLogradouro,
+                    complemento: usuario.enderecos[0].complemento,
+                } 
+            });
             setUsername(usuario.nome.split(' ')[0]);
 
             if (AuthService.isLoggedInWithGoogle()) {
@@ -134,12 +157,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     const handleShowModal = (modalName) => {
         switch (modalName) {
-            case 'email':
-                setShowEmailModal(true);
-                break;
-            case 'password':
-                setShowPasswordModal(true);
-                break;
             case 'endereco':
                 setShowEnderecoModal(true);
                 break;
@@ -161,12 +178,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     const handleCloseModal = (modalName) => {
         switch (modalName) {
-            case 'email':
-                setShowEmailModal(false);
-                break;
-            case 'password':
-                setShowPasswordModal(false);
-                break;
             case 'endereco':
                 setShowEnderecoModal(false);
                 break;
@@ -246,13 +257,10 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                 name="name"
                                 maxLength={40}
                                 minLength={5}
-                                value={form.name}
+                                value={form.nome}
                                 onChange={handleChange}
                                 disabled={!isEditing}
                             />
-                            {errors.name && (
-                                <span className="invalid">{errors.name}</span>
-                            )}
                         </p>
 
                         <p>
@@ -266,9 +274,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                 onChange={handleChange}
                                 disabled={true}
                             />
-                            {errors.email && (
-                                <span className="invalid">{errors.email}</span>
-                            )}
                         </p>
                     </div>
                     <div className="containerButtons">
@@ -306,12 +311,27 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                             </button>
                         </div>
                         {endereco ? (
-                            <button
-                                type="button"
-                                onClick={() => handleShowModal('endereco')}
-                            >
-                                Adicionar Endereço
-                            </button>
+                            form.enderecos.length != 0 ? (
+                                <>
+                                    <div className="dataEnd">
+                                        <p>CEP: {form.enderecos.cep || ''}</p>
+                                        <p>Logradouro: {form.enderecos.logradouro || ''}</p>
+                                        <p>Estado: {form.enderecos.estado || ''}</p>
+                                        <p>Bairro: {form.enderecos.bairro}</p>
+                                        <p>Cidade: {form.enderecos.cidade || ''}</p>
+                                        <p>Número: {form.enderecos.numero || ''}</p>
+                                        <p>Complemento: {form.enderecos.complemento || ''}</p>
+                                    </div>
+                                    <button type="button" onClick={() => handleShowModal('endereco')}>
+                                        Adicionar mais um Endereço
+                                    </button>
+                              
+                                </>
+                            ) : (                                   
+                                <button type="button" onClick={() => handleShowModal('endereco')}>
+                                    Adicionar Endereço
+                                </button>
+                            )
                         ) : (
                             <div className="historyOrders">
                                 <HistoricoCompras compras={historicoExemplo} />
