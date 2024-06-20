@@ -157,7 +157,7 @@ $font-items: 'Poppins', Helvetica;
             justify-content: center;
             position: relative;
 
-            .checkbox {
+            #chk {
                 cursor: pointer;
                 position: absolute;
                 top: 0;
@@ -166,16 +166,16 @@ $font-items: 'Poppins', Helvetica;
                 height: 3em;
                 opacity: 0;
 
-                &:checked + .label .ball {
+                &:checked + #labelTheme .ball {
                     transform: translateX(63px);
                 }
 
-                &:checked + .label .iconMoon {
+                &:checked + #labelTheme .iconMoon {
                     transform: translateY(88%);
                     color: $color-fontLight;
                 }
 
-                &:checked + .label .iconSun {
+                &:checked + #labelTheme .iconSun {
                     transform: translateY(-175%);
                     color: $color-fontDark;
                 }

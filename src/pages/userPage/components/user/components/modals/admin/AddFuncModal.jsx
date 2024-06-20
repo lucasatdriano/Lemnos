@@ -3,7 +3,6 @@ import { useState } from 'react';
 import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { IoClose } from 'react-icons/io5';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import {

@@ -2,16 +2,19 @@
 /* eslint-disable react/prop-types */
 import './loginForm.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '../../../../services/AuthService';
 import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../../../../services/configurations/FirebaseConfig';
+import {
+    auth,
+    googleProvider,
+} from '../../../../services/configurations/FirebaseConfig';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { login, loginFirebase } from '../../../../services/LoginService';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../../../../services/AuthService';
 
 export default function LoginForm({ onLogin, onCadastroClick }) {
     const navigate = useNavigate();

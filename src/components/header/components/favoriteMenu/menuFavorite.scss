@@ -34,7 +34,7 @@ $font-items: 'Poppins', Helvetica;
 
     .menuFavorite {
         background-color: $color-bgLight;
-        width: 40%;
+        width: 45%;
         height: 100vh;
         position: absolute;
         z-index: 999;
@@ -130,7 +130,7 @@ $font-items: 'Poppins', Helvetica;
             gap: 1em;
 
             .itemFav {
-                width: 80%;
+                width: 100%;
                 height: 17em;
                 padding: 0.25em;
                 position: relative;
@@ -359,6 +359,14 @@ $font-items: 'Poppins', Helvetica;
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .modal {
+        .menuFavorite {
+            width: 55%;
         }
     }
 }

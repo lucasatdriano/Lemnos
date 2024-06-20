@@ -66,13 +66,10 @@ export default function Card({ produto }) {
         if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
             try {
                 await adicionarFavorito(produto);
-                const success = await adicionarFavorito(produto);
-                if (success) {
-                    setIsFavorite(true);
-                    toast.success('Produto adicionado aos favoritos!');
-                }
+                setIsFavorite(true);
+                toast.success('Produto adicionado aos favoritos!');
             } catch (error) {
-                toast.error('Erro ao adicionar produto aos favoritos.');
+                console.log('Erro ao adicionar produto aos favoritos.');
             }
         } else {
             toast.warning(

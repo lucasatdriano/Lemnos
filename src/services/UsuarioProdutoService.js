@@ -1,8 +1,49 @@
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import AuthService from './AuthService';
 import { toast } from 'react-toastify';
-import { baseUri } from './configurations/ServiceConfig';
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from './AuthService';
+
+const baseUri = 'https://lemnos-server.up.railway.app/api';
+// const baseUri = "http://localhost:8080/api";
+
+export async function listarProdutosFiltrados(filtro, page, size) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'POST',
+            url: '/produto/find',
+            data: {
+                nome: filtro.nome,
+                categoria: filtro.categoria,
+                subCategoria: filtro.subCategoria,
+                marca: filtro.marca,
+                menorPreco: filtro.menorPreco,
+                maiorPreco: filtro.maiorPreco,
+                avaliacao: filtro.avaliacao,
+                page: page,
+                size: size,
+            },
+            timeout: 10000,
+        });
+
+        if (response.status !== 200 && response.status !== 204) {
+            throw new Error('Erro ao filtrar produtos.');
+        }
+
+        return response.data;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao filtrar produtos.');
+        }
+        throw error;
+    }
+}
 
 export async function listarProdutosFavoritos() {
     if (AuthService.isLoggedIn()) {

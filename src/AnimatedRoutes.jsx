@@ -23,10 +23,6 @@ const AnimatedRoutes = () => {
                         path="/productFilter/:category"
                         element={<ProductFilter />}
                     />
-                    <Route
-                        path="/productFilter/:brand"
-                        element={<ProductFilter />}
-                    />
                     <Route path="/productFilter" element={<ProductFilter />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />

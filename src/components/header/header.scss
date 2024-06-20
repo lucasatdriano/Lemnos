@@ -102,6 +102,14 @@ header {
             height: 36px;
             width: 36px;
         }
+
+        .userImg {
+            margin: 0.5em 0.2em 0;
+            border-radius: 50%;
+            height: 42px;
+            width: 42px;
+            border: 1px solid $color-primaryLight;
+        }
     }
 }
 

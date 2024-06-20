@@ -202,6 +202,7 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                         type="checkbox"
                         className="checkbox"
                         onClick={toggleTheme}
+                        id='chk'
                         name="chk"
                     />
                     <label htmlFor="chk" id="labelTheme">
