@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './login.scss';
-import User from './components/user/User';
+import User from '../userPage/User';
 import LoginForm from './components/login/LoginForm';
 import AuthService from '../../services/AuthService';
 import RegistrationForm from './components/registration/RegistrationForm';

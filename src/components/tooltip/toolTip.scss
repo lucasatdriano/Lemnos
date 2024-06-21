@@ -20,29 +20,34 @@ $font-title: 'Merriweather Sans', sans-serif;
 $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
+/* toolTip.scss */
+
 .tooltip {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 
     .tooltip-text {
-        opacity: 0;
+        visibility: hidden;
         background-color: $color-primaryLight;
-        color: $color-fontDark;
+        color: #fff;
         text-align: center;
-        border-radius: 5px;
-        white-space: nowrap;
-        padding: 5px 10px;
+        border-radius: 4px;
+        padding: 8px;
         position: absolute;
-        z-index: 10;
-        bottom: 20px;
+        z-index: 1;
+        bottom: 30px;
         left: 50%;
         transform: translateX(-50%);
-        transition: 0.3s ease-in-out;
+        white-space: nowrap;
+        opacity: 0;
+        transition: 0.5s ease;
     }
 
-    &:hover .tooltip-text {
+    .tooltip-text.visible {
+        visibility: visible;
         opacity: 1;
-        bottom: 50px;
+        bottom: 60px;
     }
 }
 
@@ -53,9 +58,3 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 }
-
-// @media only screen and (max-width: 500px) {
-//     .tooltip {
-//         pointer-events: none;
-//     }
-// }

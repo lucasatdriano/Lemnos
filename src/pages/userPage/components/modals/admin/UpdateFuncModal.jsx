@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { IoClose } from 'react-icons/io5';
 import { RiSearch2Line } from 'react-icons/ri';
-import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../../components/inputs/customInput/Inputs';
+import { useEffect, useState } from 'react';
 
-export default function UpdateFornModal({ onSelect, onClose }) {
-    const [fornecedores, setFornecedores] = useState([]);
+export default function UpdateFuncModal({ onSelect, onClose }) {
+    const [funcionarios, setFuncionarios] = useState([]);
     const [search, setSearch] = useState('');
 
     const applyFilters = async () => {
@@ -12,11 +14,11 @@ export default function UpdateFornModal({ onSelect, onClose }) {
             const filtro = {
                 nome: search,
             };
-            const fornecedoresFiltrados = await listarProdutosFiltrados(
+            const funcionariosFiltrados = await listarProdutosFiltrados(
                 filtro,
                 5
             );
-            setFornecedores(fornecedoresFiltrados);
+            setFuncionarios(funcionariosFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
         }
@@ -36,14 +38,17 @@ export default function UpdateFornModal({ onSelect, onClose }) {
 
     return (
         <div
-            className="modal fornecedor-list-modal"
+            className="modal funcionario-list-modal"
             onClick={(e) => {
                 onClose();
                 e.stopPropagation();
             }}
         >
-            <div className="containerModal">
-                <h2>Lista de Fornecedores</h2>
+            <div
+                className="containerModal"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <h2>Lista de Funcionários</h2>
                 <form
                     onSubmit={(e) => e.preventDefault()}
                     className="inputSearch"
@@ -63,7 +68,8 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                 {funcionarios.length == 0 ? (
                     <div className="emptyMessage">
                         <h2 className="textEmpty">
-                            fornecedor não encontrado. Revise e tente novamente.
+                            funcionário não encontrado. Revise e tente
+                            novamente.
                         </h2>
                         <button
                             type="button"
@@ -75,22 +81,27 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                     </div>
                 ) : (
                     <ul className="listItens">
-                        {fornecedores &&
-                            fornecedores.map((fornecedor, index) => (
+                        {funcionarios &&
+                            funcionarios.map((funcionario, index) => (
                                 <li
                                     className="itemUpdate"
                                     key={index}
-                                    onClick={() => onSelect(fornecedor.email)}
+                                    onClick={() => onSelect(funcionario.email)}
                                 >
                                     <div>
                                         <p>
-                                            Fornecedor:{' '}
+                                            Nome:{' '}
                                             <span className="spanNome">
-                                                {fornecedor.nome}
+                                                {funcionario.nome}
                                             </span>
                                         </p>
                                         <p>
-                                            Email: <span>{fornecedor.email}</span>
+                                            Email:{' '}
+                                            <span>{funcionario.email}</span>
+                                        </p>
+                                        <p>
+                                            Situação:{' '}
+                                            <span>{funcionario.situacao}</span>
                                         </p>
                                     </div>
                                 </li>

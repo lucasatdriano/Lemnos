@@ -100,7 +100,7 @@ $font-items: 'Poppins', Helvetica;
             }
         }
     }
-    
+
     .hrSeparate {
         width: 0;
         height: 104.5%;
@@ -154,6 +154,13 @@ $font-items: 'Poppins', Helvetica;
         flex-direction: column;
         padding: 1em;
         gap: 2em;
+
+        .hrFuncionario {
+            display: none;
+            width: 100%;
+            height: 0;
+            border: 1px solid $color-primaryLight;
+        }
     }
 
     .modal {
@@ -179,7 +186,11 @@ $font-items: 'Poppins', Helvetica;
             background: $color-bgLight;
             padding: 2em 1.5em;
             border-radius: 15px;
-            overflow-y: auto;
+            overflow: hidden;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             p {
                 margin: 0.25em;
@@ -367,7 +378,7 @@ $font-items: 'Poppins', Helvetica;
         justify-content: center;
         gap: 0.5em;
         font-size: 2.2rem;
-        // width: clamp(8em, 8em + 10vw, 15em);
+        min-width: 12em;
         padding: 0.5em 1em;
         border: none;
         border-radius: 5px;
@@ -437,6 +448,13 @@ $font-items: 'Poppins', Helvetica;
                         border-left: 2px solid #72757478;
                     }
                 }
+            }
+        }
+
+        .adminPage,
+        .funcionarioPage {
+            .hrFuncionario {
+                border: 1px solid $color-primaryDark;
             }
         }
 
@@ -533,6 +551,10 @@ $font-items: 'Poppins', Helvetica;
         .adminPage,
         .funcionarioPage {
             flex-direction: column;
+
+            .hrFuncionario {
+                display: block;
+            }
         }
     }
 }
@@ -706,6 +728,40 @@ $font-items: 'Poppins', Helvetica;
 
                     &:hover {
                         filter: brightness(0.9);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .userContainer {
+        .modal {
+            .containerModal {
+                padding: 1em 0;
+
+                h2 {
+                    font-size: 2.8rem;
+                    margin: 0 2em;
+                }
+
+                .modalProduto,
+                .modalFuncionario,
+                .modalFornecedor,
+                .modalEndereco {
+                    padding: 0.5em 1em 1em;
+                }
+
+                .listItens {
+                    .itemUpdate {
+                        flex-direction: column;
+                        align-items: center;
+
+                        img {
+                            height: 150px;
+                            width: 150px;
+                        }
                     }
                 }
             }

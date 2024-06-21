@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import UpdateFuncModal from './UpdateFuncModal';
 import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
@@ -8,17 +9,16 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import {
     cadastrarEndereco,
     verificarCep,
-    updateEndereco
-} from '../../../../../../../services/EnderecoService';
+    updateEndereco,
+} from '../../../../../services/EnderecoService';
 import {
     cadastrarFuncionario,
     updateFuncionario,
     excluirFuncionario,
     getFuncionarios,
     getFuncionarioByEmail,
-} from '../../../../../../../services/FuncionarioService';
+} from '../../../../../services/FuncionarioService';
 
-// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function FuncionarioModal({ onClose, tipoEntidade }) {
     const initialFormState = {
         nome: '',

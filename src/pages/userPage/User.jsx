@@ -1,29 +1,29 @@
-/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import './user.scss';
-import UserImg from '../../../../assets/imgLemnos/imgUser.svg';
-import ToolTip from '../../../../components/tooltip/ToolTip';
-import EmailModal from './components/modals/EmailModal';
-import AuthService from '../../../../services/AuthService';
-import CustomInput from '../../../../components/inputs/customInput/Inputs';
-import PasswordModal from './components/modals/PasswordModal';
+import AuthService from '../../services/AuthService';
+import UserImg from '../../assets/imgLemnos/imgUser.svg';
+import ToolTip from '../../components/tooltip/ToolTip';
+import CustomInput from '../../components/inputs/customInput/Inputs';
 import EnderecoModal from './components/modals/EnderecoModal';
-import AddProdutoModal from './components/modals/admin/AddProductModal';
 import HistoricoCompras from './components/history/History';
+import AddProdutoModal from './components/modals/admin/AddProductModal';
 import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
-import { auth } from '../../../../services/configurations/FirebaseConfig';
+import { auth } from '../../services/configurations/FirebaseConfig';
 import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { MdLogout } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
-import { setUserImg } from '../../../../store/actions/userActions';
-import { getCliente, updateCliente } from '../../../../services/ClienteService';
+import { setUserImg } from '../../store/actions/userActions';
+import { getCliente, updateCliente } from '../../services/ClienteService';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getFuncionarioByToken, updateFuncionario } from '../../../../services/FuncionarioService';
+import {
+    getFuncionarioByToken,
+    updateFuncionario,
+} from '../../services/FuncionarioService';
 
 const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -47,21 +47,11 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
         useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
-    const [form, setForm] = useState(
-        { 
-            nome: '', 
-            email: '', 
-            enderecos: {                                   
-                cep: '',
-                logradouro: '',
-                estado: '',
-                bairro: ' ',
-                cidade: '',
-                numero: '',
-                complemento:'',
-            }
-        }
-    );
+    const [form, setForm] = useState({
+        nome: '',
+        email: '',
+        enderecos: [],
+    });
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -96,19 +86,29 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     ? await getCliente()
                     : await getFuncionarioByToken();
 
-            setForm({ 
-                nome: usuario.nome, 
-                email: usuario.email,
-                enderecos: {                                   
-                    cep: usuario.enderecos[0].cep,
-                    logradouro: usuario.enderecos[0].logradouro,
-                    estado: usuario.enderecos[0].uf,
-                    bairro: usuario.enderecos[0].bairro,
-                    cidade: usuario.enderecos[0].cidade,
-                    numero: usuario.enderecos[0].numeroLogradouro,
-                    complemento: usuario.enderecos[0].complemento,
-                } 
-            });
+            if (usuario.enderecos && usuario.enderecos.length > 0) {
+                setForm({
+                    ...form,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    enderecos: usuario.enderecos.map((endereco) => ({
+                        cep: endereco.cep,
+                        logradouro: endereco.logradouro,
+                        estado: endereco.uf,
+                        bairro: endereco.bairro,
+                        cidade: endereco.cidade,
+                        numero: endereco.numeroLogradouro,
+                        complemento: endereco.complemento,
+                    })),
+                });
+            } else {
+                setForm({
+                    ...form,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    enderecos: [],
+                });
+            }
             setUsername(usuario.nome.split(' ')[0]);
 
             if (AuthService.isLoggedInWithGoogle()) {
@@ -129,6 +129,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
             }
         } catch (error) {
             toast.error('Erro ao obter os dados do Usuário');
+            console.error('Erro ao obter os dados do Usuário', error);
             navigate('/login');
             AuthService.logout();
         }
@@ -198,8 +199,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     };
 
     const handleCloseAllModals = () => {
-        setShowEmailModal(false);
-        setShowPasswordModal(false);
         setShowEnderecoModal(false);
         setShowAddProdutoModal(false);
         setShowAddFuncionarioModal(false);
@@ -211,10 +210,10 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const handleSaveChanges = async () => {
         const usuario = {
             nome: form.name,
-            email: form.email
-        }
+            email: form.email,
+        };
 
-        if(AuthService.getRole() === 'CLIENTE') {
+        if (AuthService.getRole() === 'CLIENTE') {
             await updateCliente(usuario);
         } else {
             await updateFuncionario(usuario);
@@ -307,28 +306,49 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                 className="btnView"
                                 onClick={handleViewHistory}
                             >
-                                Pedido
+                                Pedidos
                             </button>
                         </div>
                         {endereco ? (
-                            form.enderecos.length != 0 ? (
-                                <>
-                                    <div className="dataEnd">
-                                        <p>CEP: {form.enderecos.cep || ''}</p>
-                                        <p>Logradouro: {form.enderecos.logradouro || ''}</p>
-                                        <p>Estado: {form.enderecos.estado || ''}</p>
-                                        <p>Bairro: {form.enderecos.bairro}</p>
-                                        <p>Cidade: {form.enderecos.cidade || ''}</p>
-                                        <p>Número: {form.enderecos.numero || ''}</p>
-                                        <p>Complemento: {form.enderecos.complemento || ''}</p>
-                                    </div>
-                                    <button type="button" onClick={() => handleShowModal('endereco')}>
+                            form.enderecos.cep != '' ? (
+                                <div className="allEnderecos">
+                                    {form.enderecos.map((endereco, index) => (
+                                        <div key={index} className="dataEnd">
+                                            <p>CEP: {endereco.cep || ''}</p>
+                                            <p>
+                                                Logradouro:{' '}
+                                                {endereco.logradouro || ''}
+                                            </p>
+                                            <p>
+                                                Estado: {endereco.estado || ''}
+                                            </p>
+                                            <p>Bairro: {endereco.bairro}</p>
+                                            <p>
+                                                Cidade: {endereco.cidade || ''}
+                                            </p>
+                                            <p>
+                                                Número: {endereco.numero || ''}
+                                            </p>
+                                            <p>
+                                                Complemento:{' '}
+                                                {endereco.complemento || ''}
+                                            </p>
+                                        </div>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleShowModal('endereco')
+                                        }
+                                    >
                                         Adicionar mais um Endereço
                                     </button>
-                              
-                                </>
-                            ) : (                                   
-                                <button type="button" onClick={() => handleShowModal('endereco')}>
+                                </div>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() => handleShowModal('endereco')}
+                                >
                                     Adicionar Endereço
                                 </button>
                             )
@@ -340,6 +360,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     </div>
                 ) : AuthService.getRole() === 'ADMIN' ? (
                     <div className="adminPage">
+                        <hr className="hrFuncionario" />
                         <button
                             type="button"
                             onClick={() => handleShowModal('addProduto')}
@@ -361,6 +382,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     </div>
                 ) : (
                     <div className="funcionarioPage">
+                        <hr className="hrFuncionario" />
                         <button
                             type="button"
                             onClick={() => handleShowModal('addProduto')}
@@ -378,10 +400,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
             </section>
 
             {showEnderecoModal && (
-                <EnderecoModal
-                    // onSave={handleEnderecoSave}
-                    onClose={() => handleCloseModal('endereco')}
-                />
+                <EnderecoModal onClose={() => handleCloseModal('endereco')} />
             )}
 
             {showAddProdutoModal && (
@@ -407,7 +426,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     );
 };
 
-// Mapeamento do estado e das ações do Redux
 const mapStateToProps = (state) => ({
     userImg: state.user.userImg,
 });
@@ -416,5 +434,4 @@ const mapDispatchToProps = {
     setUserImg,
 };
 
-// Conectar o componente ao Redux
 export default connect(mapStateToProps, mapDispatchToProps)(User);

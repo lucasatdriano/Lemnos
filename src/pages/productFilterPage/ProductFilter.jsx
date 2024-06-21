@@ -2,7 +2,7 @@
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { listarProdutosFiltrados } from '../../services/ProdutoService';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './productFilter.scss';
@@ -206,6 +206,11 @@ export default function ProductFilter() {
         );
     };
 
+    const handleProductRating = (rating) => {
+        setSelectedEvaluation(rating);
+        setPage(0);
+    };
+
     return (
         <section className="mainFilters">
             <section className="product-filter-container">
@@ -254,17 +259,33 @@ export default function ProductFilter() {
                     setMaxValue={setMaxPrice}
                 />
 
-                <select
-                    value={selectedEvaluation}
-                    onChange={(e) => setSelectedEvaluation(e.target.value)}
-                >
-                    <option value="">Qualquer Nota</option>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                </select>
+                <div className="ratingFilter">
+                    {[5, 4, 3, 2, 1].map((index) => (
+                        <React.Fragment key={index}>
+                            <input
+                                type="radio"
+                                id={`star-${index}`}
+                                name="star-rating"
+                                value={index}
+                                checked={index === selectedEvaluation}
+                                onChange={() => handleProductRating(index)}
+                            />
+                            <label htmlFor={`star-${index}`}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    className={
+                                        index <= selectedEvaluation
+                                            ? 'filled'
+                                            : ''
+                                    }
+                                >
+                                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path>
+                                </svg>
+                            </label>
+                        </React.Fragment>
+                    ))}
+                </div>
             </section>
 
             <hr className="hrFilter" />

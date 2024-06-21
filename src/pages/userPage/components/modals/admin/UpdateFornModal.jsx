@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { IoClose } from 'react-icons/io5';
 import { RiSearch2Line } from 'react-icons/ri';
-import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../../components/inputs/customInput/Inputs';
+import { useEffect, useState } from 'react';
 
-export default function UpdateFuncModal({ onSelect, onClose }) {
-    const [funcionarios, setFuncionarios] = useState([]);
+export default function UpdateFornModal({ onSelect, onClose }) {
+    const [fornecedores, setFornecedores] = useState([]);
     const [search, setSearch] = useState('');
 
     const applyFilters = async () => {
@@ -12,11 +14,11 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
             const filtro = {
                 nome: search,
             };
-            const funcionariosFiltrados = await listarProdutosFiltrados(
+            const fornecedoresFiltrados = await listarProdutosFiltrados(
                 filtro,
                 5
             );
-            setFuncionarios(funcionariosFiltrados);
+            setFornecedores(fornecedoresFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
         }
@@ -36,17 +38,14 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
 
     return (
         <div
-            className="modal funcionario-list-modal"
+            className="modal fornecedor-list-modal"
             onClick={(e) => {
                 onClose();
                 e.stopPropagation();
             }}
         >
-            <div
-                className="containerModal"
-                onClick={(e) => e.stopPropagation()}
-            >
-                <h2>Lista de Funcionários</h2>
+            <div className="containerModal">
+                <h2>Lista de Fornecedores</h2>
                 <form
                     onSubmit={(e) => e.preventDefault()}
                     className="inputSearch"
@@ -63,10 +62,10 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                         <RiSearch2Line className="searchIcon" />
                     </button>
                 </form>
-                {funcionarios.length == 0 ? (
+                {fornecedores.length == 0 ? (
                     <div className="emptyMessage">
                         <h2 className="textEmpty">
-                            funcionário não encontrado. Revise e tente novamente.
+                            fornecedor não encontrado. Revise e tente novamente.
                         </h2>
                         <button
                             type="button"
@@ -78,30 +77,27 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                     </div>
                 ) : (
                     <ul className="listItens">
-                    {funcionarios &&
-                        funcionarios.map((funcionario, index) => (
-                            <li
-                                className="itemUpdate"
-                                key={index}
-                                onClick={() => onSelect(funcionario.email)}
-                            >
-                                <div>
-                                    <p>
-                                        Nome:{' '}
-                                        <span className="spanNome">
-                                            {funcionario.nome}
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Email: <span>{funcionario.email}</span>
-                                    </p>
-                                    <p>
-                                        Situação:{' '}
-                                        <span>{funcionario.situacao}</span>
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
+                        {fornecedores &&
+                            fornecedores.map((fornecedor, index) => (
+                                <li
+                                    className="itemUpdate"
+                                    key={index}
+                                    onClick={() => onSelect(fornecedor.email)}
+                                >
+                                    <div>
+                                        <p>
+                                            Fornecedor:{' '}
+                                            <span className="spanNome">
+                                                {fornecedor.nome}
+                                            </span>
+                                        </p>
+                                        <p>
+                                            Email:{' '}
+                                            <span>{fornecedor.email}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
                     </ul>
                 )}
                 <IoClose onClick={onClose} className="iconClose" />

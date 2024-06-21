@@ -15,7 +15,6 @@ import {
 } from '../../services/UsuarioProdutoService';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
-import { useSelector } from 'react-redux';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -28,12 +27,15 @@ export default function PaymentPage() {
     const [isCpfRegistered, setIsCpfRegistered] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [paymentMethodName, setPaymentMethodName] = useState('');
-    const [valorCompra, setValorCompra] = useState('');
+    const [valorCompra, setValorCompra] = useState('0');
     const [cliente, setCliente] = useState([]);
     const [desconto, setDesconto] = useState(0);
-    const { deliveryOption, priceDelivery } = useSelector(
-        (state) => state.delivery
-    );
+    // const { deliveryOption, priceDelivery } = useSelector(
+    //     (state) => state.delivery
+    // );
+
+    const [clienteEndereco, setClienteEndereco] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     async function fetchPagamento() {
         try {
@@ -46,6 +48,11 @@ export default function PaymentPage() {
 
                 if (clienteResponse.cpf && clienteResponse.cpf !== '') {
                     setIsCpfRegistered(true);
+                }
+
+                setClienteEndereco(clienteResponse.enderecos);
+                if (clienteResponse.enderecos.length > 0) {
+                    setSelectedAddress(clienteResponse.enderecos[0].id);
                 }
             }
         } catch (error) {
@@ -132,8 +139,14 @@ export default function PaymentPage() {
             return;
         }
 
+        if (!selectedAddress) {
+            toast.error('Por favor, selecione um endereço de entrega.');
+            return;
+        }
+
         const pedido = {
             metodoPagamento: selectedPaymentMethod,
+            enderecoId: selectedAddress,
         };
 
         try {
@@ -143,6 +156,10 @@ export default function PaymentPage() {
         } catch (error) {
             toast.error('Erro ao realizar pedido.');
         }
+    };
+
+    const handleAddressChange = (e) => {
+        setSelectedAddress(e.target.value);
     };
 
     return (
@@ -257,7 +274,7 @@ export default function PaymentPage() {
                                 <hr className="hrResume" />
                                 <div className="lineOrder">
                                     <p>Frete:</p>
-                                    <p>{BRL.format(priceDelivery)}</p>
+                                    <p>{BRL.format(10)}</p>
                                 </div>
                                 <hr className="hrResume" />
                                 <div className="lineOrder">
@@ -266,16 +283,13 @@ export default function PaymentPage() {
                                 </div>
                                 <hr className="hrResume" />
                                 <h2>
-                                    {BRL.format(
-                                        valorCompra - desconto + priceDelivery
-                                    )}
+                                    {BRL.format(valorCompra - desconto + 10)}
                                 </h2>
                                 <button
-                                    type="button"
                                     className="confirmOrder"
                                     onClick={handleConfirmOrder}
                                 >
-                                    Continuar Pedido
+                                    Finalizar Pedido
                                 </button>
                             </div>
                         </div>
@@ -299,13 +313,33 @@ export default function PaymentPage() {
                                         className="saveCpf"
                                         onClick={handleSaveCpf}
                                     >
-                                        Salvar
+                                        Salvar CPF
                                     </button>
                                 </div>
                             </div>
                         )}
+
+                        <div className="containerAddress">
+                            <p className="textAddress">
+                                Selecione o Endereço de Entrega
+                            </p>
+                            <select
+                                value={selectedAddress}
+                                onChange={handleAddressChange}
+                            >
+                                {clienteEndereco.map((endereco) => (
+                                    <option
+                                        key={endereco.id}
+                                        value={endereco.id}
+                                    >
+                                        {`${endereco.cep} - ${endereco.logradouro}, ${endereco.numeroLogradouro} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </section>
+                <section className="footerPayment"></section>
             </main>
         </>
     );

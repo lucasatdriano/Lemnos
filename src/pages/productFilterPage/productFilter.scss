@@ -71,6 +71,59 @@ $font-items: 'Poppins', Helvetica;
                 font-size: 1.8rem;
             }
         }
+
+        .ratingFilter {
+            filter: drop-shadow(2px 2px 8px $color-shadow);
+            display: flex;
+            justify-content: center;
+            flex-direction: row-reverse;
+            padding-top: 1em;
+            gap: 0.3rem;
+            --stroke: #666;
+
+            .productNote {
+                color: #837f7f7e;
+            }
+
+            input {
+                appearance: none;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            svg {
+                width: 32px;
+                height: 32px;
+                overflow: visible;
+                fill: transparent;
+                stroke: var(--stroke);
+                stroke-linejoin: bevel;
+                transition:
+                    stroke 0.2s,
+                    fill 0.5s;
+            }
+
+            label:hover svg {
+                stroke: $color-primaryLight;
+            }
+
+            input:checked ~ label svg {
+                transition: 0s;
+                animation:
+                    idle 4s linear infinite,
+                    yippee 0.75s backwards;
+                fill: $color-primaryLight;
+                stroke: $color-primaryLight;
+                stroke-opacity: 0;
+                stroke-dasharray: 0;
+                stroke-linejoin: miter;
+                stroke-width: 8px;
+            }
+        }
     }
 
     .filtered-data-container {

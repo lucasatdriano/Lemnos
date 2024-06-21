@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import { useState } from 'react';
-import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import UpdateProductModal from './UpdateProductModal';
 import { IoClose } from 'react-icons/io5';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
@@ -11,7 +11,7 @@ import {
     cadastrarProduto,
     getProdutoById,
     updateProduto,
-} from '../../../../../../../services/ProdutoService';
+} from '../../../../../services/ProdutoService';
 const categorias = [
     'Casa Inteligente',
     'Computadores',

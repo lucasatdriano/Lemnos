@@ -1,11 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import CustomInput from '../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import { IoClose } from 'react-icons/io5';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { cadastrarEndereco, getEnderecoFromCep } from '../../../../../../services/EnderecoService';
-import AuthService from '../../../../../../services/AuthService';
-import { toast } from 'react-toastify';
+import {
+    cadastrarEndereco,
+    getEnderecoFromCep,
+} from '../../../../services/EnderecoService';
+import AuthService from '../../../../services/AuthService';
 
 const estados = [
     'AC',
@@ -59,7 +62,7 @@ const Dropdown = ({ isOpen, options, onSelect, filterFunction }) => {
     );
 };
 
-export default function EnderecoModal({ onSave, onClose }) {
+export default function EnderecoModal({ onClose }) {
     const [form, setForm] = useState({
         cep: '',
         logradouro: '',
@@ -74,10 +77,10 @@ export default function EnderecoModal({ onSave, onClose }) {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        if(form.cep.length == 9) {
+        if (form.cep.length == 9) {
             fetchEndereco();
         }
-    }, [form.cep])
+    }, [form.cep]);
 
     const fetchEndereco = async () => {
         const endereco = await getEnderecoFromCep(form.cep);
@@ -87,7 +90,7 @@ export default function EnderecoModal({ onSave, onClose }) {
             bairro: endereco.bairro,
             cidade: endereco.cidade,
             estado: endereco.uf,
-        })
+        });
     };
 
     const handleChange = (name, value) => {
@@ -102,7 +105,7 @@ export default function EnderecoModal({ onSave, onClose }) {
         setSearchTerm(value);
     };
 
-    const handleSave = async e => {
+    const handleSave = async (e) => {
         e.preventDefault();
 
         const newErrors = {};
@@ -114,7 +117,8 @@ export default function EnderecoModal({ onSave, onClose }) {
             newErrors.logradouro = 'O Campo Logradouro é obrigatório';
         }
         if (!form.nLogradouro) {
-            newErrors.nLogradouro = 'O Campo Número do Logradouro é obrigatório';
+            newErrors.nLogradouro =
+                'O Campo Número do Logradouro é obrigatório';
         }
         if (!form.complemento) {
             newErrors.complemento = 'O Campo Complemento é obrigatório';
@@ -135,8 +139,12 @@ export default function EnderecoModal({ onSave, onClose }) {
             console.log('Dados do formulário:', form);
             const tokenList = AuthService.getToken().split('.');
             const json = JSON.parse(atob(tokenList[1]));
-            const response = await cadastrarEndereco(json.sub, form, json.role.toLowerCase());
-            if(response) onClose();
+            const response = await cadastrarEndereco(
+                json.sub,
+                form,
+                json.role.toLowerCase()
+            );
+            if (response) onClose();
         }
     };
 

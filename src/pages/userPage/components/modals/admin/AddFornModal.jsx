@@ -1,21 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import CustomInput from '../../../../../../../components/inputs/customInput/Inputs';
+import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import UpdateFornModal from './UpdateFornModal';
 import { toast } from 'react-toastify';
 import { IoClose } from 'react-icons/io5';
 import {
     verificarCep,
     cadastrarEndereco,
-    updateEndereco
-} from '../../../../../../../services/EnderecoService';
+    updateEndereco,
+} from '../../../../../services/EnderecoService';
 import {
     cadastrarFornecedor,
     updateFornecedor,
     getFornecedores,
     getFornecedorByEmail,
-} from '../../../../../../../services/FornecedorService';
+} from '../../../../../services/FornecedorService';
 
 export default function FornecedorModal({ onClose, tipoEntidade }) {
     const initialFormState = {

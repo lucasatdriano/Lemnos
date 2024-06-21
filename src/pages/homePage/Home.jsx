@@ -108,8 +108,8 @@ export default function Home() {
                     </div>
                 </section>
 
+                <h2>Ofertas</h2>
                 <section className="offers">
-                    <h2>Ofertas</h2>
                     <OfferList />
                 </section>
 
