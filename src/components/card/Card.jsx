@@ -64,7 +64,7 @@ export default function Card({ produto }) {
         e.preventDefault();
         e.stopPropagation();
         if (AuthService.isLoggedIn()) {
-            if(AuthService.getRole() == 'CLIENTE') {
+            if (AuthService.getRole() == 'CLIENTE') {
                 try {
                     await adicionarFavorito(produto);
                     setIsFavorite(true);
@@ -137,9 +137,7 @@ export default function Card({ produto }) {
                         <img
                             src={produto.imagemPrincipal}
                             alt={produto.nome}
-                            className={
-                                hasDiscount ? 'offerImage' : 'productImage'
-                            }
+                            className={'productImage'}
                         />
                         <div
                             className={

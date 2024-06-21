@@ -187,8 +187,16 @@ $font-items: 'Poppins', Helvetica;
 
         .productLink {
             .productDetails {
+                padding-right: 2em;
+
                 .productName {
                     font-size: 1.8rem;
+                }
+
+                .productPrice {
+                    span {
+                        font-size: 3rem;
+                    }
                 }
             }
         }

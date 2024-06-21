@@ -42,7 +42,11 @@ export default function OfferList() {
                             },
                             860: {
                                 perPage: 4,
-                            }
+                            },
+                            700: {
+                                perPage: 1,
+                                gap: 1550,
+                            },
                         },
                     }}
                 >
