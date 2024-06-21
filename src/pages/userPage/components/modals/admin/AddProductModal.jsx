@@ -674,9 +674,7 @@ export default function ProdutoModal({ onClose }) {
                             name="fabricante"
                             maxLength={50}
                             value={form.fabricante}
-                            onChange={(e) =>
-                                handleChange('fabricante', e.target.value)
-                            }
+                            onChange={(e) => handleChange('fabricante', e.target.value)}
                             disabled={isProductSelected()}
                         />
                         {errors.fabricante && (
