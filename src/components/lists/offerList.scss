@@ -83,13 +83,3 @@ $font-items: 'Poppins', Helvetica;
         }
     }
 }
-
-@media only screen and (max-width: 700px) {
-    .offers {
-        .offersList {
-            .splide__slide {
-                padding-right: -10em;
-            }
-        }
-    }
-}

@@ -136,6 +136,19 @@ $font-items: 'Poppins', Helvetica;
             }
         }
 
+        .allEnderecos {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .dataEnd {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding: 1em;
+            }
+        }
+
         .historyOrders {
             width: 85%;
             display: flex;
@@ -367,6 +380,37 @@ $font-items: 'Poppins', Helvetica;
                     width: 24px;
                     height: 24px;
                     cursor: pointer;
+                }
+
+                .reactSelectContainer {
+                }
+
+                .reactSelect__control {
+                    background-color: $color-card;
+                    border: 2px solid $color-shadow;
+                    color: $color-fontLight;
+                    padding: 0.5em 1em 0.3em;
+                    max-width: 16em;
+                    min-width: 100%;
+                    border-radius: 15px;
+                    transition: border-color 0.3s ease;
+                    cursor: text;
+                    font-family: $font-web;
+                    box-shadow: 2px 2px 4px $color-shadow;
+                }
+
+                .reactSelect__menu {
+                    position: absolute;
+                    display: grid;
+                    text-align: center;
+                    max-height: 15em;
+                    padding: 0 5px;
+                    border-radius: 10px;
+                    overflow-y: auto;
+                    cursor: pointer;
+                    box-shadow: 2px 2px 4px $color-shadow;
+                    transition: 0.2s ease;
+                    z-index: 9999;
                 }
             }
         }

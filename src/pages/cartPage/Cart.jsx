@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import Loading from '../../components/loading/Loading';
 import { setFreteInfo } from '../../store/actions/freteActions';
+import { useNavigation } from '../../NavigationProvider';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -29,6 +30,7 @@ const BRL = new Intl.NumberFormat('pt-BR', {
 
 export default function Cart() {
     const navigate = useNavigate();
+    const { setIsNavigatingToPayment } = useNavigation();
     const [cep, setCep] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const cepInputRef = useRef(null);
@@ -206,6 +208,7 @@ export default function Cart() {
                 cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
             } else {
                 setShowOptions(false);
+                setIsNavigatingToPayment(true);
                 navigate('/payment');
             }
         } catch (error) {

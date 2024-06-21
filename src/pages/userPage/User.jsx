@@ -128,7 +128,9 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                 setUserImg(storedPhotoURL || UserImg);
             }
         } catch (error) {
-            toast.error('Erro ao obter os dados do UsuárioAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            toast.error(
+                'Erro ao obter os dados do UsuárioAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+            );
             console.error('Erro ao obter os dados do Usuário', error);
             navigate('/login');
             AuthService.logout();
@@ -310,8 +312,9 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                             </button>
                         </div>
                         {endereco ? (
-                            form.enderecos.cep != '' ? (
+                            form.enderecos.length >= 1 ? (
                                 <div className="allEnderecos">
+                                    <h2>Endereços</h2>
                                     {form.enderecos.map((endereco, index) => (
                                         <div key={index} className="dataEnd">
                                             <p>CEP: {endereco.cep || ''}</p>
@@ -335,14 +338,16 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                             </p>
                                         </div>
                                     ))}
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleShowModal('endereco')
-                                        }
-                                    >
-                                        Adicionar mais um Endereço
-                                    </button>
+                                    {form.enderecos.length < 3 && (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleShowModal('endereco')
+                                            }
+                                        >
+                                            Adicionar mais um Endereço
+                                        </button>
+                                    )}
                                 </div>
                             ) : (
                                 <button

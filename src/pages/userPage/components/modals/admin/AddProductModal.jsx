@@ -1,17 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
-import { useState } from 'react';
+import Select from 'react-select';
 import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import UpdateProductModal from './UpdateProductModal';
-import { IoClose } from 'react-icons/io5';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
+import { useEffect, useState } from 'react';
+import { IoClose } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import {
     cadastrarProduto,
     getProdutoById,
     updateProduto,
 } from '../../../../../services/ProdutoService';
+import { getFornecedores } from '../../../../../services/FornecedorService';
+
 const categorias = [
     'Casa Inteligente',
     'Computadores',
@@ -123,6 +125,26 @@ export default function ProdutoModal({ onClose }) {
     const [isProdutoLoaded, setIsProdutoLoaded] = useState(false);
     const [subcategorias, setSubcategorias] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [fornecedores, setFornecedores] = useState([]);
+    const [selectedFornecedor, setSelectedFornecedor] = useState(null);
+
+    useEffect(() => {
+        const fetchFornecedores = async () => {
+            try {
+                // const response = await getFornecedores();
+                const response = [
+                    { value: 'fornecedor1', label: 'Fornecedor 1' },
+                    { value: 'fornecedor2', label: 'Fornecedor 2' },
+                ];
+                setFornecedores(response);
+            } catch (error) {
+                console.error('Erro ao buscar fornecedores:', error);
+                toast.error('Erro ao buscar fornecedores.');
+            }
+        };
+
+        fetchFornecedores();
+    }, []);
 
     const handleChange = (name, value) => {
         setForm((prevForm) => ({
@@ -264,8 +286,8 @@ export default function ProdutoModal({ onClose }) {
                     comprimento: parseFloat(form.comprimento),
                     largura: parseFloat(form.largura),
                     imagens: form.imagens.filter(Boolean),
-                    fornecedor: form.fornecedor
-                        ? form.fornecedor.toLowerCase()
+                    fornecedor: selectedFornecedor
+                        ? selectedFornecedor.value
                         : '',
                 };
                 await cadastrarProduto(formattedForm);
@@ -293,8 +315,8 @@ export default function ProdutoModal({ onClose }) {
                     comprimento: parseFloat(form.comprimento),
                     largura: parseFloat(form.largura),
                     imagens: form.imagens.filter(Boolean),
-                    fornecedor: form.fornecedor
-                        ? form.fornecedor.toLowerCase()
+                    fornecedor: selectedFornecedor
+                        ? selectedFornecedor.value
                         : '',
                 };
 
@@ -681,16 +703,14 @@ export default function ProdutoModal({ onClose }) {
                     </p>
 
                     <p>
-                        <CustomInput
-                            type="text"
-                            label="Fornecedor:"
-                            id="fornecedor"
-                            name="fornecedor"
-                            maxLength={50}
-                            value={form.fornecedor}
-                            onChange={(e) =>
-                                handleChange('fornecedor', e.target.value)
-                            }
+                        <Select
+                            options={fornecedores}
+                            value={selectedFornecedor}
+                            onChange={setSelectedFornecedor}
+                            isClearable
+                            placeholder="Selecione o fornecedor"
+                            className="reactSelectContainer"
+                            classNamePrefix="reactSelect"
                         />
                         {errors.fornecedor && (
                             <span className="invalid">{errors.fornecedor}</span>

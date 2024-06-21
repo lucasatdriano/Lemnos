@@ -202,6 +202,52 @@ $font-items: 'Poppins', Helvetica;
 }
 
 @media only screen and (max-width: 700px) {
+    .offers {
+        .descont {
+            .offerCard {
+                width: 18em;
+                height: 25em;
+
+                .offerLink {
+                    flex-direction: column;
+
+                    .productImage {
+                        width: 100%;
+                        height: 10em;
+                    }
+
+                    .offerDetails {
+                        .offerName {
+                            margin-bottom: 0;
+                        }
+
+                        .offerPriceDescont {
+                            bottom: 75px;
+
+                            span {
+                                font-size: 3.2rem;
+                            }
+                        }
+                    }
+                }
+
+                .btnAdd {
+                    bottom: 0;
+                }
+
+                &:hover {
+                    .offerDetails {
+                        .offerPriceDescont {
+                            bottom: 75px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 700px) {
     .descont {
         .offerCard {
             width: 80vw;
@@ -246,8 +292,6 @@ $font-items: 'Poppins', Helvetica;
 
             &:hover {
                 .offerDetails {
-                    padding-bottom: 4em;
-
                     .offerPrice {
                         opacity: 1;
                     }

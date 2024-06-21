@@ -7,6 +7,8 @@ import Header from './components/header/Header';
 import BackToTopButton from './components/backToTop/BackToTop';
 import Footer from './components/footer/Footer';
 import AnimatedRoutes from './AnimatedRoutes';
+import { AuthProvider } from './AuthProvider';
+import { NavigationProvider } from './NavigationProvider';
 
 export default function App() {
     const [theme, setTheme] = useState('light');
@@ -22,14 +24,16 @@ export default function App() {
     };
 
     return (
-        <>
-            <section className={`${localStorage.getItem('theme')}`}>
-                <Header toggleTheme={toggleTheme} />
-                <AnimatedRoutes />
-                <BackToTopButton />
-                <ToastContainer position="bottom-right" />
-                <Footer />
-            </section>
-        </>
+        <AuthProvider>
+            <NavigationProvider>
+                <section className={`${localStorage.getItem('theme')}`}>
+                    <Header toggleTheme={toggleTheme} />
+                    <AnimatedRoutes />
+                    <BackToTopButton />
+                    <ToastContainer position="bottom-right" />
+                    <Footer />
+                </section>
+            </NavigationProvider>
+        </AuthProvider>
     );
 }

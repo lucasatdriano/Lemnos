@@ -15,6 +15,7 @@ import {
 } from '../../services/UsuarioProdutoService';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
+import { useNavigation } from '../../NavigationProvider';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -23,6 +24,7 @@ const BRL = new Intl.NumberFormat('pt-BR', {
 
 export default function PaymentPage() {
     const navigate = useNavigate();
+    const { setIsNavigatingToBuy } = useNavigation();
     const [cpf, setCpf] = useState('');
     const [isCpfRegistered, setIsCpfRegistered] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -151,6 +153,7 @@ export default function PaymentPage() {
 
         try {
             await novoPedido(pedido);
+            setIsNavigatingToBuy(true);
             navigate('/buy');
             toast.success('Pedido realizado com sucesso!');
         } catch (error) {
