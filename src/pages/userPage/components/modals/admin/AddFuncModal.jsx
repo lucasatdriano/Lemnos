@@ -15,7 +15,6 @@ import {
     cadastrarFuncionario,
     updateFuncionario,
     excluirFuncionario,
-    getFuncionarios,
     getFuncionarioByEmail,
 } from '../../../../../services/FuncionarioService';
 

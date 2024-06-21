@@ -13,7 +13,6 @@ import {
 import {
     cadastrarFornecedor,
     updateFornecedor,
-    getFornecedores,
     getFornecedorByEmail,
 } from '../../../../../services/FornecedorService';
 

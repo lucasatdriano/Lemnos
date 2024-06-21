@@ -31,7 +31,7 @@ export default function OfferList() {
                 <Splide
                     options={{
                         type: 'carousel',
-                        perPage: 6,
+                        perPage: 1,
                         perMove: 1,
                         speed: 1000,
                         arrows: true,
@@ -44,8 +44,8 @@ export default function OfferList() {
                                 perPage: 4,
                             },
                             700: {
-                                perPage: 1,
-                                gap: 1550,
+                                perPage: 2,
+                                gap: 550,
                             },
                         },
                     }}

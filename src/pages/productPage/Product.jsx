@@ -66,6 +66,10 @@ export default function Product() {
                 const isFavorited = favorites.some(
                     (fav) => fav.id === product.id
                 );
+
+                if (!favorites) {
+                    navigate('/login')
+                }
                 setIsFavorite(isFavorited);
             }
         } catch (error) {

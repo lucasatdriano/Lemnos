@@ -128,7 +128,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                 setUserImg(storedPhotoURL || UserImg);
             }
         } catch (error) {
-            toast.error('Erro ao obter os dados do Usuário');
+            toast.error('Erro ao obter os dados do UsuárioAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
             console.error('Erro ao obter os dados do Usuário', error);
             navigate('/login');
             AuthService.logout();

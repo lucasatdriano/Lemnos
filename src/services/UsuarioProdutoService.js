@@ -63,15 +63,12 @@ export async function listarProdutosFavoritos() {
                 throw new Error('Erro ao adicionar favorito.');
             }
 
+            if (response.status == 401) {
+                return false
+            }
+
             return response.data;
         } catch (error) {
-            if (
-                error.response &&
-                error.response.data &&
-                error.response.data.error
-            ) {
-                toast.error(error.response.data.error); // aq q tá o erro
-            }
             throw error;
         }
     }

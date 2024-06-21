@@ -33,6 +33,9 @@ export default function Card({ produto }) {
                     const isFavorited = favorites.some(
                         (fav) => fav.id === produto.id
                     );
+                    if (!favorites) {
+                        navigate('/login')
+                    }
                     setIsFavorite(isFavorited);
                 } catch (error) {
                     console.log(error);

@@ -278,10 +278,6 @@ export default function ProdutoModal({ onClose }) {
         }
     };
 
-    const handleSelect = (produto) => {
-        setSelectedProduct(produto);
-    };
-
     const handleUpdate = async (e) => {
         e.preventDefault();
         if (!selectedProduct) return;

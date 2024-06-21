@@ -42,6 +42,10 @@ export default function MenuFavorite({ onClose }) {
                         return { ...produto, ...detalhesProduto };
                     })
                 );
+
+                if (!response) {
+                    navigate('/login')
+                }
                 setFavorites(
                     Array.isArray(favoritoDetalhado) ? favoritoDetalhado : []
                 );
