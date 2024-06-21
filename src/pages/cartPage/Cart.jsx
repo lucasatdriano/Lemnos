@@ -42,16 +42,17 @@ export default function Cart() {
     const frete = useSelector((state) => state.frete);
 
     useEffect(() => {
+        setIsLoading(true);
         fetchCarrinho();
     }, []);
 
     async function fetchCarrinho() {
-        setIsLoading(true);
         try {
             if (AuthService.isLoggedIn()) {
                 const response = await listarCarrinho();
                 if (response.length === 0) {
                     setCarrinho([]);
+                    setCep('');
                     return;
                 }
                 const carrinhoDetalhado = await Promise.all(
@@ -62,6 +63,15 @@ export default function Cart() {
                         return { ...produto, ...detalhesProduto };
                     })
                 );
+                carrinhoDetalhado.sort((a, b) => {
+                    const nomeA = a.nome.toUpperCase();
+                    const nomeB = b.nome.toUpperCase();
+                    if (nomeA < nomeB)
+                        return -1;
+                    if (nomeA > nomeB)
+                        return 1;
+                    return 0;
+                });
                 setCarrinho(
                     Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []
                 );
@@ -500,7 +510,7 @@ export default function Cart() {
             </section>
             <section className="offers">
                 <h2>Continue Comprando</h2>
-                <OfferList />
+                <OfferList onClick={fetchCarrinho()} />
             </section>
         </main>
     );

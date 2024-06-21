@@ -75,6 +75,29 @@ export async function getFornecedores() {
     }
 }
 
+export async function getFornecedoresByNome(nome) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: "GET",
+            url: "/fornecedor/by",
+            params: {
+                nome: nome
+            },
+            timeout: 10000
+        });
+
+        if(response.status != 200) {
+            throw new Error('Não foi possível listar os fornecedores');
+        }
+        return response.data
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
+
+
 export async function updateFornecedor(fornecedor) {
     try {
         const response = await axios({
