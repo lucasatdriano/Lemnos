@@ -51,16 +51,16 @@ export async function cadastrarProduto(produto) {
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 nome: produto.nome,
-                valor: produto.valor,
+                valor: produto.preco,
                 descricao: produto.descricao,
                 desconto: produto.desconto,
                 cor: produto.cor,
                 modelo: produto.modelo,
-                imagemPrincipal: produto.imagemPrincipal,
+                imagemPrincipal: produto.imagemPrinc,
                 imagens: produto.imagens,
                 subCategoria: produto.subCategoria,
                 peso: produto.peso,
@@ -73,19 +73,15 @@ export async function cadastrarProduto(produto) {
             timeout: 10000,
         });
 
+        console.log("Response", response);
+
         if (response.status != 201) {
             throw new Error(response);
         }
 
         return true;
     } catch (error) {
-        if (
-            error.response &&
-            error.response.data &&
-            error.response.data.error
-        ) {
-            toast.error(error.response.data.error);
-        }
+            toast.error(error);
     }
 }
 

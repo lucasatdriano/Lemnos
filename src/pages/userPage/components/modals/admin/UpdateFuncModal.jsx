@@ -4,6 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { RiSearch2Line } from 'react-icons/ri';
 import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import { useEffect, useState } from 'react';
+import { getFuncionarioByNome } from '../../../../../services/FuncionarioService';
 
 export default function UpdateFuncModal({ onSelect, onClose }) {
     const [funcionarios, setFuncionarios] = useState([]);
@@ -11,13 +12,13 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
-            const filtro = {
-                nome: search,
-            };
-            const funcionariosFiltrados = await listarProdutosFiltrados(
-                filtro,
-                5
-            );
+            if(search.length == 0) {
+                setFuncionarios([]);
+                return;
+            }
+            const funcionariosFiltrados = await getFuncionarioByNome(search);
+            if(funcionarios == funcionariosFiltrados) return;
+            console.log(funcionariosFiltrados);
             setFuncionarios(funcionariosFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -81,31 +82,34 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                     </div>
                 ) : (
                     <ul className="listItens">
-                        {funcionarios &&
-                            funcionarios.map((funcionario, index) => (
-                                <li
-                                    className="itemUpdate"
-                                    key={index}
-                                    onClick={() => onSelect(funcionario.email)}
-                                >
-                                    <div>
-                                        <p>
-                                            Nome:{' '}
-                                            <span className="spanNome">
-                                                {funcionario.nome}
-                                            </span>
-                                        </p>
-                                        <p>
-                                            Email:{' '}
-                                            <span>{funcionario.email}</span>
-                                        </p>
-                                        <p>
-                                            Situação:{' '}
-                                            <span>{funcionario.situacao}</span>
-                                        </p>
-                                    </div>
-                                </li>
-                            ))}
+                        {funcionarios && funcionarios.map((funcionario, index) => (
+                            <li
+                                className="itemUpdate"
+                                key={index}
+                                onClick={() => onSelect(funcionario.email)}
+                            >
+                                <div>
+                                    <p>
+                                        Nome:{' '}
+                                        <span className="spanNome">
+                                            {funcionario.nome}
+                                        </span>
+                                    </p>
+                                    <p>
+                                        Email:{' '}
+                                        <span className="spanNome">
+                                            {funcionario.email}
+                                        </span>
+                                    </p>
+                                    <p>
+                                        Nome:{' '}
+                                        <span className="spanNome">
+                                            {funcionario.situacao}
+                                        </span>
+                                    </p>
+                                </div>
+                            </li>
+                        ))}
                     </ul>
                 )}
                 <IoClose onClick={onClose} className="iconClose" />

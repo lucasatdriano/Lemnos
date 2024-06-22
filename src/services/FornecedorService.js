@@ -46,6 +46,10 @@ export async function getFornecedorByEmail(email) {
         const response = await axios({
             baseURL: baseUri,
             url: `/fornecedor/find?email=${email}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
             timeout: 10000,
         });
 
@@ -79,8 +83,12 @@ export async function getFornecedoresByNome(nome) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: 'GET',
-            url: '/fornecedor/by',
+            method: "POST",
+            url: "/fornecedor/by",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': AuthService.getToken()
+            },
             params: {
                 nome: nome,
             },
