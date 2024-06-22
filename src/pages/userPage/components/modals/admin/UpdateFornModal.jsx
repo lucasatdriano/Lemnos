@@ -4,6 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { RiSearch2Line } from 'react-icons/ri';
 import CustomInput from '../../../../../components/inputs/customInput/Inputs';
 import { useEffect, useState } from 'react';
+import { getFornecedoresByNome } from '../../../../../services/FornecedorService';
 
 export default function UpdateFornModal({ onSelect, onClose }) {
     const [fornecedores, setFornecedores] = useState([]);
@@ -11,13 +12,12 @@ export default function UpdateFornModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
-            const filtro = {
-                nome: search,
-            };
-            const fornecedoresFiltrados = await listarProdutosFiltrados(
-                filtro,
-                5
-            );
+            if(search.length == 0) {
+                setFornecedores([]);
+                return;
+            }
+            const fornecedoresFiltrados = await getFornecedoresByNome(search);
+            if(fornecedores == fornecedoresFiltrados) return;
             setFornecedores(fornecedoresFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -44,7 +44,7 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                 e.stopPropagation();
             }}
         >
-            <div className="containerModal">
+            <div className="containerModal" onClick={(e) => e.stopPropagation()}>
                 <h2>Lista de Fornecedores</h2>
                 <form
                     onSubmit={(e) => e.preventDefault()}
@@ -88,12 +88,8 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                                         <p>
                                             Fornecedor:{' '}
                                             <span className="spanNome">
-                                                {fornecedor.nome}
+                                                {fornecedor}
                                             </span>
-                                        </p>
-                                        <p>
-                                            Email:{' '}
-                                            <span>{fornecedor.email}</span>
                                         </p>
                                     </div>
                                 </li>
