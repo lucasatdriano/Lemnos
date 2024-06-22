@@ -120,9 +120,6 @@ export default function EnderecoModal({ onClose }) {
             newErrors.nLogradouro =
                 'O Campo Número do Logradouro é obrigatório';
         }
-        if (!form.complemento) {
-            newErrors.complemento = 'O Campo Complemento é obrigatório';
-        }
         if (!form.bairro) {
             newErrors.bairro = 'O Campo Bairro é obrigatório';
         }
@@ -136,7 +133,6 @@ export default function EnderecoModal({ onClose }) {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            console.log('Dados do formulário:', form);
             const tokenList = AuthService.getToken().split('.');
             const json = JSON.parse(atob(tokenList[1]));
             const response = await cadastrarEndereco(

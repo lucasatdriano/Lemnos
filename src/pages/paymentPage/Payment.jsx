@@ -1,21 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
-import { PiFileMagnifyingGlass } from 'react-icons/pi';
-import { FaBarcode, FaCreditCard, FaRegCreditCard } from 'react-icons/fa6';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IoCart } from 'react-icons/io5';
+import { FaCreditCard, FaRegCreditCard, FaBarcode } from 'react-icons/fa6';
+import { FaCheckCircle } from 'react-icons/fa';
 import { BsQrCodeScan } from 'react-icons/bs';
-import './payment.scss';
-import { getCliente, updateCliente } from '../../services/ClienteService';
+import { PiFileMagnifyingGlass } from 'react-icons/pi';
 import { toast } from 'react-toastify';
-import {
-    listarCarrinho,
-    novoPedido,
-} from '../../services/UsuarioProdutoService';
+import { listarCarrinho } from '../../services/UsuarioProdutoService';
+import { getCliente, updateCliente } from '../../services/ClienteService';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 import { useNavigation } from '../../NavigationProvider';
+import {
+    setSelectedAddress,
+    setDesconto,
+    setSelectedPaymentMethod,
+} from '../../store/actions/paymentActions';
+import './payment.scss';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -24,20 +27,23 @@ const BRL = new Intl.NumberFormat('pt-BR', {
 
 export default function PaymentPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { setIsNavigatingToBuy } = useNavigation();
     const [cpf, setCpf] = useState('');
     const [isCpfRegistered, setIsCpfRegistered] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [paymentMethodName, setPaymentMethodName] = useState('');
-    const [valorCompra, setValorCompra] = useState('0');
+    const [valorCompra, setValorCompra] = useState(0);
     const [cliente, setCliente] = useState([]);
-    const [desconto, setDesconto] = useState(0);
-    // const { deliveryOption, priceDelivery } = useSelector(
-    //     (state) => state.delivery
-    // );
-
     const [clienteEndereco, setClienteEndereco] = useState([]);
-    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [desconto, setDescontoLocal] = useState(0);
+
+    const selectedAddress = useSelector(
+        (state) => state.payment.selectedAddress
+    );
+    const selectedPaymentMethod = useSelector(
+        (state) => state.payment.selectedPaymentMethod
+    );
+    const Custofrete = useSelector((state) => state.frete.custo);
 
     async function fetchPagamento() {
         try {
@@ -54,7 +60,7 @@ export default function PaymentPage() {
 
                 setClienteEndereco(clienteResponse.enderecos);
                 if (clienteResponse.enderecos.length > 0) {
-                    setSelectedAddress(clienteResponse.enderecos[0].id);
+                    dispatch(setSelectedAddress(clienteResponse.enderecos[0]));
                 }
             }
         } catch (error) {
@@ -104,7 +110,7 @@ export default function PaymentPage() {
 
     const handlePaymentSelection = (e) => {
         const method = e.target.value;
-        setSelectedPaymentMethod(method);
+        dispatch(setSelectedPaymentMethod(method));
         let discount = 0;
         let methodName = '';
 
@@ -126,43 +132,36 @@ export default function PaymentPage() {
                 methodName = '';
         }
 
-        setDesconto(discount);
+        setDescontoLocal(discount);
+        dispatch(setDesconto(discount));
         setPaymentMethodName(methodName);
     };
 
     const handleConfirmOrder = async () => {
         if (!isCpfRegistered) {
-            toast.error('Por favor, cadastre seu CPF antes de continuar.');
+            toast.warning('Por favor, cadastre seu CPF antes de continuar.');
             return;
         }
 
         if (!selectedPaymentMethod) {
-            toast.error('Por favor, selecione um método de pagamento.');
+            toast.warning('Por favor, selecione um método de pagamento.');
             return;
         }
 
-        if (!selectedAddress) {
-            toast.error('Por favor, selecione um endereço de entrega.');
+        if (!selectedAddress.cep) {
+            toast.warning('Por favor, selecione um endereço de entrega.');
             return;
         }
 
-        const pedido = {
-            metodoPagamento: selectedPaymentMethod,
-            enderecoId: selectedAddress,
-        };
-
-        try {
-            await novoPedido(pedido);
-            setIsNavigatingToBuy(true);
-            navigate('/buy');
-            toast.success('Pedido realizado com sucesso!');
-        } catch (error) {
-            toast.error('Erro ao realizar pedido.');
-        }
+        // setIsNavigatingToBuy(true);
+        navigate('/buy');
     };
 
     const handleAddressChange = (e) => {
-        setSelectedAddress(e.target.value);
+        const enderecoSelecionado = clienteEndereco.find(
+            (endereco) => endereco.cep === e.target.value
+        );
+        dispatch(setSelectedAddress(enderecoSelecionado));
     };
 
     return (
@@ -189,7 +188,7 @@ export default function PaymentPage() {
                         <p className="titlePay">
                             Selecione um método de pagamento:
                         </p>
-                        <div className="optionPay">
+                        <div key="pix" className="optionPay">
                             <input
                                 type="radio"
                                 name="cbPay"
@@ -212,7 +211,7 @@ export default function PaymentPage() {
                                 </p>
                             </label>
                         </div>
-                        <div className="optionPay">
+                        <div key="credito" className="optionPay">
                             <input
                                 type="radio"
                                 name="cbPay"
@@ -230,7 +229,7 @@ export default function PaymentPage() {
                                 </p>
                             </label>
                         </div>
-                        <div className="optionPay">
+                        <div key="boleto" className="optionPay">
                             <input
                                 type="radio"
                                 name="cbPay"
@@ -277,7 +276,7 @@ export default function PaymentPage() {
                                 <hr className="hrResume" />
                                 <div className="lineOrder">
                                     <p>Frete:</p>
-                                    <p>{BRL.format(10)}</p>
+                                    <p>{BRL.format(Custofrete)}</p>
                                 </div>
                                 <hr className="hrResume" />
                                 <div className="lineOrder">
@@ -286,7 +285,9 @@ export default function PaymentPage() {
                                 </div>
                                 <hr className="hrResume" />
                                 <h2>
-                                    {BRL.format(valorCompra - desconto + 10)}
+                                    {BRL.format(
+                                        valorCompra - desconto + Custofrete
+                                    )}
                                 </h2>
                                 <button
                                     className="confirmOrder"
@@ -323,26 +324,35 @@ export default function PaymentPage() {
                         )}
 
                         <div className="containerAddress">
-                            <p className="textAddress">
-                                Selecione o Endereço de Entrega
-                            </p>
-                            <select
-                                value={selectedAddress}
-                                onChange={handleAddressChange}
-                            >
-                                {clienteEndereco.map((endereco) => (
-                                    <option
-                                        key={endereco.id}
-                                        value={endereco.id}
+                            {clienteEndereco.length === 0 ? (
+                                <p className="textAddress">
+                                    Nenhum endereço cadastrado
+                                </p>
+                            ) : (
+                                <>
+                                    <p className="textAddress">
+                                        Selecione o Endereço de Entrega
+                                    </p>
+                                    <select
+                                        value={selectedAddress.cep}
+                                        onChange={handleAddressChange}
                                     >
-                                        {`${endereco.cep} - ${endereco.logradouro}, ${endereco.numeroLogradouro} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`}
-                                    </option>
-                                ))}
-                            </select>
+                                        {clienteEndereco.map(
+                                            (endereco, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={endereco.cep}
+                                                >
+                                                    {`${endereco.cep} - ${endereco.logradouro}, ${endereco.numeroLogradouro} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </>
+                            )}
                         </div>
                     </div>
                 </section>
-                <section className="footerPayment"></section>
             </main>
         </>
     );

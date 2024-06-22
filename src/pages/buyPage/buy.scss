@@ -90,6 +90,7 @@ main {
         width: 90vw;
         margin: auto;
         display: flex;
+        flex-direction: row;
         gap: 1em;
 
         .divOrder {
@@ -135,7 +136,7 @@ main {
                     }
 
                     .hrData {
-                        margin-top: -20px;
+                        margin-top: -18px;
                         width: 0;
                         height: 200%;
                         border: 2px solid $color-primaryLight;
@@ -152,7 +153,7 @@ main {
                 .cart {
                     .dataProduct {
                         width: 100%;
-                        padding: .5em 2em;
+                        padding: 0.5em 2em;
                         text-align: center;
 
                         thead {
@@ -441,6 +442,10 @@ main {
                         .dataDelivery {
                             flex-direction: column;
                             gap: 2em;
+
+                            .term {
+                                text-indent: 0;
+                            }
                         }
                     }
                 }

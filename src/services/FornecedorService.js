@@ -90,21 +90,19 @@ export async function getFornecedoresByNome(nome) {
                 'Authorization': AuthService.getToken()
             },
             params: {
-                nome: nome
+                nome: nome,
             },
-            timeout: 10000
+            timeout: 10000,
         });
 
-        if(response.status != 200) {
+        if (response.status != 200) {
             throw new Error('Não foi possível listar os fornecedores');
         }
-        return response.data
+        return response.data;
     } catch (error) {
         toast.error(error);
     }
 }
-
-
 
 export async function updateFornecedor(fornecedor) {
     try {

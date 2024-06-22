@@ -11,7 +11,7 @@ export async function getFuncionarioByToken() {
             url: `/funcionario/me`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': AuthService.getToken(),
+                Authorization: AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -161,7 +161,7 @@ export async function updateFuncionario(funcionario) {
 
         return true;
     } catch (error) {
-        console.log(error)
+        console.error(error);
         return false;
     }
 }

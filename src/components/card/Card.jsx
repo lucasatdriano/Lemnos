@@ -34,11 +34,11 @@ export default function Card({ produto }) {
                         (fav) => fav.id === produto.id
                     );
                     if (!favorites) {
-                        navigate('/login')
+                        navigate('/login');
                     }
                     setIsFavorite(isFavorited);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         };

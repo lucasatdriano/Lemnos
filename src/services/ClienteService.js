@@ -27,9 +27,7 @@ export async function getCliente() {
             error.response.data &&
             error.response.data.error
         ) {
-            console.log(error.response.data.error);
-        } else {
-            toast.error('Erro ao pegar dados do usuário');
+            console.error(error.response.data.error);
         }
         throw error;
     }
@@ -91,7 +89,7 @@ export async function updateCliente(cliente) {
 
         return true;
     } catch (error) {
-        console.log(error)
+        console.error(error);
         return false;
     }
 }

@@ -30,7 +30,7 @@ export default function OfferList() {
             ) : (
                 <Splide
                     options={{
-                        type: 'carousel',
+                        type: 'loop',
                         perPage: 6,
                         perMove: 1,
                         speed: 1000,

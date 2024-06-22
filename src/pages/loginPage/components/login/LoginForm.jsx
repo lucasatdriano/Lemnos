@@ -73,8 +73,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
                 toast.success('Usuário logado');
             }
         } catch (error) {
-            console.log(error);
-            toast.error('Error during Google login:', error.message);
+            console.error(error);
         }
     };
 

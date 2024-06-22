@@ -69,7 +69,7 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                 {funcionarios.length == 0 ? (
                     <div className="emptyMessage">
                         <h2 className="textEmpty">
-                            funcionário não encontrado. Revise e tente
+                            Funcionário não encontrado. Revise e tente
                             novamente.
                         </h2>
                         <button
