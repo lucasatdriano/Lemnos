@@ -48,7 +48,7 @@ const subcategoriasPorCategoria = {
         'Coolers',
         'Fonte',
         'Memória RAM',
-        'Placa de vídeo',
+        'Placa de Vídeo',
         'Placa Mãe',
         'Processadores',
     ],
@@ -272,6 +272,7 @@ export default function ProdutoModal({ onClose }) {
                         ? selectedFornecedor.value
                         : '',
                 };
+                console.log("Produto",formattedForm);
                 await cadastrarProduto(formattedForm);
 
                 toast.success('Produto cadastrado com sucesso');

@@ -40,7 +40,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
     const selectFornecedor = async (email) => {
         try {
             const fornecedor = await getFornecedorByEmail(email);
-
+            console.log(fornecedor);
             if (!fornecedor) {
                 throw new Error('Dados do fornecedor não encontrados.');
             }

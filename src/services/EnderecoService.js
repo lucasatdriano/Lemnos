@@ -65,7 +65,7 @@ export async function cadastrarEndereco(emailEntidade, endereco, tipoEntidade) {
             data: {
                 email: emailEntidade,
                 cep: endereco.cep,
-                numeroLogradouro: endereco.nLogradouro,
+                numeroLogradouro: endereco.numLogradouro,
                 complemento: endereco.complemento,
                 entidade: tipoEntidade,
             },
