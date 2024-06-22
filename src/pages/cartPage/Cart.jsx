@@ -66,10 +66,8 @@ export default function Cart() {
                 carrinhoDetalhado.sort((a, b) => {
                     const nomeA = a.nome.toUpperCase();
                     const nomeB = b.nome.toUpperCase();
-                    if (nomeA < nomeB)
-                        return -1;
-                    if (nomeA > nomeB)
-                        return 1;
+                    if (nomeA < nomeB) return -1;
+                    if (nomeA > nomeB) return 1;
                     return 0;
                 });
                 setCarrinho(
@@ -88,7 +86,7 @@ export default function Cart() {
         const result = new Date();
         result.setDate(result.getDate() + days);
         const day = String(result.getDate()).padStart(2, '0');
-        const month = String(result.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+        const month = String(result.getMonth() + 1).padStart(2, '0');
         const year = result.getFullYear();
         return `${day}/${month}/${year}`;
     };

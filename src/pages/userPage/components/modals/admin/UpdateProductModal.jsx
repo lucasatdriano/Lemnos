@@ -79,7 +79,7 @@ export default function UpdateProductModal({ onUpdate, onSelect, onClose }) {
                 {produtos.length == 0 ? (
                     <div className="emptyMessage">
                         <h2 className="textEmpty">
-                            produto não encontrado. Revise e tente novamente.
+                            Produto não encontrado. Revise e tente novamente.
                         </h2>
                         <button
                             type="button"

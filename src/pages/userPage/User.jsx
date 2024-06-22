@@ -128,9 +128,6 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                 setUserImg(storedPhotoURL || UserImg);
             }
         } catch (error) {
-            toast.error(
-                'Erro ao obter os dados do UsuárioAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-            );
             console.error('Erro ao obter os dados do Usuário', error);
             navigate('/login');
             AuthService.logout();
@@ -225,6 +222,16 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         toast.success('Dados atualizados!');
     };
 
+    function formatCEP(cep) {
+        if (cep) {
+            cep = cep.toString().replace(/\D/g, ''); // Remove qualquer coisa que não seja número
+            if (cep.length === 8) {
+                return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
+            }
+        }
+        return cep;
+    }
+
     return (
         <section className="userContainer">
             <section>
@@ -317,7 +324,10 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                     <h2>Endereços</h2>
                                     {form.enderecos.map((endereco, index) => (
                                         <div key={index} className="dataEnd">
-                                            <p>CEP: {endereco.cep || ''}</p>
+                                            <p>
+                                                CEP:{' '}
+                                                {formatCEP(endereco.cep) || ''}
+                                            </p>
                                             <p>
                                                 Logradouro:{' '}
                                                 {endereco.logradouro || ''}

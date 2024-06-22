@@ -2,9 +2,9 @@ import { SET_FRETE_INFO } from '../actions/freteActions';
 
 const initialState = {
     metodo: '',
-    dataEstimadaEnvio: '',
-    prazoEntrega: '',
     custo: 0,
+    dataEstimadaEnvio: '',
+    prazoEntrega: 0,
 };
 
 const freteReducer = (state = initialState, action) => {

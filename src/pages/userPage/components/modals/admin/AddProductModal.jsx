@@ -295,7 +295,7 @@ export default function ProdutoModal({ onClose }) {
                 toast.success('Produto cadastrado com sucesso');
                 setForm(initialFormState);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
     };
@@ -337,8 +337,6 @@ export default function ProdutoModal({ onClose }) {
                     toast.error(error.response.data.message);
                     throw error;
                 }
-            } else {
-                console.log('Form validation failed');
             }
         } catch (error) {
             console.error('Erro na requisição de produto:', error);
@@ -692,7 +690,9 @@ export default function ProdutoModal({ onClose }) {
                             name="fabricante"
                             maxLength={50}
                             value={form.fabricante}
-                            onChange={(e) => handleChange('fabricante', e.target.value)}
+                            onChange={(e) =>
+                                handleChange('fabricante', e.target.value)
+                            }
                             disabled={isProductSelected()}
                         />
                         {errors.fabricante && (

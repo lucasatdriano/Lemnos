@@ -65,7 +65,7 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                 {fornecedores.length == 0 ? (
                     <div className="emptyMessage">
                         <h2 className="textEmpty">
-                            fornecedor não encontrado. Revise e tente novamente.
+                            Fornecedor não encontrado. Revise e tente novamente.
                         </h2>
                         <button
                             type="button"

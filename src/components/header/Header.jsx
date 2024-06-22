@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine, RiHeartLine, RiUser3Line } from 'react-icons/ri';
@@ -8,7 +9,6 @@ import MenuFavorite from './components/favoriteMenu/MenuFavorite';
 import AuthService from '../../services/AuthService';
 import './header.scss';
 
-// eslint-disable-next-line react/prop-types
 export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
     const [showFavoriteMenu, setShowFavoriteMenu] = useState(false);

@@ -21,7 +21,7 @@ export default function historicoCompras({ compras }) {
 
     return (
         <div className="containerHistory">
-            <h2>Histórico de Compras</h2>
+            <h2>Histórico de Pedidos</h2>
             {compras &&
                 compras
                     .slice(0, mostrarMais ? compras.length : 3)
