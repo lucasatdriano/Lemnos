@@ -18,6 +18,7 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
             }
             const funcionariosFiltrados = await getFuncionarioByNome(search);
             if(funcionarios == funcionariosFiltrados) return;
+            console.log(funcionariosFiltrados);
             setFuncionarios(funcionariosFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -91,7 +92,19 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                                     <p>
                                         Nome:{' '}
                                         <span className="spanNome">
-                                            {funcionario}
+                                            {funcionario.nome}
+                                        </span>
+                                    </p>
+                                    <p>
+                                        Email:{' '}
+                                        <span className="spanNome">
+                                            {funcionario.email}
+                                        </span>
+                                    </p>
+                                    <p>
+                                        Nome:{' '}
+                                        <span className="spanNome">
+                                            {funcionario.situacao}
                                         </span>
                                     </p>
                                 </div>

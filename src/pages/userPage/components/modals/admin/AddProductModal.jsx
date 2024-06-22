@@ -349,7 +349,7 @@ export default function ProdutoModal({ onClose }) {
     const fetchFornecedores = async nome => {
         try {
             const fornecedores = await getFornecedoresByNome(nome);
-            const fornecedorObject = fornecedores.slice(0, 5).map(fornecedor => ({ value: fornecedor, label: fornecedor}))
+            const fornecedorObject = fornecedores.slice(0, 5).map(fornecedor => ({ value: fornecedor.nome, label: fornecedor.nome}))
             setFornecedores(fornecedorObject);
         } catch (error) {
             console.error(error);

@@ -88,7 +88,7 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                                         <p>
                                             Fornecedor:{' '}
                                             <span className="spanNome">
-                                                {fornecedor}
+                                                {fornecedor.nome}
                                             </span>
                                         </p>
                                     </div>

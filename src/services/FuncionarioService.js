@@ -50,12 +50,13 @@ export async function getFuncionarioByNome(funcionario) {
     try {
         const response = await axios({
             baseURL: baseUri,
+            method: "POST",
             url: "/funcionario/by",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: AuthService.getToken(),
             },
-            params: {
+            data: {
                 nome: funcionario
             },
             timeout: 10000,
