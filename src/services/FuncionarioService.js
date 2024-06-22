@@ -30,6 +30,34 @@ export async function getFuncionarioByEmail(email) {
         const response = await axios({
             baseURL: baseUri,
             url: `/funcionario/find?email=${email}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            timeout: 10000,
+        });
+
+        if (response.status != 200) {
+            throw new Error('Não foi encontrar o funcionario');
+        }
+        return response.data;
+    } catch (error) {
+        toast.error(error);
+    }
+}
+
+export async function getFuncionarioByNome(funcionario) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            url: "/funcionario/by",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+            params: {
+                nome: funcionario
+            },
             timeout: 10000,
         });
 
@@ -47,6 +75,10 @@ export async function getFuncionarios() {
         const response = await axios({
             baseURL: baseUri,
             url: `/funcionario`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
             timeout: 10000,
         });
 
