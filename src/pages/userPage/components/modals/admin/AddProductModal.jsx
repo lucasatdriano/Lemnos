@@ -12,7 +12,7 @@ import {
     getProdutoById,
     updateProduto,
 } from '../../../../../services/ProdutoService';
-import { getFornecedores } from '../../../../../services/FornecedorService';
+import { getFornecedores, getFornecedoresByNome } from '../../../../../services/FornecedorService';
 
 const categorias = [
     'Casa Inteligente',
@@ -127,24 +127,6 @@ export default function ProdutoModal({ onClose }) {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [fornecedores, setFornecedores] = useState([]);
     const [selectedFornecedor, setSelectedFornecedor] = useState(null);
-
-    useEffect(() => {
-        const fetchFornecedores = async () => {
-            try {
-                // const response = await getFornecedores();
-                const response = [
-                    { value: 'fornecedor1', label: 'Fornecedor 1' },
-                    { value: 'fornecedor2', label: 'Fornecedor 2' },
-                ];
-                setFornecedores(response);
-            } catch (error) {
-                console.error('Erro ao buscar fornecedores:', error);
-                toast.error('Erro ao buscar fornecedores.');
-            }
-        };
-
-        fetchFornecedores();
-    }, []);
 
     const handleChange = (name, value) => {
         setForm((prevForm) => ({
@@ -363,6 +345,36 @@ export default function ProdutoModal({ onClose }) {
     const isProductSelected = () => {
         return selectedProduct !== null;
     };
+
+    const fetchFornecedores = async nome => {
+        try {
+            const fornecedores = await getFornecedoresByNome(nome);
+            const fornecedorObject = fornecedores.slice(0, 5).map(fornecedor => ({ value: fornecedor, label: fornecedor}))
+            setFornecedores(fornecedorObject);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        if(searchTerm)
+            fetchFornecedores(searchTerm);
+        else
+            setFornecedores([]);
+    }, [searchTerm])
+
+    const handleFornecedorChange = (selectedOption) => {
+        setSelectedFornecedor(selectedOption);
+        handleChange('fornecedor', selectedOption.value);
+    };
+
+
+    const handleInputChange = fornecedor => {
+        if(!fornecedor)
+            return "";
+        setSearchTerm(fornecedor);
+        return fornecedor;
+      };
 
     return (
         <div className="modal" onClick={onClose}>
@@ -702,13 +714,16 @@ export default function ProdutoModal({ onClose }) {
 
                     <p>
                         <Select
-                            options={fornecedores}
                             value={selectedFornecedor}
-                            onChange={setSelectedFornecedor}
+                            options={fornecedores}
+                            onChange={handleFornecedorChange}
+                            onInputChange={handleInputChange}
                             isClearable
+                            noOptionsMessage={() => ""}
                             placeholder="Selecione o fornecedor"
                             className="reactSelectContainer"
                             classNamePrefix="reactSelect"
+                            menuPlacement='top'
                         />
                         {errors.fornecedor && (
                             <span className="invalid">{errors.fornecedor}</span>

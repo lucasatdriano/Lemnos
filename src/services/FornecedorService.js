@@ -81,6 +81,10 @@ export async function getFornecedoresByNome(nome) {
             baseURL: baseUri,
             method: "GET",
             url: "/fornecedor/by",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': AuthService.getToken()
+            },
             params: {
                 nome: nome
             },
