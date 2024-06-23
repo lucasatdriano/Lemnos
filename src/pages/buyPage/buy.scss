@@ -77,13 +77,28 @@ main {
         }
     }
 
-    .loadingDelivery {
+    .loadingOrder {
         margin: 0 auto 1em;
+        padding: 3em 2em;
         width: calc(90vw);
-        height: 10em;
+        height: auto;
         background: $color-bgLight;
         border-radius: 15px;
         box-shadow: 4px 4px 15px $color-shadow;
+
+        .loadingBackground {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            height: 100%;
+
+            .iconLoadingOrder {
+                width: 48px;
+                height: 48px;
+            }
+        }
     }
 
     .sectionOrder {
@@ -98,6 +113,7 @@ main {
             display: flex;
             flex-direction: column;
             gap: 1em;
+            font-family: $font-items;
 
             .personalData {
                 background: $color-bgLight;
@@ -356,6 +372,16 @@ main {
                 width: 50vw;
                 min-width: 30em;
                 height: 30em;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    main {
+        .loadingOrder {
+            .loadingBackground {
+                flex-direction: column;
             }
         }
     }

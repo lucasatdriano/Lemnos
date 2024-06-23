@@ -2,9 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from './AuthService';
-
-const baseUri = 'https://lemnos-server.up.railway.app/api';
-// const baseUri = "http://localhost:8080/api";
+import { baseUri } from './configurations/ServiceConfig';
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -179,6 +177,8 @@ export async function listarCarrinho() {
             throw new Error('Erro ao listar carrinho.');
         }
 
+        console.log(response);
+
         return response.data;
     } catch (error) {
         if (
@@ -289,6 +289,7 @@ export async function apagarCarrinho() {
 }
 
 export async function novoPedido(pedido) {
+    console.log('enviou');
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -300,8 +301,8 @@ export async function novoPedido(pedido) {
             },
             data: {
                 metodoPagamento: pedido.metodoPagamento,
-                valorPagamento: pedido.valor,
-                valorFrete: pedido.frete,
+                valorPagamento: pedido.valorPedido,
+                valorFrete: pedido.fretePedido,
             },
             timeout: 10000,
         });
@@ -323,12 +324,13 @@ export async function novoPedido(pedido) {
     }
 }
 
-export async function listarPedido(pedido) {
+export async function listarPedido() {
+    console.log('listou');
     try {
         const response = await axios({
             baseURL: baseUri,
             method: 'GET',
-            url: `/pedido/${pedido.id}`,
+            url: `/pedido`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: AuthService.getToken(),
@@ -358,7 +360,7 @@ export async function getPedido(pedido) {
         const response = await axios({
             baseURL: baseUri,
             method: 'GET',
-            url: `/pedido/${pedido.id}`,
+            url: `/pedido/${pedido}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: AuthService.getToken(),
@@ -394,13 +396,13 @@ export async function atualizarStatus(pedido) {
                 Authorization: AuthService.getToken(),
             },
             data: {
-                id: pedido.id,
+                id: pedido,
             },
             timeout: 10000,
         });
 
         if (response.status !== 200) {
-            throw new Error('Erro ao apagar carrinho.');
+            throw new Error('Erro ao atualizar status do pedido.');
         }
 
         return response.data;

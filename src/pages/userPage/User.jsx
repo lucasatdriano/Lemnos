@@ -7,7 +7,7 @@ import UserImg from '../../assets/imgLemnos/imgUser.svg';
 import ToolTip from '../../components/tooltip/ToolTip';
 import CustomInput from '../../components/inputs/customInput/Inputs';
 import EnderecoModal from './components/modals/EnderecoModal';
-import HistoricoCompras from './components/history/History';
+import HistoricoCompras from './components/order/Order';
 import AddProdutoModal from './components/modals/admin/AddProductModal';
 import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
@@ -224,7 +224,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     function formatCEP(cep) {
         if (cep) {
-            cep = cep.toString().replace(/\D/g, ''); // Remove qualquer coisa que não seja número
+            cep = cep.toString().replace(/\D/g, '');
             if (cep.length === 8) {
                 return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
             }

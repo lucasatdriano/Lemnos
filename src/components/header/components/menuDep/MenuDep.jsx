@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogoVertical from '../../../../assets/imgLemnos/logoVerticalClaro.svg';
@@ -13,7 +14,6 @@ import {
     RiMoonLine,
 } from 'react-icons/ri';
 
-// eslint-disable-next-line react/prop-types
 export default function MenuDep({ toggleTheme, showMenuFav }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);

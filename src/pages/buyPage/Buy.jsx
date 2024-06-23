@@ -1,27 +1,35 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { TbPackageExport } from 'react-icons/tb';
 import { MdInfoOutline } from 'react-icons/md';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BsTruck } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import { FaCreditCard } from 'react-icons/fa6';
+import { FaCreditCard, FaRoute, FaTruckFast } from 'react-icons/fa6';
+import { LuPackageCheck } from 'react-icons/lu';
 import { PiFileMagnifyingGlass } from 'react-icons/pi';
 import { IoCart } from 'react-icons/io5';
 import ModalCompleted from './components/ModalCompleted';
 import './buy.scss';
 import AuthService from '../../services/AuthService';
-import { listarCarrinho } from '../../services/UsuarioProdutoService';
+import {
+    atualizarStatus,
+    listarCarrinho,
+    novoPedido,
+    listarPedido,
+} from '../../services/UsuarioProdutoService';
 import { getCliente } from '../../services/ClienteService';
 import { getProdutoById } from '../../services/ProdutoService';
+import { toast } from 'react-toastify';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
 });
 
-// Função para formatar CPF
 const formatCPF = (cpf) => {
     if (!cpf) return '';
     return cpf
@@ -29,7 +37,6 @@ const formatCPF = (cpf) => {
         .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 };
 
-// Função para formatar CEP
 const formatCEP = (cep) => {
     if (!cep) return '';
     return cep.replace(/\D/g, '').replace(/(\d{5})(\d{3})/, '$1-$2');
@@ -43,7 +50,9 @@ export default function BuyPage() {
     const [clienteEndereco, setClienteEndereco] = useState({});
     const [valorCompra, setValorCompra] = useState(0);
     const [desconto, setDesconto] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const [pedidoStatus, setPedidoStatus] = useState('');
+    const [pedidoId, setPedidoId] = useState(null);
+    const [statusUpdates, setStatusUpdates] = useState(0);
 
     const frete = useSelector((state) => state.frete);
     const selectedPaymentMethod = useSelector(
@@ -70,6 +79,7 @@ export default function BuyPage() {
                     setCarrinho([]);
                     return;
                 }
+
                 const carrinhoDetalhado = await Promise.all(
                     pedidoResponse.produtos.map(async (produto) => {
                         const detalhesProduto = await getProdutoById(
@@ -84,8 +94,6 @@ export default function BuyPage() {
             }
         } catch (error) {
             console.error('Erro ao obter itens do pedido:', error);
-        } finally {
-            setLoading(false);
         }
     }
 
@@ -93,8 +101,85 @@ export default function BuyPage() {
         fetchPedido();
     }, []);
 
-    const handleOpenModal = () => {
-        setIsModalCompleted(!isModalCompleted);
+    const fetchPedidoStatus = async (pedidoId) => {
+        try {
+            await atualizarStatus(pedidoId);
+
+            const pedidos = await listarPedido();
+            const pedidoAtualizado = pedidos.find(
+                (pedido) => pedido.id === pedidoId
+            );
+
+            console.log(pedidoAtualizado);
+            console.log(pedidoAtualizado.status);
+            if (pedidoAtualizado) {
+                setPedidoStatus(pedidoAtualizado.status);
+                setStatusUpdates((prev) => prev + 1);
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar status do pedido:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (pedidoId) {
+            const interval = setInterval(() => {
+                fetchPedidoStatus(pedidoId);
+            }, 30000);
+
+            return () => clearInterval(interval);
+        }
+    }, [pedidoId]);
+
+    useEffect(() => {
+        if (statusUpdates >= 5) {
+            setIsModalCompleted(true);
+        }
+    }, [statusUpdates]);
+
+    const handleConfirmOrder = async () => {
+        const pedidoData = {
+            metodoPagamento: selectedPaymentMethod,
+            fretePedido: frete.custo,
+            valorPedido: valorCompra - desconto + frete.custo,
+        };
+
+        try {
+            await novoPedido(pedidoData);
+
+            const pedidos = await listarPedido();
+            console.log('Lista de pedidos:', pedidos);
+
+            const newPedido = pedidos[pedidos.length - 1];
+            setPedidoId(newPedido.id);
+            console.log('Novo pedido ID:', newPedido.id);
+
+            toast.success('Compra Realizada');
+            fetchPedido();
+        } catch (error) {
+            console.error('Erro ao realizar compra', error);
+        }
+    };
+
+    const statusStyles = (status) => {
+        const currentStatus = pedidoStatus.toLowerCase();
+
+        switch (status.toLowerCase()) {
+            case 'em processamento':
+            case 'enviado para a transportadora':
+            case 'recebido pela transportadora':
+            case 'mercadoria em trânsito':
+            case 'mercadoria em rota de entrega':
+            case 'pedido entregue':
+                return {
+                    color:
+                        currentStatus === status.toLowerCase()
+                            ? '#36cec4'
+                            : '#686767',
+                };
+            default:
+                return { color: '#686767' };
+        }
     };
 
     return (
@@ -116,8 +201,81 @@ export default function BuyPage() {
                         <p>Confirmação</p>
                     </div>
                 </div>
-                <div className="loadingDelivery">
-                    <div className="loadingBackground"></div>
+                <div className="loadingOrder">
+                    <div className="loadingBackground">
+                        <div>
+                            <AiOutlineLoading3Quarters
+                                style={statusStyles('Em processamento')}
+                                className="iconLoadingOrder"
+                            />
+                            <h3 style={statusStyles('Em processamento')}>
+                                Em processamento
+                            </h3>
+                        </div>
+                        <div>
+                            <TbPackageExport
+                                style={statusStyles(
+                                    'Enviado para a transportadora'
+                                )}
+                                className="iconLoadingOrder"
+                            />
+                            <h3
+                                style={statusStyles(
+                                    'Enviado para a transportadora'
+                                )}
+                            >
+                                Enviado para a transportadora
+                            </h3>
+                        </div>
+                        <div>
+                            <FaCheckCircle
+                                style={statusStyles(
+                                    'Recebido pela transportadora'
+                                )}
+                                className="iconLoadingOrder"
+                            />
+                            <h3
+                                style={statusStyles(
+                                    'Recebido pela transportadora'
+                                )}
+                            >
+                                Recebido pela transportadora
+                            </h3>
+                        </div>
+                        <div>
+                            <FaRoute
+                                style={statusStyles('Mercadoria em trânsito')}
+                                className="iconLoadingOrder"
+                            />
+                            <h3 style={statusStyles('Mercadoria em trânsito')}>
+                                Mercadoria em trânsito
+                            </h3>
+                        </div>
+                        <div>
+                            <FaTruckFast
+                                style={statusStyles(
+                                    'Mercadoria em rota de entrega'
+                                )}
+                                className="iconLoadingOrder"
+                            />
+                            <h3
+                                style={statusStyles(
+                                    'Mercadoria em rota de entrega'
+                                )}
+                            >
+                                Mercadoria em rota de entrega
+                            </h3>
+                        </div>
+                        <div>
+                            <LuPackageCheck
+                                style={statusStyles('Pedido entregue')}
+                                className="iconLoadingOrder"
+                            />
+                            <h3 style={statusStyles('Pedido entregue')}>
+                                Pedido entregue
+                            </h3>
+                        </div>
+                    </div>
                     <div className="loadingProgress"></div>
                 </div>
                 <section className="sectionOrder">
@@ -178,6 +336,7 @@ export default function BuyPage() {
                                 </div>
                             </div>
                         </div>
+
                         <div className="shippingCart">
                             <div className="cart">
                                 <div className="titleContainers">
@@ -210,7 +369,7 @@ export default function BuyPage() {
                                                 <td>{produto.qntdProduto}</td>
                                                 <td>
                                                     {BRL.format(
-                                                        produto.valorTotal
+                                                        produto.valorComDesconto
                                                     )}
                                                 </td>
                                             </tr>
@@ -280,7 +439,7 @@ export default function BuyPage() {
                             </h2>
                             <button
                                 type="button"
-                                onClick={handleOpenModal}
+                                onClick={handleConfirmOrder}
                                 className="confirmOrder"
                             >
                                 Confirmar Pedido

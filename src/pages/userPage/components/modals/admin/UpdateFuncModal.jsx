@@ -12,13 +12,8 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
-            if(search.length == 0) {
-                setFuncionarios([]);
-                return;
-            }
             const funcionariosFiltrados = await getFuncionarioByNome(search);
-            if(funcionarios == funcionariosFiltrados) return;
-            console.log(funcionariosFiltrados);
+            if (funcionarios == funcionariosFiltrados) return;
             setFuncionarios(funcionariosFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -82,34 +77,35 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
                     </div>
                 ) : (
                     <ul className="listItens">
-                        {funcionarios && funcionarios.map((funcionario, index) => (
-                            <li
-                                className="itemUpdate"
-                                key={index}
-                                onClick={() => onSelect(funcionario.email)}
-                            >
-                                <div>
-                                    <p>
-                                        Nome:{' '}
-                                        <span className="spanNome">
-                                            {funcionario.nome}
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Email:{' '}
-                                        <span className="spanNome">
-                                            {funcionario.email}
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Nome:{' '}
-                                        <span className="spanNome">
-                                            {funcionario.situacao}
-                                        </span>
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
+                        {funcionarios &&
+                            funcionarios.map((funcionario, index) => (
+                                <li
+                                    className="itemUpdate"
+                                    key={index}
+                                    onClick={() => onSelect(funcionario.email)}
+                                >
+                                    <div>
+                                        <p>
+                                            Nome:{' '}
+                                            <span className="spanNome">
+                                                {funcionario.nome}
+                                            </span>
+                                        </p>
+                                        <p>
+                                            Email:{' '}
+                                            <span className="spanNome">
+                                                {funcionario.email}
+                                            </span>
+                                        </p>
+                                        <p>
+                                            Situação:{' '}
+                                            <span className="spanNome">
+                                                {funcionario.situacao}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
                     </ul>
                 )}
                 <IoClose onClick={onClose} className="iconClose" />

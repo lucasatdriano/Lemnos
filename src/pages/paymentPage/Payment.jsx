@@ -10,7 +10,6 @@ import { PiFileMagnifyingGlass } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 import { listarCarrinho } from '../../services/UsuarioProdutoService';
 import { getCliente, updateCliente } from '../../services/ClienteService';
-import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 import { useNavigation } from '../../NavigationProvider';
 import {
@@ -19,6 +18,8 @@ import {
     setSelectedPaymentMethod,
 } from '../../store/actions/paymentActions';
 import './payment.scss';
+import Loading from '../../components/loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -36,6 +37,7 @@ export default function PaymentPage() {
     const [cliente, setCliente] = useState([]);
     const [clienteEndereco, setClienteEndereco] = useState([]);
     const [desconto, setDescontoLocal] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const selectedAddress = useSelector(
         (state) => state.payment.selectedAddress
@@ -46,6 +48,7 @@ export default function PaymentPage() {
     const Custofrete = useSelector((state) => state.frete.custo);
 
     async function fetchPagamento() {
+        setLoading(true);
         try {
             if (AuthService.isLoggedIn()) {
                 const response = await listarCarrinho();
@@ -65,6 +68,8 @@ export default function PaymentPage() {
             }
         } catch (error) {
             console.error('Erro ao obter itens do carrinho:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -119,7 +124,7 @@ export default function PaymentPage() {
                 discount = (valorCompra / 100) * 15;
                 methodName = 'PIX';
                 break;
-            case 'Credito':
+            case 'Crédito':
                 discount = 0;
                 methodName = 'Crédito';
                 break;
@@ -153,7 +158,7 @@ export default function PaymentPage() {
             return;
         }
 
-        // setIsNavigatingToBuy(true);
+        setIsNavigatingToBuy(true);
         navigate('/buy');
     };
 
@@ -165,195 +170,199 @@ export default function PaymentPage() {
     };
 
     return (
-        <>
-            <main>
-                <div className="statusPay">
-                    <div className="status">
-                        <IoCart className="iconStatus" />
-                        <p>Carrinho</p>
-                    </div>
-                    <span></span>
-                    <div className="status">
-                        <FaCreditCard className="iconStatus" />
-                        <p>Pagamento</p>
-                    </div>
-                    <span className="spanWaiting"></span>
-                    <div className="waitingStatus">
-                        <FaCheckCircle className="iconStatus" />
-                        <p>Confirmação</p>
-                    </div>
-                </div>
-                <section className="sectionPayment">
-                    <div className="containerOptionsPay">
-                        <p className="titlePay">
-                            Selecione um método de pagamento:
-                        </p>
-                        <div key="pix" className="optionPay">
-                            <input
-                                type="radio"
-                                name="cbPay"
-                                id="cbPix"
-                                value="PIX"
-                                onChange={handlePaymentSelection}
-                            />
-                            <label htmlFor="cbPix" className="labelPay">
-                                <BsQrCodeScan className="iconPayment" />
-                                <h3>Pagar no PIX</h3>
-                                <p>
-                                    <span>
-                                        {BRL.format(
-                                            valorCompra -
-                                                (valorCompra / 100) * 15
-                                        )}
-                                    </span>
-                                    <br />
-                                    Em até 15% de desconto
-                                </p>
-                            </label>
+        <main>
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div className="statusPay">
+                        <div className="status">
+                            <IoCart className="iconStatus" />
+                            <p>Carrinho</p>
                         </div>
-                        <div key="credito" className="optionPay">
-                            <input
-                                type="radio"
-                                name="cbPay"
-                                id="cbCredito"
-                                value="Credito"
-                                onChange={handlePaymentSelection}
-                            />
-                            <label htmlFor="cbCredito" className="labelPay">
-                                <FaRegCreditCard className="iconPayment" />
-                                <h3>Pagar no Crédito</h3>
-                                <p>
-                                    <span>{BRL.format(valorCompra)}</span>{' '}
-                                    <br />
-                                    Em até 12x sem juros
-                                </p>
-                            </label>
+                        <span></span>
+                        <div className="status">
+                            <FaCreditCard className="iconStatus" />
+                            <p>Pagamento</p>
                         </div>
-                        <div key="boleto" className="optionPay">
-                            <input
-                                type="radio"
-                                name="cbPay"
-                                id="cbBoleto"
-                                value="Boleto"
-                                onChange={handlePaymentSelection}
-                            />
-                            <label htmlFor="cbBoleto" className="labelPay">
-                                <FaBarcode className="iconPayment" />
-                                <h3>Pagar no Boleto</h3>
-                                <p>
-                                    <span>
-                                        {BRL.format(
-                                            valorCompra -
-                                                (valorCompra / 100) * 5
-                                        )}
-                                    </span>
-                                    <br />
-                                    Em até 5% de desconto
-                                </p>
-                            </label>
+                        <span className="spanWaiting"></span>
+                        <div className="waitingStatus">
+                            <FaCheckCircle className="iconStatus" />
+                            <p>Confirmação</p>
                         </div>
                     </div>
-
-                    <div>
-                        <div className="orderSummary">
-                            <div className="titleContainers">
-                                <PiFileMagnifyingGlass className="iconOrder" />
-                                <h3>Resumo</h3>
-                            </div>
-                            <hr className="hrTitle" />
-                            <div className="dataResume">
-                                <div className="lineOrder">
-                                    <p>Valor do Produto:</p>
-                                    <p>{BRL.format(valorCompra)}</p>
-                                </div>
-                                <hr className="hrResume" />
-                                <div className="lineOrder">
-                                    <p>Desconto:</p>
-                                    <p className="discount">
-                                        -{BRL.format(desconto)}
+                    <section className="sectionPayment">
+                        <div className="containerOptionsPay">
+                            <p className="titlePay">
+                                Selecione um método de pagamento:
+                            </p>
+                            <div key="pix" className="optionPay">
+                                <input
+                                    type="radio"
+                                    name="cbPay"
+                                    id="cbPix"
+                                    value="PIX"
+                                    onChange={handlePaymentSelection}
+                                />
+                                <label htmlFor="cbPix" className="labelPay">
+                                    <BsQrCodeScan className="iconPayment" />
+                                    <h3>Pagar no PIX</h3>
+                                    <p>
+                                        <span>
+                                            {BRL.format(
+                                                valorCompra -
+                                                    (valorCompra / 100) * 15
+                                            )}
+                                        </span>
+                                        <br />
+                                        Em até 15% de desconto
                                     </p>
-                                </div>
-                                <hr className="hrResume" />
-                                <div className="lineOrder">
-                                    <p>Frete:</p>
-                                    <p>{BRL.format(Custofrete)}</p>
-                                </div>
-                                <hr className="hrResume" />
-                                <div className="lineOrder">
-                                    <p>Forma de Pagamento:</p>
-                                    <p>{paymentMethodName}</p>
-                                </div>
-                                <hr className="hrResume" />
-                                <h2>
-                                    {BRL.format(
-                                        valorCompra - desconto + Custofrete
-                                    )}
-                                </h2>
-                                <button
-                                    className="confirmOrder"
-                                    onClick={handleConfirmOrder}
-                                >
-                                    Finalizar Pedido
-                                </button>
+                                </label>
+                            </div>
+                            <div key="credito" className="optionPay">
+                                <input
+                                    type="radio"
+                                    name="cbPay"
+                                    id="cbCredito"
+                                    value="Crédito"
+                                    onChange={handlePaymentSelection}
+                                />
+                                <label htmlFor="cbCredito" className="labelPay">
+                                    <FaRegCreditCard className="iconPayment" />
+                                    <h3>Pagar no Crédito</h3>
+                                    <p>
+                                        <span>{BRL.format(valorCompra)}</span>{' '}
+                                        <br />
+                                        Em até 12x sem juros
+                                    </p>
+                                </label>
+                            </div>
+                            <div key="boleto" className="optionPay">
+                                <input
+                                    type="radio"
+                                    name="cbPay"
+                                    id="cbBoleto"
+                                    value="Boleto"
+                                    onChange={handlePaymentSelection}
+                                />
+                                <label htmlFor="cbBoleto" className="labelPay">
+                                    <FaBarcode className="iconPayment" />
+                                    <h3>Pagar no Boleto</h3>
+                                    <p>
+                                        <span>
+                                            {BRL.format(
+                                                valorCompra -
+                                                    (valorCompra / 100) * 5
+                                            )}
+                                        </span>
+                                        <br />
+                                        Em até 5% de desconto
+                                    </p>
+                                </label>
                             </div>
                         </div>
 
-                        {!isCpfRegistered && (
-                            <div className="registrationCPF">
-                                <h4>Cadastrar CPF</h4>
-                                <hr className="hrCPF" />
-                                <div className="inputCpf">
-                                    <input
-                                        type="text"
-                                        placeholder="Digite seu CPF"
-                                        value={cpf}
-                                        onChange={handleCpfChange}
-                                        maxLength={14}
-                                        inputMode="numeric"
-                                        pattern="\d{3}.?\d{3}.?\d{3}-?\d{2}"
-                                    />
+                        <div>
+                            <div className="orderSummary">
+                                <div className="titleContainers">
+                                    <PiFileMagnifyingGlass className="iconOrder" />
+                                    <h3>Resumo</h3>
+                                </div>
+                                <hr className="hrTitle" />
+                                <div className="dataResume">
+                                    <div className="lineOrder">
+                                        <p>Valor do Produto:</p>
+                                        <p>{BRL.format(valorCompra)}</p>
+                                    </div>
+                                    <hr className="hrResume" />
+                                    <div className="lineOrder">
+                                        <p>Desconto:</p>
+                                        <p className="discount">
+                                            -{BRL.format(desconto)}
+                                        </p>
+                                    </div>
+                                    <hr className="hrResume" />
+                                    <div className="lineOrder">
+                                        <p>Frete:</p>
+                                        <p>{BRL.format(Custofrete)}</p>
+                                    </div>
+                                    <hr className="hrResume" />
+                                    <div className="lineOrder">
+                                        <p>Forma de Pagamento:</p>
+                                        <p>{paymentMethodName}</p>
+                                    </div>
+                                    <hr className="hrResume" />
+                                    <h2>
+                                        {BRL.format(
+                                            valorCompra - desconto + Custofrete
+                                        )}
+                                    </h2>
                                     <button
-                                        type="button"
-                                        className="saveCpf"
-                                        onClick={handleSaveCpf}
+                                        className="confirmOrder"
+                                        onClick={handleConfirmOrder}
                                     >
-                                        Salvar CPF
+                                        Finalizar Pedido
                                     </button>
                                 </div>
                             </div>
-                        )}
 
-                        <div className="containerAddress">
-                            {clienteEndereco.length === 0 ? (
-                                <p className="textAddress">
-                                    Nenhum endereço cadastrado
-                                </p>
-                            ) : (
-                                <>
-                                    <p className="textAddress">
-                                        Selecione o Endereço de Entrega
-                                    </p>
-                                    <select
-                                        value={selectedAddress.cep}
-                                        onChange={handleAddressChange}
-                                    >
-                                        {clienteEndereco.map(
-                                            (endereco, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={endereco.cep}
-                                                >
-                                                    {`${endereco.cep} - ${endereco.logradouro}, ${endereco.numeroLogradouro} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`}
-                                                </option>
-                                            )
-                                        )}
-                                    </select>
-                                </>
+                            {!isCpfRegistered && (
+                                <div className="registrationCPF">
+                                    <h4>Cadastrar CPF</h4>
+                                    <hr className="hrCPF" />
+                                    <div className="inputCpf">
+                                        <input
+                                            type="text"
+                                            placeholder="Digite seu CPF"
+                                            value={cpf}
+                                            onChange={handleCpfChange}
+                                            maxLength={14}
+                                            inputMode="numeric"
+                                            pattern="\d{3}.?\d{3}.?\d{3}-?\d{2}"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="saveCpf"
+                                            onClick={handleSaveCpf}
+                                        >
+                                            Salvar CPF
+                                        </button>
+                                    </div>
+                                </div>
                             )}
+
+                            <div className="containerAddress">
+                                {clienteEndereco.length === 0 ? (
+                                    <p className="textAddress">
+                                        Nenhum endereço cadastrado
+                                    </p>
+                                ) : (
+                                    <>
+                                        <p className="textAddress">
+                                            Selecione o Endereço de Entrega
+                                        </p>
+                                        <select
+                                            value={selectedAddress.cep}
+                                            onChange={handleAddressChange}
+                                        >
+                                            {clienteEndereco.map(
+                                                (endereco, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={endereco.cep}
+                                                    >
+                                                        {`${endereco.cep} - ${endereco.logradouro}, ${endereco.numeroLogradouro} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`}
+                                                    </option>
+                                                )
+                                            )}
+                                        </select>
+                                    </>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </main>
-        </>
+                    </section>
+                </>
+            )}
+        </main>
     );
 }

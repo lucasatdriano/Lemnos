@@ -97,20 +97,23 @@ $font-items: 'Poppins', Helvetica;
 
             .containerVisual {
                 display: flex;
+                gap: 1em;
                 align-items: center;
 
                 img {
                     padding: 20px;
                     height: 50%;
-                    max-height: 15em;
+                    max-height: 5em;
+                    object-fit: contain;
+                    background: #fff;
                     width: 25%;
-                    min-width: 25%;
+                    min-width: 8em;
                 }
 
                 h4 {
                     font-size: 2rem;
                     color: $color-fontLight;
-                    width: 75%;
+                    width: 70%;
                 }
             }
 

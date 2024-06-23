@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +39,10 @@ export default function Cart() {
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const frete = useSelector((state) => state.frete);
+
+    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
+    const [localDeliveryCost, setLocalDeliveryCost] = useState('');
+    const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState('');
 
     useEffect(() => {
         setIsLoading(true);
@@ -101,6 +104,10 @@ export default function Cart() {
                 prazoEntrega: term,
             })
         );
+
+        setSelectedDeliveryOption(option);
+        setLocalDeliveryCost(price);
+        setEstimatedDeliveryDate(estimatedDeliveryDate);
     };
 
     const handleCepChange = (event) => {
@@ -150,8 +157,7 @@ export default function Cart() {
     };
 
     const calcularTotal = () => {
-        const { custo } = frete;
-        return calcularSubTotal() + custo;
+        return calcularSubTotal() + localDeliveryCost;
     };
 
     const diminuirQuantidadeCarrinho = async (produtoId) => {
@@ -211,7 +217,7 @@ export default function Cart() {
             } else if (cep.length !== 9) {
                 toast.warning('Por favor, adicione o seu CEP para prosseguir.');
                 cepInputRef.current.focus();
-            } else if (frete.metodo === '') {
+            } else if (selectedDeliveryOption === '') {
                 toast.warning('Por favor, selecione uma opção de entrega.');
                 cepInputRef.current.scrollIntoView({ behavior: 'smooth' });
             } else {
@@ -220,7 +226,7 @@ export default function Cart() {
                 navigate('/payment');
             }
         } catch (error) {
-            console.error('Erro ao finalizar pedido:', error);
+            console.error('Erro ao continuar pedido:', error);
         } finally {
             setIsLoading(false);
         }
@@ -344,7 +350,11 @@ export default function Cart() {
                         </div>
                         <div className="values">
                             <p>Entrega:</p>
-                            <p>{BRL.format(frete.custo)}</p>
+                            {selectedDeliveryOption ? (
+                                <p>{BRL.format(localDeliveryCost)}</p>
+                            ) : (
+                                <p>{BRL.format(0)}</p>
+                            )}
                         </div>
                         <hr className="hrTotal" />
                         <div className="values">
@@ -372,8 +382,10 @@ export default function Cart() {
                                 <p>
                                     <strong>
                                         {BRL.format(
-                                            calcularTotal() -
-                                                (calcularTotal() / 100) * 15
+                                            calcularSubTotal() -
+                                                (calcularSubTotal() / 100) *
+                                                    15 +
+                                                frete.custo
                                         )}
                                     </strong>{' '}
                                     <br />

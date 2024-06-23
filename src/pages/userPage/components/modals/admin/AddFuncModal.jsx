@@ -51,6 +51,8 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
         try {
             const funcionario = await getFuncionarioByEmail(email);
 
+            console.log(funcionario);
+
             if (!funcionario) {
                 throw new Error('Dados do funcionário não encontrados.');
             }

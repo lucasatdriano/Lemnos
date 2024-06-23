@@ -103,12 +103,29 @@ header {
             width: 36px;
         }
 
-        .userImg {
-            margin: 0.5em 0.2em 0;
-            border-radius: 50%;
-            height: 42px;
-            width: 42px;
-            border: 1px solid $color-primaryLight;
+        .linkIcons {
+            position: relative;
+
+            .spanCarrinhoLength {
+                position: absolute;
+                top: 0;
+                right: 5px;
+                font-size: 2rem;
+                font-weight: 600;
+                background-color: $color-primaryLight;
+                border-radius: 50%;
+                padding: 0 0.5em;
+                font-family: $font-items;
+                color: $color-fontDark;
+            }
+
+            .userImg {
+                margin: 0.5em 0.2em 0;
+                border-radius: 50%;
+                height: 42px;
+                width: 42px;
+                border: 1px solid $color-primaryLight;
+            }
         }
     }
 }

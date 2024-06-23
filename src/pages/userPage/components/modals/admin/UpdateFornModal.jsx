@@ -12,12 +12,8 @@ export default function UpdateFornModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
-            if(search.length == 0) {
-                setFornecedores([]);
-                return;
-            }
             const fornecedoresFiltrados = await getFornecedoresByNome(search);
-            if(fornecedores == fornecedoresFiltrados) return;
+            if (fornecedores == fornecedoresFiltrados) return;
             setFornecedores(fornecedoresFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -44,7 +40,10 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                 e.stopPropagation();
             }}
         >
-            <div className="containerModal" onClick={(e) => e.stopPropagation()}>
+            <div
+                className="containerModal"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <h2>Lista de Fornecedores</h2>
                 <form
                     onSubmit={(e) => e.preventDefault()}
@@ -89,6 +88,12 @@ export default function UpdateFornModal({ onSelect, onClose }) {
                                             Fornecedor:{' '}
                                             <span className="spanNome">
                                                 {fornecedor.nome}
+                                            </span>
+                                        </p>
+                                        <p>
+                                            Email:{' '}
+                                            <span className="spanNome">
+                                                {fornecedor.email}
                                             </span>
                                         </p>
                                     </div>

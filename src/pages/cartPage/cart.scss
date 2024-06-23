@@ -609,16 +609,16 @@ main {
                         }
                     }
                 }
-
-                .delivery {
-                    margin: 0 0 2em;
-                }
             }
 
-            .resumeBuy {
-                height: 31em;
-                width: clamp(23em, 90vw, 30em);
-                margin-bottom: 1.5em;
+            .resume {
+                gap: 0;
+
+                .resumeBuy {
+                    height: 31em;
+                    width: clamp(23em, 90vw, 30em);
+                    margin-bottom: 1.5em;
+                }
             }
         }
     }

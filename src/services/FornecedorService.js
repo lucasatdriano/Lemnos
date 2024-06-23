@@ -79,18 +79,18 @@ export async function getFornecedores() {
     }
 }
 
-export async function getFornecedoresByNome(nome) {
+export async function getFornecedoresByNome(fornecedor) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: "POST",
-            url: "/fornecedor/by",
+            method: 'POST',
+            url: '/fornecedor/by',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': AuthService.getToken()
+                Authorization: AuthService.getToken(),
             },
             params: {
-                nome: nome,
+                nome: fornecedor,
             },
             timeout: 10000,
         });
