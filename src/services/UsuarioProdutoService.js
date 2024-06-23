@@ -177,8 +177,6 @@ export async function listarCarrinho() {
             throw new Error('Erro ao listar carrinho.');
         }
 
-        console.log(response);
-
         return response.data;
     } catch (error) {
         if (

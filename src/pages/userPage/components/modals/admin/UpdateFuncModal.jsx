@@ -12,7 +12,9 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
+            console.log(search);
             const funcionariosFiltrados = await getFuncionarioByNome(search);
+            console.log(funcionariosFiltrados);
             if (funcionarios == funcionariosFiltrados) return;
             setFuncionarios(funcionariosFiltrados);
         } catch (error) {
@@ -21,7 +23,9 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
     };
 
     useEffect(() => {
-        applyFilters();
+        if(search.length != 0)
+            applyFilters();
+        setFuncionarios([]);
     }, [search]);
 
     const handleChange = (e) => {
