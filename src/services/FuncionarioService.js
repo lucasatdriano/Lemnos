@@ -46,7 +46,7 @@ export async function getFuncionarioByEmail(email) {
     }
 }
 
-export async function getFuncionarioByNome(funcionario) {
+export async function getFuncionarioByNome(nome) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -57,10 +57,12 @@ export async function getFuncionarioByNome(funcionario) {
                 Authorization: AuthService.getToken(),
             },
             data: {
-                nome: funcionario,
+                nome: nome
             },
             timeout: 10000,
         });
+        console.log(nome);
+        console.log(response);
 
         if (response.status != 200) {
             throw new Error('Não foi encontrar o funcionario');

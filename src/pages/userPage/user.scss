@@ -21,12 +21,17 @@ $font-web: 'Roboto Flex', Arial;
 $font-items: 'Poppins', Helvetica;
 
 .userContainer {
+    width: 80vw;
     background: #f3faf9de;
     display: flex;
     height: auto;
     padding-bottom: 1.1em;
     border-radius: 20px;
     box-shadow: 2px 2px 15px $color-shadow;
+
+    section {
+        width: 50%;
+    }
 
     .userData {
         width: 100%;
@@ -80,7 +85,7 @@ $font-items: 'Poppins', Helvetica;
 
         .updateInputs {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             grid-template-rows: 1fr;
             gap: 1.5em;
         }
@@ -140,26 +145,44 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .allEnderecos {
+            width: 90%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
 
-            .dataEnd {
-                width: 100%;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 5px;
-                padding: 1em;
-                border-bottom: 2px solid $color-primaryLight;
+            .selected {
+                box-shadow: 2px 2px 15px #36cec480;
+            }
 
-                &:last-of-type {
-                    border: none;
+            .dataEnd {
+                display: flex;
+                justify-content: start;
+                align-items: start;
+                flex-direction: column;
+                background-color: #12171710;
+                width: 100%;
+                gap: 10%;
+                padding: 1em;
+                border: #36cec4 solid 3px;
+                border-left: #36cec4 solid 10px;
+                border-radius: 15px;
+                margin-bottom: 5%;
+                user-select: none;
+
+                .fixo {
+                    font-weight: bold;
                 }
 
                 p {
                     font-size: 1.8rem;
                 }
+            }
+            .buttons {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: 10px;
             }
         }
 
@@ -624,8 +647,13 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 1300px) {
     .userContainer {
+        width: auto;
         max-width: 90vw;
         flex-direction: column;
+
+        section {
+            width: 100%;
+        }
 
         .hrSeparate {
             display: none;

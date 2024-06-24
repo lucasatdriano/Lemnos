@@ -24,7 +24,9 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
     };
 
     useEffect(() => {
-        applyFilters();
+        if(search.length != 0)
+            applyFilters();
+        setFuncionarios([]);
     }, [search]);
 
     const handleChange = (e) => {
