@@ -20,19 +20,7 @@ import {
     getFuncionarioByToken,
     updateFuncionario,
 } from '../../services/FuncionarioService';
-import './user.scss';
-
-const historicoExemplo = [
-    { id: 1, produto: 'Laptop', preco: 25.99 },
-    { id: 2, produto: 'Monitor', produto2: 'Laptop', preco: 39.99 },
-    { id: 3, produto: 'Gabinete', preco: 49.99 },
-    { id: 4, produto: 'Celular', preco: 12.99 },
-    { id: 5, produto: 'Teclado', preco: 12.99 },
-    { id: 6, produto: 'SSD Kingstom', preco: 12.99 },
-    { id: 7, produto: 'Laptop', produto2: 'Mouse', preco: 12.99 },
-    { id: 8, produto: 'Monitor', produto2: 'Teclado', preco: 12.99 },
-    { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
-];
+import Loading from '../../components/loading/Loading';
 
 const User = ({ onLogout, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');
@@ -43,6 +31,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [showEnderecoModal, setShowEnderecoModal] = useState(false);
     const [endereco, setEndereco] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
     const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
@@ -79,26 +68,29 @@ const User = ({ onLogout, userImg, setUserImg }) => {
     }, [setUserImg]);
 
     async function fetchUsuario() {
+        setLoading(true);
         try {
             const usuario =
                 AuthService.getRole() === 'CLIENTE'
                     ? await getCliente()
                     : await getFuncionarioByToken();
 
-            setForm({
+            const updatedForm = {
                 nome: usuario.nome,
                 email: usuario.email,
-                enderecos: usuario.enderecos.map((endereco) => ({
-                    cep: endereco.cep,
-                    logradouro: endereco.logradouro,
-                    estado: endereco.uf,
-                    bairro: endereco.bairro,
-                    cidade: endereco.cidade,
-                    numero: endereco.numeroLogradouro,
-                    complemento: endereco.complemento,
-                })),
-            });
+                enderecos:
+                    usuario.enderecos?.map((endereco) => ({
+                        cep: endereco.cep,
+                        logradouro: endereco.logradouro,
+                        estado: endereco.uf,
+                        bairro: endereco.bairro,
+                        cidade: endereco.cidade,
+                        numero: endereco.numeroLogradouro,
+                        complemento: endereco.complemento,
+                    })) || [],
+            };
 
+            setForm(updatedForm);
             setUsername(usuario.nome.split(' ')[0]);
 
             if (AuthService.isLoggedInWithGoogle()) {
@@ -121,6 +113,8 @@ const User = ({ onLogout, userImg, setUserImg }) => {
             console.error('Erro ao obter os dados do Usuário', error);
             navigate('/login');
             AuthService.logout();
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -262,7 +256,6 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                                 disabled={!isEditing}
                             />
                         </p>
-
                         <p>
                             <CustomInput
                                 type="text"
@@ -351,7 +344,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                             )
                         ) : (
                             <div className="historyOrders">
-                                <HistoricoCompras compras={historicoExemplo} />
+                                <HistoricoCompras />
                             </div>
                         )}
                     </div>

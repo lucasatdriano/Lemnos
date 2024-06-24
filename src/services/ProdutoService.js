@@ -51,7 +51,7 @@ export async function cadastrarProduto(produto) {
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': AuthService.getToken(),
+                Authorization: AuthService.getToken(),
             },
             data: {
                 nome: produto.nome,
@@ -73,7 +73,7 @@ export async function cadastrarProduto(produto) {
             timeout: 10000,
         });
 
-        console.log("Response", response);
+        console.log('Response', response);
 
         if (response.status != 201) {
             throw new Error(response);
@@ -81,7 +81,7 @@ export async function cadastrarProduto(produto) {
 
         return true;
     } catch (error) {
-            toast.error(error);
+        toast.error(error);
     }
 }
 

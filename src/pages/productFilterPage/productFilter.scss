@@ -219,9 +219,8 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .filtered-data-container {
-            .emptyFilterMessage,
-            .loadingIndicator {
-                box-shadow: 0 0 10px $color-card;
+            .emptyFilterMessage {
+                box-shadow: 0 0 10px #141414a8;
 
                 .dot-spinner {
                     --uib-color: #10a88d;
@@ -229,14 +228,14 @@ $font-items: 'Poppins', Helvetica;
 
                 .btnBackFilter {
                     background: $color-primaryDark;
-                    box-shadow: 0 0 8px $color-card;
+                    box-shadow: 0 0 10px #141414a8;
 
                     &:hover {
-                        box-shadow: 5px 10px 5px $color-card;
+                        box-shadow: 5px 10px 5px #141414a8;
                     }
 
                     &:active {
-                        box-shadow: 2px 5px 5px $color-card;
+                        box-shadow: 2px 5px 5px #141414a8;
                     }
                 }
             }
@@ -268,9 +267,10 @@ $font-items: 'Poppins', Helvetica;
             gap: 2em;
             margin-bottom: 5em;
             max-width: 100vw;
+            padding: 0;
 
             select {
-                max-width: 100vw;
+                max-width: 45vw;
             }
         }
 
@@ -290,6 +290,11 @@ $font-items: 'Poppins', Helvetica;
     .mainFilters {
         .product-filter-container {
             grid-template-columns: 1fr;
+            place-items: center;
+
+            select {
+                min-width: 90vw;
+            }
         }
     }
 }

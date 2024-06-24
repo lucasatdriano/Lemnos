@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,35 +9,33 @@ import MenuSearch from './components/searchMenu/MenuSearch';
 import MenuFavorite from './components/favoriteMenu/MenuFavorite';
 import AuthService from '../../services/AuthService';
 import './header.scss';
-import { listarCarrinho } from '../../services/UsuarioProdutoService';
+import { getQuantidadeCarrinho } from '../../services/UsuarioProdutoService';
 
 export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
     const [showFavoriteMenu, setShowFavoriteMenu] = useState(false);
-    const [carrinho, setCarrinho] = useState({ produtos: [] });
+    const [carrinho, setCarrinho] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(
         AuthService.isLoggedIn() || AuthService.isLoggedInWithGoogle()
     );
 
     useEffect(() => {
         fetchCarrinho();
-        const interval = setInterval(fetchCarrinho, 100);
+        const interval = setInterval(() => {
+            fetchCarrinho();
+        }, 100);
         return () => clearInterval(interval);
-    }, []);
+    }, [carrinho]);
 
     const fetchCarrinho = async () => {
         if (AuthService.isLoggedIn()) {
             try {
-                const response = await listarCarrinho();
-
-                if (response && response.produtos) {
-                    setCarrinho(response);
-                } else {
-                    setCarrinho({ produtos: [] });
+                const response = await getQuantidadeCarrinho();
+                if (response !== carrinho) {
+                    setCarrinho(response > 0 ? response : null);
                 }
             } catch (error) {
-                console.error('Erro ao contar a quantidade do carrinho', error);
-                setCarrinho({ produtos: [] });
+                setCarrinho(null);
             }
         }
     };
@@ -124,10 +123,10 @@ export default function Header({ toggleTheme }) {
                         )}
                     </Link>
                     <Link to="/cart" className="linkIcons">
-                        {carrinho.produtos && carrinho.produtos.length > 0 ? (
+                        {carrinho !== null && carrinho > 0 ? (
                             <>
                                 <span className="spanCarrinhoLength">
-                                    {carrinho.produtos.length}
+                                    {carrinho}
                                 </span>
                                 <RiShoppingCartLine className="cartIcon" />
                             </>

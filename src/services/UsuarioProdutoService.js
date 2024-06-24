@@ -190,6 +190,30 @@ export async function listarCarrinho() {
     }
 }
 
+export async function getQuantidadeCarrinho() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'GET',
+            url: '/carrinho/quantidade',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error(
+                'Erro ao obter quantidade de produtos no carrinho.'
+            );
+        }
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function adicionarProdutoCarrinho(produto, qntd) {
     try {
         const response = await axios({

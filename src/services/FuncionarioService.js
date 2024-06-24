@@ -50,8 +50,8 @@ export async function getFuncionarioByNome(nome) {
     try {
         const response = await axios({
             baseURL: baseUri,
-            method: "POST",
-            url: "/funcionario/by",
+            method: 'POST',
+            url: '/funcionario/by',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: AuthService.getToken(),
@@ -67,6 +67,7 @@ export async function getFuncionarioByNome(nome) {
         if (response.status != 200) {
             throw new Error('Não foi encontrar o funcionario');
         }
+
         return response.data;
     } catch (error) {
         toast.error(error);

@@ -44,6 +44,7 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
     const [selectedFunc, setSelectedFunc] = useState(null);
 
     const handleFuncionarioListToggle = () => {
+        setForm(initialFormState);
         setIsFuncionarioListOpen(!isFuncionarioListOpen);
     };
 

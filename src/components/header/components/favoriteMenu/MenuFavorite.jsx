@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import './menuFavorite.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -44,7 +45,7 @@ export default function MenuFavorite({ onClose }) {
                 );
 
                 if (!response) {
-                    navigate('/login')
+                    navigate('/login');
                 }
                 setFavorites(
                     Array.isArray(favoritoDetalhado) ? favoritoDetalhado : []
@@ -125,6 +126,7 @@ export default function MenuFavorite({ onClose }) {
                                     <Link
                                         to={`/product/${favorite.id}`}
                                         className="favLink"
+                                        onClick={handleCloseModal}
                                     >
                                         {hasDiscount && (
                                             <p className="offerDescont">

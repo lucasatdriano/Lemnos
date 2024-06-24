@@ -12,7 +12,10 @@ import {
     getProdutoById,
     updateProduto,
 } from '../../../../../services/ProdutoService';
-import { getFornecedores, getFornecedoresByNome } from '../../../../../services/FornecedorService';
+import {
+    getFornecedores,
+    getFornecedoresByNome,
+} from '../../../../../services/FornecedorService';
 
 const categorias = [
     'Casa Inteligente',
@@ -151,6 +154,7 @@ export default function ProdutoModal({ onClose }) {
     };
 
     const handleProdutoListToggle = () => {
+        setForm(initialFormState);
         setIsProdutoListOpen(!isProdutoListOpen);
     };
 
@@ -179,6 +183,12 @@ export default function ProdutoModal({ onClose }) {
                 categoria: produto.categoria || '',
                 subCategoria: produto.subCategoria || '',
             });
+
+            const fornecedorOption = fornecedores.find(
+                (f) => f.value === produto.fornecedor
+            );
+            setSelectedFornecedor(fornecedorOption || null);
+
             setSelectedProduct(produto);
             setIsProdutoLoaded(true);
             setIsProdutoListOpen(false);
@@ -272,7 +282,7 @@ export default function ProdutoModal({ onClose }) {
                         ? selectedFornecedor.value
                         : '',
                 };
-                console.log("Produto",formattedForm);
+                console.log('Produto', formattedForm);
                 await cadastrarProduto(formattedForm);
 
                 toast.success('Produto cadastrado com sucesso');
@@ -284,7 +294,6 @@ export default function ProdutoModal({ onClose }) {
     };
 
     const handleUpdate = async (e) => {
-        e.preventDefault();
         if (!selectedProduct) return;
 
         try {
@@ -345,35 +354,36 @@ export default function ProdutoModal({ onClose }) {
         return selectedProduct !== null;
     };
 
-    const fetchFornecedores = async nome => {
+    const fetchFornecedores = async (nome) => {
         try {
             const fornecedores = await getFornecedoresByNome(nome);
-            const fornecedorObject = fornecedores.slice(0, 5).map(fornecedor => ({ value: fornecedor.nome, label: fornecedor.nome}))
+            const fornecedorObject = fornecedores
+                .slice(0, 5)
+                .map((fornecedor) => ({
+                    value: fornecedor.nome,
+                    label: fornecedor.nome,
+                }));
             setFornecedores(fornecedorObject);
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     useEffect(() => {
-        if(searchTerm)
-            fetchFornecedores(searchTerm);
-        else
-            setFornecedores([]);
-    }, [searchTerm])
+        if (searchTerm) fetchFornecedores(searchTerm);
+        else setFornecedores([]);
+    }, [searchTerm]);
 
     const handleFornecedorChange = (selectedOption) => {
         setSelectedFornecedor(selectedOption);
         handleChange('fornecedor', selectedOption.value);
     };
 
-
-    const handleInputChange = fornecedor => {
-        if(!fornecedor)
-            return "";
+    const handleInputChange = (fornecedor) => {
+        if (!fornecedor) return '';
         setSearchTerm(fornecedor);
         return fornecedor;
-      };
+    };
 
     return (
         <div className="modal" onClick={onClose}>
@@ -720,11 +730,11 @@ export default function ProdutoModal({ onClose }) {
                             onChange={handleFornecedorChange}
                             onInputChange={handleInputChange}
                             isClearable
-                            noOptionsMessage={() => ""}
+                            noOptionsMessage={() => ''}
                             placeholder="Selecione o fornecedor"
                             className="reactSelectContainer"
                             classNamePrefix="reactSelect"
-                            menuPlacement='top'
+                            menuPlacement="top"
                         />
                         {errors.fornecedor && (
                             <span className="invalid">{errors.fornecedor}</span>

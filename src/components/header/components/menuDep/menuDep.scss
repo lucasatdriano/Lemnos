@@ -67,6 +67,10 @@ $font-items: 'Poppins', Helvetica;
         animation: menuDep 0.5s ease-in-out forwards;
         width: 20%;
 
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         &.active {
             display: flex;
             align-items: center;
@@ -294,12 +298,6 @@ $font-items: 'Poppins', Helvetica;
 
 @media only screen and (max-width: 620px) {
     .menuCat {
-        .menuButton {
-            .menuIcon {
-                margin: 0.5em 1em 0 -1em;
-            }
-        }
-
         .menu {
             width: 65%;
         }

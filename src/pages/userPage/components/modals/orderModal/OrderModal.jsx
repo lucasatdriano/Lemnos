@@ -19,7 +19,7 @@ function formatarData(dataISO) {
 }
 
 export default function OrderModal({ pedido, onClose }) {
-    const [detalhesCompra, sepetalhesCompra] = useState(null);
+    const [detalhesCompra, setDetalhesCompra] = useState([]);
 
     useEffect(() => {
         async function fetchDetalhesCompra(idPedido) {
@@ -45,7 +45,8 @@ export default function OrderModal({ pedido, onClose }) {
                     ...pedidoDetalhado,
                     produtos: detalhesProdutos,
                 };
-                sepetalhesCompra(detalhesCompraAtualizado);
+                setDetalhesCompra(detalhesCompraAtualizado);
+                console.log(detalhesCompra);
             } catch (error) {
                 console.error('Erro ao obter detalhes da compra:', error);
             }
@@ -59,6 +60,8 @@ export default function OrderModal({ pedido, onClose }) {
     if (!detalhesCompra) {
         return null;
     }
+
+    console.log(detalhesCompra);
 
     return (
         <div className="modal" onClick={onClose}>
@@ -82,7 +85,12 @@ export default function OrderModal({ pedido, onClose }) {
                             <p className="labelDetails">Data do Pedido</p>
                             <p>{formatarData(detalhesCompra.dataPedido)}</p>
                             <p className="labelDetails">Valor Total</p>
-                            <p>{BRL.format(detalhesCompra.valorPedido)}</p>
+                            <p>
+                                {BRL.format(
+                                    detalhesCompra.valorPedido +
+                                        detalhesCompra.valorFrete
+                                )}
+                            </p>
                         </div>
                     </div>
                     <ul className="containerProductsOrder">

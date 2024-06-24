@@ -34,6 +34,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
     const [selectedForn, setSelectedForn] = useState(null);
 
     const handleFornecedorListToggle = () => {
+        setForm(initialFormState);
         setIsFornecedorListOpen(!isFornecedorListOpen);
     };
 

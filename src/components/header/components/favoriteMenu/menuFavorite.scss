@@ -40,11 +40,13 @@ $font-items: 'Poppins', Helvetica;
         z-index: 999;
         border-radius: 10px 0 0 10px;
         top: 0;
-        right: -30em;
+        right: -28em;
         animation: menuFav 0.5s ease-in-out forwards;
         overflow-y: auto;
         opacity: 1;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         .iconClose {
             display: none;
@@ -58,7 +60,8 @@ $font-items: 'Poppins', Helvetica;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1em;
+            width: 100%;
+            margin: 1em 0;
 
             h2 {
                 font-family: $font-title;
@@ -79,6 +82,7 @@ $font-items: 'Poppins', Helvetica;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            text-align: center;
             background: $color-card;
             margin: 3em auto;
             width: 90%;
@@ -128,6 +132,7 @@ $font-items: 'Poppins', Helvetica;
             justify-content: center;
             flex-direction: column;
             gap: 1em;
+            width: 100%;
 
             .itemFav {
                 width: 100%;
@@ -382,7 +387,7 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 768px) {
     .modal {
         .menuFavorite {
-            width: 105%;
+            width: 100%;
 
             .iconClose {
                 display: block;
@@ -409,7 +414,7 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 420px) {
     .modal {
         .menuFavorite {
-            width: 110%;
+            width: 100%;
 
             .listaFavoritos {
                 padding-right: 2.5em;
