@@ -164,21 +164,40 @@ export default function BuyPage() {
     const statusStyles = (status) => {
         const currentStatus = pedidoStatus.toLowerCase();
 
-        switch (status.toLowerCase()) {
-            case 'em processamento':
-            case 'enviado para a transportadora':
-            case 'recebido pela transportadora':
-            case 'mercadoria em trânsito':
-            case 'mercadoria em rota de entrega':
-            case 'pedido entregue':
-                return {
-                    color:
-                        currentStatus === status.toLowerCase()
-                            ? '#36cec4'
-                            : '#686767',
-                };
-            default:
-                return { color: '#686767' };
+        if(AuthService.getTheme() == 'light') {
+            switch (status.toLowerCase()) {
+                case 'em processamento':
+                case 'enviado para a transportadora':
+                case 'recebido pela transportadora':
+                case 'mercadoria em trânsito':
+                case 'mercadoria em rota de entrega':
+                case 'pedido entregue':
+                    return {
+                        color:
+                            currentStatus === status.toLowerCase()
+                                ? '#36cec4'
+                                : '#686767',
+                    };
+                default:
+                    return { color: '#686767' };
+            }
+        } else {
+            switch (status.toLowerCase()) {
+                case 'em processamento':
+                case 'enviado para a transportadora':
+                case 'recebido pela transportadora':
+                case 'mercadoria em trânsito':
+                case 'mercadoria em rota de entrega':
+                case 'pedido entregue':
+                    return {
+                        color:
+                            currentStatus === status.toLowerCase()
+                                ? '#36cec4'
+                                : '#c2c9c7',
+                    };
+                default:
+                    return { color: '#c2c9c7' };
+            }
         }
     };
 

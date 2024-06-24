@@ -23,6 +23,14 @@ const AuthService = {
         return localStorage.getItem('googleProfilePhoto');
     },
 
+    setTheme(theme) {
+        return localStorage.setItem('theme', theme);
+    },
+    
+    getTheme() {
+        return localStorage.getItem('theme');
+    },
+
     logout() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('token');

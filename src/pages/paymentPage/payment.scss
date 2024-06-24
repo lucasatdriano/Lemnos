@@ -454,6 +454,21 @@ main {
                     }
                 }
             }
+
+            .containerAddress {
+                background-color: #72757478;
+                box-shadow: 0 0 15px #141414a8;
+    
+                select {
+                    box-shadow: 0 0 15px #141414a8;
+                    border: 1px solid #ccc;
+    
+                    option {
+                        cursor: pointer;
+                        background-color: $color-fontDark;
+                    }
+                }
+            }
         }
     }
 }

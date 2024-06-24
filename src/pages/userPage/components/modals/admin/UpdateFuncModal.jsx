@@ -16,7 +16,7 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
 
     const applyFilters = async () => {
         try {
-            const funcionariosFiltrados = await getFuncionarios();
+            const funcionariosFiltrados = await getFuncionarioByNome(search);
             setFuncionarios(funcionariosFiltrados);
         } catch (error) {
             console.error('Erro ao aplicar filtros:', error);
@@ -24,9 +24,7 @@ export default function UpdateFuncModal({ onSelect, onClose }) {
     };
 
     useEffect(() => {
-        if(search.length != 0)
-            applyFilters();
-        setFuncionarios([]);
+        applyFilters();
     }, [search]);
 
     const handleChange = (e) => {

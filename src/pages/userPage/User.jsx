@@ -20,7 +20,7 @@ import {
     getFuncionarioByToken,
     updateFuncionario,
 } from '../../services/FuncionarioService';
-import Loading from '../../components/loading/Loading';
+import './user.scss';
 
 const User = ({ onLogout, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');

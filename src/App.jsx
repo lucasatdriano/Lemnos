@@ -9,6 +9,7 @@ import Footer from './components/footer/Footer';
 import AnimatedRoutes from './AnimatedRoutes';
 import { AuthProvider } from './AuthProvider';
 import { NavigationProvider } from './NavigationProvider';
+import AuthService from './services/AuthService';
 
 export default function App() {
     const [theme, setTheme] = useState('dark');
@@ -19,14 +20,14 @@ export default function App() {
     }, [pathname]);
 
     const toggleTheme = () => {
-        localStorage.setItem('theme', theme);
         setTheme(theme === 'light' ? 'dark' : 'light');
+        AuthService.setTheme(theme);
     };
 
     return (
         <AuthProvider>
             <NavigationProvider>
-                <section className={`${localStorage.getItem('theme')}`}>
+                <section className={`${AuthService.getTheme()}`}>
                     <Header toggleTheme={toggleTheme} />
                     <AnimatedRoutes />
                     <BackToTopButton />
