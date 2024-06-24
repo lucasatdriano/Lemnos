@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
-import './user.scss';
+import React, { useState, useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 import UserImg from '../../assets/imgLemnos/imgUser.svg';
 import ToolTip from '../../components/tooltip/ToolTip';
@@ -13,17 +12,15 @@ import AddFornecedorModal from './components/modals/admin/AddFornModal';
 import AddFuncionarioModal from './components/modals/admin/AddFuncModal';
 import { auth } from '../../services/configurations/FirebaseConfig';
 import { toast } from 'react-toastify';
-import { connect } from 'react-redux';
 import { MdLogout } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 import { setUserImg } from '../../store/actions/userActions';
 import { getCliente, updateCliente } from '../../services/ClienteService';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import {
     getFuncionarioByToken,
     updateFuncionario,
 } from '../../services/FuncionarioService';
+import './user.scss';
 
 const historicoExemplo = [
     { id: 1, produto: 'Laptop', preco: 25.99 },
@@ -37,15 +34,17 @@ const historicoExemplo = [
     { id: 9, produto: 'Laptop', produto2: 'Gabinete', preco: 12.99 },
 ];
 
-const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
+const User = ({ onLogout, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
+    const [selectedEndereco, setSelectedEndereco] = useState(null);
+    const [selectedCep, setSelectedCep] = useState(null);
+    const [isEnderecoSelected, setIsEnderecoSelected] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [showEnderecoModal, setShowEnderecoModal] = useState(false);
     const [endereco, setEndereco] = useState(true);
     const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
-    const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
-        useState(false);
+    const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
     const [form, setForm] = useState({
         nome: '',
@@ -68,7 +67,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     useEffect(() => {
         fetchUsuario();
-    }, [clearUserImg]);
+    }, [setUserImg]);
 
     useEffect(() => {
         const storedPhotoURL = localStorage.getItem('userImg');
@@ -86,29 +85,20 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                     ? await getCliente()
                     : await getFuncionarioByToken();
 
-            if (usuario.enderecos && usuario.enderecos.length > 0) {
-                setForm({
-                    ...form,
-                    nome: usuario.nome,
-                    email: usuario.email,
-                    enderecos: usuario.enderecos.map((endereco) => ({
-                        cep: endereco.cep,
-                        logradouro: endereco.logradouro,
-                        estado: endereco.uf,
-                        bairro: endereco.bairro,
-                        cidade: endereco.cidade,
-                        numero: endereco.numeroLogradouro,
-                        complemento: endereco.complemento,
-                    })),
-                });
-            } else {
-                setForm({
-                    ...form,
-                    nome: usuario.nome,
-                    email: usuario.email,
-                    enderecos: [],
-                });
-            }
+            setForm({
+                nome: usuario.nome,
+                email: usuario.email,
+                enderecos: usuario.enderecos.map((endereco) => ({
+                    cep: endereco.cep,
+                    logradouro: endereco.logradouro,
+                    estado: endereco.uf,
+                    bairro: endereco.bairro,
+                    cidade: endereco.cidade,
+                    numero: endereco.numeroLogradouro,
+                    complemento: endereco.complemento,
+                })),
+            });
+
             setUsername(usuario.nome.split(' ')[0]);
 
             if (AuthService.isLoggedInWithGoogle()) {
@@ -137,7 +127,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
-        if (name === 'name') {
+        if (name === 'nome') {
             const firstName = value.split(' ')[0];
             setUsername(firstName);
         }
@@ -208,7 +198,7 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
 
     const handleSaveChanges = async () => {
         const usuario = {
-            nome: form.name,
+            nome: form.nome,
             email: form.email,
         };
 
@@ -222,15 +212,17 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
         toast.success('Dados atualizados!');
     };
 
-    function formatCEP(cep) {
-        if (cep) {
-            cep = cep.toString().replace(/\D/g, '');
-            if (cep.length === 8) {
-                return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
-            }
+    const handleSelectEndereco = (index, cep) => {
+        if(selectedEndereco == index) {
+            setSelectedEndereco(null);
+            setSelectedCep(null);
+            setIsEnderecoSelected(false);
+        } else {
+            setSelectedEndereco(index);
+            setSelectedCep(cep);
+            setIsEnderecoSelected(true);
         }
-        return cep;
-    }
+    };
 
     return (
         <section className="userContainer">
@@ -261,8 +253,8 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                             <CustomInput
                                 type="text"
                                 label="Nome Completo:"
-                                id="name"
-                                name="name"
+                                id="nome"
+                                name="nome"
                                 maxLength={40}
                                 minLength={5}
                                 value={form.nome}
@@ -323,47 +315,37 @@ const User = ({ onLogout, clearUserImg, userImg, setUserImg }) => {
                                 <div className="allEnderecos">
                                     <h2>Endereços</h2>
                                     {form.enderecos.map((endereco, index) => (
-                                        <div key={index} className="dataEnd">
-                                            <p>
-                                                CEP:{' '}
-                                                {formatCEP(endereco.cep) || ''}
-                                            </p>
-                                            <p>
-                                                Logradouro:{' '}
-                                                {endereco.logradouro || ''}
-                                            </p>
-                                            <p>
-                                                Estado: {endereco.estado || ''}
-                                            </p>
-                                            <p>Bairro: {endereco.bairro}</p>
-                                            <p>
-                                                Cidade: {endereco.cidade || ''}
-                                            </p>
-                                            <p>
-                                                Número: {endereco.numero || ''}
-                                            </p>
-                                            <p>
-                                                Complemento:{' '}
-                                                {endereco.complemento || ''}
-                                            </p>
+                                        <div
+                                            key={index}
+                                            className={`dataEnd ${selectedEndereco === index ? 'selected' : ''}`}
+                                            onClick={() => handleSelectEndereco(index, endereco.cep)}
+                                        >
+                                            <p>{endereco.logradouro || ''}</p>
+                                            <p><span className="fixo">Número:</span> {endereco.numero || ''}, {endereco.complemento || ''}</p>
+                                            <p><span className="fixo">CEP:</span> {endereco.cep || ''} - {endereco.cidade || ''}, {endereco.estado || ''}</p>
                                         </div>
                                     ))}
                                     {form.enderecos.length < 3 && (
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleShowModal('endereco')
-                                            }
-                                        >
-                                            Adicionar mais um Endereço
-                                        </button>
+                                        isEnderecoSelected 
+                                        ? (
+                                            <div className='buttons'>
+                                                <button type="button" onClick={() => toast.warn("Não implementado")}>
+                                                    Apagar Endereço
+                                                </button>
+                                                <button type="button" onClick={() => toast.warn("Não implementado")}>
+                                                    Alterar Endereço
+                                                </button>
+                                            </div>
+                                        )
+                                        : (
+                                            <button type="button" onClick={() => handleShowModal('endereco')}>
+                                                Adicionar mais um Endereço
+                                            </button>
+                                        )
                                     )}
                                 </div>
                             ) : (
-                                <button
-                                    type="button"
-                                    onClick={() => handleShowModal('endereco')}
-                                >
+                                <button type="button" onClick={() => handleShowModal('endereco')}>
                                     Adicionar Endereço
                                 </button>
                             )
