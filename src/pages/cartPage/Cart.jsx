@@ -44,11 +44,6 @@ export default function Cart() {
     const [localDeliveryCost, setLocalDeliveryCost] = useState('');
     const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState('');
 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchCarrinho();
-    }, []);
-
     async function fetchCarrinho() {
         try {
             if (AuthService.isLoggedIn()) {
@@ -84,6 +79,11 @@ export default function Cart() {
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetchCarrinho();
+    }, []);
 
     const addDaysToDate = (days) => {
         const result = new Date();
@@ -520,7 +520,9 @@ export default function Cart() {
             </section>
             <section className="offers">
                 <h2>Continue Comprando</h2>
-                <OfferList onClick={fetchCarrinho()} />
+                {AuthService.isLoggedIn && AuthService.isLoggedInWithGoogle && (
+                    <OfferList fetchCarrinho={fetchCarrinho} />
+                )}
             </section>
         </main>
     );

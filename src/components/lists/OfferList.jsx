@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import Card from '../card/Card';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
@@ -6,7 +7,7 @@ import './offerList.scss';
 import { getAllProdutos } from '../../services/ProdutoService';
 import Loading from '../loading/Loading';
 
-export default function OfferList() {
+export default function OfferList({ fetchCarrinho }) {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -18,6 +19,10 @@ export default function OfferList() {
         }
         fetchDescontos();
     }, []);
+
+    const handleClick = () => {
+        fetchCarrinho();
+    };
 
     const produtosComDesconto = produtos.filter(
         (produto) => produto.desconto > 0
@@ -50,7 +55,7 @@ export default function OfferList() {
                     }}
                 >
                     {produtosComDesconto.map((produto) => (
-                        <SplideSlide key={produto.id}>
+                        <SplideSlide key={produto.id} onClick={handleClick}>
                             <Card produto={produto} />
                         </SplideSlide>
                     ))}
