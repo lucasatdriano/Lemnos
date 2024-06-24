@@ -38,7 +38,7 @@ const categorias = [
     'Notebooks e Portáteis',
     'Periféricos',
     'Realidade Virtual',
-    'Redes e Wireless',
+    'Redes e wireless',
     'Video Games',
 ];
 

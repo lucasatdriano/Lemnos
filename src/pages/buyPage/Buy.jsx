@@ -110,7 +110,6 @@ export default function BuyPage() {
                 (pedido) => pedido.id === pedidoId
             );
 
-            console.log(pedidoAtualizado);
             console.log(pedidoAtualizado.status);
             if (pedidoAtualizado) {
                 setPedidoStatus(pedidoAtualizado.status);
@@ -125,7 +124,7 @@ export default function BuyPage() {
         if (pedidoId) {
             const interval = setInterval(() => {
                 fetchPedidoStatus(pedidoId);
-            }, 30000);
+            }, 5000);
 
             return () => clearInterval(interval);
         }
@@ -152,6 +151,7 @@ export default function BuyPage() {
 
             const newPedido = pedidos[pedidos.length - 1];
             setPedidoId(newPedido.id);
+            setPedidoStatus('Em processamento'); // Atualize o status do pedido aqui
             console.log('Novo pedido ID:', newPedido.id);
 
             toast.success('Compra Realizada');

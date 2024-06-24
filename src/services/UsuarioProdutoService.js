@@ -177,8 +177,6 @@ export async function listarCarrinho() {
             throw new Error('Erro ao listar carrinho.');
         }
 
-        console.log(response);
-
         return response.data;
     } catch (error) {
         if (
@@ -189,6 +187,30 @@ export async function listarCarrinho() {
             console.error(error.response.data.error);
         }
         throw error;
+    }
+}
+
+export async function getQuantidadeCarrinho() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'GET',
+            url: '/carrinho/quantidade',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error(
+                'Erro ao obter quantidade de produtos no carrinho.'
+            );
+        }
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
     }
 }
 

@@ -11,7 +11,7 @@ import { AuthProvider } from './AuthProvider';
 import { NavigationProvider } from './NavigationProvider';
 
 export default function App() {
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState('dark');
     const { pathname } = useLocation();
 
     useEffect(() => {

@@ -104,7 +104,15 @@ $font-items: 'Poppins', Helvetica;
 @media only screen and (max-width: 1024px) {
     .doubleRangeInput {
         .rangeSlider {
-            max-width: 80vw;
+            max-width: 45vw;
+        }
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    .doubleRangeInput {
+        .rangeSlider {
+            min-width: 70vw;
         }
     }
 }
