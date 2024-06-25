@@ -12,10 +12,7 @@ import {
     getProdutoById,
     updateProduto,
 } from '../../../../../services/ProdutoService';
-import {
-    getFornecedores,
-    getFornecedoresByNome,
-} from '../../../../../services/FornecedorService';
+import { getFornecedoresByNome } from '../../../../../services/FornecedorService';
 
 const categorias = [
     'Casa Inteligente',
@@ -183,6 +180,7 @@ export default function ProdutoModal({ onClose }) {
                 categoria: produto.categoria || '',
                 subCategoria: produto.subCategoria || '',
             });
+
             setSelectedFornecedor({
                 value: produto.fornecedor,
                 label: produto.fornecedor,
@@ -309,7 +307,6 @@ export default function ProdutoModal({ onClose }) {
                         ? selectedFornecedor.value
                         : '',
                 };
-
                 try {
                     let entidadeAtualizada = await updateProduto(
                         formattedForm,

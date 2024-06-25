@@ -24,7 +24,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
         cnpj: '',
         endereco: {
             cep: '',
-            numLogradouro: '',
+            nLogradouro: '',
             complemento: '',
         },
     };
@@ -54,7 +54,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                     cep: fornecedor.endereco
                         ? fornecedor.endereco.cep || ''
                         : '',
-                    numLogradouro: fornecedor.endereco
+                    nLogradouro: fornecedor.endereco
                         ? fornecedor.endereco.numeroLogradouro || ''
                         : '',
                     complemento: fornecedor.endereco
@@ -93,17 +93,21 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
         if (!form.endereco.cep) {
             newErrors.cep = 'O Cep é obrigatório';
         }
-        if (!form.endereco.numLogradouro) {
-            newErrors.numLogradouro = 'O Número de Logradouro é obrigatório';
+        if (!form.endereco.nLogradouro) {
+            newErrors.nLogradouro = 'O Número de Logradouro é obrigatório';
         }
 
         setErrors(newErrors);
 
+        console.log(newErrors);
+        
         return Object.keys(newErrors).length === 0;
     };
 
     const handleAdd = async (e) => {
         e.preventDefault();
+        console.log("1");
+        console.log(validateForm());
 
         if (validateForm()) {
             const formattedForm = {
@@ -321,17 +325,17 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                             id="numeroLogradouro"
                             name="numeroLogradouro"
                             maxLength={6}
-                            value={form.endereco.numLogradouro}
+                            value={form.endereco.nLogradouro}
                             onChange={(e) =>
                                 handleChange('endereco', {
                                     ...form.endereco,
-                                    numLogradouro: e.target.value,
+                                    nLogradouro: e.target.value,
                                 })
                             }
                         />
-                        {errors.numLogradouro && (
+                        {errors.nLogradouro && (
                             <span className="invalid">
-                                {errors.numLogradouro}
+                                {errors.nLogradouro}
                             </span>
                         )}
                     </p>

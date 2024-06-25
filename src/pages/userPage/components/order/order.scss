@@ -37,8 +37,30 @@ $font-items: 'Poppins', Helvetica;
         .itensCompra {
             margin: 0.5em 0;
             font-family: $font-items;
+            border: #121717 solid 3px;
+            border-left: #121717 solid 10px;
+            border-radius: 15px;
+            padding: 1em;
+            margin-bottom: 5%;
+            background-color: #12171710;
             cursor: pointer;
-            border-bottom: 2px solid $color-primaryLight;
+
+            .details {
+                display: flex;
+                justify-content: space-evenly;
+                text-align: center;
+            }
+
+            .bold {
+                font-weight: bold;
+            }
+
+            .greenStatus {
+                color: #0b806a;
+            }
+            .statusColor {
+                color: #eb6a00;
+            }
         }
     }
 
