@@ -13,7 +13,6 @@ import {
     updateProduto,
 } from '../../../../../services/ProdutoService';
 import {
-    getFornecedores,
     getFornecedoresByNome,
 } from '../../../../../services/FornecedorService';
 
@@ -187,8 +186,9 @@ export default function ProdutoModal({ onClose }) {
             const fornecedorOption = fornecedores.find(
                 (f) => f.value === produto.fornecedor
             );
+            console.log(fornecedorOption);
             setSelectedFornecedor(fornecedorOption || null);
-
+            
             setSelectedProduct(produto);
             setIsProdutoLoaded(true);
             setIsProdutoListOpen(false);
@@ -311,7 +311,6 @@ export default function ProdutoModal({ onClose }) {
                         ? selectedFornecedor.value
                         : '',
                 };
-
                 try {
                     let entidadeAtualizada = await updateProduto(
                         formattedForm,
