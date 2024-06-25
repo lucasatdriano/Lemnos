@@ -6,6 +6,14 @@ import { listarPedido } from '../../../../services/UsuarioProdutoService';
 import { getProdutoById } from '../../../../services/ProdutoService';
 import Loading from '../../../../components/loading/Loading';
 
+function formatarData(dataISO) {
+    const data = new Date(dataISO);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+}
+
 export default function historicoCompras() {
     const BRL = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -73,7 +81,7 @@ export default function historicoCompras() {
 
     return (
         <div className="containerHistory">
-            <h2>Histórico de Pedidos</h2>
+            <h2>Pedidos</h2>
             {loading ? (
                 <Loading />
             ) : (
@@ -83,21 +91,15 @@ export default function historicoCompras() {
                             .slice(0, mostrarMais ? pedidos.length : 3)
                             .map((pedido, index) => (
                                 <ul className="listItens" key={index}>
-                                    <li
-                                        onClick={() => handleAbrirModal(pedido)}
-                                        className="itensCompra"
-                                    >
-                                        <h3 className="namesProducts">
-                                            Produtos: {pedido.produtos[0].nome}
-                                            ...
-                                        </h3>
-                                        <h3>
-                                            Status do pedido: {pedido.status}...
-                                        </h3>
-                                        <h3>
-                                            Valor Total:{' '}
-                                            {BRL.format(pedido.valorPedido)}
-                                        </h3>
+                                    <li onClick={() => handleAbrirModal(pedido)} className="itensCompra">
+                                        <p><span className='bold'>Data:</span> {formatarData(pedido.dataPedido)}</p>
+                                        <hr />
+                                        <div className="details">
+                                            <p><span className='bold'>Pagamento</span><br />{pedido.metodoPagamento}</p>
+                                            <p><span className='bold'>Status</span><br /><span className={pedido.status == "Pedido entregue" ? "greenStatus" : "statusColor"}>{pedido.status}</span></p>
+                                            <p><span className='bold'>Valor</span><br />{BRL.format(pedido.valorPedido)}</p>
+                                        </div>
+
                                     </li>
                                 </ul>
                             ))}

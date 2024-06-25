@@ -61,8 +61,6 @@ export default function OrderModal({ pedido, onClose }) {
         return null;
     }
 
-    console.log(detalhesCompra);
-
     return (
         <div className="modal" onClick={onClose}>
             <div
