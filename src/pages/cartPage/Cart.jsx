@@ -136,7 +136,7 @@ export default function Cart() {
     };
 
     const handleCalculateDelivery = async () => {
-        if (cart.items === 0) {
+        if (cart.items === null) {
             toast.warning('Por favor, adicione um produto no seu carrinho.');
             setShowOptions(false);
         } else if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
@@ -182,6 +182,10 @@ export default function Cart() {
         } else {
             return calcularSubTotal();
         }
+    };
+
+    const handleLinkNavigate = (produtoId) => {
+        navigate(`/product/${produtoId}`);
     };
 
     const diminuirQuantidadeCarrinho = async (produtoId) => {
@@ -273,8 +277,16 @@ export default function Cart() {
                                         <img
                                             src={produto.imagemPrincipal}
                                             alt={produto.nome}
+                                            onClick={() =>
+                                                handleLinkNavigate(produto.id)
+                                            }
                                         />
-                                        <h4 className="nameProduct">
+                                        <h4
+                                            className="nameProduct"
+                                            onClick={() =>
+                                                handleLinkNavigate(produto.id)
+                                            }
+                                        >
                                             {produto.nome}
                                         </h4>
                                         <p className="amount">

@@ -68,7 +68,7 @@ export default function Product() {
                 );
 
                 if (!favorites) {
-                    navigate('/login')
+                    navigate('/login');
                 }
                 setIsFavorite(isFavorited);
             }
@@ -87,7 +87,7 @@ export default function Product() {
         if (AuthService.isLoggedIn()) {
             try {
                 await adicionarProdutoCarrinho(product, 1);
-                toast.success('Produto adicionado ao carrinho com sucesso!');
+                toast.success('Produto adicionado ao carrinho!');
             } catch (error) {
                 console.error('Erro ao adicionar produto ao carrinho:', error);
             }
@@ -140,7 +140,7 @@ export default function Product() {
         if (AuthService.isLoggedIn()) {
             try {
                 await avaliarProduto(product, rating);
-                toast.success('Produto avaliado com sucesso!');
+                toast.success('Produto avaliado!');
                 setProductRating(rating);
             } catch (error) {
                 console.error('Erro ao avaliar o produto:', error);

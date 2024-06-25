@@ -26,7 +26,7 @@ export async function cadastrarFornecedor(fornecedor, tipoEntidade) {
         if (response.status != 201) {
             return false;
         }
-        toast.success('Fornecedor cadastrado com sucesso');
+        toast.success('Fornecedor cadastrado');
 
         return true;
     } catch (error) {

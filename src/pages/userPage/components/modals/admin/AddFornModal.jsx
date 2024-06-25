@@ -100,13 +100,13 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
         setErrors(newErrors);
 
         console.log(newErrors);
-        
+
         return Object.keys(newErrors).length === 0;
     };
 
     const handleAdd = async (e) => {
         e.preventDefault();
-        console.log("1");
+        console.log('1');
         console.log(validateForm());
 
         if (validateForm()) {
@@ -197,7 +197,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                     );
 
                     if (enderecoAtualizada === true) {
-                        toast.success('Fornecedor atualizado com sucesso');
+                        toast.success('Fornecedor atualizado');
                         setSelectedForn(null);
                         setForm(initialFormState);
                         return;

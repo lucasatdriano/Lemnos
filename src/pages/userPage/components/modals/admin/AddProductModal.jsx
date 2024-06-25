@@ -281,7 +281,7 @@ export default function ProdutoModal({ onClose }) {
                 };
                 await cadastrarProduto(formattedForm);
 
-                toast.success('Produto cadastrado com sucesso');
+                toast.success('Produto cadastrado');
                 setForm(initialFormState);
             } catch (error) {
                 console.error(error);
@@ -314,7 +314,7 @@ export default function ProdutoModal({ onClose }) {
                     );
 
                     if (entidadeAtualizada === true) {
-                        toast.success('Produto atualizado com sucesso.');
+                        toast.success('Produto atualizado.');
                         setSelectedProduct(null);
                         setForm(initialFormState);
                         return;

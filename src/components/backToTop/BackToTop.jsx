@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import imgBtnScroll from '../../assets/icons/btnScrollToTop.svg';
+import AuthService from '../../services/AuthService';
 
 export default function BackToTopButton() {
     const [isVisible, setIsVisible] = useState(false);
@@ -20,7 +22,11 @@ export default function BackToTopButton() {
             progressBar.classList.remove('visible');
         }
 
-        progressBar.style.background = `conic-gradient(#36CEC4 ${vlScroll}%, #2D3A3A ${vlScroll}%)`;
+        if (AuthService.getTheme() === 'light') {
+            progressBar.style.background = `conic-gradient(#36CEC4 ${vlScroll}%, #2D3A3A ${vlScroll}%)`;
+        } else {
+            progressBar.style.background = `conic-gradient(#10a88d ${vlScroll}%, #2D3A3A ${vlScroll}%)`;
+        }
     };
 
     useEffect(() => {

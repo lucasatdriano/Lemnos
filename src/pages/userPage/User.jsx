@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +23,7 @@ import {
     updateFuncionario,
 } from '../../services/FuncionarioService';
 import './user.scss';
+import { excluirEndereco } from '../../services/EnderecoService';
 
 const User = ({ onLogout, userImg, setUserImg }) => {
     const [username, setUsername] = useState('');
@@ -33,7 +36,8 @@ const User = ({ onLogout, userImg, setUserImg }) => {
     const [endereco, setEndereco] = useState(true);
     const [loading, setLoading] = useState(false);
     const [showAddProdutoModal, setShowAddProdutoModal] = useState(false);
-    const [showAddFuncionarioModal, setShowAddFuncionarioModal] = useState(false);
+    const [showAddFuncionarioModal, setShowAddFuncionarioModal] =
+        useState(false);
     const [showAddFornecedorModal, setShowAddFornecedorModal] = useState(false);
     const [form, setForm] = useState({
         nome: '',
@@ -207,7 +211,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
     };
 
     const handleSelectEndereco = (index, cep) => {
-        if(selectedEndereco == index) {
+        if (selectedEndereco == index) {
             setSelectedEndereco(null);
             setSelectedCep(null);
             setIsEnderecoSelected(false);
@@ -215,6 +219,42 @@ const User = ({ onLogout, userImg, setUserImg }) => {
             setSelectedEndereco(index);
             setSelectedCep(cep);
             setIsEnderecoSelected(true);
+        }
+    };
+
+    const handleDeleteEndereco = async () => {
+        if (selectedEndereco === null) {
+            toast.warn('Nenhum endereço selecionado.');
+            return;
+        }
+
+        const cepToDelete = form.enderecos[selectedEndereco].cep;
+
+        try {
+            const response = await excluirEndereco(
+                cepToDelete,
+                AuthService.getRole()
+            );
+
+            if (response) {
+                const updatedEnderecos = form.enderecos.filter(
+                    (endereco, index) => index !== selectedEndereco
+                );
+
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    enderecos: updatedEnderecos,
+                }));
+            }
+
+            setSelectedEndereco(null);
+            setSelectedCep(null);
+            setIsEnderecoSelected(false);
+
+            toast.success('Endereço apagado!');
+        } catch (error) {
+            toast.error('Erro ao apagar o endereço.');
+            console.error('Erro ao apagar o endereço', error);
         }
     };
 
@@ -311,34 +351,57 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                                         <div
                                             key={index}
                                             className={`dataEnd ${selectedEndereco === index ? 'selected' : ''}`}
-                                            onClick={() => handleSelectEndereco(index, endereco.cep)}
+                                            onClick={() =>
+                                                handleSelectEndereco(
+                                                    index,
+                                                    endereco.cep
+                                                )
+                                            }
                                         >
                                             <p>{endereco.logradouro || ''}</p>
-                                            <p><span className="fixo">Número:</span> {endereco.numero || ''}, {endereco.complemento || ''}</p>
-                                            <p><span className="fixo">CEP:</span> {endereco.cep || ''} - {endereco.cidade || ''}, {endereco.estado || ''}</p>
+                                            <p>
+                                                <span className="fixo">
+                                                    CEP:
+                                                </span>{' '}
+                                                {endereco.cep || ''} -{' '}
+                                                {endereco.cidade || ''},{' '}
+                                                {endereco.estado || ''}
+                                            </p>
+                                            <p>
+                                                <span className="fixo">
+                                                    Número:
+                                                </span>{' '}
+                                                {endereco.numero || ''},{' '}
+                                                {endereco.complemento || ''}
+                                            </p>
                                         </div>
                                     ))}
-                                    {form.enderecos.length < 3 && (
-                                        isEnderecoSelected 
-                                        ? (
-                                            <div className='buttons'>
-                                                <button type="button" onClick={() => toast.warn("Não implementado")}>
-                                                    Apagar Endereço
-                                                </button>
-                                                <button type="button" onClick={() => toast.warn("Não implementado")}>
-                                                    Alterar Endereço
-                                                </button>
-                                            </div>
-                                        )
-                                        : (
-                                            <button type="button" onClick={() => handleShowModal('endereco')}>
-                                                Adicionar mais um Endereço
+                                    {isEnderecoSelected && (
+                                        <div className="buttons">
+                                            <button
+                                                type="button"
+                                                onClick={handleDeleteEndereco}
+                                            >
+                                                Apagar Endereço
                                             </button>
-                                        )
+                                        </div>
+                                    )}
+                                    {form.enderecos.length < 3 && (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleShowModal('endereco')
+                                            }
+                                        >
+                                            Adicionar Outro Endereço
+                                        </button>
                                     )}
                                 </div>
                             ) : (
-                                <button type="button" onClick={() => handleShowModal('endereco')}>
+                                <button
+                                    type="button"
+                                    onClick={() => handleShowModal('endereco')}
+                                >
                                     Adicionar Endereço
                                 </button>
                             )
@@ -372,19 +435,104 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                     </div>
                 ) : (
                     <div className="funcionarioPage">
-                        <hr className="hrFuncionario" />
-                        <button
-                            type="button"
-                            onClick={() => handleShowModal('addProduto')}
-                        >
-                            Adicionar Produto
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleShowModal('addFornecedor')}
-                        >
-                            Adicionar Fornecedor
-                        </button>
+                        <div className="selectBtn">
+                            <button
+                                type="button"
+                                className="btnView"
+                                onClick={handleViewEndereco}
+                            >
+                                Endereços
+                            </button>
+                            <button
+                                type="button"
+                                className="btnView"
+                                onClick={handleViewHistory}
+                            >
+                                Pedidos
+                            </button>
+                        </div>
+                        {endereco ? (
+                            form.enderecos.length >= 1 ? (
+                                <div className="allEnderecos">
+                                    <h2>Endereços</h2>
+                                    {form.enderecos.map((endereco, index) => (
+                                        <div
+                                            key={index}
+                                            className={`dataEnd ${selectedEndereco === index ? 'selected' : ''}`}
+                                            onClick={() =>
+                                                handleSelectEndereco(
+                                                    index,
+                                                    endereco.cep
+                                                )
+                                            }
+                                        >
+                                            <p>{endereco.logradouro || ''}</p>
+                                            <p>
+                                                <span className="fixo">
+                                                    Número:
+                                                </span>{' '}
+                                                {endereco.numero || ''},{' '}
+                                                {endereco.complemento || ''}
+                                            </p>
+                                            <p>
+                                                <span className="fixo">
+                                                    CEP:
+                                                </span>{' '}
+                                                {endereco.cep || ''} -{' '}
+                                                {endereco.cidade || ''},{' '}
+                                                {endereco.estado || ''}
+                                            </p>
+                                        </div>
+                                    ))}
+                                    {isEnderecoSelected && (
+                                        <div className="buttons">
+                                            <button
+                                                type="button"
+                                                onClick={handleDeleteEndereco}
+                                            >
+                                                Apagar Endereço
+                                            </button>
+                                        </div>
+                                    )}
+                                    {form.enderecos.length < 3 && (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleShowModal('endereco')
+                                            }
+                                        >
+                                            Adicionar Outro Endereço
+                                        </button>
+                                    )}
+                                </div>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() => handleShowModal('endereco')}
+                                >
+                                    Adicionar Endereço
+                                </button>
+                            )
+                        ) : (
+                            <>
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        handleShowModal('addProduto')
+                                    }
+                                >
+                                    Adicionar Produto
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        handleShowModal('addFornecedor')
+                                    }
+                                >
+                                    Adicionar Fornecedor
+                                </button>
+                            </>
+                        )}
                     </div>
                 )}
             </section>

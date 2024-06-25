@@ -13,10 +13,12 @@ import {
     RiSunLine,
     RiMoonLine,
 } from 'react-icons/ri';
+import AuthService from '../../../../services/AuthService';
 
 export default function MenuDep({ toggleTheme, showMenuFav }) {
     const dropDownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -30,6 +32,12 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [isActive]);
+
+    useEffect(() => {
+        if (AuthService.getTheme() === 'dark') {
+            setIsDarkTheme(true);
+        }
+    }, []);
 
     const toggleMenu = () => {
         setIsActive(!isActive);
@@ -49,6 +57,11 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
         setIsActive(false);
         const htmlTag = document.querySelector('html');
         htmlTag.classList.remove('modalOpen');
+    };
+
+    const handleThemeToggle = () => {
+        setIsDarkTheme(!isDarkTheme);
+        toggleTheme();
     };
 
     return (
@@ -201,7 +214,9 @@ export default function MenuDep({ toggleTheme, showMenuFav }) {
                     <input
                         type="checkbox"
                         className="checkbox"
-                        onClick={toggleTheme}
+                        onClick={handleThemeToggle}
+                        checked={isDarkTheme}
+                        onChange={handleThemeToggle}
                         id="chk"
                         name="chk"
                     />

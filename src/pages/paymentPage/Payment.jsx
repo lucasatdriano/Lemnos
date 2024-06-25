@@ -106,7 +106,7 @@ export default function PaymentPage() {
             const success = await updateCliente(usuario);
             if (success) {
                 setIsCpfRegistered(true);
-                toast.success('CPF cadastrado com sucesso!');
+                toast.success('CPF cadastrado!');
             }
         } catch (error) {
             toast.error('Erro ao cadastrar CPF.');

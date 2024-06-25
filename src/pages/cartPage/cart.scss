@@ -143,11 +143,18 @@ main {
                             min-width: 15em;
                             object-fit: contain;
                             border-radius: 10px;
+                            cursor: pointer;
                         }
 
                         .nameProduct {
+                            cursor: pointer;
                             width: 200%;
                             font-size: clamp(1.8rem, 0.2rem + 1vw, 2rem);
+                            transition: 0.2s ease;
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
                         }
 
                         .amount {

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './menuSearch.scss';
 import { RiSearch2Line } from 'react-icons/ri';
@@ -14,6 +14,8 @@ export default function MenuSearch() {
         style: 'currency',
         currency: 'BRL',
     });
+
+    const inputRef = useRef(null);
 
     async function fetchProdutos() {
         const filtro = {
@@ -38,7 +40,19 @@ export default function MenuSearch() {
             setProdutos([]);
             setShowResults(false);
         }
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, [searchTerm]);
+
+    const handleClickOutside = (event) => {
+        if (inputRef.current && !inputRef.current.contains(event.target)) {
+            setShowResults(false);
+        }
+    };
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
@@ -63,6 +77,7 @@ export default function MenuSearch() {
         <div className="searchContainer">
             <form onSubmit={handleSearch} className="inputSearch">
                 <input
+                    ref={inputRef}
                     type="text"
                     placeholder="Pesquisar..."
                     name="search"

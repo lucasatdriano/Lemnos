@@ -249,13 +249,13 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                     );
 
                     if (enderecoAtualizada === true) {
-                        toast.success('Endereço atualizado com sucesso');
+                        toast.success('Endereço atualizado');
                         setForm(initialFormState);
                         setSelectedFunc(null);
                         return;
                     }
                 }
-                toast.success('Funcionario atualizado com sucesso');
+                toast.success('Funcionario atualizado');
             } catch (error) {
                 console.error('Erro ao atualizar funcionário:', error);
                 toast.error(error.response.data.message);

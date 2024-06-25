@@ -118,7 +118,7 @@ export async function cadastrarFuncionario(funcionario, tipoEntidade) {
         if (response.status != 201) {
             return false;
         }
-        toast.success('Funcionário cadastrado com sucesso');
+        toast.success('Funcionário cadastrado');
 
         return true;
     } catch (error) {
