@@ -7,7 +7,7 @@ import './offerList.scss';
 import { getAllProdutos } from '../../services/ProdutoService';
 import Loading from '../loading/Loading';
 
-export default function OfferList({ fetchCarrinho }) {
+export default function OfferList() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -19,10 +19,6 @@ export default function OfferList({ fetchCarrinho }) {
         }
         fetchDescontos();
     }, []);
-
-    const handleClick = () => {
-        fetchCarrinho();
-    };
 
     const produtosComDesconto = produtos.filter(
         (produto) => produto.desconto > 0
@@ -55,7 +51,7 @@ export default function OfferList({ fetchCarrinho }) {
                     }}
                 >
                     {produtosComDesconto.map((produto) => (
-                        <SplideSlide key={produto.id} onClick={handleClick}>
+                        <SplideSlide key={produto.id}>
                             <Card produto={produto} />
                         </SplideSlide>
                     ))}

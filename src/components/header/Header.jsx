@@ -10,6 +10,7 @@ import MenuFavorite from './components/favoriteMenu/MenuFavorite';
 import AuthService from '../../services/AuthService';
 import './header.scss';
 import { getQuantidadeCarrinho } from '../../services/UsuarioProdutoService';
+import cartEventEmitter from '../../services/configurations/events';
 
 export default function Header({ toggleTheme }) {
     const [shrinkHeader, setShrinkHeader] = useState(false);
@@ -21,19 +22,23 @@ export default function Header({ toggleTheme }) {
 
     useEffect(() => {
         fetchCarrinho();
-        const interval = setInterval(() => {
+
+        const handleUpdateCart = () => {
             fetchCarrinho();
-        }, 100);
-        return () => clearInterval(interval);
-    }, [carrinho]);
+        };
+
+        cartEventEmitter.on('updateCart', handleUpdateCart);
+
+        return () => {
+            cartEventEmitter.off('updateCart', handleUpdateCart);
+        };
+    }, []);
 
     const fetchCarrinho = async () => {
         if (AuthService.isLoggedIn()) {
             try {
                 const response = await getQuantidadeCarrinho();
-                if (response !== carrinho) {
-                    setCarrinho(response > 0 ? response : null);
-                }
+                setCarrinho(response > 0 ? response : null);
             } catch (error) {
                 setCarrinho(null);
             }
@@ -58,11 +63,7 @@ export default function Header({ toggleTheme }) {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 0) {
-                setShrinkHeader(true);
-            } else {
-                setShrinkHeader(false);
-            }
+            setShrinkHeader(window.scrollY > 0);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -123,7 +124,7 @@ export default function Header({ toggleTheme }) {
                         )}
                     </Link>
                     <Link to="/cart" className="linkIcons">
-                        {carrinho !== null && carrinho > 0 ? (
+                        {isLoggedIn && carrinho !== null && carrinho > 0 ? (
                             <>
                                 <span className="spanCarrinhoLength">
                                     {carrinho}

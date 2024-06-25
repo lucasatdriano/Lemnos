@@ -57,12 +57,10 @@ export async function getFuncionarioByNome(nome) {
                 Authorization: AuthService.getToken(),
             },
             data: {
-                nome: nome
+                nome: nome,
             },
             timeout: 10000,
         });
-        console.log(nome);
-        console.log(response);
 
         if (response.status != 200) {
             throw new Error('Não foi encontrar o funcionario');

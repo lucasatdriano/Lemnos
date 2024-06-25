@@ -55,7 +55,7 @@ export async function cadastrarProduto(produto) {
             },
             data: {
                 nome: produto.nome,
-                valor: produto.preco,
+                valorTotal: produto.preco,
                 descricao: produto.descricao,
                 desconto: produto.desconto,
                 cor: produto.cor,
@@ -72,8 +72,6 @@ export async function cadastrarProduto(produto) {
             },
             timeout: 10000,
         });
-
-        console.log('Response', response);
 
         if (response.status != 201) {
             throw new Error(response);

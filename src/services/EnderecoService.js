@@ -19,7 +19,7 @@ export async function verificarCep(cep) {
     }
 }
 
-export async function getEnderecoFromCep(cep){
+export async function getEnderecoFromCep(cep) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -30,7 +30,7 @@ export async function getEnderecoFromCep(cep){
                 Authorization: AuthService.getToken(),
             },
             params: {
-                cep: cep
+                cep: cep,
             },
             timeout: 10000,
         });
@@ -122,6 +122,7 @@ export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
         ) {
             toast.error(error.response.data.error);
         }
+        console.error(error);
         return false;
     }
 }

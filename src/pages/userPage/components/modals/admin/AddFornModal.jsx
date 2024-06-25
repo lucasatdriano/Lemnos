@@ -41,7 +41,6 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
     const selectFornecedor = async (email) => {
         try {
             const fornecedor = await getFornecedorByEmail(email);
-            console.log(fornecedor);
             if (!fornecedor) {
                 throw new Error('Dados do fornecedor não encontrados.');
             }
@@ -137,13 +136,12 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                     tipoEntidade
                 );
 
-                if (entidadeCadastrada == true) {
+                if (entidadeCadastrada) {
                     const enderecoResponse = await cadastrarEndereco(
                         formattedForm.email,
                         formattedForm.endereco,
                         tipoEntidade
                     );
-                    toast.success('Fornecedor adicionado com sucesso');
                     setSelectedForn(null);
                     setForm(initialFormState);
                 }

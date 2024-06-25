@@ -73,7 +73,7 @@ export default function Card({ produto }) {
                     setIsFavorite(true);
                     toast.success('Produto adicionado aos favoritos!');
                 } catch (error) {
-                    console.log('Erro ao adicionar produto aos favoritos.');
+                    console.error('Erro ao adicionar produto aos favoritos.');
                 }
             } else {
                 toast.warning(

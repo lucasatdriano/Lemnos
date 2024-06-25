@@ -1,8 +1,9 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from './AuthService';
+import { toast } from 'react-toastify';
 import { baseUri } from './configurations/ServiceConfig';
+import cartEventEmitter from './configurations/events';
+import AuthService from './AuthService';
+import axios from 'axios';
 
 export async function listarProdutosFiltrados(filtro, page, size) {
     try {
@@ -66,7 +67,7 @@ export async function listarProdutosFavoritos() {
 
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         throw error;
     }
 }
@@ -94,7 +95,7 @@ export async function adicionarFavorito(produto) {
 
             return response.data;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw error;
         }
     }
@@ -210,7 +211,7 @@ export async function getQuantidadeCarrinho() {
 
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -234,6 +235,9 @@ export async function adicionarProdutoCarrinho(produto, qntd) {
         if (response.status !== 200) {
             throw new Error('Erro ao adicionar produto ao carrinho.');
         }
+
+        cartEventEmitter.emit('produtoAdicionado');
+        cartEventEmitter.emit('updateCart');
     } catch (error) {
         if (
             error.response &&
@@ -267,6 +271,8 @@ export async function removerProdutoCarrinho(produto, qntd) {
             throw new Error('Erro ao remover produto do carrinho.');
         }
 
+        cartEventEmitter.emit('produtoAdicionado');
+        cartEventEmitter.emit('updateCart');
         return response.data;
     } catch (error) {
         if (
@@ -297,6 +303,8 @@ export async function apagarCarrinho() {
             throw new Error('Erro ao apagar carrinho.');
         }
 
+        cartEventEmitter.emit('produtoAdicionado');
+        cartEventEmitter.emit('updateCart');
         return response.data;
     } catch (error) {
         if (
@@ -311,7 +319,7 @@ export async function apagarCarrinho() {
 }
 
 export async function novoPedido(pedido) {
-    console.log('enviou');
+    console.error('enviou');
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -333,6 +341,7 @@ export async function novoPedido(pedido) {
             throw new Error('Erro ao fazer pedido.');
         }
 
+        cartEventEmitter.emit('updateCart');
         return response.data;
     } catch (error) {
         if (
@@ -347,7 +356,6 @@ export async function novoPedido(pedido) {
 }
 
 export async function listarPedido() {
-    console.log('listou');
     try {
         const response = await axios({
             baseURL: baseUri,

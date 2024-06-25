@@ -112,6 +112,7 @@ export async function updateFornecedor(fornecedor) {
             url: `/fornecedor`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: AuthService.getToken(),
             },
             data: {
                 nome: fornecedor.nome,
