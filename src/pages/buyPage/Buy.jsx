@@ -356,7 +356,8 @@ export default function BuyPage() {
                                                 <td>{produto.qntdProduto}</td>
                                                 <td>
                                                     {BRL.format(
-                                                        produto.valorComDesconto
+                                                        produto.valorComDesconto *
+                                                            produto.qntdProduto
                                                     )}
                                                 </td>
                                             </tr>

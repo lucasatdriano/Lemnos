@@ -165,7 +165,6 @@ export default function ProdutoModal({ onClose }) {
                 throw new Error('Dados do produto não encontrados.');
             }
 
-            console.log(produto);
             setForm({
                 nome: produto.nome || '',
                 descricao: produto.descricao || '',
@@ -184,11 +183,10 @@ export default function ProdutoModal({ onClose }) {
                 categoria: produto.categoria || '',
                 subCategoria: produto.subCategoria || '',
             });
-
-            const fornecedorOption = fornecedores.find(
-                (f) => f.value === produto.fornecedor
-            );
-            setSelectedFornecedor(fornecedorOption || null);
+            setSelectedFornecedor({
+                value: produto.fornecedor,
+                label: produto.fornecedor,
+            });
 
             setSelectedProduct(produto);
             setIsProdutoLoaded(true);
