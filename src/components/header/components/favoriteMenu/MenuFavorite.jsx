@@ -27,11 +27,11 @@ export default function MenuFavorite({ onClose }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         fetchFavorites();
     }, []);
 
     const fetchFavorites = async () => {
-        setIsLoading(true);
         if (AuthService.isLoggedIn() && AuthService.getRole() == 'CLIENTE') {
             try {
                 const response = await listarProdutosFavoritos();

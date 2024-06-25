@@ -108,11 +108,6 @@ export default function historicoCompras() {
                             Mostrar Mais
                         </a>
                     )}
-                    {mostrarMais && (
-                        <a className="btnMost" onClick={handleToggleMostrar}>
-                            Mostrar Menos
-                        </a>
-                    )}
                     {compraSelecionada && (
                         <OrderModal
                             pedido={compraSelecionada}

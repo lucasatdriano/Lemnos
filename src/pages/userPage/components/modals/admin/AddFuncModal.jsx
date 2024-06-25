@@ -52,8 +52,6 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
         try {
             const funcionario = await getFuncionarioByEmail(email);
 
-            console.log(funcionario);
-
             if (!funcionario) {
                 throw new Error('Dados do funcionário não encontrados.');
             }
@@ -185,13 +183,13 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                     tipoEntidade
                 );
 
-                if (entidadeCadastrada === true) {
+                if (entidadeCadastrada) {
                     const enderecoResponse = await cadastrarEndereco(
                         formattedForm.email,
                         formattedForm.endereco,
                         tipoEntidade
                     );
-                    if (enderecoResponse === true) {
+                    if (enderecoResponse) {
                         setForm(initialFormState);
                     }
                     return;

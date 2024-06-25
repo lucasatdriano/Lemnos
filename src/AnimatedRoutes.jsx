@@ -32,7 +32,8 @@ export default function AnimatedRoutes() {
                     <Route path="/about" element={<About />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cart" element={<Cart />} />
-                    <Route
+                    <Route path="/buy" element={<BuyPage />} />
+                    {/* <Route
                         path="/buy"
                         element={
                             isAuthenticated || isNavigatingToPayment ? (
@@ -41,7 +42,7 @@ export default function AnimatedRoutes() {
                                 <Navigate to="/" />
                             )
                         }
-                    />
+                    /> */}
                     <Route
                         path="/payment"
                         element={

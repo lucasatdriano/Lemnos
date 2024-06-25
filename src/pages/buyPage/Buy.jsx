@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { TbPackageExport } from 'react-icons/tb';
 import { MdInfoOutline } from 'react-icons/md';
@@ -17,13 +17,12 @@ import './buy.scss';
 import AuthService from '../../services/AuthService';
 import {
     atualizarStatus,
-    listarCarrinho,
     novoPedido,
     listarPedido,
 } from '../../services/UsuarioProdutoService';
 import { getCliente } from '../../services/ClienteService';
-import { getProdutoById } from '../../services/ProdutoService';
 import { toast } from 'react-toastify';
+import { setCarrinho } from '../../store/actions/cartActions';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -43,13 +42,12 @@ const formatCEP = (cep) => {
 };
 
 export default function BuyPage() {
+    const dispatch = useDispatch();
+    const carrinho = useSelector((state) => state.cart.items);
+    const valorCompra = useSelector((state) => state.cart.totalAmount);
+
     const [isModalCompleted, setIsModalCompleted] = useState(false);
-    const [pedido, setPedido] = useState([]);
-    const [carrinho, setCarrinho] = useState([]);
     const [cliente, setCliente] = useState({});
-    const [clienteEndereco, setClienteEndereco] = useState({});
-    const [valorCompra, setValorCompra] = useState(0);
-    const [desconto, setDesconto] = useState(0);
     const [pedidoStatus, setPedidoStatus] = useState('');
     const [pedidoId, setPedidoId] = useState(null);
     const [statusUpdates, setStatusUpdates] = useState(0);
@@ -61,45 +59,21 @@ export default function BuyPage() {
     const selectedAddress = useSelector(
         (state) => state.payment.selectedAddress
     );
-    const descontoRedux = useSelector((state) => state.payment.desconto);
-
-    async function fetchPedido() {
-        try {
-            if (AuthService.isLoggedIn()) {
-                const pedidoResponse = await listarCarrinho();
-                const clienteResponse = await getCliente();
-
-                setValorCompra(pedidoResponse.valorTotal);
-                setDesconto(descontoRedux);
-                setPedido(pedidoResponse || []);
-                setCliente(clienteResponse || {});
-                setClienteEndereco(clienteResponse.enderecos[0] || {});
-
-                if (pedidoResponse.length === 0) {
-                    setCarrinho([]);
-                    return;
-                }
-
-                const carrinhoDetalhado = await Promise.all(
-                    pedidoResponse.produtos.map(async (produto) => {
-                        const detalhesProduto = await getProdutoById(
-                            produto.id
-                        );
-                        return { ...produto, ...detalhesProduto };
-                    })
-                );
-                setCarrinho(
-                    Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []
-                );
-            }
-        } catch (error) {
-            console.error('Erro ao obter itens do pedido:', error);
-        }
-    }
+    const desconto = useSelector((state) => state.payment.desconto);
 
     useEffect(() => {
-        fetchPedido();
-    }, []);
+        async function fetchCliente() {
+            try {
+                if (AuthService.isLoggedIn()) {
+                    const clienteResponse = await getCliente();
+                    setCliente(clienteResponse || {});
+                }
+            } catch (error) {
+                console.error('Erro ao obter dados do cliente:', error);
+            }
+        }
+        fetchCliente();
+    }, [dispatch]);
 
     const fetchPedidoStatus = async (pedidoId) => {
         try {
@@ -110,7 +84,6 @@ export default function BuyPage() {
                 (pedido) => pedido.id === pedidoId
             );
 
-            console.log(pedidoAtualizado.status);
             if (pedidoAtualizado) {
                 setPedidoStatus(pedidoAtualizado.status);
                 setStatusUpdates((prev) => prev + 1);
@@ -147,15 +120,10 @@ export default function BuyPage() {
             await novoPedido(pedidoData);
 
             const pedidos = await listarPedido();
-            console.log('Lista de pedidos:', pedidos);
-
             const newPedido = pedidos[pedidos.length - 1];
             setPedidoId(newPedido.id);
-            setPedidoStatus('Em processamento'); // Atualize o status do pedido aqui
-            console.log('Novo pedido ID:', newPedido.id);
-
+            setPedidoStatus('Em processamento');
             toast.success('Compra Realizada');
-            fetchPedido();
         } catch (error) {
             console.error('Erro ao realizar compra', error);
         }
@@ -164,7 +132,7 @@ export default function BuyPage() {
     const statusStyles = (status) => {
         const currentStatus = pedidoStatus.toLowerCase();
 
-        if(AuthService.getTheme() == 'light') {
+        if (AuthService.getTheme() === 'light') {
             switch (status.toLowerCase()) {
                 case 'em processamento':
                 case 'enviado para a transportadora':

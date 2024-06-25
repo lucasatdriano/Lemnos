@@ -1,25 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { setCarrinho } from '../../store/actions/cartActions';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { MdDelete } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from 'react-icons/fa6';
+import { FaMinus, FaPlus, FaRegCreditCard, FaBarcode } from 'react-icons/fa';
 import { TbTruckDelivery } from 'react-icons/tb';
-import OfferList from '../../components/lists/OfferList';
-import './cart.scss';
+import { MdDelete } from 'react-icons/md';
 import {
-    adicionarProdutoCarrinho,
-    apagarCarrinho,
     listarCarrinho,
     removerProdutoCarrinho,
+    adicionarProdutoCarrinho,
+    apagarCarrinho,
 } from '../../services/UsuarioProdutoService';
 import { verificarCep } from '../../services/EnderecoService';
 import { getProdutoById } from '../../services/ProdutoService';
-import { useDispatch, useSelector } from 'react-redux';
+import { setFreteInfo } from '../../store/actions/freteActions';
 import AuthService from '../../services/AuthService';
 import Loading from '../../components/loading/Loading';
-import { setFreteInfo } from '../../store/actions/freteActions';
+import OfferList from '../../components/lists/OfferList';
+import cartEventEmitter from '../../services/configurations/events';
+import './cart.scss';
 import { useNavigation } from '../../NavigationProvider';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
@@ -29,61 +32,72 @@ const BRL = new Intl.NumberFormat('pt-BR', {
 
 export default function Cart() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { setIsNavigatingToPayment } = useNavigation();
-    const [cep, setCep] = useState('');
-    const [showOptions, setShowOptions] = useState(false);
     const cepInputRef = useRef(null);
     const cartRef = useRef(null);
-    const [carrinho, setCarrinho] = useState([]);
-    const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
+    const [cep, setCep] = useState('');
+    const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
-    const frete = useSelector((state) => state.frete);
-
     const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
     const [localDeliveryCost, setLocalDeliveryCost] = useState('');
     const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState('');
+    const frete = useSelector((state) => state.frete);
 
-    async function fetchCarrinho() {
+    useEffect(() => {
+        setIsLoading(true);
+        fetchCarrinho();
+        cartEventEmitter.on('produtoAdicionado', fetchCarrinho);
+
+        return () => {
+            cartEventEmitter.off('produtoAdicionado', fetchCarrinho);
+        };
+    }, []);
+
+    const fetchCarrinho = async () => {
         try {
             if (AuthService.isLoggedIn()) {
+                setIsLoading(true);
+
                 const response = await listarCarrinho();
-                if (response.length === 0) {
-                    setCarrinho([]);
+
+                if (!response || response.produtos.length === 0) {
+                    dispatch(setCarrinho([]));
                     setCep('');
-                    return;
+                } else {
+                    const carrinhoDetalhado = await Promise.all(
+                        response.produtos.map(async (produto) => {
+                            const detalhesProduto = await getProdutoById(
+                                produto.id
+                            );
+                            return { ...produto, ...detalhesProduto };
+                        })
+                    );
+
+                    carrinhoDetalhado.sort((a, b) => {
+                        const nomeA = a.nome.toUpperCase();
+                        const nomeB = b.nome.toUpperCase();
+                        if (nomeA < nomeB) return -1;
+                        if (nomeA > nomeB) return 1;
+                        return 0;
+                    });
+
+                    dispatch(
+                        setCarrinho({
+                            items: carrinhoDetalhado,
+                            totalAmount: response.valorTotal,
+                        })
+                    );
                 }
-                const carrinhoDetalhado = await Promise.all(
-                    response.produtos.map(async (produto) => {
-                        const detalhesProduto = await getProdutoById(
-                            produto.id
-                        );
-                        return { ...produto, ...detalhesProduto };
-                    })
-                );
-                carrinhoDetalhado.sort((a, b) => {
-                    const nomeA = a.nome.toUpperCase();
-                    const nomeB = b.nome.toUpperCase();
-                    if (nomeA < nomeB) return -1;
-                    if (nomeA > nomeB) return 1;
-                    return 0;
-                });
-                setCarrinho(
-                    Array.isArray(carrinhoDetalhado) ? carrinhoDetalhado : []
-                );
-                setValorTotalCarrinho(response.valorTotal);
             }
         } catch (error) {
             console.error('Erro ao obter itens do carrinho:', error);
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchCarrinho();
-    }, []);
+    const cart = useSelector((state) => state.cart.items);
 
     const addDaysToDate = (days) => {
         const result = new Date();
@@ -116,13 +130,16 @@ export default function Cart() {
             formattedCep = formattedCep.replace(/^(\d{5})(\d)/, '$1-$2');
         }
         setCep(formattedCep);
-        if (cep.length !== 10) {
+        if (formattedCep.length !== 9) {
             setShowOptions(false);
         }
     };
 
     const handleCalculateDelivery = async () => {
-        if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
+        if (cart.items === 0) {
+            toast.warning('Por favor, adicione um produto no seu carrinho.');
+            setShowOptions(false);
+        } else if (cep.length === 9 && cep.match(/^\d{5}-\d{3}$/)) {
             try {
                 const cepValido = await verificarCep(cep);
                 if (cepValido) {
@@ -149,21 +166,27 @@ export default function Cart() {
     };
 
     const calcularSubTotal = () => {
-        return carrinho.reduce(
-            (total, produto) =>
-                total + produto.qntdProduto * produto.valorComDesconto,
-            0
-        );
+        if (cart && cart.length > 0) {
+            return cart.reduce(
+                (total, produto) =>
+                    total + produto.qntdProduto * produto.valorComDesconto,
+                0
+            );
+        }
+        return 0;
     };
 
     const calcularTotal = () => {
-        return calcularSubTotal() + localDeliveryCost;
+        if (selectedDeliveryOption) {
+            return calcularSubTotal() + frete.custo;
+        } else {
+            return calcularSubTotal();
+        }
     };
 
     const diminuirQuantidadeCarrinho = async (produtoId) => {
         try {
             await removerProdutoCarrinho({ id: produtoId }, 1);
-            await fetchCarrinho();
         } catch (error) {
             console.error('Erro ao diminuir produto do carrinho:', error);
         }
@@ -171,13 +194,9 @@ export default function Cart() {
 
     const aumentarQuantidadeCarrinho = async (produtoId) => {
         try {
-            const produto = carrinho.find((item) => item.id === produtoId);
+            const produto = cart.find((item) => item.id === produtoId);
             if (produto) {
-                await adicionarProdutoCarrinho(
-                    { id: produtoId },
-                    produto.quantidade + 1
-                );
-                await fetchCarrinho();
+                await adicionarProdutoCarrinho({ id: produtoId }, 1);
             }
         } catch (error) {
             console.error('Erro ao aumentar quantidade do produto:', error);
@@ -190,28 +209,23 @@ export default function Cart() {
                 { id: produtoId },
                 produto.qntdProduto
             );
-            await fetchCarrinho();
         } catch (error) {
             console.error('Erro ao remover produto do carrinho:', error);
         }
     };
 
     const handleCleanCart = async () => {
-        setIsLoading(true);
         try {
             await apagarCarrinho();
-            await fetchCarrinho();
+            dispatch(setCarrinho([]));
         } catch (error) {
             console.error('Erro ao apagar carrinho:', error);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     const finalizarPedido = async () => {
-        setIsLoading(true);
         try {
-            if (carrinho.length === 0) {
+            if (cart.length === 0) {
                 toast.warning('Por favor, adicione algum item no carrinho.');
                 cartRef.current.scrollIntoView({ behavior: 'smooth' });
             } else if (cep.length !== 9) {
@@ -243,7 +257,79 @@ export default function Cart() {
                 <div className="containerCart">
                     {isLoading ? (
                         <Loading />
-                    ) : carrinho.length === 0 ? (
+                    ) : cart && cart.length > 0 ? (
+                        <ul className="listCart">
+                            {cart.map((produto) => (
+                                <li key={produto.id} className="order">
+                                    <div className="labels">
+                                        <p>Produto</p>
+                                        <div className="labelsNumber">
+                                            <p>Quantidade</p>
+                                            <p>Valor</p>
+                                        </div>
+                                    </div>
+                                    <hr className="hrLabels" />
+                                    <div className="productDesc">
+                                        <img
+                                            src={produto.imagemPrincipal}
+                                            alt={produto.nome}
+                                        />
+                                        <h4 className="nameProduct">
+                                            {produto.nome}
+                                        </h4>
+                                        <p className="amount">
+                                            <button
+                                                type="button"
+                                                className="buttonQtd"
+                                                id="minusQtd"
+                                                onClick={() =>
+                                                    diminuirQuantidadeCarrinho(
+                                                        produto.id
+                                                    )
+                                                }
+                                            >
+                                                <FaMinus />
+                                            </button>
+                                            <span id="qtdNumber">
+                                                {produto.qntdProduto}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                className="buttonQtd"
+                                                id="plusQtd"
+                                                onClick={() =>
+                                                    aumentarQuantidadeCarrinho(
+                                                        produto.id
+                                                    )
+                                                }
+                                            >
+                                                <FaPlus />
+                                            </button>
+                                        </p>
+                                        <h4 className="priceProduct">
+                                            {BRL.format(
+                                                produto.qntdProduto *
+                                                    produto.valorComDesconto
+                                            )}
+                                        </h4>
+                                        <p>
+                                            <button
+                                                className="btnRemove"
+                                                onClick={() =>
+                                                    removerProdutoCarrinhoAPI(
+                                                        produto.id,
+                                                        produto
+                                                    )
+                                                }
+                                            >
+                                                <TiDeleteOutline />
+                                            </button>
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
                         <div className="emptyCartMessage">
                             <h2 className="textEmpty">
                                 O seu carrinho está vazio.
@@ -255,79 +341,6 @@ export default function Cart() {
                                 Voltar para às compras
                             </button>
                         </div>
-                    ) : (
-                        <ul className="listCart">
-                            {Array.isArray(carrinho) &&
-                                carrinho.map((produto) => (
-                                    <li key={produto.id} className="order">
-                                        <div className="labels">
-                                            <p>Produto</p>
-                                            <div className="labelsNumber">
-                                                <p>Quantidade</p>
-                                                <p>Valor</p>
-                                            </div>
-                                        </div>
-                                        <hr className="hrLabels" />
-                                        <div className="productDesc">
-                                            <img
-                                                src={produto.imagemPrincipal}
-                                                alt={produto.nome}
-                                            />
-                                            <h4 className="nameProduct">
-                                                {produto.nome}
-                                            </h4>
-                                            <p className="amount">
-                                                <button
-                                                    type="button"
-                                                    className="buttonQtd"
-                                                    id="minusQtd"
-                                                    onClick={() =>
-                                                        diminuirQuantidadeCarrinho(
-                                                            produto.id
-                                                        )
-                                                    }
-                                                >
-                                                    <FaMinus />
-                                                </button>
-                                                <span id="qtdNumber">
-                                                    {produto.qntdProduto}
-                                                </span>
-                                                <button
-                                                    type="button"
-                                                    className="buttonQtd"
-                                                    id="plusQtd"
-                                                    onClick={() =>
-                                                        aumentarQuantidadeCarrinho(
-                                                            produto.id
-                                                        )
-                                                    }
-                                                >
-                                                    <FaPlus />
-                                                </button>
-                                            </p>
-                                            <h4 className="priceProduct">
-                                                {BRL.format(
-                                                    produto.qntdProduto *
-                                                        produto.valorComDesconto
-                                                )}
-                                            </h4>
-                                            <p>
-                                                <button
-                                                    className="btnRemove"
-                                                    onClick={() =>
-                                                        removerProdutoCarrinhoAPI(
-                                                            produto.id,
-                                                            produto
-                                                        )
-                                                    }
-                                                >
-                                                    <TiDeleteOutline />
-                                                </button>
-                                            </p>
-                                        </div>
-                                    </li>
-                                ))}
-                        </ul>
                     )}
 
                     <button
@@ -351,7 +364,7 @@ export default function Cart() {
                         <div className="values">
                             <p>Entrega:</p>
                             {selectedDeliveryOption ? (
-                                <p>{BRL.format(localDeliveryCost)}</p>
+                                <p>{BRL.format(frete.custo)}</p>
                             ) : (
                                 <p>{BRL.format(0)}</p>
                             )}
@@ -380,14 +393,24 @@ export default function Cart() {
                             <div className="options">
                                 <FaBarcode className="icon" />
                                 <p>
-                                    <strong>
-                                        {BRL.format(
-                                            calcularSubTotal() -
-                                                (calcularSubTotal() / 100) *
-                                                    15 +
-                                                frete.custo
-                                        )}
-                                    </strong>{' '}
+                                    {selectedDeliveryOption ? (
+                                        <strong>
+                                            {BRL.format(
+                                                calcularSubTotal() -
+                                                    (calcularSubTotal() / 100) *
+                                                        15 +
+                                                    frete.custo
+                                            )}
+                                        </strong>
+                                    ) : (
+                                        <strong>
+                                            {BRL.format(
+                                                calcularSubTotal() -
+                                                    (calcularSubTotal() / 100) *
+                                                        15
+                                            )}
+                                        </strong>
+                                    )}
                                     <br />
                                     com desconto à vista no boleto ou pix
                                 </p>
@@ -396,7 +419,7 @@ export default function Cart() {
                         <button
                             type="button"
                             className="endOrder"
-                            onClick={() => finalizarPedido()}
+                            onClick={finalizarPedido}
                         >
                             Ir para o Pagamento
                         </button>
@@ -520,9 +543,7 @@ export default function Cart() {
             </section>
             <section className="offers">
                 <h2>Continue Comprando</h2>
-                {AuthService.isLoggedIn && AuthService.isLoggedInWithGoogle && (
-                    <OfferList fetchCarrinho={fetchCarrinho} />
-                )}
+                <OfferList />
             </section>
         </main>
     );

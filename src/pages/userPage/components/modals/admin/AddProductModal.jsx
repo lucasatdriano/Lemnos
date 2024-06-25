@@ -164,6 +164,7 @@ export default function ProdutoModal({ onClose }) {
                 throw new Error('Dados do produto não encontrados.');
             }
 
+            console.log(produto);
             setForm({
                 nome: produto.nome || '',
                 descricao: produto.descricao || '',
@@ -282,7 +283,6 @@ export default function ProdutoModal({ onClose }) {
                         ? selectedFornecedor.value
                         : '',
                 };
-                console.log('Produto', formattedForm);
                 await cadastrarProduto(formattedForm);
 
                 toast.success('Produto cadastrado com sucesso');
@@ -373,9 +373,20 @@ export default function ProdutoModal({ onClose }) {
         else setFornecedores([]);
     }, [searchTerm]);
 
-    const handleFornecedorChange = (selectedOption) => {
+    const handleFornecedorChange = async (selectedOption) => {
         setSelectedFornecedor(selectedOption);
         handleChange('fornecedor', selectedOption.value);
+
+        try {
+            const fornecedor = await getFornecedoresByNome(
+                selectedOption.value
+            );
+            if (fornecedor) {
+                handleChange('fornecedor', fornecedor || '');
+            }
+        } catch (error) {
+            console.error('Erro ao buscar fornecedor:', error);
+        }
     };
 
     const handleInputChange = (fornecedor) => {

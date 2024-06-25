@@ -46,7 +46,6 @@ export default function OrderModal({ pedido, onClose }) {
                     produtos: detalhesProdutos,
                 };
                 setDetalhesCompra(detalhesCompraAtualizado);
-                console.log(detalhesCompra);
             } catch (error) {
                 console.error('Erro ao obter detalhes da compra:', error);
             }
