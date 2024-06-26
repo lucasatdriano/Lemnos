@@ -127,7 +127,7 @@ export async function updateEndereco(emailEntidade, endereco, TipoEntidade) {
     }
 }
 
-export async function excluirEndereco(endereco, entidade) {
+export async function excluirEndereco(email, cep, entidade) {
     try {
         const response = await axios({
             baseURL: baseUri,
@@ -138,7 +138,8 @@ export async function excluirEndereco(endereco, entidade) {
                 Authorization: AuthService.getToken(),
             },
             params: {
-                cep: endereco.cep,
+                email: email,
+                cep: cep,
                 e: entidade,
             },
             timeout: 10000,
