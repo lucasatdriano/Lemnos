@@ -16,6 +16,7 @@ export default function MenuSearch() {
     });
 
     const inputRef = useRef(null);
+    const searchProducts = useRef(null);
 
     async function fetchProdutos() {
         const filtro = {
@@ -49,7 +50,12 @@ export default function MenuSearch() {
     }, [searchTerm]);
 
     const handleClickOutside = (event) => {
-        if (inputRef.current && !inputRef.current.contains(event.target)) {
+        if (
+            inputRef.current &&
+            !inputRef.current.contains(event.target) &&
+            searchProducts.current &&
+            !searchProducts.current.contains(event.target)
+        ) {
             setShowResults(false);
         }
     };
@@ -91,7 +97,7 @@ export default function MenuSearch() {
                 </button>
             </form>
             {showResults && produtos.length > 0 && (
-                <ul className="searchResults">
+                <ul className="searchResults" ref={searchProducts}>
                     {produtos.map((product) => (
                         <Link
                             to={`/product/${product.id}`}
