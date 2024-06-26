@@ -4,8 +4,7 @@ import './about.scss';
 import LogoHorizontalLight from '../../assets/imgLemnos/logoHorizontal.svg';
 import LogoHorizontalDark from '../../assets/imgLemnos/logoHorizontalClaro.svg';
 import TechFesto from '../../assets/imgLemnos/imgMascote.svg';
-// import { cadastrarFornecedor } from '../../services/FornecedorService';
-// import { cadastrarProduto } from '../../services/ProdutoService';
+import { cadastrarProduto } from '../../services/ProdutoService';
 
 export default function About() {
     useEffect(() => {
@@ -42,10 +41,10 @@ export default function About() {
             reset: false,
         });
     }, []);
-
-    // const handleProdutos = () => {
-    //     processarProdutos();
-    // }
+    
+    const handleProdutos = () => {
+        processarProdutos();
+    }
 
     // const handleFornecedores = () => {
     //     processarFornecedores();
@@ -88,8 +87,8 @@ export default function About() {
                 </div>
 
                 <div className="content">
-                    {/* <button onClick={handleProdutos}>Cadastrar produtos</button>
-                    <button onClick={handleFornecedores}>Cadastrar Fornecedores</button> */}
+                    {/* <button onClick={handleProdutos}>Cadastrar produtos</button> */}
+                    {/* <button onClick={handleFornecedores}>Cadastrar Fornecedores</button> */}
                     <p className="text">
                         Desde sua fundação em 2023, a Lemnos lidera o mercado
                         tecnológico com a sua inovação, oferecendo uma ampla

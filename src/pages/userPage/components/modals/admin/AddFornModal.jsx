@@ -99,20 +99,16 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
 
         setErrors(newErrors);
 
-        console.log(newErrors);
-
         return Object.keys(newErrors).length === 0;
     };
 
     const handleAdd = async (e) => {
         e.preventDefault();
-        console.log('1');
-        console.log(validateForm());
 
         if (validateForm()) {
             const formattedForm = {
                 ...form,
-                nome: form.nome ? form.nome.toLowerCase() : '',
+                nome: form.nome ? form.nome : '',
                 cnpj: String(form.cnpj).replace(/\D/g, ''),
                 telefone: String(form.telefone)
                     .replace(/\D/g, '')
