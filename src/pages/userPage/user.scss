@@ -583,16 +583,17 @@ $font-items: 'Poppins', Helvetica;
         }
 
         .allEnderecos {
-            .selected {
-                box-shadow: 2px 2px 15px $color-primaryDark;
-            }
-
             .dataEnd {
                 background-color: #dce0e081;
                 border: $color-primaryDark solid 3px;
                 border-left: $color-primaryDark solid 10px;
                 color: $color-fontLight;
-                box-shadow: 0 0 10px #141414a8;
+                box-shadow: 0 0 5px #141414a8;
+
+                &.selected {
+                    background-color: #dce0e050;
+                    box-shadow: 2px 2px 25px #0d977e80;
+                }
             }
         }
 

@@ -150,10 +150,8 @@ $font-items: 'Poppins', Helvetica;
                 box-shadow: 0 0 15px #141414a8;
 
                 .detailsTable {
-                    thead {
-                        tr > th {
-                            color: $color-primaryDark;
-                        }
+                    .labelDetails {
+                        color: $color-primaryDark;
                     }
                 }
             }

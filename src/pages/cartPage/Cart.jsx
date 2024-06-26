@@ -57,8 +57,6 @@ export default function Cart() {
     const fetchCarrinho = async () => {
         try {
             if (AuthService.isLoggedIn()) {
-                setIsLoading(true);
-
                 const response = await listarCarrinho();
 
                 if (!response || response.produtos.length === 0) {

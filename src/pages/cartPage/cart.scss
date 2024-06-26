@@ -94,7 +94,7 @@ main {
                     &:active {
                         transform: rotateX(25deg);
                         top: 5px;
-                        box-shadow: 2px 5px 5px $color-shadow;
+                        box-shadow: 2px 2px 5px $color-shadow;
                     }
                 }
             }
@@ -446,11 +446,20 @@ main {
         .containerMain {
             .containerCart {
                 .emptyCartMessage {
+                    background-color: #72757478;
                     box-shadow: 0 0 15px #141414a8;
 
                     .btnBackBuy {
                         background: $color-primaryDark;
-                        box-shadow: 0 0 15px $color-shadow;
+                        box-shadow: 0 0 15px #141414a8;
+
+                        &:hover {
+                            box-shadow: 5px 10px 5px #141414a8;
+                        }
+
+                        &:active {
+                            box-shadow: 2px 2px 5px #141414a8;
+                        }
                     }
                 }
 
