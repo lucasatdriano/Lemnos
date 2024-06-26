@@ -4,7 +4,10 @@ import CustomInput from '../../../../components/inputs/customInput/Inputs';
 import './registrationForm.scss';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { auth, googleProvider } from '../../../../services/configurations/FirebaseConfig';
+import {
+    auth,
+    googleProvider,
+} from '../../../../services/configurations/FirebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
 import { loginFirebase } from '../../../../services/LoginService';
 
@@ -130,7 +133,7 @@ export default function RegistrationForm({
             <form className="registration" onSubmit={handleSubmit}>
                 <h2>Crie sua Conta Lemnos</h2>
                 <div className="inputsRegistration">
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Nome Completo:"
@@ -144,9 +147,9 @@ export default function RegistrationForm({
                         {errors.name && (
                             <span className="invalid">{errors.name}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="CPF:"
@@ -162,9 +165,9 @@ export default function RegistrationForm({
                         {errors.cpf && (
                             <span className="invalid">{errors.cpf}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Email:"
@@ -177,9 +180,9 @@ export default function RegistrationForm({
                         {errors.email && (
                             <span className="invalid">{errors.email}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Confirme seu Email:"
@@ -192,9 +195,9 @@ export default function RegistrationForm({
                         {errors.confEmail && (
                             <span className="invalid">{errors.confEmail}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type={showPassword ? 'text' : 'password'}
                             label="Senha:"
@@ -219,9 +222,9 @@ export default function RegistrationForm({
                         {errors.password && (
                             <span className="invalid">{errors.password}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type={showConfPassword ? 'text' : 'password'}
                             label="Confirme sua Senha:"
@@ -247,7 +250,7 @@ export default function RegistrationForm({
                                 {errors.confPassword}
                             </span>
                         )}
-                    </p>
+                    </div>
                 </div>
 
                 <div className="btnRegistrationForm">

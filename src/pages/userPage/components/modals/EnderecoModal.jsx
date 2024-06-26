@@ -152,7 +152,7 @@ export default function EnderecoModal({ onClose }) {
             >
                 <h2>Adicionar Endereço</h2>
                 <div className="modalEndereco">
-                    <p className="inputCep">
+                    <div className="inputCep groupInput">
                         <CustomInput
                             type="text"
                             label="CEP:"
@@ -168,9 +168,9 @@ export default function EnderecoModal({ onClose }) {
                         {errors.cep && (
                             <span className="invalid">{errors.cep}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Estado:"
@@ -212,9 +212,9 @@ export default function EnderecoModal({ onClose }) {
                                     .includes(searchTerm.toLowerCase())
                             }
                         />
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Cidade:"
@@ -230,9 +230,9 @@ export default function EnderecoModal({ onClose }) {
                         {errors.cidade && (
                             <span className="invalid">{errors.cidade}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Bairro:"
@@ -248,9 +248,9 @@ export default function EnderecoModal({ onClose }) {
                         {errors.bairro && (
                             <span className="invalid">{errors.bairro}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Logradouro:"
@@ -266,9 +266,9 @@ export default function EnderecoModal({ onClose }) {
                         {errors.logradouro && (
                             <span className="invalid">{errors.logradouro}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Número do Logradouro:"
@@ -285,9 +285,9 @@ export default function EnderecoModal({ onClose }) {
                                 {errors.nLogradouro}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Complemento:"
@@ -304,7 +304,7 @@ export default function EnderecoModal({ onClose }) {
                                 {errors.complemento}
                             </span>
                         )}
-                    </p>
+                    </div>
                 </div>
                 <button type="button" onClick={handleSave}>
                     Salvar

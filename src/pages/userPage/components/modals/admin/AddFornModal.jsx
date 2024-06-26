@@ -223,7 +223,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
             >
                 <h2>Adicionar/Atualizar Fornecedor</h2>
                 <div className="modalFornecedor">
-                    <p className="inputNome">
+                    <div className="inputNome groupInput">
                         <CustomInput
                             type="text"
                             label="Nome do Fornecedor:"
@@ -238,9 +238,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                         {errors.nome && (
                             <span className="invalid">{errors.nome}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="email"
                             label="Email:"
@@ -256,9 +256,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                         {errors.email && (
                             <span className="invalid">{errors.email}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Telefone:"
@@ -275,9 +275,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                         {errors.telefone && (
                             <span className="invalid">{errors.telefone}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="CNPJ:"
@@ -294,9 +294,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                         {errors.cnpj && (
                             <span className="invalid">{errors.cnpj}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="CEP:"
@@ -316,9 +316,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                         {errors.cep && (
                             <span className="invalid">{errors.cep}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Número do Logradouro:"
@@ -338,9 +338,9 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                                 {errors.nLogradouro}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Complemento:"
@@ -360,7 +360,7 @@ export default function FornecedorModal({ onClose, tipoEntidade }) {
                                 {errors.complemento}
                             </span>
                         )}
-                    </p>
+                    </div>
                 </div>
                 <div className="containerButtons">
                     <button

@@ -387,7 +387,7 @@ $font-items: 'Poppins', Helvetica;
                 grid-column: span 2;
             }
 
-            p {
+            .groupInput {
                 position: relative;
 
                 .dropdown {
@@ -683,25 +683,25 @@ $font-items: 'Poppins', Helvetica;
             display: none;
         }
 
-        .clientePage {
-            .selectBtn {
-                button {
-                    width: 50%;
+        .selectBtn {
+            width: 100%;
+            button {
+                width: 50%;
 
-                    &:last-child {
-                        border-radius: 0;
-                        border-left: 2px solid #f3faf9de;
-                    }
+                &:last-child {
+                    border-radius: 0;
+                    border-left: 2px solid #f3faf9de;
+                }
 
-                    &:hover {
-                        filter: brightness(0.9);
-                    }
+                &:hover {
+                    filter: brightness(0.9);
                 }
             }
         }
 
         .adminPage,
         .funcionarioPage {
+            padding: 1em 0;
             flex-direction: column;
 
             .hrFuncionario {

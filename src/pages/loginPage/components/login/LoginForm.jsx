@@ -106,7 +106,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
             <form onSubmit={handleLogin} className="login">
                 <h2>Digite seu Email e sua Senha</h2>
                 <div className="inputsLogin">
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Email:"
@@ -119,9 +119,9 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
                         {errors.email && (
                             <span className="invalid">{errors.email}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type={showPassword ? 'text' : 'password'}
                             label="Senha:"
@@ -145,7 +145,7 @@ export default function LoginForm({ onLogin, onCadastroClick }) {
                         {errors.password && (
                             <span className="invalid">{errors.password}</span>
                         )}
-                    </p>
+                    </div>
                 </div>
 
                 <div className="btnLoginForm">

@@ -283,7 +283,7 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
             >
                 <h2>Adicionar/Atualizar Funcionário</h2>
                 <div className="modalFuncionario">
-                    <p className="inputNome">
+                    <div className="inputNome">
                         <CustomInput
                             type="text"
                             label="Nome do Funcionário:"
@@ -298,9 +298,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.nome && (
                             <span className="invalid">{errors.nome}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="CPF:"
@@ -318,9 +318,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.cpf && (
                             <span className="invalid">{errors.cpf}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Telefone:"
@@ -337,9 +337,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.telefone && (
                             <span className="invalid">{errors.telefone}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="date"
                             label="Data de Nascimento:"
@@ -353,9 +353,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.dataNasc && (
                             <span className="invalid">{errors.dataNasc}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="date"
                             label="Data de Admissão:"
@@ -371,9 +371,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                                 {errors.dataAdmissao}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="CEP:"
@@ -391,9 +391,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.cep && (
                             <span className="invalid">{errors.cep}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Número do Logradouro:"
@@ -413,9 +413,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                                 {errors.numLogradouro}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Complemento:"
@@ -435,9 +435,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                                 {errors.complemento}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Email:"
@@ -453,9 +453,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.email && (
                             <span className="invalid">{errors.email}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type={showPassword ? 'text' : 'password'}
                             label="Senha:"
@@ -482,9 +482,9 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.senha && (
                             <span className="invalid">{errors.senha}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type={showConfPassword ? 'text' : 'password'}
                             label="Confirme sua Senha:"
@@ -510,7 +510,7 @@ export default function FuncionarioModal({ onClose, tipoEntidade }) {
                         {errors.confSenha && (
                             <span className="invalid">{errors.confSenha}</span>
                         )}
-                    </p>
+                    </div>
                 </div>
                 <div className="containerButtons">
                     {!isFuncSelected() ? (
