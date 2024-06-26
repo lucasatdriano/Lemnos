@@ -228,11 +228,14 @@ const User = ({ onLogout, userImg, setUserImg }) => {
             return;
         }
 
-        const cepToDelete = form.enderecos[selectedEndereco].cep;
-
         try {
+
+            const tokenList = AuthService.getToken().split('.');
+            const json = JSON.parse(atob(tokenList[1]));
+
             const response = await excluirEndereco(
-                cepToDelete,
+                json.sub,
+                selectedCep,
                 AuthService.getRole()
             );
 
@@ -245,13 +248,13 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                     ...prevForm,
                     enderecos: updatedEnderecos,
                 }));
+
+                setSelectedEndereco(null);
+                setSelectedCep(null);
+                setIsEnderecoSelected(false);
+
+                toast.success('Endereço apagado!');
             }
-
-            setSelectedEndereco(null);
-            setSelectedCep(null);
-            setIsEnderecoSelected(false);
-
-            toast.success('Endereço apagado!');
         } catch (error) {
             toast.error('Erro ao apagar o endereço.');
             console.error('Erro ao apagar o endereço', error);
