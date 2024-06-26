@@ -52,7 +52,7 @@ export async function listarProdutosFavoritos() {
             url: `/produto/fav`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -81,7 +81,7 @@ export async function adicionarFavorito(produto) {
                 url: '/produto/fav',
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
-                    Authorization: AuthService.getToken(),
+                    'Authorization': AuthService.getToken(),
                 },
                 params: {
                     id_prod: produto.id,
@@ -109,7 +109,7 @@ export async function desfavoritarProduto(produto) {
             url: '/produto/fav',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             params: {
                 id_prod: produto.id,
@@ -136,7 +136,7 @@ export async function avaliarProduto(produto, valorAvaliacao) {
             url: `/produto/avaliar/${produto.id}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 avaliacao: valorAvaliacao,
@@ -169,7 +169,7 @@ export async function listarCarrinho() {
             url: '/carrinho',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -199,7 +199,7 @@ export async function getQuantidadeCarrinho() {
             url: '/carrinho/quantidade',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
         });
 
@@ -223,7 +223,7 @@ export async function adicionarProdutoCarrinho(produto, qntd) {
             url: '/carrinho',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 id: produto.id,
@@ -258,7 +258,7 @@ export async function removerProdutoCarrinho(produto, qntd) {
             url: '/carrinho',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 id: produto.id,
@@ -294,7 +294,7 @@ export async function apagarCarrinho() {
             url: '/carrinho/tudo',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -327,7 +327,7 @@ export async function novoPedido(pedido) {
             url: '/pedido',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 metodoPagamento: pedido.metodoPagamento,
@@ -363,7 +363,37 @@ export async function listarPedido() {
             url: `/pedido`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
+            },
+            timeout: 10000,
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Erro ao listar pedido.');
+        }
+
+        return response.data;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            console.error(error.response.data.error);
+        }
+        throw error;
+    }
+}
+
+export async function pedidoPorId(id) {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'GET',
+            url: `/pedido/${id}`,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -393,7 +423,7 @@ export async function getPedido(pedido) {
             url: `/pedido/${pedido}`,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             timeout: 10000,
         });
@@ -423,7 +453,7 @@ export async function atualizarStatus(pedido) {
             url: '/pedido',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 id: pedido,
