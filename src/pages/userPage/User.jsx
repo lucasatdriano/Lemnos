@@ -451,7 +451,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                                 className="btnView"
                                 onClick={handleViewHistory}
                             >
-                                Pedidos
+                                Administração
                             </button>
                         </div>
                         {endereco ? (
@@ -518,6 +518,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                             )
                         ) : (
                             <>
+                                <h2>Administrar Produtos</h2>
                                 <button
                                     type="button"
                                     onClick={() =>

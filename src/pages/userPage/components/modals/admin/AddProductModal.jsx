@@ -399,7 +399,7 @@ export default function ProdutoModal({ onClose }) {
             >
                 <h2>Adicionar/Atualizar Produto</h2>
                 <div className="modalProduto">
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Nome do Produto:"
@@ -414,9 +414,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.nome && (
                             <span className="invalid">{errors.nome}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Preço:"
@@ -432,9 +432,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.preco && (
                             <span className="invalid">{errors.preco}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Descrição:"
@@ -450,9 +450,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.descricao && (
                             <span className="invalid">{errors.descricao}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Desconto (%):"
@@ -469,9 +469,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.desconto && (
                             <span className="invalid">{errors.desconto}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Cor:"
@@ -487,9 +487,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.cor && (
                             <span className="invalid">{errors.cor}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Modelo:"
@@ -505,9 +505,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.modelo && (
                             <span className="invalid">{errors.modelo}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Imagem Principal:"
@@ -524,10 +524,10 @@ export default function ProdutoModal({ onClose }) {
                                 {errors.imagemPrinc}
                             </span>
                         )}
-                    </p>
+                    </div>
 
                     {form.imagens.map((imagem, index) => (
-                        <p key={index}>
+                        <div className="groupInput" key={index}>
                             <CustomInput
                                 type="text"
                                 label={`Imagem ${index + 2}:`}
@@ -539,10 +539,10 @@ export default function ProdutoModal({ onClose }) {
                                 }
                                 disabled={isProductSelected()}
                             />
-                        </p>
+                        </div>
                     ))}
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Categoria:"
@@ -583,9 +583,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.categoria && (
                             <span className="invalid">{errors.categoria}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Subcategoria:"
@@ -628,9 +628,9 @@ export default function ProdutoModal({ onClose }) {
                                 {errors.subCategoria}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Peso (kg):"
@@ -647,9 +647,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.peso && (
                             <span className="invalid">{errors.peso}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Altura (cm):"
@@ -666,9 +666,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.altura && (
                             <span className="invalid">{errors.altura}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Comprimento (cm):"
@@ -690,9 +690,9 @@ export default function ProdutoModal({ onClose }) {
                                 {errors.comprimento}
                             </span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Largura (cm):"
@@ -709,9 +709,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.largura && (
                             <span className="invalid">{errors.largura}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <CustomInput
                             type="text"
                             label="Fabricante:"
@@ -727,9 +727,9 @@ export default function ProdutoModal({ onClose }) {
                         {errors.fabricante && (
                             <span className="invalid">{errors.fabricante}</span>
                         )}
-                    </p>
+                    </div>
 
-                    <p>
+                    <div className="groupInput">
                         <Select
                             value={selectedFornecedor}
                             options={fornecedores}
@@ -745,7 +745,7 @@ export default function ProdutoModal({ onClose }) {
                         {errors.fornecedor && (
                             <span className="invalid">{errors.fornecedor}</span>
                         )}
-                    </p>
+                    </div>
                 </div>
                 <div className="containerButtons">
                     <button
