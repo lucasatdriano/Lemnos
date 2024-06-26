@@ -51,7 +51,7 @@ export async function cadastrarProduto(produto) {
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                Authorization: AuthService.getToken(),
+                'Authorization': AuthService.getToken(),
             },
             data: {
                 nome: produto.nome,
