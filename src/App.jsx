@@ -12,25 +12,23 @@ import { NavigationProvider } from './NavigationProvider';
 import AuthService from './services/AuthService';
 
 export default function App() {
-    const [theme, setTheme] = useState(AuthService.getTheme() || 'light');
+    const [theme, setTheme] = useState(AuthService.getTheme() || 'dark');
     const { pathname } = useLocation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [pathname]);
 
-    useEffect(() => {
-        AuthService.setTheme(theme);
-    }, [theme]);
-
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        AuthService.setTheme(newTheme);
     };
 
     return (
         <AuthProvider>
             <NavigationProvider>
-                <section className={theme}>
+                <section className={`${AuthService.getTheme()}`}>
                     <Header toggleTheme={toggleTheme} />
                     <AnimatedRoutes />
                     <BackToTopButton />
