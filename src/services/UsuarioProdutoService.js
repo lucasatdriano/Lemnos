@@ -22,7 +22,7 @@ export async function listarProdutosFiltrados(filtro, page, size) {
                 page: page,
                 size: size,
             },
-            timeout: 10000,
+            timeout: 25000,
         });
 
         if (response.status !== 200 && response.status !== 204) {
@@ -38,7 +38,7 @@ export async function listarProdutosFiltrados(filtro, page, size) {
         ) {
             toast.error(error.response.data.error);
         } else {
-            toast.error('Erro ao filtrar produtos.');
+            console.error('Erro ao filtrar produtos.', error);
         }
         throw error;
     }
