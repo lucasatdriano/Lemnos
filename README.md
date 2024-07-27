@@ -10,6 +10,7 @@ Este é um projeto de e-commerce de tecnologia desenvolvido em React como parte 
 - <a href="#-funcionalidades">Funcionalidades</a>
 - <a href="#-estrutura-do-projeto">Estrutura do Projeto</a>
 - <a href="#-como-executar-o-projeto">Como Executar o Projeto</a>
+- <a href="#-planos-futuros">Planos Futuros</a>
 - <a href="#-contato">Contato</a>
 
 ## 🛠️ Tecnologias Utilizadas
