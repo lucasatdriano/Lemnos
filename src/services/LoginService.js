@@ -31,7 +31,7 @@ export async function login(usuario, navigate) {
                 AuthService.logout();
                 navigate('/login');
             },
-            5 * 60 * 1000
+            45 * 60 * 1000
         );
 
         return true;

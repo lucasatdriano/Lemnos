@@ -18,6 +18,15 @@
         "complemento": "Sala 202"
     },
     {
+        "nome": "Thermaltake Brasil",
+        "telefone": "95349493804",
+        "cep": "34567890",
+        "email": "contato@thermaltake.com.br",
+        "numeroLogradouro": "13000",
+        "cnpj": "90123456063102",
+        "complemento": "Sala 13"
+    },
+    {
         "nome": "AMD Brasil",
         "telefone": "11315147002",
         "cep": "04578000",
@@ -167,7 +176,7 @@
         "cep": "89012345",
         "email": "contato@hp.com",
         "numeroLogradouro": "18000",
-        "cnpj": "45678901000156",
+        "cnpj": "45678901010156",
         "complemento": "Sala 1818"
     },
     {
@@ -176,8 +185,35 @@
         "cep": "90123456",
         "email": "contato@intel.com.br",
         "numeroLogradouro": "19000",
-        "cnpj": "56789012000167",
+        "cnpj": "56789012890167",
         "complemento": "Sala 1919"
+    },
+    {
+        "nome": "Logitech Store",
+        "telefone": "42322892408",
+        "cep": "90123456",
+        "email": "contato@logitech.com.br",
+        "numeroLogradouro": "19",
+        "cnpj": "56789213850167",
+        "complemento": "Sala 1"
+    },
+    {
+        "nome": "Smart Home Devices Ltda",
+        "telefone": "56522892408",
+        "cep": "90123456",
+        "email": "contato@smarthome.com.br",
+        "numeroLogradouro": "1",
+        "cnpj": "76781518850167",
+        "complemento": "Sala 22"
+    },
+    {
+        "nome": "Kingston Brasil",
+        "telefone": "52322892408",
+        "cep": "90123456",
+        "email": "contato@kingston.com.br",
+        "numeroLogradouro": "190",
+        "cnpj": "46781313850167",
+        "complemento": "Sala 12"
     },
     {
         "nome": "Kabum",
@@ -185,7 +221,7 @@
         "cep": "01234567",
         "email": "contato@kabum.com.br",
         "numeroLogradouro": "20000",
-        "cnpj": "67890123000178",
+        "cnpj": "67890123300178",
         "complemento": "Sala 2020"
     },
     {
@@ -194,7 +230,7 @@
         "cep": "12345678",
         "email": "contato@lenovo.com.br",
         "numeroLogradouro": "21000",
-        "cnpj": "78901234000189",
+        "cnpj": "78901234000389",
         "complemento": "Sala 2121"
     },
     {
@@ -203,7 +239,7 @@
         "cep": "23456789",
         "email": "contato@lojadecomponentes.com",
         "numeroLogradouro": "22000",
-        "cnpj": "89012345000190",
+        "cnpj": "89012345310190",
         "complemento": "Sala 2222"
     },
     {
@@ -212,7 +248,7 @@
         "cep": "01234567",
         "email": "contato@megamamute.com.br",
         "numeroLogradouro": "300",
-        "cnpj": "12345678000190",
+        "cnpj": "12345678060190",
         "complemento": "Bloco A"
     },
     {
@@ -311,7 +347,7 @@
         "cep": "12345678",
         "email": "contato@smartliving.com.br",
         "numeroLogradouro": "700",
-        "cnpj": "12345678000121",
+        "cnpj": "12345678030121",
         "complemento": "Andar 2"
     },
     {
@@ -320,7 +356,7 @@
         "cep": "23456789",
         "email": "contato@sony.com.br",
         "numeroLogradouro": "50",
-        "cnpj": "23456789000132",
+        "cnpj": "29056789000132",
         "complemento": "Edifício Sony"
     },
     {
@@ -329,7 +365,7 @@
         "cep": "34567890",
         "email": "contato@universalelectronics.com.br",
         "numeroLogradouro": "1500",
-        "cnpj": "34567890000143",
+        "cnpj": "34567898900143",
         "complemento": "Loja 5"
     },
     {
@@ -338,7 +374,7 @@
         "cep": "45678901",
         "email": "contato@xiaomi.com.br",
         "numeroLogradouro": "900",
-        "cnpj": "45678901000154",
+        "cnpj": "45678901019154",
         "complemento": "Bloco D"
     }
 ]
