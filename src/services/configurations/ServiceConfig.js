@@ -1,2 +1,2 @@
-const baseUri = "https://lemnos-server.up.railway.app/api";
+const baseUri = "https://lemnos-server.onrender.com/api";
 export { baseUri };
