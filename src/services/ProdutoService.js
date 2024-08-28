@@ -43,6 +43,34 @@ export async function listarProdutosFiltrados(filtro, page, size) {
     }
 }
 
+export async function listarProdutosComDesconto() {
+    try {
+        const response = await axios({
+            baseURL: baseUri,
+            method: 'GET',
+            url: '/produto/desconto',
+            timeout: 10000,
+        });
+
+        if (response.status !== 200 && response.status !== 204) {
+            throw new Error('Erro ao listar produtos com desconto.');
+        }
+
+        return response.data;
+    } catch (error) {
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+        ) {
+            toast.error(error.response.data.error);
+        } else {
+            toast.error('Erro ao listar produtos.');
+        }
+        throw error;
+    }
+}
+
 export async function cadastrarProduto(produto) {
     try {
         const response = await axios({
@@ -130,20 +158,6 @@ export async function getProdutoById(id) {
         return response.data;
     } catch (error) {
         console.error('Erro ao obter detalhes do produto:', error);
-        return null;
-    }
-}
-
-export async function getAllProdutos() {
-    try {
-        const response = await axios({
-            baseURL: baseUri,
-            url: `/produto`,
-            timeout: 10000,
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao listar Produtos:', error);
         return null;
     }
 }
