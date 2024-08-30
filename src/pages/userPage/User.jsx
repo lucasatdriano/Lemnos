@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
@@ -229,7 +231,6 @@ const User = ({ onLogout, userImg, setUserImg }) => {
         }
 
         try {
-
             const tokenList = AuthService.getToken().split('.');
             const json = JSON.parse(atob(tokenList[1]));
 
@@ -276,7 +277,7 @@ const User = ({ onLogout, userImg, setUserImg }) => {
                                 onClick={handleEditProfile}
                             />
                         </ToolTip>
-                        <ToolTip message="Fazer Logout">
+                        <ToolTip message="Logout">
                             <MdLogout className="icon" onClick={onLogout} />
                         </ToolTip>
                     </div>

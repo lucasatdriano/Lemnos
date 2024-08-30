@@ -39,8 +39,8 @@ $font-items: 'Poppins', Helvetica;
         .iconFav {
             cursor: pointer;
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 10px;
+            left: 10px;
             color: $color-primaryLight;
             float: right;
             width: 32px;
@@ -184,14 +184,14 @@ $font-items: 'Poppins', Helvetica;
             display: flex;
 
             .iconFav {
-                top: 5px;
-                left: 95%;
+                top: 15px;
+                left: 94%;
                 height: 42px;
                 width: 42px;
             }
 
             .offerDescont {
-                right: 96.5%;
+                right: 95.5%;
             }
 
             .productImage {
@@ -209,10 +209,9 @@ $font-items: 'Poppins', Helvetica;
                 height: 100%;
 
                 .offerName {
-                    font-size: 1.7rem;
-                    margin-bottom: 8px;
+                    font-size: 2rem;
+                    margin: 0;
                     font-weight: 700;
-                    padding: 5px 0 0;
                 }
 
                 .offerPriceDescont {

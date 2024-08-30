@@ -98,7 +98,7 @@ export default function Slide() {
                     />
                 </SplideSlide>
                 <SplideSlide>
-                    <Link to={'/product/992c2ad8-b0ab-45e5-aa56-cc7fcf8bbc4e'}>
+                    <Link to={'/product/7dfa5602-fc10-4f8b-8c81-8d96831b040f'}>
                         <ImageWithLoadingEffect
                             src={imgBanner2}
                             alt="Slide 2"
@@ -112,7 +112,7 @@ export default function Slide() {
                     </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <Link to={'/product/3d32b563-c84d-42f9-a6a6-2e26dd7ed9c6'}>
+                    <Link to={'/product/fd824c36-5b5b-4ab1-af1b-20e9ea622283'}>
                         <ImageWithLoadingEffect
                             src={imgBanner3}
                             alt="Slide 3"
@@ -126,7 +126,7 @@ export default function Slide() {
                     </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <Link to={'/product/e57e1820-3baf-4c20-81d0-882a44e656f3'}>
+                    <Link to={'/product/8cba6423-1451-49c3-9135-f9fbe64585b8'}>
                         <ImageWithLoadingEffect
                             src={imgBanner4}
                             alt="Slide 4"
@@ -140,7 +140,7 @@ export default function Slide() {
                     </Link>
                 </SplideSlide>
                 <SplideSlide>
-                    <Link to={'/product/b1c098db-bff3-4ed2-b7be-eda75ee14935'}>
+                    <Link to={'/product/1e9549d2-eb2d-4f9a-a39f-9df2eb255984'}>
                         <ImageWithLoadingEffect
                             src={imgBanner5}
                             alt="Slide 5"
