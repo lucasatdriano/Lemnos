@@ -86,6 +86,13 @@ $font-items: 'Poppins', Helvetica;
                 background-color: #dce0e081;
                 color: $color-fontLight;
                 box-shadow: 0 0 10px #141414a8;
+
+                .greenStatus {
+                    color: #115c45;
+                }
+                .statusColor {
+                    color: #dfb80d;
+                }
             }
         }
 

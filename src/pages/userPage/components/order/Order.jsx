@@ -96,7 +96,7 @@ export default function historicoCompras() {
                                         <hr />
                                         <div className="details">
                                             <p><span className='bold'>Pagamento</span><br />{pedido.metodoPagamento}</p>
-                                            <p><span className='bold'>Status</span><br /><span className={pedido.status == "Pedido entregue" ? "greenStatus" : "statusColor"}>{pedido.status}</span></p>
+                                            <p><span className='bold'>Status</span><br /><span className={pedido.status == "Entregue" || pedido.status == "Pedido entregue" ? "greenStatus" : "statusColor"}>{pedido.status}</span></p>
                                             <p><span className='bold'>Valor</span><br />{BRL.format(pedido.valorPedido)}</p>
                                         </div>
 

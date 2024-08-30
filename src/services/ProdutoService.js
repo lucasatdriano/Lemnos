@@ -51,7 +51,7 @@ export async function cadastrarProduto(produto) {
             },
             data: {
                 nome: produto.nome,
-                valorTotal: produto.preco,
+                valor: produto.preco,
                 descricao: produto.descricao,
                 desconto: produto.desconto,
                 cor: produto.cor,

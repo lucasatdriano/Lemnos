@@ -19,10 +19,10 @@ import {
     atualizarStatus,
     novoPedido,
     listarPedido,
+    pedidoPorId,
 } from '../../services/UsuarioProdutoService';
 import { getCliente } from '../../services/ClienteService';
 import { toast } from 'react-toastify';
-import { setCarrinho } from '../../store/actions/cartActions';
 
 const BRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -79,10 +79,7 @@ export default function BuyPage() {
         try {
             await atualizarStatus(pedidoId);
 
-            const pedidos = await listarPedido();
-            const pedidoAtualizado = pedidos.find(
-                (pedido) => pedido.id === pedidoId
-            );
+            const pedidoAtualizado = await pedidoPorId(pedidoId);
 
             if (pedidoAtualizado) {
                 setPedidoStatus(pedidoAtualizado.status);
@@ -122,7 +119,7 @@ export default function BuyPage() {
             const pedidos = await listarPedido();
             const newPedido = pedidos[pedidos.length - 1];
             setPedidoId(newPedido.id);
-            setPedidoStatus('Em processamento');
+            setPedidoStatus(newPedido.status);
             toast.success('Compra Realizada');
         } catch (error) {
             console.error('Erro ao realizar compra', error);
@@ -139,7 +136,7 @@ export default function BuyPage() {
                 case 'recebido pela transportadora':
                 case 'mercadoria em trânsito':
                 case 'mercadoria em rota de entrega':
-                case 'pedido entregue':
+                case 'Entregue':
                     return {
                         color:
                             currentStatus === status.toLowerCase()
@@ -156,7 +153,7 @@ export default function BuyPage() {
                 case 'recebido pela transportadora':
                 case 'mercadoria em trânsito':
                 case 'mercadoria em rota de entrega':
-                case 'pedido entregue':
+                case 'Entregue':
                     return {
                         color:
                             currentStatus === status.toLowerCase()
@@ -255,10 +252,10 @@ export default function BuyPage() {
                         </div>
                         <div>
                             <LuPackageCheck
-                                style={statusStyles('Pedido entregue')}
+                                style={statusStyles('Entregue')}
                                 className="iconLoadingOrder"
                             />
-                            <h3 style={statusStyles('Pedido entregue')}>
+                            <h3 style={statusStyles('Entregue')}>
                                 Pedido entregue
                             </h3>
                         </div>
