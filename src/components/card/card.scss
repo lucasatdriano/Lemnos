@@ -25,7 +25,6 @@ $font-items: 'Poppins', Helvetica;
     font-family: $font-items;
     overflow: hidden;
     position: relative;
-    transition: 0.5s ease-in-out;
 
     .iconFav {
         cursor: pointer;
@@ -56,6 +55,12 @@ $font-items: 'Poppins', Helvetica;
             font-size: 1.7rem;
             margin-bottom: 24px;
             font-weight: 700;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            text-overflow: ellipsis;
         }
 
         .productPrice {
@@ -63,8 +68,8 @@ $font-items: 'Poppins', Helvetica;
             font-weight: 500;
             line-height: 1.2;
             position: absolute;
-            top: 250px;
-            transition: 0.5s ease-in-out;
+            top: 280px;
+            transition: 0.7s ease-in-out;
 
             span {
                 font-weight: 700;
@@ -92,7 +97,7 @@ $font-items: 'Poppins', Helvetica;
         width: 100%;
         font-size: 2rem;
         padding: 0.8em 0;
-        transition: 0.5s ease-out;
+        transition: 0.7s ease-out;
         cursor: pointer;
 
         &:hover {
@@ -114,6 +119,67 @@ $font-items: 'Poppins', Helvetica;
         }
         .btnAdd {
             bottom: 0;
+        }
+    }
+}
+
+.cardList {
+    .productCard {
+        width: 65vw;
+        height: 15em;
+        padding: 1em;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 2px 2px 8px $color-shadow;
+        gap: 2em;
+
+        .productLink {
+            display: flex;
+
+            .iconFav {
+                top: 5px;
+                left: 95%;
+                height: 42px;
+                width: 42px;
+            }
+
+            .productImage {
+                min-width: 20em;
+                max-width: 20em;
+                width: 45%;
+                height: 100%;
+            }
+
+            .productDetails {
+                display: flex;
+
+                justify-content: space-between;
+                flex-direction: column;
+                position: relative;
+
+                .productName {
+                    position: relative;
+                    font-size: 2rem;
+                    -webkit-line-clamp: 2;
+                    line-clamp: 2;
+                }
+
+                .productPrice {
+                    top: 0;
+                    position: relative;
+                }
+            }
+        }
+
+        .btnAdd {
+            position: relative;
+            top: 70%;
+            max-width: 20em;
+            height: 3em;
+
+            &:hover {
+                box-shadow: 0 0 20px $color-primaryLight;
+            }
         }
     }
 }

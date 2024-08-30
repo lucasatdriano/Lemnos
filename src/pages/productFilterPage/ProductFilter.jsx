@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef } from 'react';
+import { IoList } from 'react-icons/io5';
+import { HiSquares2X2 } from 'react-icons/hi2';
+import { listarProdutosFiltrados } from '../../services/ProdutoService';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Card from '../../components/card/Card';
 import Loading from '../../components/loading/Loading';
 import DoubleInputRange from '../../components/inputs/doubleInput/DoubleInput';
-import React, { useState, useEffect, useRef } from 'react';
-import { listarProdutosFiltrados } from '../../services/ProdutoService';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 import './productFilter.scss';
 
 const brands = [
@@ -94,22 +97,80 @@ export default function ProductFilter() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const search = searchParams.get('search') || '';
-    const [selectedBrand, setSelectedBrand] = useState('');
-    const [selectedEvaluation, setSelectedEvaluation] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState(category || '');
-    const [selectedSubCategory, setSelectedSubCategory] = useState('');
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(50000);
-    const [searchTerm, setSearchTerm] = useState(search || '');
+
+    const [selectedBrand, setSelectedBrand] = useState(
+        localStorage.getItem('selectedBrand') || ''
+    );
+    const [selectedEvaluation, setSelectedEvaluation] = useState(
+        localStorage.getItem('selectedEvaluation') || ''
+    );
+    const [selectedCategory, setSelectedCategory] = useState(
+        localStorage.getItem('selectedCategory') || category || ''
+    );
+    const [selectedSubCategory, setSelectedSubCategory] = useState(
+        localStorage.getItem('selectedSubCategory') || ''
+    );
+    const [minPrice, setMinPrice] = useState(
+        parseInt(localStorage.getItem('minPrice')) || 0
+    );
+    const [maxPrice, setMaxPrice] = useState(
+        parseInt(localStorage.getItem('maxPrice')) || 50000
+    );
+    const [searchTerm, setSearchTerm] = useState(
+        localStorage.getItem('searchTerm') || search || ''
+    );
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [cardList, setCardList] = useState(AuthService.getCard() === 'true');
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const endOfPageRef = useRef();
     const observer = useRef();
 
+    const saveFiltersToLocalStorage = () => {
+        localStorage.setItem('selectedBrand', selectedBrand);
+        localStorage.setItem('selectedEvaluation', selectedEvaluation);
+        localStorage.setItem('selectedCategory', selectedCategory);
+        localStorage.setItem('selectedSubCategory', selectedSubCategory);
+        localStorage.setItem('minPrice', minPrice.toString());
+        localStorage.setItem('maxPrice', maxPrice.toString());
+        localStorage.setItem('searchTerm', searchTerm);
+    };
+
+    const calculateMaxPrice = async () => {
+        try {
+            const filtro = {
+                nome: searchTerm ?? null,
+                categoria: selectedCategory ?? null,
+                subCategoria: selectedSubCategory ?? null,
+                marca: selectedBrand ?? null,
+                menorPreco: null,
+                maiorPreco: null,
+                avaliacao: selectedEvaluation
+                    ? parseInt(selectedEvaluation, 10)
+                    : null,
+            };
+
+            const produtosFiltrados = await listarProdutosFiltrados(
+                filtro,
+                0,
+                1000
+            );
+            const novoMaxPrice = produtosFiltrados.reduce((max, produto) => {
+                return produto.valorComDesconto > max
+                    ? produto.valorComDesconto
+                    : max;
+            }, 0);
+
+            setMaxPrice(novoMaxPrice);
+        } catch (error) {
+            console.error('Erro ao calcular o maior preço:', error);
+        }
+    };
+
     const applyFilters = async (pageToLoad = 0) => {
         setLoading(true);
+        saveFiltersToLocalStorage();
         try {
             const filtro = {
                 nome: searchTerm ?? null,
@@ -128,6 +189,7 @@ export default function ProductFilter() {
                 pageToLoad,
                 24
             );
+
             if (pageToLoad === 0) {
                 setFilteredData(produtosFiltrados);
             } else {
@@ -145,13 +207,22 @@ export default function ProductFilter() {
     };
 
     useEffect(() => {
+        calculateMaxPrice();
+    }, [
+        selectedBrand,
+        selectedCategory,
+        selectedSubCategory,
+        searchTerm,
+        selectedEvaluation,
+    ]);
+
+    useEffect(() => {
         applyFilters(0);
     }, [
         selectedBrand,
         selectedCategory,
         selectedSubCategory,
         minPrice,
-        maxPrice,
         searchTerm,
         selectedEvaluation,
     ]);
@@ -192,6 +263,7 @@ export default function ProductFilter() {
         setSelectedCategory('');
         setPage(0);
         setHasMore(true);
+        localStorage.clear();
         navigate(`/productFilter`);
     };
 
@@ -207,13 +279,57 @@ export default function ProductFilter() {
     };
 
     const handleProductRating = (rating) => {
-        setSelectedEvaluation(rating);
+        if (rating === selectedEvaluation) {
+            setSelectedEvaluation('');
+        } else {
+            setSelectedEvaluation(rating);
+        }
         setPage(0);
+    };
+
+    const handleAlterCardsList = () => {
+        setCardList(true);
+        AuthService.setCard('true');
+        applyFilters();
+    };
+
+    const handleAlterCardsSquare = () => {
+        setCardList(false);
+        AuthService.setCard('false');
+        applyFilters();
     };
 
     return (
         <section className="mainFilters">
             <section className="product-filter-container">
+                <div className="containerAlterFilter">
+                    <p className="containerChecked">
+                        <input
+                            type="radio"
+                            id="listView"
+                            name="view"
+                            checked={cardList}
+                            onChange={handleAlterCardsList}
+                        />
+                        <label htmlFor="listView" className="labelIcon">
+                            <IoList className="iconAlter" />
+                        </label>
+                    </p>
+
+                    <p className="containerChecked">
+                        <input
+                            type="radio"
+                            id="gridView"
+                            name="view"
+                            checked={!cardList}
+                            onChange={handleAlterCardsSquare}
+                        />
+                        <label htmlFor="gridView" className="labelIcon">
+                            <HiSquares2X2 className="iconAlter" />
+                        </label>
+                    </p>
+                </div>
+
                 <select
                     value={selectedCategory}
                     onChange={handleCategoryChange}
@@ -257,6 +373,7 @@ export default function ProductFilter() {
                     maxValue={maxPrice}
                     setMinValue={setMinPrice}
                     setMaxValue={setMaxPrice}
+                    maxPrice={maxPrice}
                 />
 
                 <div className="ratingFilter">
@@ -288,9 +405,9 @@ export default function ProductFilter() {
                 </div>
             </section>
 
-            <hr className="hrFilter" />
-
             <section className="filtered-data-container">
+                <hr className="hrFilter" />
+
                 {loading && page === 0 ? (
                     <Loading />
                 ) : (
@@ -314,7 +431,9 @@ export default function ProductFilter() {
 
                         {filteredData.length > 0 && (
                             <>
-                                <div className="productsList">
+                                <div
+                                    className={`productsList ${cardList ? 'cardList' : ''}`}
+                                >
                                     {filteredData.map((produto) => (
                                         <Card
                                             key={produto.id}

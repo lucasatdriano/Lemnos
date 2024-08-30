@@ -80,8 +80,15 @@ $font-items: 'Poppins', Helvetica;
                         object-fit: contain;
                         width: 8vw;
                         height: 8vw;
+                        z-index: 50;
                         cursor: pointer;
-                        box-shadow: 2px 2px 10px $color-shadow;
+                        box-shadow: 0 0 5px $color-shadow;
+                        transition: 0.25s ease;
+
+                        &:hover {
+                            box-shadow: 0 0 15px $color-shadow;
+                            filter: brightness(0.98);
+                        }
                     }
                 }
 
@@ -126,11 +133,13 @@ $font-items: 'Poppins', Helvetica;
                         filter: drop-shadow(2px 2px 8px $color-shadow);
                         display: flex;
                         flex-direction: row-reverse;
+                        align-items: center;
                         gap: 0.3rem;
                         --stroke: #666;
 
                         .productNote {
                             color: #837f7f7e;
+                            font-size: clamp(2.2rem, 2rem + 1vw, 2.6rem);
                         }
 
                         input {
@@ -145,6 +154,7 @@ $font-items: 'Poppins', Helvetica;
 
                         svg {
                             width: 1.5em;
+                            width: clamp(1em, 1em + 1vw, 1.5em);
                             height: 1.5em;
                             overflow: visible;
                             fill: transparent;
@@ -182,7 +192,7 @@ $font-items: 'Poppins', Helvetica;
                 }
 
                 .productName {
-                    font-family: $font-title;
+                    font-family: $font-items;
                     font-size: clamp(2.8rem, 1rem + 2vw, 3.5rem);
                 }
 
@@ -198,22 +208,25 @@ $font-items: 'Poppins', Helvetica;
 
                 .productPrice {
                     font-family: $font-title;
+                    font-size: clamp(2rem, 1rem + 1vw, 2.6rem);
+
                     span {
                         font-family: $font-items;
                         color: $color-primaryLight;
                         font-weight: 700;
-                        font-size: clamp(2.5rem, 1rem + 2vw, 5rem);
+                        font-size: clamp(4rem, 3rem + 2vw, 6rem);
                         text-shadow: 2px 2px 2px $color-shadow;
                     }
                 }
 
                 .priceFees {
                     font-family: $font-title;
+                    font-size: clamp(2rem, 1rem + 1vw, 2.6rem);
                     span {
                         font-family: $font-items;
                         color: $color-detailsLight;
                         font-weight: 600;
-                        font-size: clamp(2rem, 1rem + 2vw, 2.6rem);
+                        font-size: clamp(2.2rem, 1rem + 2vw, 2.6rem);
                     }
                 }
 
@@ -405,21 +418,23 @@ $font-items: 'Poppins', Helvetica;
                     justify-content: center;
                     align-items: center;
                     width: 100%;
+                    height: 35em;
 
                     .imageMain {
-                        width: 50vw;
-                        height: 60svh;
+                        width: 75%;
+                        min-height: 30em;
+                        max-height: 30em;
                     }
 
                     .optionsImages {
                         flex-direction: column;
                         max-width: 10em;
                         min-width: 10em;
-                        max-height: 60svh;
+                        max-height: 100%;
 
                         img {
-                            width: 9em;
-                            height: 9em;
+                            width: 100%;
+                            min-height: 7em;
                         }
                     }
 
@@ -468,16 +483,21 @@ $font-items: 'Poppins', Helvetica;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    margin: 0 auto 5em;
+                    margin: 0 auto 8em;
+                    max-width: 100%;
 
                     .imageMain {
-                        width: 75vw;
+                        width: 100%;
                     }
 
                     .optionsImages {
                         flex-direction: row;
-                        max-width: 75vw;
                         justify-content: center;
+                        max-width: 100%;
+
+                        img {
+                            width: 25%;
+                        }
                     }
 
                     .offerDescont {
@@ -487,7 +507,6 @@ $font-items: 'Poppins', Helvetica;
 
                 .containerInfos {
                     margin: -3em 0 -1em;
-                    width: clamp(70vw, 30vw + 100em, 85vw);
                 }
             }
         }
@@ -504,15 +523,6 @@ $font-items: 'Poppins', Helvetica;
                         height: 40svh;
                     }
 
-                    .optionsImages {
-                        max-width: 50vw;
-
-                        img {
-                            width: 40%;
-                            height: 7em;
-                        }
-                    }
-
                     .offerDescont {
                         right: 5px;
                     }
@@ -525,6 +535,19 @@ $font-items: 'Poppins', Helvetica;
                             width: 32px;
                             height: 32px;
                         }
+                    }
+                }
+            }
+
+            .containerDetails {
+                .containerSpecifications {
+                    padding: 2em 1em;
+                    width: 100%;
+
+                    .specification {
+                        width: 100%;
+                        font-size: clamp(1.7rem, 1rem + 1.75vw, 2rem);
+                        text-align: left;
                     }
                 }
             }

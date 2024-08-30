@@ -83,6 +83,12 @@ $font-items: 'Poppins', Helvetica;
                 margin-bottom: 8px;
                 font-weight: 700;
                 padding: 5px 0 0;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                text-overflow: ellipsis;
             }
 
             .offerPrice {
@@ -97,7 +103,7 @@ $font-items: 'Poppins', Helvetica;
 
             .offerPriceDescont {
                 position: absolute;
-                bottom: 55px;
+                bottom: 40px;
                 font-size: 1.4rem;
                 font-weight: 500;
                 line-height: 1.2;
@@ -160,6 +166,103 @@ $font-items: 'Poppins', Helvetica;
             }
             .btnAdd {
                 bottom: 0;
+            }
+        }
+    }
+}
+
+.cardList > .descont {
+    .offerCard {
+        width: 65vw;
+        height: 15em;
+        padding: 1em;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 2px 2px 8px $color-shadow;
+
+        .offerLink {
+            display: flex;
+
+            .iconFav {
+                top: 5px;
+                left: 95%;
+                height: 42px;
+                width: 42px;
+            }
+
+            .offerDescont {
+                right: 96.5%;
+            }
+
+            .productImage {
+                min-width: 20em;
+                max-width: 20em;
+                width: 45%;
+                height: 100%;
+            }
+
+            .offerDetails {
+                padding-bottom: 4em;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+
+                .offerName {
+                    font-size: 1.7rem;
+                    margin-bottom: 8px;
+                    font-weight: 700;
+                    padding: 5px 0 0;
+                }
+
+                .offerPriceDescont {
+                    position: relative;
+                    top: 37%;
+                }
+            }
+        }
+
+        .btnAdd {
+            position: relative;
+            top: 70%;
+            max-width: 20em;
+            height: 3em;
+
+            &:hover {
+                box-shadow: 0 0 20px $color-primaryLight;
+            }
+        }
+
+        &:hover {
+            .offerDescont {
+                opacity: 1;
+            }
+
+            .offerDetails {
+                .offerPrice {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    .offerCard {
+        .productLink {
+            display: flex;
+
+            .productDetails {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                position: relative;
+
+                .productName {
+                    position: relative;
+                }
+
+                .productPrice {
+                    top: 0;
+                    position: relative;
+                }
             }
         }
     }

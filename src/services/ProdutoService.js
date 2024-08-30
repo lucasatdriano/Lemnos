@@ -1,7 +1,5 @@
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import AuthService from './AuthService';
-import { toast } from 'react-toastify';
 import { baseUri } from './configurations/ServiceConfig';
 
 export async function listarProdutosFiltrados(filtro, page, size) {
@@ -35,9 +33,7 @@ export async function listarProdutosFiltrados(filtro, page, size) {
             error.response.data &&
             error.response.data.error
         ) {
-            toast.error(error.response.data.error);
-        } else {
-            toast.error('Erro ao filtrar produtos.');
+            console.error(error.response.data.error);
         }
         throw error;
     }
@@ -51,7 +47,7 @@ export async function cadastrarProduto(produto) {
             url: '/produto',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': AuthService.getToken(),
+                Authorization: AuthService.getToken(),
             },
             data: {
                 nome: produto.nome,
@@ -79,7 +75,7 @@ export async function cadastrarProduto(produto) {
 
         return true;
     } catch (error) {
-        toast.error(error);
+        console.error(error);
     }
 }
 
@@ -114,7 +110,7 @@ export async function updateProduto(produto, id) {
             error.response.data &&
             error.response.data.error
         ) {
-            toast.error(error.response.data.error);
+            console.error(error.response.data.error);
         }
         return false;
     }
