@@ -3,7 +3,8 @@
 ### **🚧 Atenção: Este projeto está em desenvolvimento. A API externa está atualmente fora do ar.**
 
 Este é um projeto de e-commerce de tecnologia desenvolvido em React como parte do Trabalho de Conclusão de Curso (TCC). O projeto inclui uma variedade de funcionalidades avançadas para proporcionar uma experiência de usuário completa e envolvente.
-<img src="src/assets/imgLemnos/logoHorizontalClaro.svg" alt="Logo da Lemnos" height="300" width="100%"/>
+<img src="src/assets/imgLemnos/logoHorizontalClaro.svg" alt="Logo da Lemnos" height="250" width="100%"/>
+<img src="src/assets/capaReadMe.png" alt="Capa do Projeto" width="100%"/>
 
 ## Índice
 - <a href="#%EF%B8%8F-tecnologias-utilizadas">Tecnologias Utilizadas</a>

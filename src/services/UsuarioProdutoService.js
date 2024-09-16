@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 import { baseUri } from './configurations/ServiceConfig';
 import cartEventEmitter from './configurations/events';
 import AuthService from './AuthService';
@@ -36,9 +34,7 @@ export async function listarProdutosFiltrados(filtro, page, size) {
             error.response.data &&
             error.response.data.error
         ) {
-            toast.error(error.response.data.error);
-        } else {
-            console.error('Erro ao filtrar produtos.', error);
+            console.error(error.response.data.error);
         }
         throw error;
     }

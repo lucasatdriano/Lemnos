@@ -23,10 +23,18 @@ const AuthService = {
         return localStorage.getItem('googleProfilePhoto');
     },
 
+    setCard(card) {
+        return localStorage.setItem('cardList', card);
+    },
+
+    getCard() {
+        return localStorage.getItem('cardList');
+    },
+
     setTheme(theme) {
         return localStorage.setItem('theme', theme);
     },
-    
+
     getTheme() {
         return localStorage.getItem('theme');
     },

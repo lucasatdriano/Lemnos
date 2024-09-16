@@ -6,13 +6,13 @@ import './doubleInput.scss';
 
 const STEP = 50;
 const MIN = 0;
-const MAX = 50000;
 
 export default function DoubleInputRange({
     minValue,
     maxValue,
     setMinValue,
     setMaxValue,
+    maxPrice,
 }) {
     const BRL = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -67,10 +67,10 @@ export default function DoubleInputRange({
 
     const handleMaxInputBlur = () => {
         const [minVal, maxVal] = values;
-        if (isNaN(maxVal) || maxVal > MAX) {
+        if (isNaN(maxVal) || maxVal > maxPrice) {
             toast.warning('O valor máximo não pode ser maior que 10000.');
-            setMaxValue(MAX);
-            setValues([minVal, MAX]);
+            setMaxValue(maxPrice);
+            setValues([minVal, maxPrice]);
         } else if (maxVal < minVal) {
             toast.warning(
                 'O valor máximo não pode ser menor que o valor mínimo.'
@@ -90,7 +90,7 @@ export default function DoubleInputRange({
                     values={values}
                     step={STEP}
                     min={MIN}
-                    max={MAX}
+                    max={maxPrice}
                     onChange={handleRangeChange}
                     onFinalChange={handleRangeFinalChange}
                     renderTrack={({ props, children }) => (
@@ -105,7 +105,7 @@ export default function DoubleInputRange({
                                     values,
                                     colors: ['#415352', '#36CEC4', '#415352'],
                                     min: MIN,
-                                    max: MAX,
+                                    max: maxPrice,
                                 }),
                             }}
                         >
@@ -137,7 +137,7 @@ export default function DoubleInputRange({
                                 onBlur={handleMinInputBlur}
                                 inputMode="numeric"
                                 min={MIN}
-                                max={MAX}
+                                max={maxPrice}
                             />
                         </div>
                     </div>
@@ -152,7 +152,7 @@ export default function DoubleInputRange({
                                 onBlur={handleMaxInputBlur}
                                 inputMode="numeric"
                                 min={MIN}
-                                max={MAX}
+                                max={maxPrice}
                             />
                         </div>
                     </div>
