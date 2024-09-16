@@ -203,6 +203,10 @@ export async function getQuantidadeCarrinho() {
             },
         });
 
+        if (response.status == 401) {
+            AuthService.logout();
+            return
+        }
         if (response.status !== 200) {
             throw new Error(
                 'Erro ao obter quantidade de produtos no carrinho.'
