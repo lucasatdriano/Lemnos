@@ -165,7 +165,7 @@ export default function ProdutoModal({ onClose }) {
             setForm({
                 nome: produto.nome || '',
                 descricao: produto.descricao || '',
-                imagemPrinc: produto.imagemPrincipal || '',
+                imagemPrincipal: produto.imagemPrincipal || '',
                 imagens: produto.imagens || ['', '', ''],
                 desconto: produto.desconto || '',
                 cor: produto.cor || '',
@@ -250,8 +250,8 @@ export default function ProdutoModal({ onClose }) {
         if (!form.subCategoria) {
             newErrors.subCategoria = 'A Subcategoria do produto é obrigatória';
         }
-        if (!form.imagemPrinc) {
-            newErrors.imagemPrinc =
+        if (!form.imagemPrincipal) {
+            newErrors.imagemPrincipal =
                 'A Imagem principal do produto é obrigatória';
         }
         if (!form.fornecedor) {
@@ -268,7 +268,7 @@ export default function ProdutoModal({ onClose }) {
             try {
                 const formattedForm = {
                     ...form,
-                    preco: parseFloat(form.preco),
+                    valor: parseFloat(form.preco),
                     desconto: parseFloat(form.desconto),
                     peso: parseFloat(form.peso),
                     altura: parseFloat(form.altura),
